@@ -16,7 +16,7 @@ df_h_1armcluster(N_total, ICC, N_grp, avg_grp_size)
 \item{avg_grp_size}{Numerical value indicating the average cluster size.}
 }
 \value{
-Returns a numerical values indicating the adjusted degree of freedom.
+Returns a numerical values indicating the cluster adjusted degrees of freedom.
 }
 \description{
 This function calculates the degrees of freedom for studies

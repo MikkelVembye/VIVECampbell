@@ -13,7 +13,7 @@
 #' @param N_grp Numerical value indicating the sample size of the arm/group containing clustering.
 #' @param avg_grp_size Numerical value indicating the average cluster size.
 #'
-#' @return Returns a numerical values indicating the adjusted degree of freedom.
+#' @return Returns a numerical values indicating the cluster adjusted degrees of freedom.
 #'
 #' @export
 #'
