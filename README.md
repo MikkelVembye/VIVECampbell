@@ -7,7 +7,9 @@
 <!-- badges: end -->
 
 The package provides functions used in Campbell review conducted by
-VIVE - The Danish Center for Social Science Research.
+[VIVE - The Danish Center for Social Science
+Research](https://www.vive.dk/en/). See also the VIVE Campbell
+[homepage](https://www.vive.dk/da/centre-og-netvaerk/campbell/).
 
 ## Installation
 
@@ -29,7 +31,7 @@ library(VIVECampbell)
 ## basic example code
 
 df_h_1armcluster(N_total = 100, ICC = 0.1, N_grp = 60, avg_grp_size = 5)
-#> [1] 94.84379
+#> [1] 94.84
 ```
 
 # References
