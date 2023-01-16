@@ -30,7 +30,10 @@ treatment group only (Hedges & Citkowicz, 2015)
 library(VIVECampbell)
 ## basic example code
 
-df_h_1armcluster(N_total = 100, ICC = 0.1, N_grp = 60, avg_grp_size = 5)
+h_eq7_hedges2105 <- 
+  df_h_1armcluster(N_total = 100, ICC = 0.1, N_grp = 60, avg_grp_size = 5)
+
+h_eq7_hedges2105
 #> [1] 94.84
 ```
 
