@@ -21,6 +21,7 @@
 #'  \item{Estimation_method}{String variable indicating the type of estimation method the effect
 #'  estimate is taken from (e.g., raw means, adjusted means, regression adjusted).}
 #'  \item{Effectsize_g}{Effect size, Hedges' g, not adjusted for clustering.}
+#'  \item{SE_g}{The standard error of the effect size, not adjusted for clustering.}
 #'
 #' }
 #'
