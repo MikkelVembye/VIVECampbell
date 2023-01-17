@@ -16,9 +16,14 @@ Research](https://www.vive.dk/en/). See also the VIVE Campbell
 You can install the development version of VIVECampbell like so:
 
 ``` r
-
 # install.packages("devtools")
 devtools::install_github("MikkelVembye/VIVECampbell")
+```
+
+``` r
+# Load necessary packages
+library(VIVECampbell)
+library(dplyr)
 ```
 
 ## Example - Degrees of freedom calculation for cluster-designed studies
@@ -27,18 +32,6 @@ Calcualting degrees of freedom for studies with clustering in one
 treatment group only (Hedges & Citkowicz, 2015)
 
 ``` r
-# Load necessary packages
-library(VIVECampbell)
-library(dplyr)
-#> 
-#> Attaching package: 'dplyr'
-#> The following objects are masked from 'package:stats':
-#> 
-#>     filter, lag
-#> The following objects are masked from 'package:base':
-#> 
-#>     intersect, setdiff, setequal, union
-
 ## Degrees of freedom calculation for cluster bias correction when there is clustering in one treatment group only
 
 h_eq7_hedges2105 <- 
