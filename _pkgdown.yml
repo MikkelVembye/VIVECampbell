@@ -1,4 +1,19 @@
 url: https://mikkelvembye.github.io/VIVECampbell/
 template:
   bootstrap: 5
+development:
+  mode: auto
+
+reference:
+  - title: "Degrees of freedom calculation in cluster designed studies"
+    desc: "Functions for performing degrees of freedom calculation in cluster designed studies"
+    contents:
+      - df_h
+      - df_puste
+      - df_h_1armcluster
+
+  - title: "Datasets"
+    desc: "Example datasets"
+    contents:
+      - Dietrichson2021_data
 
