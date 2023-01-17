@@ -1,4 +1,8 @@
 
+###################################################
+# WWC calculation
+###################################################
+
 #' @title 'Degrees of freedom calculation for cluster bias correction'
 #'
 #' @description This function calculates the degrees of freedom for studies
@@ -65,6 +69,80 @@ df_h <- function(N_total, ICC, avg_grp_size = NULL, n_clusters = NULL){
   round(h, 2)
 
 }
+
+###################################################
+# Pustejovsky calculation
+###################################################
+
+#' @title 'Degrees of freedom calculation for cluster bias correction with Pustejovsky formula'
+#'
+#' @description This function calculates the degrees of freedom for studies
+#' with clustering, using the upsilon formula from Pustejovsky (2016). Find under
+#' the Cluster randomized trials section.
+#'
+#' @references Pustejovsky (2016).
+#' Alternative formulas for the standardized mean difference.
+#' \url{https://www.jepusto.com/alternative-formulas-for-the-smd/}
+#'
+#' @template dfs-arg
+#'
+#' @return Returns a numerical values indicating the cluster adjusted degrees of freedom.
+#'
+#' @export
+#'
+#' @examples
+#' df_puste(N_total = 100, ICC = 0.1, avg_grp_size = 5)
+
+df_puste <- function(N_total, ICC, avg_grp_size = NULL, n_clusters = NULL){
+
+  if (length(N_total) == 1){
+    N <- N_total
+  } else {
+    N <- sum(N_total)
+  }
+
+  rho <- ICC
+
+  if (!is.null(avg_grp_size) & is.null(n_clusters)){
+
+    n <- avg_grp_size
+
+  } else if (!is.null(n_clusters) & is.null(avg_grp_size)) {
+
+    n <- round(N/n_clusters)
+
+  } else if (!is.null(avg_grp_size) & !is.null(n_clusters)){
+
+    n <- avg_grp_size
+    n_test <- round(N/n_clusters)
+
+    if (n != n_test) {
+
+      warning(paste0("The average cluster size diverges between the specified ",
+                     "average group size and the N_total/n_clusters calculation"))
+    }
+
+  }
+
+  if (is.null(n_clusters)){
+
+    M <- N/n
+
+  } else {
+
+    M <- n_clusters
+
+  }
+
+  upsilon <- (n^2*M * (M-2)) / (M*((n-1)*rho + 1)^2 + (M-2) * (n-1) * (1-rho)^2)
+
+  round(upsilon, 2)
+
+}
+
+###################################################
+# One arm clustering calculation
+###################################################
 
 
 #' @title 'Degrees of freedom calculation for cluster bias correction when there is clustering in one treatment group only'
