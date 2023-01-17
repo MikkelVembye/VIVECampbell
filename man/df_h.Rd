@@ -2,9 +2,9 @@
 % Please edit documentation in R/dfs.R
 \name{df_h}
 \alias{df_h}
-\title{'Degrees of freedom calculation for cluster bias correction'}
+\title{'Degrees of freedom calculation for cluster bias correction for standardized mean differences'}
 \usage{
-df_h(N_total, ICC, avg_grp_size = NULL, n_clusters = NULL)
+df_h(N_total, ICC, avg_grp_size = NULL, n_clusters = NULL, df_type = "WWC")
 }
 \arguments{
 \item{N_total}{Numerical value indicating the total sample size of the study.}
@@ -15,6 +15,10 @@ df_h(N_total, ICC, avg_grp_size = NULL, n_clusters = NULL)
 the average number of individuals per cluster.}
 
 \item{n_clusters}{Numerical value indicating the number of clusters.}
+
+\item{df_type}{Character indicating how the degrees of freedom are calculated.
+Default is \code{"WWC"}, which uses WWCs Equation E.21 (2022, p. 171). Alternative is \code{"Pustejovsky"},
+which uses the upsilon formula from Pustejovsky (2016).}
 }
 \value{
 Returns a numerical values indicating the cluster adjusted degrees of freedom.
@@ -22,12 +26,18 @@ Returns a numerical values indicating the cluster adjusted degrees of freedom.
 \description{
 This function calculates the degrees of freedom for studies
 with clustering, using Equation (E.21) from WWC (2022, p. 171). Can also be found
-as h in WWC (2021).
+as h in WWC (2021). When \code{df_type = "Pustejovsky"}, the function calculates the
+degrees of freedom, using the upsilon formula from Pustejovsky (2016). Find under
+the Cluster randomized trials section.
 }
 \examples{
 df_h(N_total = 100, ICC = 0.1, avg_grp_size = 5)
 }
 \references{
+Pustejovsky (2016).
+Alternative formulas for the standardized mean difference.
+\url{https://www.jepusto.com/alternative-formulas-for-the-smd/}
+
 What Works Clearinghouse (2022).
 What Works Clearinghouse Procedures and Standards Handbook, Version 5.0.
 \emph{Institute of Education Science}.
@@ -37,7 +47,4 @@ What Works Clearinghouse (2021).
 Supplement document for Appendix E and the What Works Clearinghouse procedures handbook, version 4.1
 \emph{Institute of Education Science}.
 \url{https://ies.ed.gov/ncee/wwc/Docs/referenceresources/WWC-41-Supplement-508_09212020.pdf}
-}
-\seealso{
-\code{\link{df_puste}}
 }

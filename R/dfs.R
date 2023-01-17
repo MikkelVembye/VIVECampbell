@@ -1,15 +1,21 @@
 
 ###################################################
-# WWC calculation
+# WWC and Pustejovsky calculation
 ###################################################
 
-#' @title 'Degrees of freedom calculation for cluster bias correction'
+#' @title 'Degrees of freedom calculation for cluster bias correction for standardized mean differences'
 #'
 #' @description This function calculates the degrees of freedom for studies
 #' with clustering, using Equation (E.21) from WWC (2022, p. 171). Can also be found
-#' as h in WWC (2021).
+#' as h in WWC (2021). When \code{df_type = "Pustejovsky"}, the function calculates the
+#' degrees of freedom, using the upsilon formula from Pustejovsky (2016). Find under
+#' the Cluster randomized trials section.
 #'
-#' @references What Works Clearinghouse (2022).
+#' @references Pustejovsky (2016).
+#' Alternative formulas for the standardized mean difference.
+#' \url{https://www.jepusto.com/alternative-formulas-for-the-smd/}
+#'
+#' What Works Clearinghouse (2022).
 #' What Works Clearinghouse Procedures and Standards Handbook, Version 5.0.
 #' \emph{Institute of Education Science}.
 #' \url{https://ies.ed.gov/ncee/wwc/Docs/referenceresources/Final_WWC-HandbookVer5_0-0-508.pdf}
@@ -20,125 +26,108 @@
 #' \url{https://ies.ed.gov/ncee/wwc/Docs/referenceresources/WWC-41-Supplement-508_09212020.pdf}
 #'
 #' @template dfs-arg
+#' @param df_type Character indicating how the degrees of freedom are calculated.
+#' Default is \code{"WWC"}, which uses WWCs Equation E.21 (2022, p. 171). Alternative is \code{"Pustejovsky"},
+#' which uses the upsilon formula from Pustejovsky (2016).
 #'
 #' @return Returns a numerical values indicating the cluster adjusted degrees of freedom.
-#'
-#' @seealso \code{\link{df_puste}}
 #'
 #' @export
 #'
 #' @examples
 #' df_h(N_total = 100, ICC = 0.1, avg_grp_size = 5)
 
-df_h <- function(N_total, ICC, avg_grp_size = NULL, n_clusters = NULL){
+df_h <- function(N_total, ICC, avg_grp_size = NULL, n_clusters = NULL, df_type = "WWC"){
 
-  if (length(N_total) == 1){
-    N <- N_total
-  } else {
-    N <- sum(N_total)
-  }
+  if ("WWC" %in% df_type){
 
-  rho <- ICC
-
-  if (!is.null(avg_grp_size) & is.null(n_clusters)){
-
-    n <- avg_grp_size
-
-  } else if (!is.null(n_clusters) & is.null(avg_grp_size)) {
-
-    n <- round(N/n_clusters)
-
-  } else if (!is.null(avg_grp_size) & !is.null(n_clusters)){
-
-    n <- avg_grp_size
-    n_test <- round(N/n_clusters)
-
-    if (n != n_test) {
-
-      warning(paste0("The average cluster size diverges between the specified ",
-                     "average group size and the N_total/n_clusters calculation"))
+    if (length(N_total) == 1){
+      N <- N_total
+    } else {
+      N <- sum(N_total)
     }
 
+    rho <- ICC
+
+    if (!is.null(avg_grp_size) & is.null(n_clusters)){
+
+      n <- avg_grp_size
+
+    } else if (!is.null(n_clusters) & is.null(avg_grp_size)) {
+
+      n <- round(N/n_clusters)
+
+    } else if (!is.null(avg_grp_size) & !is.null(n_clusters)){
+
+      n <- avg_grp_size
+      n_test <- round(N/n_clusters)
+
+      if (n != n_test) {
+
+        warning(paste0("The average cluster size diverges between the specified ",
+                       "average group size and the N_total/n_clusters calculation"))
+      }
+
+    }
+
+    h <- ((N-2) - 2 * (n-1) * rho)^2 /
+      ((N-2) * (1-rho)^2 + n * (N-2*n) * rho^2 + 2*(N-2*n)*rho*(1-rho))
+
+    df <- round(h, 2)
+
   }
 
-  h <- ((N-2) - 2 * (n-1) * rho)^2 /
-    ((N-2) * (1-rho)^2 + n * (N-2*n) * rho^2 + 2*(N-2*n)*rho*(1-rho))
+  if ("Pustejovsky" %in% df_type){
 
-  round(h, 2)
+    if (length(N_total) == 1){
+      N <- N_total
+    } else {
+      N <- sum(N_total)
+    }
+
+    rho <- ICC
+
+    if (!is.null(avg_grp_size) & is.null(n_clusters)){
+
+      n <- avg_grp_size
+
+    } else if (!is.null(n_clusters) & is.null(avg_grp_size)) {
+
+      n <- round(N/n_clusters)
+
+    } else if (!is.null(avg_grp_size) & !is.null(n_clusters)){
+
+      n <- avg_grp_size
+      n_test <- round(N/n_clusters)
+
+      if (n != n_test) {
+
+        warning(paste0("The average cluster size diverges between the specified ",
+                       "average group size and the N_total/n_clusters calculation"))
+      }
+
+    }
+
+    if (is.null(n_clusters)){
+
+      M <- N/n
+
+    } else {
+
+      M <- n_clusters
+
+    }
+
+    upsilon <- (n^2*M * (M-2)) / (M*((n-1)*rho + 1)^2 + (M-2) * (n-1) * (1-rho)^2)
+
+    df <- round(upsilon, 2)
+
+  }
+
+  df
 
 }
 
-###################################################
-# Pustejovsky calculation
-###################################################
-
-#' @title 'Degrees of freedom calculation for cluster bias correction with Pustejovsky formula'
-#'
-#' @description This function calculates the degrees of freedom for studies
-#' with clustering, using the upsilon formula from Pustejovsky (2016). Find under
-#' the Cluster randomized trials section.
-#'
-#' @references Pustejovsky (2016).
-#' Alternative formulas for the standardized mean difference.
-#' \url{https://www.jepusto.com/alternative-formulas-for-the-smd/}
-#'
-#' @template dfs-arg
-#'
-#' @return Returns a numerical values indicating the cluster adjusted degrees of freedom.
-#'
-#' @seealso \code{\link{df_h}}
-#'
-#' @export
-#'
-#' @examples
-#' df_puste(N_total = 100, ICC = 0.1, avg_grp_size = 5)
-
-df_puste <- function(N_total, ICC, avg_grp_size = NULL, n_clusters = NULL){
-
-  if (length(N_total) == 1){
-    N <- N_total
-  } else {
-    N <- sum(N_total)
-  }
-
-  rho <- ICC
-
-  if (!is.null(avg_grp_size) & is.null(n_clusters)){
-
-    n <- avg_grp_size
-
-  } else if (!is.null(n_clusters) & is.null(avg_grp_size)) {
-
-    n <- round(N/n_clusters)
-
-  } else if (!is.null(avg_grp_size) & !is.null(n_clusters)){
-
-    n <- avg_grp_size
-    n_test <- round(N/n_clusters)
-
-    if (n != n_test) {
-
-      warning(paste0("The average cluster size diverges between the specified ",
-                     "average group size and the N_total/n_clusters calculation"))
-    }
-
-  }
-
-  if (is.null(n_clusters)){
-
-    M <- N/n
-
-  } else {
-
-    M <- n_clusters
-
-  }
-
-  upsilon <- (n^2*M * (M-2)) / (M*((n-1)*rho + 1)^2 + (M-2) * (n-1) * (1-rho)^2)
-
-  round(upsilon, 2)
-
-}
 
 ###################################################
 # One arm clustering calculation
