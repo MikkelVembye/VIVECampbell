@@ -1,5 +1,7 @@
 ---
 output: github_document
+editor_options: 
+  chunk_output_type: console
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -31,13 +33,16 @@ devtools::install_github("MikkelVembye/VIVECampbell")
 
 ```
 
-## Example
+## Example - Degrees of freedom calculation for cluster-designed studies
 
 Calcualting degrees of freedom for studies with clustering in one treatment group only (Hedges & Citkowicz, 2015)
 
 ```{r}
+# Load necessary packages
 library(VIVECampbell)
-## basic example code
+library(dplyr)
+
+## Degrees of freedom calculation for cluster bias correction when there is clustering in one treatment group only
 
 h_eq7_hedges2105 <- 
   df_h_1armcluster(N_total = 100, ICC = 0.1, N_grp = 60, avg_grp_size = 5)
@@ -45,7 +50,23 @@ h_eq7_hedges2105 <-
 h_eq7_hedges2105
 ```
 
+## Example - Data included in package
+
+Data from the 'Targeted school-based interventions for improving reading and mathematics for students with or at risk of academic difficulties in Grades K-6: A systematic review' (Dietrichson et al., 2021)
+
+```{r}
+
+# Data from a Campbell Systematic Review conducted by Dietrichson et al. (2021)
+glimpse(Dietrichson2021_data)
+
+# Find documentation behind the data set by removing the below #
+#?Dietrichson2021_data
+
+```
+
 
 # References
+
+Dietrichson, J., Filges, T., Seerup, J. K., Klokker, R. H., Viinholt, B. C. A., Bøg, M., & Eiberg, M. (2021). Targeted school-based interventions for improving reading and mathematics for students with or at risk of academic difficulties in Grades K-6: A systematic review. *Campbell Systematic Reviews*, 17(2), e1152. <https://doi.org/10.1002/cl2.1152>
 
 Hedges, L. V., & Citkowicz, M (2015). Estimating effect size when there is clustering in one treatment groups. *Behavior Research Methods*, 47(4), 1295-1308. <https://doi.org/10.3758/s13428-014-0538-z>
