@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# VIVECampbell:  Functions for Campbell reviews in VIVE
+# VIVECampbell: Functions for Campbell reviews in VIVE
 
 <!-- badges: start -->
 <!-- badges: end -->
@@ -57,7 +57,7 @@ Data from the 'Targeted school-based interventions for improving reading and mat
 ```{r}
 
 # Data from a Campbell Systematic Review conducted by Dietrichson et al. (2021)
-glimpse(Dietrichson2021_data)
+glimpse(Dietrichson2021_data[1:20])
 
 # Find documentation behind the data set by removing the below #
 #?Dietrichson2021_data
