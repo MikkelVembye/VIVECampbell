@@ -45,6 +45,7 @@ h_eq7_hedges2105 <-
 h_eq7_hedges2105
 ```
 
+
 # References
 
 Hedges, L. V., & Citkowicz, M (2015). Estimating effect size when there is clustering in one treatment groups. *Behavior Research Methods*, 47(4), 1295-1308. <https://doi.org/10.3758/s13428-014-0538-z>

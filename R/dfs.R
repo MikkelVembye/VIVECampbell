@@ -19,11 +19,7 @@
 #' \emph{Institute of Education Science}.
 #' \url{https://ies.ed.gov/ncee/wwc/Docs/referenceresources/WWC-41-Supplement-508_09212020.pdf}
 #'
-#' @param N_total Numerical value indicating the total sample size of the study.
-#' @param ICC Numerical value indicating the intra-class correlation (ICC) value.
-#' @param avg_grp_size Numerical value indicating the average cluster size/
-#'        the average number of individuals per cluster.
-#' @param n_clusters Numerical value indicating the number of clusters.
+#' @template dfs-arg
 #'
 #' @return Returns a numerical values indicating the cluster adjusted degrees of freedom.
 #'
