@@ -23,6 +23,8 @@
 #'
 #' @return Returns a numerical values indicating the cluster adjusted degrees of freedom.
 #'
+#' @seealso \code{\link{df_puste}}
+#'
 #' @export
 #'
 #' @examples
@@ -83,6 +85,8 @@ df_h <- function(N_total, ICC, avg_grp_size = NULL, n_clusters = NULL){
 #' @template dfs-arg
 #'
 #' @return Returns a numerical values indicating the cluster adjusted degrees of freedom.
+#'
+#' @seealso \code{\link{df_h}}
 #'
 #' @export
 #'

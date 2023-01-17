@@ -38,3 +38,6 @@ Supplement document for Appendix E and the What Works Clearinghouse procedures h
 \emph{Institute of Education Science}.
 \url{https://ies.ed.gov/ncee/wwc/Docs/referenceresources/WWC-41-Supplement-508_09212020.pdf}
 }
+\seealso{
+\code{\link{df_puste}}
+}

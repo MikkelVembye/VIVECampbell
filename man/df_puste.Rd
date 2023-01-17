@@ -32,3 +32,6 @@ Pustejovsky (2016).
 Alternative formulas for the standardized mean difference.
 \url{https://www.jepusto.com/alternative-formulas-for-the-smd/}
 }
+\seealso{
+\code{\link{df_h}}
+}
