@@ -34,10 +34,10 @@ treatment group only (Hedges & Citkowicz, 2015)
 ``` r
 ## Degrees of freedom calculation for cluster bias correction when there is clustering in one treatment group only
 
-h_eq7_hedges2105 <- 
+h_eq7_hedges2015 <- 
   df_h_1armcluster(N_total = 100, ICC = 0.1, N_grp = 60, avg_grp_size = 5)
 
-h_eq7_hedges2105
+h_eq7_hedges2015
 #> [1] 94.84
 ```
 
