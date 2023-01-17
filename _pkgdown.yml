@@ -4,6 +4,8 @@ template:
 development:
   mode: auto
 
+- uses: actions/checkout@v2.3.4
+
 reference:
   - title: "Degrees of freedom calculation in cluster designed studies"
     desc: "Functions for performing degrees of freedom calculation in cluster designed studies"
@@ -12,7 +14,7 @@ reference:
       - df_puste
       - df_h_1armcluster
 
-  - title: "Datasets"
+  - tit le: "Datasets"
     desc: "Example datasets"
     contents:
       - Dietrichson2021_data
