@@ -1,5 +1,73 @@
 
-#' @title 'Cluster bias correction when there is clustering in one treatment group only'
+#' @title 'Degrees of freedom calculation for cluster bias correction'
+#'
+#' @description This function calculates the degrees of freedom for studies
+#' with clustering, using Equation (E.21) from WWC (2022, p. 171). Can also be found
+#' as h in WWC (2021).
+#'
+#' @references What Works Clearinghouse (2022).
+#' What Works Clearinghouse Procedures and Standards Handbook, Version 5.0.
+#' \emph{Institute of Education Science}.
+#' \url{https://ies.ed.gov/ncee/wwc/Docs/referenceresources/Final_WWC-HandbookVer5_0-0-508.pdf}
+#'
+#' What Works Clearinghouse (2021).
+#' Supplement document for Appendix E and the What Works Clearinghouse procedures handbook, version 4.1
+#' \emph{Institute of Education Science}.
+#' \url{https://ies.ed.gov/ncee/wwc/Docs/referenceresources/WWC-41-Supplement-508_09212020.pdf}
+#'
+#' @param N_total Numerical value indicating the total sample size of the study.
+#' @param ICC Numerical value indicating the intra-class correlation (ICC) value.
+#' @param avg_grp_size Numerical value indicating the average cluster size/
+#'        the average number of individuals per cluster.
+#' @param n_clusters Numerical value indicating the number of clusters.
+#'
+#' @return Returns a numerical values indicating the cluster adjusted degrees of freedom.
+#'
+#' @export
+#'
+#' @examples
+#' df_h(N_total = 100, ICC = 0.1, avg_grp_size = 5)
+
+df_h <- function(N_total, ICC, avg_grp_size = NULL, n_clusters = NULL){
+
+  if (length(N_total) == 1){
+    N <- N_total
+  } else {
+    N <- sum(N_total)
+  }
+
+  rho <- ICC
+
+  if (!is.null(avg_grp_size) & is.null(n_clusters)){
+
+    n <- avg_grp_size
+
+  } else if (!is.null(n_clusters) & is.null(avg_grp_size)) {
+
+    n <- round(N/n_clusters)
+
+  } else if (!is.null(avg_grp_size) & !is.null(n_clusters)){
+
+    n <- avg_grp_size
+    n_test <- round(N/n_clusters)
+
+    if (n != n_test) {
+
+      warning(paste0("The average cluster size diverges between the specified ",
+                     "average group size and the N_total/n_clusters calculation"))
+    }
+
+  }
+
+  h <- ((N-2) - 2 * (n-1) * rho)^2 /
+    ((N-2) * (1-rho)^2 + n * (N-2*n) * rho^2 + 2*(N-2*n)*rho*(1-rho))
+
+  round(h, 2)
+
+}
+
+
+#' @title 'Degrees of freedom calculation for cluster bias correction when there is clustering in one treatment group only'
 #'
 #' @description This function calculates the degrees of freedom for studies
 #' with clustering in one treatment group only, using Equation (7) from Hedges & Citkowicz (2015).
@@ -12,6 +80,7 @@
 #' @param ICC Numerical value indicating the intra-class correlation (ICC) value.
 #' @param N_grp Numerical value indicating the sample size of the arm/group containing clustering.
 #' @param avg_grp_size Numerical value indicating the average cluster size.
+#' @param n_clusters Numerical value indicating the number of clusters in the treatment group.
 #'
 #' @return Returns a numerical values indicating the cluster adjusted degrees of freedom.
 #'
@@ -22,15 +91,45 @@
 
 
 df_h_1armcluster <-
-  function(N_total, ICC, N_grp, avg_grp_size){
+  function(N_total, ICC, N_grp, avg_grp_size = NULL, n_clusters = NULL){
 
-  N <- N_total
+  if (length(N_total) == 1){
+    N <- N_total
+  } else {
+    N <- sum(N_total)
+  }
+
   rho <- ICC
   NT <- N_grp
-  n <- avg_grp_size
+
+  if (!is.null(avg_grp_size) & is.null(n_clusters)){
+
+    n <- avg_grp_size
+
+  } else if (!is.null(n_clusters) & is.null(avg_grp_size)) {
+
+    n <- round(N_grp/n_clusters)
+
+  } else if (!is.null(avg_grp_size) & !is.null(n_clusters)){
+
+    n <- avg_grp_size
+    n_test <- round(N_grp/n_clusters)
+
+    if (n != n_test) {
+
+    warning(paste0("The average cluster size diverges between the specified ",
+             "average group size and the N_total/n_clusters calculation"))
+    }
+
+  }
 
   h <- ((N-2)*(1-rho) + (NT-n)*rho)^2 /
     ((N-2)*(1-rho)^2 + (NT-n)*n*rho^2 + 2*(NT-2)*(1-rho)*rho)
 
   round(h, 2)
+
 }
+
+
+
+

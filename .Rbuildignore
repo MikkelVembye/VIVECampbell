@@ -4,5 +4,4 @@
 ^README\.Rmd$
 README.Rmd
 README.md
-play.R
-To-do.docx
+^other$
