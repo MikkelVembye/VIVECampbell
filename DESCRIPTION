@@ -1,12 +1,18 @@
 Package: VIVECampbell
 Title: Functions for Campbell reviews in VIVE
 Version: 0.0.1
-Authors@R: 
+Authors@R: c(
     person(given = "Mikkel H.", 
            family = "Vembye", 
            email = "mikkel.vembye@gmail.com", 
            role = c("aut", "cre"),
-           comment = c(ORCID = "0000-0001-9071-0724"))
+           comment = c(ORCID = "0000-0001-9071-0724")),
+    person(given = "Rasmus H.", 
+           family = "Klokker", 
+           email = " 	rhk@vive.dk", 
+           role = c("aut"),
+           comment = c(ORCID = "0000-0001-7488-6682"))
+           )
 BugReports: https://github.com/MikkelVembye/VIVECampbell/issues
 Description: Provides functions used in Campbell review conducted by VIVE - The Danish Center for Social Science Research.
 Depends:
