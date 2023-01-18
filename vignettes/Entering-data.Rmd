@@ -1,0 +1,159 @@
+---
+title: "Entering data, calculating effect sizes, and cluster bias correction example"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Entering data, calculating effect sizes, and cluster bias correction example}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+options(pillar.sigfig = 4) # ensure tibble include 4 digits
+options(tibble.width = Inf)
+options(dplyr.print_min = 310)
+options(scipen = 10)
+options(dplyr.summarise.inform = FALSE)
+```
+
+## Introduction
+
+This vignette/article provides examples of how to enter data from rather complex result tables and how to calculate effect size and conduct cluster bias correction for such data, using functions from the `VIVECampbell` R package. 
+
+## Loading necessary package
+
+```{r setup, message=FALSE}
+library(VIVECampbell)
+library(purrr)
+library(dplyr)
+```
+
+## Enter data from Fisher & Bentley (1996)
+
+Find data in Table 4 (p. 1248)
+
+```{r}
+
+Fisher1996 <- tibble::tibble(
+  
+  Setting = rep(c("Inpatient", "Outpatient"), each = 3),
+  
+  Outcome = rep(c("Alcohol use"), each = 6),
+  
+  treatment = rep(c("Disease", "Cognitive", "TAU"), 2),
+  
+    N = 6, # N is imputed/guested for illustrative purposes only, because we only know the total sample (N = 19).
+    
+    m_pre = c(
+      .469, .441, .349, # Alcohol use - inpatient
+      .725, .598, .682  # Alcohol use - outpatient
+      
+    ),
+    
+    sd_pre = c(
+      .12, .13, .22,
+      .11, .16, .17
+      
+    ),
+    
+    m_post = c(
+      .070, .018, .141,
+      .521, .152, .492
+    ),
+    
+    sd_post = c(
+      .11, .05, .21,
+      .11, .15, .27
+      
+      
+    ),
+    
+    m_diff = c(
+      .399, .423, .208,
+      .204, .446, .190
+      
+    ),
+    
+    sd_diff = c(
+      .02, .09, .04,
+      .01, .02, .11
+      
+    ),
+    
+    # Taking from the Cochrane handbook (Higgins & Thomas, 2019, p. 166)
+    r = (sd_pre^2 + sd_post^2-sd_diff^2)/(2 * sd_pre * sd_post ),
+    
+    # Obtained from Wilson (2016). Converting sd_diff to raw sd
+    sdg = sd_diff/sqrt(2*(1-r)),
+    
+    z = 0.5 * log( (1+r)/(1-r) ),
+    v = 1/(N-3)
+    
+    
+); Fisher1996
+
+```
+
+Calculating Cohens' *d* and Hedges' *g*
+
+```{r}
+
+treat_label_fisher <- unique(Fisher1996$treatment)[1:2]
+
+
+fisher_function <- function(label){
+  
+  Fisher1996 |> 
+    dplyr::filter(treatment != label) |> 
+    group_by(Setting, Outcome) |> 
+    summarise(
+      study = "Fisher1996",
+      treatment = treatment[1],
+      es_method = "diff-in-diffs",
+      
+      M = sum(v*z)/sum(v),
+      ppcor = (exp(2*M)-1)/(exp(2*M)+1),
+      
+      Nt = N[1],
+      Nc = N[2],
+      N_tot = Nt + Nc,
+      
+      df_ind = N_tot,
+      
+      s_pool = sqrt(sum((N - 1) * sd_post^2) / df_ind),
+      
+      diff_t = m_post[1] - m_pre[1],
+      diff_c = m_post[2] - m_pre[2],
+      
+      d = (diff_t - diff_c) / s_pool,
+      vd = sum(1/N) * (2*(1-ppcor)) + d^2/(2*df_ind),
+      se = sqrt(vd)
+      
+      
+    ) |> 
+    ungroup() |> 
+    relocate(study)
+  
+}
+
+Fisher1996_est <- 
+  map_dfr(treat_label_fisher, ~ fisher_function(label = .x))
+
+Fisher1996_est
+```
+
+Cluster bias correction when there is clustering in the treatment group only
+
+```{r}
+
+# [INSERT EXAMPLE WHEN FUNCTIONS ARE ADDED TO THE PACKAGE]
+
+```
+
+## Reference 
+
+Fisher, M. S., & Bentley, K. J. (1996). Two group therapy models for clients with a dual diagnosis of substance abuse and personality disorder. *Psychiatric services*, 47(6) <https://doi.org/10.1176/ps.47.11.1244>

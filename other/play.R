@@ -15,3 +15,5 @@ df_h(N_total = c(100), ICC = 0.1, avg_grp_size = 10, n_clusters = 10, df_type = 
 VIVECampbell::Dietrichson2021_data
 
 dplyr::glimpse(Dietrichson2021_data)
+
+use_vignette("Entering-data")
