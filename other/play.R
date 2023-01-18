@@ -16,4 +16,4 @@ VIVECampbell::Dietrichson2021_data
 
 dplyr::glimpse(Dietrichson2021_data)
 
-use_vignette("Entering-data")
+use_vignette("VIVECampbell")

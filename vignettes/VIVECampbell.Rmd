@@ -1,0 +1,21 @@
+---
+title: "VIVECampbell"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{VIVECampbell}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, include=FALSE}
+library(VIVECampbell)
+```
+
+## Welcome to the `VIVECampbell` R package. 
