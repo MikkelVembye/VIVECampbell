@@ -1,10 +1,17 @@
 ---
 title: "Entering data, calculating effect sizes, and cluster bias correction example"
-output: rmarkdown::html_vignette
+date: "Last modified `r Sys.Date()`"
+output: 
+  rmarkdown::html_vignette:
+    number_sections: true
+    toc: true
 vignette: >
   %\VignetteIndexEntry{Entering data, calculating effect sizes, and cluster bias correction example}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  %\VignetteDepends{dplyr}
+  %\VignetteDepends{tibble}
+  %\VignetteDepends{purrr}
 ---
 
 ```{r, include = FALSE}
@@ -84,7 +91,7 @@ Fisher1996 <- tibble::tibble(
       
     ),
     
-    # Taking from the Cochrane handbook (Higgins & Thomas, 2019, p. 166)
+    # From the Cochrane handbook (Higgins & Thomas, 2019, p. 166)
     r = (sd_pre^2 + sd_post^2-sd_diff^2)/(2 * sd_pre * sd_post ),
     
     # Obtained from Wilson (2016). Converting sd_diff to raw sd

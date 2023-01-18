@@ -25,5 +25,8 @@ RoxygenNote: 7.2.1
 URL: https://mikkelvembye.github.io/VIVECampbell/
 Suggests: 
     knitr,
-    rmarkdown
+    rmarkdown,
+    dplyr,
+    purrr,
+    tibble
 VignetteBuilder: knitr
