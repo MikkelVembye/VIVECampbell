@@ -1,12 +1,12 @@
 ---
-title: "Entering data, calculating effect sizes, and cluster bias correction example"
+title: "Entering data, calculating effect sizes, and cluster bias correction when there is clustering in one group only"
 date: "Last modified `r Sys.Date()`"
 output: 
   rmarkdown::html_vignette:
     number_sections: true
     toc: true
 vignette: >
-  %\VignetteIndexEntry{Entering data, calculating effect sizes, and cluster bias correction example}
+  %\VignetteIndexEntry{Entering data, calculating effect sizes, and cluster bias correction when there is clustering in one group only}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
   %\VignetteDepends{dplyr}
@@ -31,7 +31,7 @@ options(dplyr.summarise.inform = FALSE)
 
 This vignette/article provides examples of how to enter data from rather complex result tables and how to calculate effect size and conduct cluster bias correction for such data, using functions from the `VIVECampbell` R package. 
 
-## Loading necessary package
+## Loading necessary packages
 
 ```{r setup, message=FALSE}
 library(VIVECampbell)
@@ -41,7 +41,8 @@ library(dplyr)
 
 ## Enter data from Fisher & Bentley (1996)
 
-Find data in Table 4 (p. 1248)
+The practice, we often use when we enter data for studies is to name the data object using the first authors surname and the year of the publication, i.e., an object with the following structure: `AuthorYear`. For the present study used in this vignette this guideline means that we will coin the data object `Fisher1996`. One important part of calculating effect size is to make clear documentation of how and from where we obtained data we use for effect size calculation. At a minimum you much write some like "Find data in Table 4 (p. 1248)" before the codes/chunk in which construct the result data. 
+ 
 
 ```{r}
 
@@ -105,7 +106,9 @@ Fisher1996 <- tibble::tibble(
 
 ```
 
-Calculating Cohens' *d* and Hedges' *g*
+## Calculating Cohens' *d* and Hedges' *g*
+
+Add text
 
 ```{r}
 
@@ -153,7 +156,9 @@ Fisher1996_est <-
 Fisher1996_est
 ```
 
-Cluster bias correction when there is clustering in the treatment group only
+## Cluster bias correction when there is clustering in the treatment group only
+
+Add text
 
 ```{r}
 
