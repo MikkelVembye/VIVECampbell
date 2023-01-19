@@ -36,6 +36,10 @@ Ekstremt vigtigt, når man har mindre end 50 studier eller meget skævvrædet da
 * [`wildmeta`](https://meghapsimatrix.github.io/wildmeta/index.html): Til at udregne cluster-wild-bootstrapping (CWB) p-værdier. 
 * [`POMADE`](https://mikkelvembye.github.io/POMADE/). Kan bruges til at udregne den statistske styrke af ens meta-analyse model.
   
-Udover selve pakkerne ligger der også denne her seje [hands-on guide til metaanalyse i R](https://bookdown.org/MathiasHarrer/Doing_Meta_Analysis_in_R/forest.html). Den kan altså også være god at kigge lidt på, hvis man føler sig en smule fortabt.       
+Udover selve pakkerne ligger der også denne her seje [hands-on guide til metaanalyse i R](https://bookdown.org/MathiasHarrer/Doing_Meta_Analysis_in_R/forest.html). Den kan altså også være god at kigge lidt på, hvis man føler sig en smule fortabt.  
+
+Hvis man vil nørde den helt ud kan tilmelde sig [R meta-analysis mailing-listen](https://stat.ethz.ch/mailman/listinfo/r-sig-meta-analysis). Alle tidligere diskusioner på listen kan findes [her](https://stat.ethz.ch/pipermail/r-sig-meta-analysis/). 
+
+
 
 **OBS! Dette er langt fra et færdigt dokument. Tilføj gerne, hvis der er tips og tricks, R-pakker til metanalyse eller andet, som er godt for os alle at vide noget om!**
