@@ -191,7 +191,7 @@ df_h_1armcluster <-
   }
 
   h <- ((N-2)*(1-rho) + (NT-n)*rho)^2 /
-    ((N-2)*(1-rho)^2 + (NT-n)*n*rho^2 + 2*(NT-2)*(1-rho)*rho)
+    ((N-2)*(1-rho)^2 + (NT-n)*n*rho^2 + 2*(NT-n)*(1-rho)*rho)
 
   round(h, 2)
 
