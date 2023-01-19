@@ -40,4 +40,7 @@ Small class sizes for improving student achievement in primary and secondary sch
 A systematic review.
 \emph{Campbell Systematic Reviews}, 14(1), 1-107. \doi{10.4073/csr.2018.10}
 }
+\seealso{
+\code{\link{Dietrichson2021_data}}
+}
 \keyword{datasets}

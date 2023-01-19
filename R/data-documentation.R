@@ -47,6 +47,8 @@
 #'
 #' @format A tibble with 548 rows/studies and 136 variables/colomns
 #'
+#' @seealso \code{\link{Dietrichson2021_data}}
+#'
 #' @references Dietrichson, J., Bøg, M., Filges, T., & Klint Jørgensen, A.-M. (2017).
 #' Academic interventions for elementary and middle school students with low socioeconomic status:
 #' A systematic review and meta-analysis. \emph{Review of Educational Research},
@@ -67,6 +69,7 @@
 #' Small class sizes for improving student achievement in primary and secondary schools:
 #' A systematic review.
 #' \emph{Campbell Systematic Reviews}, 14(1), 1-107. \doi{10.4073/csr.2018.10}
+#'
 #'
 
 "fadeout"
