@@ -1,0 +1,38 @@
+---
+title: "Kom godt i gang med metaanalyse i R"
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, include = FALSE}
+library(VIVECampbell)
+```
+
+UPDATÈR, NÅR DER ER TID
+
+Her kommer nogle tips, tricks og gode råd til din helt spæde start som R-bruger: 
+
+-	R er tilgængeligt i VIVE’s softwarecenter. Hvilket betyder, at du ikke skal logge på fjernskrivebordet for at kunne tilgå det (fx som med STATA og NVIVO), da R bliver installeret lokalt på din computer. 
+-	Der findes tonsvis af hjælp, gode råd og introer online – så fortvivl ej! En googlesøgning kan ofte give svar på det meste. 
+-	For at komme bedst muligt i gang med R, kan man med fordel downloade pakken ”SWIRL”, som giver en overskuelig introduktion til R’s basale syntaks. 
+-	Hjemmesiden ”datacamp” udbyder også en del gratis online kurser, som man kan have gavn af.
+
+*Okay. Nu har jeg lært den basale syntaks – men hvordan kommer jeg så bedst i gang med en meta-analyse?*
+
+Der findes forskellige pakker, som er målrettet metanalyse i R. Nogle af de vigtigste er nok: 
+
+* Meta: En god all-round pakke der rummer forskellige statistiske metoder til metaanalyser. 
+*	Metafor: Hjælper en med udregning af effektstørrelser, fixed eller random models, meta-regression m.m)
+*	Robumeta: Hjælper en med at lave en RVE meta-regression, og har også funktioner for sensitivitetanalyse og
+  forestplot baseret på ens RVE-modeller. 
+* clubSandwich: Opdatér
+* wildmeta: Opdatér
+  
+Udover selve pakkerne ligger der også denne her seje hands-on guide til metaanalyse i R. Den kan altså også være god at kigge lidt på, hvis man føler sig en smule fortabt. 
+
+**OBS! Dette er langt fra et færdigt dokument. Tilføj gerne, hvis der er tips og tricks, R-pakker til metanalyse eller andet, som er godt for os alle at vide noget om!**

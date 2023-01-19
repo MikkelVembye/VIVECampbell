@@ -39,5 +39,4 @@ df == round(raw_calc, 2)
 usethis::use_data_raw("fadeout")
 
 
-
 fadeout
