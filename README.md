@@ -6,8 +6,8 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-The package provides functions used in Campbell review conducted by
-[VIVE - The Danish Center for Social Science
+The package provides functions used in Campbell reviews and
+meta-analyses conducted by [VIVE - The Danish Center for Social Science
 Research](https://www.vive.dk/en/). See also the VIVE Campbell
 [homepage](https://www.vive.dk/da/centre-og-netvaerk/campbell/).
 
@@ -38,7 +38,7 @@ h_eq7_hedges2015 <-
   df_h_1armcluster(N_total = 100, ICC = 0.1, N_grp = 60, avg_grp_size = 5)
 
 h_eq7_hedges2015
-#> [1] 94.84
+#> [1] 95.4
 ```
 
 ## Example - Data included in package

@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-The package provides functions used in Campbell review conducted by [VIVE - The Danish Center for Social Science Research](https://www.vive.dk/en/). See also the VIVE Campbell [homepage](https://www.vive.dk/da/centre-og-netvaerk/campbell/).
+The package provides functions used in Campbell reviews and meta-analyses conducted by [VIVE - The Danish Center for Social Science Research](https://www.vive.dk/en/). See also the VIVE Campbell [homepage](https://www.vive.dk/da/centre-og-netvaerk/campbell/).
 
 ## Installation
 
