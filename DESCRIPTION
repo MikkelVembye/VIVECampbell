@@ -28,5 +28,6 @@ Suggests:
     rmarkdown,
     dplyr,
     purrr,
-    tibble
+    tibble,
+    readxl
 VignetteBuilder: knitr

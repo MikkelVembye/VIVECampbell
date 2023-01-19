@@ -33,8 +33,8 @@
 #' \emph{Campbell Systematic Reviews}, 17(2), e1152. \doi{10.1002/cl2.1152}
 #'
 
-
 "Dietrichson2021_data"
+
 
 #' Fadeout data
 #'
