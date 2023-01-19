@@ -6,12 +6,12 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="description" content="VIVECampbell">
-<title>Entering data, calculating effect sizes, and cluster bias correction example • VIVECampbell</title>
+<title>Entering data, calculating effect sizes, and cluster bias correction when there is clustering in one group only • VIVECampbell</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Entering data, calculating effect sizes, and cluster bias correction example">
+<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Entering data, calculating effect sizes, and cluster bias correction when there is clustering in one group only">
 <meta property="og:description" content="VIVECampbell">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -44,7 +44,7 @@
 <li class="active nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/Entering-data.html">Entering data, calculating effect sizes, and cluster bias correction example</a>
+    <a class="dropdown-item" href="../articles/Entering-data.html">Entering data, calculating effect sizes, and cluster bias correction when there is clustering in one group only</a>
     <a class="dropdown-item" href="../articles/meta-analysis-in-R.html">Kom godt i gang med metaanalyse i R</a>
   </div>
 </li>
@@ -72,7 +72,7 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="" class="logo" alt=""><h1>Entering data, calculating effect sizes, and cluster bias correction example</h1>
+      <img src="" class="logo" alt=""><h1>Entering data, calculating effect sizes, and cluster bias correction when there is clustering in one group only</h1>
             
             <h4 data-toc-skip class="date">Last modified 2023-01-19</h4>
       
@@ -91,7 +91,7 @@ conduct cluster bias correction for such data, using functions from the
 <code>VIVECampbell</code> R package.</p>
 </div>
 <div class="section level2">
-<h2 id="loading-necessary-package">Loading necessary package<a class="anchor" aria-label="anchor" href="#loading-necessary-package"></a>
+<h2 id="loading-necessary-packages">Loading necessary packages<a class="anchor" aria-label="anchor" href="#loading-necessary-packages"></a>
 </h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mikkelvembye.github.io/VIVECampbell/">VIVECampbell</a></span><span class="op">)</span></span>
@@ -101,7 +101,16 @@ conduct cluster bias correction for such data, using functions from the
 <div class="section level2">
 <h2 id="enter-data-from-fisher-bentley-1996">Enter data from Fisher &amp; Bentley (1996)<a class="anchor" aria-label="anchor" href="#enter-data-from-fisher-bentley-1996"></a>
 </h2>
-<p>Find data in Table 4 (p. 1248)</p>
+<p>The practice, we often use when we enter data for studies is to name
+the data object using the first authors surname and the year of the
+publication, i.e., an object with the following structure:
+<code>AuthorYear</code>. For the present study used in this vignette
+this guideline means that we will coin the data object
+<code>Fisher1996</code>. One important part of calculating effect size
+is to make clear documentation of how and from where we obtained data we
+use for effect size calculation. At a minimum you much write some like
+“Find data in Table 4 (p. 1248)” before the codes/chunk in which
+construct the result data.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="va">Fisher1996</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
@@ -178,7 +187,11 @@ conduct cluster bias correction for such data, using functions from the
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>    0.01 0.995<span style="text-decoration: underline;">9</span> 0.110<span style="text-decoration: underline;">0</span> 3.090 0.333<span style="text-decoration: underline;">3</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span>    0.02 0.993<span style="text-decoration: underline;">8</span> 0.178<span style="text-decoration: underline;">9</span> 2.883 0.333<span style="text-decoration: underline;">3</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span>    0.11 0.977<span style="text-decoration: underline;">1</span> 0.514<span style="text-decoration: underline;">3</span> 2.230 0.333<span style="text-decoration: underline;">3</span></span></span></code></pre></div>
-<p>Calculating Cohens’ <em>d</em> and Hedges’ <em>g</em></p>
+</div>
+<div class="section level2">
+<h2 id="calculating-cohens-d-and-hedges-g">Calculating Cohens’ <em>d</em> and Hedges’ <em>g</em><a class="anchor" aria-label="anchor" href="#calculating-cohens-d-and-hedges-g"></a>
+</h2>
+<p>Add text</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="va">treat_label_fisher</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">Fisher1996</span><span class="op">$</span><span class="va">treatment</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span></span>
@@ -236,8 +249,12 @@ conduct cluster bias correction for such data, using functions from the
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>     6    12     12 0.199<span style="text-decoration: underline;">4</span> -<span style="color: #BB0000;">0.446</span> -<span style="color: #BB0000;">0.19</span>  -<span style="color: #BB0000;">1.284</span>   0.076<span style="text-decoration: underline;">68</span>  0.276<span style="text-decoration: underline;">9</span> </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>     6    12     12 0.153<span style="text-decoration: underline;">0</span> -<span style="color: #BB0000;">0.399</span> -<span style="color: #BB0000;">0.208</span> -<span style="color: #BB0000;">1.248</span>   0.073<span style="text-decoration: underline;">97</span>  0.272<span style="text-decoration: underline;">0</span> </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>     6    12     12 0.188<span style="text-decoration: underline;">2</span> -<span style="color: #BB0000;">0.204</span> -<span style="color: #BB0000;">0.19</span>  -<span style="color: #BB0000;">0.074</span><span style="color: #BB0000; text-decoration: underline;">39</span> 0.006<span style="text-decoration: underline;">725</span> 0.082<span style="text-decoration: underline;">00</span></span></span></code></pre></div>
-<p>Cluster bias correction when there is clustering in the treatment
-group only</p>
+</div>
+<div class="section level2">
+<h2 id="cluster-bias-correction-when-there-is-clustering-in-the-treatment-group-only">Cluster bias correction when there is clustering in the treatment
+group only<a class="anchor" aria-label="anchor" href="#cluster-bias-correction-when-there-is-clustering-in-the-treatment-group-only"></a>
+</h2>
+<p>Add text</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="co"># [INSERT EXAMPLE WHEN FUNCTIONS ARE ADDED TO THE PACKAGE]</span></span></code></pre></div>
