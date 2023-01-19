@@ -91,29 +91,55 @@ STATA og NVIVO), da R bliver installeret lokalt på din computer.</li>
 <li>Der findes tonsvis af hjælp, gode råd og introer online – så
 fortvivl ej! En googlesøgning kan ofte give svar på det meste.</li>
 <li>For at komme bedst muligt i gang med R, kan man med fordel downloade
-pakken ”SWIRL”, som giver en overskuelig introduktion til R’s basale
-syntaks.</li>
-<li>Hjemmesiden ”datacamp” udbyder også en del gratis online kurser, som
-man kan have gavn af.</li>
+pakken <a href="https://swirlstats.com/students.html" class="external-link"><code>SWIRL</code></a>, som
+giver en overskuelig introduktion til R’s basale syntaks.</li>
+<li>Hjemmesiden <a href="https://www.datacamp.com/" class="external-link">”datacamp”</a>
+udbyder også en del gratis online kurser, som man kan have gavn af.</li>
+<li>
+<a href="https://r4ds.had.co.nz/" class="external-link">R4DS</a> (R for Data Science) er
+formentlig den beste bog som introduktion til <code>tidyversere</code>,
+herunder <code>dplyr</code> og <code>ggplot2</code>, som vi benytter
+meget på vores reviews.</li>
 </ul>
 <p><em>Okay. Nu har jeg lært den basale syntaks – men hvordan kommer jeg
 så bedst i gang med en meta-analyse?</em></p>
 <p>Der findes forskellige pakker, som er målrettet metanalyse i R. Nogle
 af de vigtigste er nok:</p>
 <ul>
-<li>Meta: En god all-round pakke der rummer forskellige statistiske
-metoder til metaanalyser.</li>
-<li>Metafor: Hjælper en med udregning af effektstørrelser, fixed eller
-random models, meta-regression m.m)</li>
-<li>Robumeta: Hjælper en med at lave en RVE meta-regression, og har også
-funktioner for sensitivitetanalyse og forestplot baseret på ens
-RVE-modeller.</li>
-<li>clubSandwich: Opdatér</li>
-<li>wildmeta: Opdatér</li>
+<li>
+<a href="https://cran.r-project.org/web/packages/meta/meta.pdf" class="external-link"><code>Meta</code></a>:
+En god all-round pakke der rummer forskellige statistiske metoder til
+metaanalyser.</li>
+<li>
+<a href="https://www.metafor-project.org/doku.php/metafor" class="external-link"><code>Metafor</code></a>:
+Hjælper en med udregning af effektstørrelser, fixed eller random models,
+meta-regression m.m). <strong>Den absolut vigtigste pakke at
+kende!</strong>
+</li>
+<li>
+<a href="https://cran.r-project.org/web/packages/robumeta/robumeta.pdf" class="external-link"><code>robumeta</code></a>:
+Hjælper en med at lave en RVE meta-regression, og har også funktioner
+for sensitivitetanalyse og forestplot baseret på ens RVE-modeller.
+<strong>OUTDATED - brug istedet metafor sammen med clubSandwich og
+wildmeta.</strong>
+</li>
+<li>
+<a href="http://jepusto.github.io/clubSandwich/" class="external-link"><code>clubSandwich</code></a>:
+Robust variance estimation (RVE) i meta-analyses. Ekstremt vigtigt, når
+man har mindre end 50 studier eller meget skævvrædet data, dvs. enkelte
+store studier, som bidrager med hovedparten af de inkluderede
+effektstørrelser.</li>
+<li>
+<a href="https://meghapsimatrix.github.io/wildmeta/index.html" class="external-link"><code>wildmeta</code></a>:
+Til at udregne cluster-wild-bootstrapping (CWB) p-værdier.</li>
+<li>
+<a href="https://mikkelvembye.github.io/POMADE/" class="external-link"><code>POMADE</code></a>.
+Kan bruges til at udregne den statistske styrke af ens meta-analyse
+model.</li>
 </ul>
-<p>Udover selve pakkerne ligger der også denne her seje hands-on guide
-til metaanalyse i R. Den kan altså også være god at kigge lidt på, hvis
-man føler sig en smule fortabt.</p>
+<p>Udover selve pakkerne ligger der også denne her seje <a href="https://bookdown.org/MathiasHarrer/Doing_Meta_Analysis_in_R/forest.html" class="external-link">hands-on
+guide til metaanalyse i R</a>. Den kan altså også være god at kigge lidt
+på, hvis man føler sig en smule fortabt.</p>
 <p><strong>OBS! Dette er langt fra et færdigt dokument. Tilføj gerne,
 hvis der er tips og tricks, R-pakker til metanalyse eller andet, som er
 godt for os alle at vide noget om!</strong></p>
