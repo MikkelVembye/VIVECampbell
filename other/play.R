@@ -34,6 +34,10 @@ raw_calc <- ((N-2)*(1-rho) + (NT-n)*rho)^2 /
 
 df == round(raw_calc, 2)
 
+# Starting up data-raw
+
+usethis::use_data_raw("fadeout")
 
 
 
+fadeout
