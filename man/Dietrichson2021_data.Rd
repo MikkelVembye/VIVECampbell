@@ -5,7 +5,7 @@
 \alias{Dietrichson2021_data}
 \title{Targeted school-based interventions data (K-6)}
 \format{
-A tibble with 1334 rows/studies and 71 variables
+A tibble with 1334 rows/studies and 71 variables/columns
 
 \describe{
 \item{Authors}{\code{String} variable with short-hand information about authors.}

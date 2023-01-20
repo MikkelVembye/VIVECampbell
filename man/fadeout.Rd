@@ -5,7 +5,7 @@
 \alias{fadeout}
 \title{Fadeout data}
 \format{
-A tibble with 548 rows/studies and 136 variables/colomns
+A tibble with 548 rows/studies and 136 variables/columns
 }
 \usage{
 fadeout

@@ -5,7 +5,7 @@
 #' (Dietrichson et al., 2021)
 #'
 #'
-#' @format A tibble with 1334 rows/studies and 71 variables
+#' @format A tibble with 1334 rows/studies and 71 variables/columns
 #'
 #' \describe{
 #'  \item{Authors}{\code{String} variable with short-hand information about authors.}
@@ -45,7 +45,7 @@
 #' standardized tests of reading or mathematics. Most interventions were targeted (selected or
 #' indicated) at students at risk of academic difficulties.
 #'
-#' @format A tibble with 548 rows/studies and 136 variables/colomns
+#' @format A tibble with 548 rows/studies and 136 variables/columns
 #'
 #' @seealso \code{\link{Dietrichson2021_data}}
 #'

@@ -46,7 +46,7 @@ library(dplyr)
 library(gt)
 
 options(pillar.sigfig = 4) # Ensure tibble include 4 digits
-options(tibble.width = Inf) # Ensure that all colums are printed 
+options(tibble.width = Inf) # Ensure that all columns are printed 
 options(dplyr.print_min = 310) # Specifying the number of row printed
 options(scipen = 10) # Specified how many digits are printed be R shall preint scientific numbers
 options(dplyr.summarise.inform = FALSE) # Avoids summarize info from tidyverse
@@ -65,7 +65,8 @@ Important for understanding the use of `group_by` function, when we calculate ef
 tibble(
   
   outcome = rep(c("Alcohol use", "Drug use"), each = 3),
-  groups = rep(c("Disease-and-recovery", "Cognitive-behavioral", "Usual group treatment"), 2),
+  groups = rep(c("Disease-and-recovery group", "Cognitive-behavioral group", 
+                 "Usual group treatment"), 2),
   Pretest_m = c(".469", ".441", ".349", ".107", ".116", ".117"),
   Pretest_sd = c(".12", ".13", ".22", ".09", ".10", ".12"),
   Posttest_m = ".1",
@@ -81,6 +82,10 @@ tibble(
   
 ) |> 
 gt(rowname_col = "groups", groupname_col = "outcome") |> 
+  tab_header(
+    title = md("**Table 1**")
+  ) |> 
+  opt_align_table_header(align = "left") |> 
   tab_spanner(
     label = html("Pretest<br>score"),
     columns = c(Pretest_m:Pretest_sd)
@@ -127,7 +132,11 @@ gt(rowname_col = "groups", groupname_col = "outcome") |>
     Diff_m2 = "Mean",
     Diff_sd2 = "SD",
   ) |> 
-  tab_stubhead(label = html("Subscale and<br>therapy group"))
+  tab_stubhead(label = md("Subscale and<br>therapy group")) |> 
+  tab_source_note(
+    source_note = "Source: Reproduced from Table 4 in Fisher (1996, p. 1248)."
+  ) 
+
   
 
 
