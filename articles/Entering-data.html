@@ -73,6 +73,8 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Entering data, calculating effect sizes, and cluster bias correction when there is clustering in one group only</h1>
+                        <h4 data-toc-skip class="author">Mikkel H.
+Vembye</h4>
             
             <h4 data-toc-skip class="date">Last modified 2023-01-20</h4>
       
@@ -107,10 +109,10 @@ conduct cluster bias correction for such data, using functions from the
 <span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>scipen <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="co"># Specified how many digits are printed be R shall preint scientific numbers</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>dplyr.summarise.inform <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="co"># Avoids summarize info from tidyverse</span></span></code></pre></div>
 </div>
-</div>
-<div class="section level2">
-<h2 id="fisher-bentley-1996-data-and-structure">Fisher &amp; Bentley (1996) data and structure<a class="anchor" aria-label="anchor" href="#fisher-bentley-1996-data-and-structure"></a>
-</h2>
+<div class="section level3">
+<h3 id="fisher-bentley--fisher1996-data-and-structure">Fisher &amp; Bentley <span class="citation">(<a href="#ref-Fisher1996" role="doc-biblioref">1996</a>)</span> data and
+structure<a class="anchor" aria-label="anchor" href="#fisher-bentley--fisher1996-data-and-structure"></a>
+</h3>
 <p>Talk about the data structure with measures (i.e., pretest, posttest,
 and differences measures) nested within treatment groups (i.e.,
 Disease-and-recovery group, Cognitive-behavioral group, and the Usual
@@ -119,12 +121,12 @@ Drug use, Social and family, Psychological functioning) which again is
 nested within setting (i.e, inpatient vs. outpatient).</p>
 <p>Important for understanding the use of <code>group_by</code>
 function, when we calculate effect sizes.</p>
-<div id="oaleqoftdd" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="pemyhtxrly" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#oaleqoftdd .gt_table {
+#pemyhtxrly .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -149,7 +151,7 @@ function, when we calculate effect sizes.</p>
   border-left-color: #D3D3D3;
 }
 
-#oaleqoftdd .gt_heading {
+#pemyhtxrly .gt_heading {
   background-color: #FFFFFF;
   text-align: left;
   border-bottom-color: #FFFFFF;
@@ -161,12 +163,12 @@ function, when we calculate effect sizes.</p>
   border-right-color: #D3D3D3;
 }
 
-#oaleqoftdd .gt_caption {
+#pemyhtxrly .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#oaleqoftdd .gt_title {
+#pemyhtxrly .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -178,7 +180,7 @@ function, when we calculate effect sizes.</p>
   border-bottom-width: 0;
 }
 
-#oaleqoftdd .gt_subtitle {
+#pemyhtxrly .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -190,13 +192,13 @@ function, when we calculate effect sizes.</p>
   border-top-width: 0;
 }
 
-#oaleqoftdd .gt_bottom_border {
+#pemyhtxrly .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#oaleqoftdd .gt_col_headings {
+#pemyhtxrly .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -211,7 +213,7 @@ function, when we calculate effect sizes.</p>
   border-right-color: #D3D3D3;
 }
 
-#oaleqoftdd .gt_col_heading {
+#pemyhtxrly .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -231,7 +233,7 @@ function, when we calculate effect sizes.</p>
   overflow-x: hidden;
 }
 
-#oaleqoftdd .gt_column_spanner_outer {
+#pemyhtxrly .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -243,15 +245,15 @@ function, when we calculate effect sizes.</p>
   padding-right: 4px;
 }
 
-#oaleqoftdd .gt_column_spanner_outer:first-child {
+#pemyhtxrly .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#oaleqoftdd .gt_column_spanner_outer:last-child {
+#pemyhtxrly .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#oaleqoftdd .gt_column_spanner {
+#pemyhtxrly .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -263,7 +265,7 @@ function, when we calculate effect sizes.</p>
   width: 100%;
 }
 
-#oaleqoftdd .gt_group_heading {
+#pemyhtxrly .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -289,7 +291,7 @@ function, when we calculate effect sizes.</p>
   text-align: left;
 }
 
-#oaleqoftdd .gt_empty_group_heading {
+#pemyhtxrly .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -304,15 +306,15 @@ function, when we calculate effect sizes.</p>
   vertical-align: middle;
 }
 
-#oaleqoftdd .gt_from_md > :first-child {
+#pemyhtxrly .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#oaleqoftdd .gt_from_md > :last-child {
+#pemyhtxrly .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#oaleqoftdd .gt_row {
+#pemyhtxrly .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -331,7 +333,7 @@ function, when we calculate effect sizes.</p>
   overflow-x: hidden;
 }
 
-#oaleqoftdd .gt_stub {
+#pemyhtxrly .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -344,7 +346,7 @@ function, when we calculate effect sizes.</p>
   padding-right: 5px;
 }
 
-#oaleqoftdd .gt_stub_row_group {
+#pemyhtxrly .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -358,11 +360,11 @@ function, when we calculate effect sizes.</p>
   vertical-align: top;
 }
 
-#oaleqoftdd .gt_row_group_first td {
+#pemyhtxrly .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#oaleqoftdd .gt_summary_row {
+#pemyhtxrly .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -372,16 +374,16 @@ function, when we calculate effect sizes.</p>
   padding-right: 5px;
 }
 
-#oaleqoftdd .gt_first_summary_row {
+#pemyhtxrly .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#oaleqoftdd .gt_first_summary_row.thick {
+#pemyhtxrly .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#oaleqoftdd .gt_last_summary_row {
+#pemyhtxrly .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -391,7 +393,7 @@ function, when we calculate effect sizes.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#oaleqoftdd .gt_grand_summary_row {
+#pemyhtxrly .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -401,7 +403,7 @@ function, when we calculate effect sizes.</p>
   padding-right: 5px;
 }
 
-#oaleqoftdd .gt_first_grand_summary_row {
+#pemyhtxrly .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -411,11 +413,11 @@ function, when we calculate effect sizes.</p>
   border-top-color: #D3D3D3;
 }
 
-#oaleqoftdd .gt_striped {
+#pemyhtxrly .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#oaleqoftdd .gt_table_body {
+#pemyhtxrly .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -424,7 +426,7 @@ function, when we calculate effect sizes.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#oaleqoftdd .gt_footnotes {
+#pemyhtxrly .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -438,7 +440,7 @@ function, when we calculate effect sizes.</p>
   border-right-color: #D3D3D3;
 }
 
-#oaleqoftdd .gt_footnote {
+#pemyhtxrly .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -447,7 +449,7 @@ function, when we calculate effect sizes.</p>
   padding-right: 5px;
 }
 
-#oaleqoftdd .gt_sourcenotes {
+#pemyhtxrly .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -461,7 +463,7 @@ function, when we calculate effect sizes.</p>
   border-right-color: #D3D3D3;
 }
 
-#oaleqoftdd .gt_sourcenote {
+#pemyhtxrly .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -469,71 +471,76 @@ function, when we calculate effect sizes.</p>
   padding-right: 5px;
 }
 
-#oaleqoftdd .gt_left {
+#pemyhtxrly .gt_left {
   text-align: left;
 }
 
-#oaleqoftdd .gt_center {
+#pemyhtxrly .gt_center {
   text-align: center;
 }
 
-#oaleqoftdd .gt_right {
+#pemyhtxrly .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#oaleqoftdd .gt_font_normal {
+#pemyhtxrly .gt_font_normal {
   font-weight: normal;
 }
 
-#oaleqoftdd .gt_font_bold {
+#pemyhtxrly .gt_font_bold {
   font-weight: bold;
 }
 
-#oaleqoftdd .gt_font_italic {
+#pemyhtxrly .gt_font_italic {
   font-style: italic;
 }
 
-#oaleqoftdd .gt_super {
+#pemyhtxrly .gt_super {
   font-size: 65%;
 }
 
-#oaleqoftdd .gt_footnote_marks {
+#pemyhtxrly .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-#oaleqoftdd .gt_asterisk {
+#pemyhtxrly .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#oaleqoftdd .gt_indent_1 {
+#pemyhtxrly .gt_indent_1 {
   text-indent: 5px;
 }
 
-#oaleqoftdd .gt_indent_2 {
+#pemyhtxrly .gt_indent_2 {
   text-indent: 10px;
 }
 
-#oaleqoftdd .gt_indent_3 {
+#pemyhtxrly .gt_indent_3 {
   text-indent: 15px;
 }
 
-#oaleqoftdd .gt_indent_4 {
+#pemyhtxrly .gt_indent_4 {
   text-indent: 20px;
 }
 
-#oaleqoftdd .gt_indent_5 {
+#pemyhtxrly .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
 <table class="table gt_table">
-<thead class="gt_header"><tr>
-<td colspan="13" class="gt_heading gt_title gt_font_normal gt_bottom_border" style><strong>Table 1</strong></td>
-    </tr></thead>
+<thead class="gt_header">
+<tr>
+<td colspan="13" class="gt_heading gt_title gt_font_normal" style><strong>Table 1</strong></td>
+    </tr>
+<tr>
+<td colspan="13" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border" style><em>Reproduced from Table 4 in Fisher (1996, p. 1248)</em></td>
+    </tr>
+</thead>
 <thead class="gt_col_headings">
 <tr>
 <th rowspan="1" colspan="1" scope="col"></th>
@@ -678,9 +685,6 @@ function, when we calculate effect sizes.</p>
 <td headers="Drug use stub_1_6 Diff_sd2" class="gt_row gt_right">.2</td>
 </tr>
 </tbody>
-<tfoot class="gt_sourcenotes"><tr>
-<td class="gt_sourcenote" colspan="13">Source: Reproduced from Table 4 in Fisher (1996, p. 1248).</td>
-    </tr></tfoot>
 </table>
 </div>
 <p>Show the <code>rep</code> function and its importance</p>
@@ -689,9 +693,11 @@ function, when we calculate effect sizes.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"hej"</span>, <span class="fl">6</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "hej" "hej" "hej" "hej" "hej" "hej"</span></span></code></pre></div>
 </div>
+</div>
 <div class="section level2">
 <h2 id="enter-data-from-fisher-bentley-1996">Enter data from Fisher &amp; Bentley (1996)<a class="anchor" aria-label="anchor" href="#enter-data-from-fisher-bentley-1996"></a>
 </h2>
+<p>Test <span class="citation">Fisher and Bentley (<a href="#ref-Fisher1996" role="doc-biblioref">1996</a>)</span></p>
 <p>The practice, we often use when we enter data for studies is to name
 the data object using the first author’s surname and the year of the
 publication, i.e., an object with the following structure:
@@ -717,7 +723,9 @@ SD^2_{C,post} - SD^2_{C,diff}}{2 \times SD_{C,pre} \times SD_{C,post}}
 \]</span></p>
 <p>We will later on pool these correlation estimates. In order to get
 one <span class="math inline">\(\rho_{pulled}\)</span> for each
-comparison and each outcome: To do so - INTRODUCE log transformation</p>
+comparison and each outcome: To do so - INTRODUCE log transformation
+refer to <span class="citation">Borenstein et al. (<a href="#ref-Borenstein2009" role="doc-biblioref">2009</a>)</span> (to
+VIVE students: Find e-version of this book in our literature folder)</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="va">Fisher1996</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
@@ -918,11 +926,21 @@ group only<a class="anchor" aria-label="anchor" href="#cluster-bias-correction-w
 <span><span class="co"># [INSERT EXAMPLE WHEN FUNCTIONS ARE ADDED TO THE PACKAGE]</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="reference">Reference<a class="anchor" aria-label="anchor" href="#reference"></a>
+<h2 class="unnumbered" id="reference">Reference<a class="anchor" aria-label="anchor" href="#reference"></a>
 </h2>
-<p>Fisher, M. S., &amp; Bentley, K. J. (1996). Two group therapy models
-for clients with a dual diagnosis of substance abuse and personality
-disorder. <em>Psychiatric services</em>, 47(6) <a href="https://doi.org/10.1176/ps.47.11.1244" class="external-link uri">https://doi.org/10.1176/ps.47.11.1244</a></p>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-Borenstein2009" class="csl-entry">
+Borenstein, Michael, Larry V. Hedges, Julian P T Higgins, and Hannah R.
+Rothstein. 2009. <em><span class="nocase">Introduction to
+meta-analysis</span></em>. 1st ed. John Wiley &amp; Sons.
+</div>
+<div id="ref-Fisher1996" class="csl-entry">
+Fisher, M. S, and K. J Bentley. 1996. <span>“<span class="nocase">Two
+group therapy models for clients with a dual diagnosis of substance
+abuse and personality disorder</span>.”</span> <em>Psychiatric Services
+(Washington, D.C.)</em> 47 (11): 1244–50. <a href="https://doi.org/10.1176/ps.47.11.1244" class="external-link">https://doi.org/10.1176/ps.47.11.1244</a>.
+</div>
+</div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
