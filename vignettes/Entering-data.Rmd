@@ -29,7 +29,7 @@ options(scipen = 10)
 options(dplyr.summarise.inform = FALSE)
 ```
 
-## Introduction
+# Introduction
 
 This vignette/article provides examples of how to enter data from rather complex result tables and how to calculate effect size and conduct cluster bias correction for such data, using functions from the `VIVECampbell` R package. 
 
@@ -41,14 +41,15 @@ library(purrr)
 library(dplyr)
 ```
 
-## Enter data from Fisher & Bentley (1996)
+# Enter data from Fisher & Bentley (1996)
 
-The practice, we often use when we enter data for studies is to name the data object using the first authors surname and the year of the publication, i.e., an object with the following structure: `AuthorYear`. For the present study used in this vignette this guideline means that we will coin the data object `Fisher1996`. One important part of calculating effect size is to make clear documentation of how and from where we obtained data we use for effect size calculation. At a minimum you much write some like "Find data in Table 4 (p. 1248)" before the codes/chunk in which construct the result data. In some cases when studies provide enough information to calculation the pre-post test correlation, $\rho$, the first calculation can be done when entering the data. When studies, such as Fisher (insert reference), report raw pre and post test means and standard deviations (SDs) plus the mean difference and its standard error, we can use the correlation formulas given in [Chapter 6 of the Cochrane Handbook](https://training.cochrane.org/handbook/current/chapter-06). For the treatment group, we can calculated the pre-post test correlation, $\rho$ via
-
+The practice, we often use when we enter data for studies is to name the data object using the first authors surname and the year of the publication, i.e., an object with the following structure: `AuthorYear`. For the present study used in this vignette this guideline means that we will coin the data object `Fisher1996`. One important part of calculating effect size is to make clear documentation of how and from where we obtained data we use for effect size calculation. At a minimum you much write some like "Find data in Table 4 (p. 1248)" before the codes/chunk in which construct the result data. In some cases when studies provide enough information to calculation the pre-post test correlation, $\rho$, the first calculation can be done when entering the data. When studies, such as Fisher (insert reference), report raw pre and post test means and standard deviations (SDs) plus the mean difference and its standard error, we can use the correlation formulas given in [Chapter 6 of the Cochrane Handbook](https://training.cochrane.org/handbook/current/chapter-06). For the treatment group, we can calculated the pre-post test correlation, $\rho$ via       
 $$ \rho_T = \frac{SD^2_{T,pre} + SD^2_{T,post} - SD^2_{T,diff}}{2 \times SD_{T,pre} \times SD_{T,post}} $$
+
 and for the control group
 
-$$ \rho_C = \frac{SD^2_{C,pre} + SD^2_{C,post} - SD^2_{C,diff}}{2 \times SD_{C,pre} \times SD_{C,post}} $$
+$$ \rho_C = \frac{SD^2_{C,pre} + SD^2_{C,post} - SD^2_{C,diff}}{2 \times SD_{C,pre} \times SD_{C,post}} $$   
+
 We will later on pool these correlation estimates. To do so - INTRODUCE log transformation
 
 ```{r}
@@ -141,7 +142,7 @@ Fisher1996 <- tibble::tibble(
 
 ```
 
-## Calculating Cohens' *d* and Hedges' *g*
+# Calculating Cohens' *d* and Hedges' *g*
 
 Add text
 
@@ -191,7 +192,7 @@ Fisher1996_est <-
 Fisher1996_est
 ```
 
-## Cluster bias correction when there is clustering in the treatment group only
+# Cluster bias correction when there is clustering in the treatment group only
 
 Add text
 
@@ -201,6 +202,6 @@ Add text
 
 ```
 
-## Reference 
+# Reference 
 
 Fisher, M. S., & Bentley, K. J. (1996). Two group therapy models for clients with a dual diagnosis of substance abuse and personality disorder. *Psychiatric services*, 47(6) <https://doi.org/10.1176/ps.47.11.1244>
