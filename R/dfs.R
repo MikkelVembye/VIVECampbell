@@ -139,6 +139,7 @@ df_h <- function(N_total, ICC, avg_grp_size = NULL, n_clusters = NULL, df_type =
 #' @description This function calculates the degrees of freedom for studies
 #' with clustering in one treatment group only, using Equation (7) from Hedges & Citkowicz (2015).
 #'
+#'
 #' @references Hedges, L. V., & Citkowicz, M (2015).
 #' Estimating effect size when there is clustering in one treatment groups.
 #' \emph{Behavior Research Methods}, 47(4), 1295-1308. \doi{10.3758/s13428-014-0538-z}

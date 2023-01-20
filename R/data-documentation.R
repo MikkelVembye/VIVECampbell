@@ -76,22 +76,3 @@
 
 
 
-#' Class size data
-#'
-#' Data from a systematic review on the effects of class size on student achievement in elementary school
-#' (Filges, Sonne-Schmidt, & Nielsen, 2018).
-#'
-#'
-#' @format A tibble with 8064 rows/studies and 27 variables/columns
-#'
-#'
-#' @references Filges, T., Sonne-Schmidt, C. S., & Nielsen, B. C. V. (2018).
-#' Small class sizes for improving student achievement in primary and secondary schools:
-#' A systematic review.
-#' \emph{Campbell Systematic Reviews}, 14(1), 1-107. \doi{10.4073/csr.2018.10}
-#'
-#'
-
-"class_size"
-
-
