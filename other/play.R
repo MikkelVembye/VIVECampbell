@@ -40,3 +40,6 @@ usethis::use_data_raw("fadeout")
 
 
 fadeout
+
+class_size
+
