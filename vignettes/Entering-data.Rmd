@@ -11,6 +11,7 @@ vignette: >
   %\VignetteDepends{dplyr}
   %\VignetteDepends{tibble}
   %\VignetteDepends{purrr}
+  %\VignetteDepends{gt}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
   chunk_output_type: console
@@ -35,14 +36,105 @@ This vignette/article provides examples of how to enter data from rather complex
 
 ## Loading necessary packages
 
-```{r setup, message=FALSE}
+```{r setup, message=FALSE, warning=FALSE}
 #install.packages("devtools")
 #devtools::install_github("MikkelVembye/VIVECampbell")
 
 library(VIVECampbell)
 library(purrr)
 library(dplyr)
+library(gt)
 ```
+
+# Fisher & Bentley (1996) data and structure
+
+Talk about the data structure with measures (i.e., pretest, posttest, and differences measures) nested within treatment groups (i.e., Disease-and-recovery group, Cognitive-behavioral group, and the Usual group treatment) which are nested within outcomes (i.e., Alcohol use, Drug use, Social and family, Psychological functioning) which again is nested within setting (i.e, inpatient vs. outpatient). 
+
+Important for understanding the use of `group_by` function, when we calculate effect sizes. 
+
+```{r, echo=FALSE}
+
+ 
+tibble(
+  
+  outcome = rep(c("Alcohol use", "Drug use"), each = 3),
+  groups = rep(c("Disease-and-recovery", "Cognitive-behavioral", "Usual group treatment"), 2),
+  Pretest_m = c(".469", ".441", ".349", ".107", ".116", ".117"),
+  Pretest_sd = c(".12", ".13", ".22", ".09", ".10", ".12"),
+  Posttest_m = ".1",
+  Posttest_sd = ".5",
+  Diff_m = ".4",
+  Diff_sd = ".2",
+  Pretest_m2 = c(".469", ".441", ".349", ".107", ".116", ".117"),
+  Pretest_sd2 = c(".12", ".13", ".22", ".09", ".10", ".12"),
+  Posttest_m2 = "1",
+  Posttest_sd2 = ".5",
+  Diff_m2 = ".4",
+  Diff_sd2 = ".2"
+  
+) |> 
+gt(rowname_col = "groups", groupname_col = "outcome") |> 
+  tab_spanner(
+    label = html("Pretest<br>score"),
+    columns = c(Pretest_m:Pretest_sd)
+  ) |> 
+  tab_spanner(
+    label = html("Posttest<br>score"),
+    columns = c(Posttest_m:Posttest_sd)
+  ) |> 
+  tab_spanner(
+    label = html("<br>Difference"),
+    columns = c(Diff_m:Diff_sd)
+  ) |> 
+  tab_spanner(
+    label = "Inpatient setting",
+    columns = c(Pretest_m:Diff_sd)
+  ) |> 
+  tab_spanner(
+    label = html("Pretest<br>score", id = ""),
+    columns = c(Pretest_m2:Pretest_sd2)
+  ) |> 
+  tab_spanner(
+    label = html("Posttest<br>score", id = ""),
+    columns = c(Posttest_m2:Posttest_sd2)
+  ) |> 
+  tab_spanner(
+    label = html("<br>Difference", id = ""),
+    columns = c(Diff_m2:Diff_sd2)
+  ) |> 
+  tab_spanner(
+    label = "Outpatient setting",
+    columns = c(Pretest_m2:Diff_sd2)
+  ) |> 
+  cols_label(
+    Pretest_m = "Mean",
+    Pretest_sd = "SD",
+    Posttest_m = "Mean",
+    Posttest_sd = "SD",
+    Diff_m = "Mean",
+    Diff_sd = "SD",
+    Pretest_m2 = "Mean",
+    Pretest_sd2 = "SD",
+    Posttest_m2 = "Mean",
+    Posttest_sd2 = "SD",
+    Diff_m2 = "Mean",
+    Diff_sd2 = "SD",
+  ) |> 
+  tab_stubhead(label = html("Subscale and<br>therapy group"))
+  
+
+
+```
+
+Show the `rep` function and its importance
+
+```{r rep-function}
+
+rep("hej", 6)
+
+```
+
+
 
 # Enter data from Fisher & Bentley (1996)
 
