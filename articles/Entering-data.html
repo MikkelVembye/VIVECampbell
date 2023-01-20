@@ -93,7 +93,10 @@ conduct cluster bias correction for such data, using functions from the
 <h3 id="loading-necessary-packages">Loading necessary packages<a class="anchor" aria-label="anchor" href="#loading-necessary-packages"></a>
 </h3>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mikkelvembye.github.io/VIVECampbell/">VIVECampbell</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="co">#install.packages("devtools")</span></span>
+<span><span class="co">#devtools::install_github("MikkelVembye/VIVECampbell")</span></span>
+<span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mikkelvembye.github.io/VIVECampbell/">VIVECampbell</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://purrr.tidyverse.org/" class="external-link">purrr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -102,7 +105,7 @@ conduct cluster bias correction for such data, using functions from the
 <h2 id="enter-data-from-fisher-bentley-1996">Enter data from Fisher &amp; Bentley (1996)<a class="anchor" aria-label="anchor" href="#enter-data-from-fisher-bentley-1996"></a>
 </h2>
 <p>The practice, we often use when we enter data for studies is to name
-the data object using the first authors surname and the year of the
+the data object using the first author’s surname and the year of the
 publication, i.e., an object with the following structure:
 <code>AuthorYear</code>. For the present study used in this vignette
 this guideline means that we will coin the data object
@@ -124,8 +127,9 @@ SD^2_{T,post} - SD^2_{T,diff}}{2 \times SD_{T,pre} \times SD_{T,post}}
 <p><span class="math display">\[ \rho_C = \frac{SD^2_{C,pre} +
 SD^2_{C,post} - SD^2_{C,diff}}{2 \times SD_{C,pre} \times SD_{C,post}}
 \]</span></p>
-<p>We will later on pool these correlation estimates. To do so -
-INTRODUCE log transformation</p>
+<p>We will later on pool these correlation estimates. In order to get
+one <span class="math inline">\(\rho_{pulled}\)</span> for each
+comparison and each outcome: To do so - INTRODUCE log transformation</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="va">Fisher1996</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
@@ -142,6 +146,9 @@ INTRODUCE log transformation</p>
 <span>    N <span class="op">=</span> <span class="fl">9</span>, </span>
 <span>    </span>
 <span>    m_pre <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>      </span>
+<span>      <span class="co"># All values entered below follow the same structure as presented here</span></span>
+<span>      </span>
 <span>      <span class="fl">.469</span>, <span class="fl">.441</span>, <span class="fl">.349</span>, <span class="co"># Alcohol use - inpatient</span></span>
 <span>      <span class="fl">.725</span>, <span class="fl">.598</span>, <span class="fl">.682</span>, <span class="co"># Alcohol use - outpatient</span></span>
 <span>      </span>
