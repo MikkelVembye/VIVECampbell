@@ -165,7 +165,7 @@ and for the control group
 
 $$ \rho_C = \frac{SD^2_{C,pre} + SD^2_{C,post} - SD^2_{C,diff}}{2 \times SD_{C,pre} \times SD_{C,post}} $$   
 
-We will later on pool these correlation estimates. In order to get one $\rho_{pulled}$ for each comparison and each outcome: To do so - INTRODUCE log transformation refer to @Borenstein2009 (to VIVE students: Find e-version of this book in our literature folder)
+We will later on pool these correlation estimates. In order to get one $\rho_{pool}$ for each comparison and each outcome: To do so - INTRODUCE log transformation refer to @Borenstein2009 (to VIVE students: Find e-version of this book in our literature folder)
 
 ```{r}
 
