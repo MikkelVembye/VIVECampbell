@@ -89,14 +89,14 @@
 rather complex result tables and how to calculate effect size and
 conduct cluster bias correction for such data, using functions from the
 <code>VIVECampbell</code> R package.</p>
-</div>
-<div class="section level2">
-<h2 id="loading-necessary-packages">Loading necessary packages<a class="anchor" aria-label="anchor" href="#loading-necessary-packages"></a>
-</h2>
+<div class="section level3">
+<h3 id="loading-necessary-packages">Loading necessary packages<a class="anchor" aria-label="anchor" href="#loading-necessary-packages"></a>
+</h3>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mikkelvembye.github.io/VIVECampbell/">VIVECampbell</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://purrr.tidyverse.org/" class="external-link">purrr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span></code></pre></div>
+</div>
 </div>
 <div class="section level2">
 <h2 id="enter-data-from-fisher-bentley-1996">Enter data from Fisher &amp; Bentley (1996)<a class="anchor" aria-label="anchor" href="#enter-data-from-fisher-bentley-1996"></a>
@@ -117,13 +117,14 @@ report raw pre and post test means and standard deviations (SDs) plus
 the mean difference and its standard error, we can use the correlation
 formulas given in <a href="https://training.cochrane.org/handbook/current/chapter-06" class="external-link">Chapter
 6 of the Cochrane Handbook</a>. For the treatment group, we can
-calculated the pre-post test correlation, <span class="math inline">\(\rho\)</span> via</p>
-<p><span class="math display">\[ \rho_T = \frac{SD^2_{T,pre} +
+calculated the pre-post test correlation, <span class="math inline">\(\rho\)</span> via<br><span class="math display">\[ \rho_T = \frac{SD^2_{T,pre} +
 SD^2_{T,post} - SD^2_{T,diff}}{2 \times SD_{T,pre} \times SD_{T,post}}
-\]</span> and for the control group</p>
+\]</span></p>
+<p>and for the control group</p>
 <p><span class="math display">\[ \rho_C = \frac{SD^2_{C,pre} +
 SD^2_{C,post} - SD^2_{C,diff}}{2 \times SD_{C,pre} \times SD_{C,post}}
-\]</span> We will later on pool these correlation estimates. To do so -
+\]</span></p>
+<p>We will later on pool these correlation estimates. To do so -
 INTRODUCE log transformation</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
