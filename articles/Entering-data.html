@@ -90,7 +90,7 @@ rather complex result tables and how to calculate effect size and
 conduct cluster bias correction for such data, using functions from the
 <code>VIVECampbell</code> R package.</p>
 <div class="section level3">
-<h3 id="loading-necessary-packages">Loading necessary packages<a class="anchor" aria-label="anchor" href="#loading-necessary-packages"></a>
+<h3 id="loading-necessary-packages-and-helpfull-options">Loading necessary packages and helpfull options<a class="anchor" aria-label="anchor" href="#loading-necessary-packages-and-helpfull-options"></a>
 </h3>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#install.packages("devtools")</span></span>
@@ -98,8 +98,590 @@ conduct cluster bias correction for such data, using functions from the
 <span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mikkelvembye.github.io/VIVECampbell/">VIVECampbell</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://purrr.tidyverse.org/" class="external-link">purrr</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span></code></pre></div>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://gt.rstudio.com/" class="external-link">gt</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>pillar.sigfig <span class="op">=</span> <span class="fl">4</span><span class="op">)</span> <span class="co"># Ensure tibble include 4 digits</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>tibble.width <span class="op">=</span> <span class="cn">Inf</span><span class="op">)</span> <span class="co"># Ensure that all colums are printed </span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>dplyr.print_min <span class="op">=</span> <span class="fl">310</span><span class="op">)</span> <span class="co"># Specifying the number of row printed</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>scipen <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="co"># Specified how many digits are printed be R shall preint scientific numbers</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>dplyr.summarise.inform <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="co"># Avoids summarize info from tidyverse</span></span></code></pre></div>
 </div>
+</div>
+<div class="section level2">
+<h2 id="fisher-bentley-1996-data-and-structure">Fisher &amp; Bentley (1996) data and structure<a class="anchor" aria-label="anchor" href="#fisher-bentley-1996-data-and-structure"></a>
+</h2>
+<p>Talk about the data structure with measures (i.e., pretest, posttest,
+and differences measures) nested within treatment groups (i.e.,
+Disease-and-recovery group, Cognitive-behavioral group, and the Usual
+group treatment) which are nested within outcomes (i.e., Alcohol use,
+Drug use, Social and family, Psychological functioning) which again is
+nested within setting (i.e, inpatient vs. outpatient).</p>
+<p>Important for understanding the use of <code>group_by</code>
+function, when we calculate effect sizes.</p>
+<div id="sbpfjvvfdm" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#sbpfjvvfdm .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#sbpfjvvfdm .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#sbpfjvvfdm .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#sbpfjvvfdm .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#sbpfjvvfdm .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#sbpfjvvfdm .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#sbpfjvvfdm .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#sbpfjvvfdm .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#sbpfjvvfdm .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#sbpfjvvfdm .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#sbpfjvvfdm .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#sbpfjvvfdm .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#sbpfjvvfdm .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#sbpfjvvfdm .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#sbpfjvvfdm .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#sbpfjvvfdm .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#sbpfjvvfdm .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#sbpfjvvfdm .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#sbpfjvvfdm .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#sbpfjvvfdm .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#sbpfjvvfdm .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#sbpfjvvfdm .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#sbpfjvvfdm .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#sbpfjvvfdm .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#sbpfjvvfdm .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#sbpfjvvfdm .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#sbpfjvvfdm .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#sbpfjvvfdm .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#sbpfjvvfdm .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#sbpfjvvfdm .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-left: 4px;
+  padding-right: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#sbpfjvvfdm .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#sbpfjvvfdm .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#sbpfjvvfdm .gt_left {
+  text-align: left;
+}
+
+#sbpfjvvfdm .gt_center {
+  text-align: center;
+}
+
+#sbpfjvvfdm .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#sbpfjvvfdm .gt_font_normal {
+  font-weight: normal;
+}
+
+#sbpfjvvfdm .gt_font_bold {
+  font-weight: bold;
+}
+
+#sbpfjvvfdm .gt_font_italic {
+  font-style: italic;
+}
+
+#sbpfjvvfdm .gt_super {
+  font-size: 65%;
+}
+
+#sbpfjvvfdm .gt_footnote_marks {
+  font-style: italic;
+  font-weight: normal;
+  font-size: 75%;
+  vertical-align: 0.4em;
+}
+
+#sbpfjvvfdm .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#sbpfjvvfdm .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#sbpfjvvfdm .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#sbpfjvvfdm .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#sbpfjvvfdm .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#sbpfjvvfdm .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+<table class="table gt_table">
+<thead class="gt_col_headings">
+<tr>
+<th rowspan="1" colspan="1" scope="col"></th>
+      <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="6" scope="colgroup" id="Inpatient setting">
+        <span class="gt_column_spanner">Inpatient setting</span>
+      </th>
+      <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="6" scope="colgroup" id="Outpatient setting">
+        <span class="gt_column_spanner">Outpatient setting</span>
+      </th>
+    </tr>
+<tr>
+<th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1" scope="col" id="Subscale and&lt;br&gt;therapy group">Subscale and<br>therapy group</th>
+      <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="Pretest&lt;br&gt;score">
+        <span class="gt_column_spanner">Pretest<br>score</span>
+      </th>
+      <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="Posttest&lt;br&gt;score">
+        <span class="gt_column_spanner">Posttest<br>score</span>
+      </th>
+      <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="&lt;br&gt;Difference">
+        <span class="gt_column_spanner"><br>Difference</span>
+      </th>
+      <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="Pretest&lt;br&gt;score ">
+        <span class="gt_column_spanner">Pretest<br>score </span>
+      </th>
+      <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="Posttest&lt;br&gt;score ">
+        <span class="gt_column_spanner">Posttest<br>score </span>
+      </th>
+      <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="&lt;br&gt;Difference ">
+        <span class="gt_column_spanner"><br>Difference </span>
+      </th>
+    </tr>
+<tr>
+<th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Mean">Mean</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="SD">SD</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Mean">Mean</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="SD">SD</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Mean">Mean</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="SD">SD</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Mean">Mean</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="SD">SD</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Mean">Mean</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="SD">SD</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Mean">Mean</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="SD">SD</th>
+    </tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="gt_group_heading_row">
+<th colspan="13" class="gt_group_heading" scope="colgroup" id="Alcohol use">Alcohol use</th>
+    </tr>
+<tr class="gt_row_group_first">
+<th id="stub_1_1" scope="row" class="gt_row gt_left gt_stub">Disease-and-recovery</th>
+<td headers="Alcohol use stub_1_1 Pretest_m" class="gt_row gt_right">.469</td>
+<td headers="Alcohol use stub_1_1 Pretest_sd" class="gt_row gt_right">.12</td>
+<td headers="Alcohol use stub_1_1 Posttest_m" class="gt_row gt_right">.1</td>
+<td headers="Alcohol use stub_1_1 Posttest_sd" class="gt_row gt_right">.5</td>
+<td headers="Alcohol use stub_1_1 Diff_m" class="gt_row gt_right">.4</td>
+<td headers="Alcohol use stub_1_1 Diff_sd" class="gt_row gt_right">.2</td>
+<td headers="Alcohol use stub_1_1 Pretest_m2" class="gt_row gt_right">.469</td>
+<td headers="Alcohol use stub_1_1 Pretest_sd2" class="gt_row gt_right">.12</td>
+<td headers="Alcohol use stub_1_1 Posttest_m2" class="gt_row gt_right">1</td>
+<td headers="Alcohol use stub_1_1 Posttest_sd2" class="gt_row gt_right">.5</td>
+<td headers="Alcohol use stub_1_1 Diff_m2" class="gt_row gt_right">.4</td>
+<td headers="Alcohol use stub_1_1 Diff_sd2" class="gt_row gt_right">.2</td>
+</tr>
+<tr>
+<th id="stub_1_2" scope="row" class="gt_row gt_left gt_stub">Cognitive-behavioral</th>
+<td headers="Alcohol use stub_1_2 Pretest_m" class="gt_row gt_right">.441</td>
+<td headers="Alcohol use stub_1_2 Pretest_sd" class="gt_row gt_right">.13</td>
+<td headers="Alcohol use stub_1_2 Posttest_m" class="gt_row gt_right">.1</td>
+<td headers="Alcohol use stub_1_2 Posttest_sd" class="gt_row gt_right">.5</td>
+<td headers="Alcohol use stub_1_2 Diff_m" class="gt_row gt_right">.4</td>
+<td headers="Alcohol use stub_1_2 Diff_sd" class="gt_row gt_right">.2</td>
+<td headers="Alcohol use stub_1_2 Pretest_m2" class="gt_row gt_right">.441</td>
+<td headers="Alcohol use stub_1_2 Pretest_sd2" class="gt_row gt_right">.13</td>
+<td headers="Alcohol use stub_1_2 Posttest_m2" class="gt_row gt_right">1</td>
+<td headers="Alcohol use stub_1_2 Posttest_sd2" class="gt_row gt_right">.5</td>
+<td headers="Alcohol use stub_1_2 Diff_m2" class="gt_row gt_right">.4</td>
+<td headers="Alcohol use stub_1_2 Diff_sd2" class="gt_row gt_right">.2</td>
+</tr>
+<tr>
+<th id="stub_1_3" scope="row" class="gt_row gt_left gt_stub">Usual group treatment</th>
+<td headers="Alcohol use stub_1_3 Pretest_m" class="gt_row gt_right">.349</td>
+<td headers="Alcohol use stub_1_3 Pretest_sd" class="gt_row gt_right">.22</td>
+<td headers="Alcohol use stub_1_3 Posttest_m" class="gt_row gt_right">.1</td>
+<td headers="Alcohol use stub_1_3 Posttest_sd" class="gt_row gt_right">.5</td>
+<td headers="Alcohol use stub_1_3 Diff_m" class="gt_row gt_right">.4</td>
+<td headers="Alcohol use stub_1_3 Diff_sd" class="gt_row gt_right">.2</td>
+<td headers="Alcohol use stub_1_3 Pretest_m2" class="gt_row gt_right">.349</td>
+<td headers="Alcohol use stub_1_3 Pretest_sd2" class="gt_row gt_right">.22</td>
+<td headers="Alcohol use stub_1_3 Posttest_m2" class="gt_row gt_right">1</td>
+<td headers="Alcohol use stub_1_3 Posttest_sd2" class="gt_row gt_right">.5</td>
+<td headers="Alcohol use stub_1_3 Diff_m2" class="gt_row gt_right">.4</td>
+<td headers="Alcohol use stub_1_3 Diff_sd2" class="gt_row gt_right">.2</td>
+</tr>
+<tr class="gt_group_heading_row">
+<th colspan="13" class="gt_group_heading" scope="colgroup" id="Drug use">Drug use</th>
+    </tr>
+<tr class="gt_row_group_first">
+<th id="stub_1_4" scope="row" class="gt_row gt_left gt_stub">Disease-and-recovery</th>
+<td headers="Drug use stub_1_4 Pretest_m" class="gt_row gt_right">.107</td>
+<td headers="Drug use stub_1_4 Pretest_sd" class="gt_row gt_right">.09</td>
+<td headers="Drug use stub_1_4 Posttest_m" class="gt_row gt_right">.1</td>
+<td headers="Drug use stub_1_4 Posttest_sd" class="gt_row gt_right">.5</td>
+<td headers="Drug use stub_1_4 Diff_m" class="gt_row gt_right">.4</td>
+<td headers="Drug use stub_1_4 Diff_sd" class="gt_row gt_right">.2</td>
+<td headers="Drug use stub_1_4 Pretest_m2" class="gt_row gt_right">.107</td>
+<td headers="Drug use stub_1_4 Pretest_sd2" class="gt_row gt_right">.09</td>
+<td headers="Drug use stub_1_4 Posttest_m2" class="gt_row gt_right">1</td>
+<td headers="Drug use stub_1_4 Posttest_sd2" class="gt_row gt_right">.5</td>
+<td headers="Drug use stub_1_4 Diff_m2" class="gt_row gt_right">.4</td>
+<td headers="Drug use stub_1_4 Diff_sd2" class="gt_row gt_right">.2</td>
+</tr>
+<tr>
+<th id="stub_1_5" scope="row" class="gt_row gt_left gt_stub">Cognitive-behavioral</th>
+<td headers="Drug use stub_1_5 Pretest_m" class="gt_row gt_right">.116</td>
+<td headers="Drug use stub_1_5 Pretest_sd" class="gt_row gt_right">.10</td>
+<td headers="Drug use stub_1_5 Posttest_m" class="gt_row gt_right">.1</td>
+<td headers="Drug use stub_1_5 Posttest_sd" class="gt_row gt_right">.5</td>
+<td headers="Drug use stub_1_5 Diff_m" class="gt_row gt_right">.4</td>
+<td headers="Drug use stub_1_5 Diff_sd" class="gt_row gt_right">.2</td>
+<td headers="Drug use stub_1_5 Pretest_m2" class="gt_row gt_right">.116</td>
+<td headers="Drug use stub_1_5 Pretest_sd2" class="gt_row gt_right">.10</td>
+<td headers="Drug use stub_1_5 Posttest_m2" class="gt_row gt_right">1</td>
+<td headers="Drug use stub_1_5 Posttest_sd2" class="gt_row gt_right">.5</td>
+<td headers="Drug use stub_1_5 Diff_m2" class="gt_row gt_right">.4</td>
+<td headers="Drug use stub_1_5 Diff_sd2" class="gt_row gt_right">.2</td>
+</tr>
+<tr>
+<th id="stub_1_6" scope="row" class="gt_row gt_left gt_stub">Usual group treatment</th>
+<td headers="Drug use stub_1_6 Pretest_m" class="gt_row gt_right">.117</td>
+<td headers="Drug use stub_1_6 Pretest_sd" class="gt_row gt_right">.12</td>
+<td headers="Drug use stub_1_6 Posttest_m" class="gt_row gt_right">.1</td>
+<td headers="Drug use stub_1_6 Posttest_sd" class="gt_row gt_right">.5</td>
+<td headers="Drug use stub_1_6 Diff_m" class="gt_row gt_right">.4</td>
+<td headers="Drug use stub_1_6 Diff_sd" class="gt_row gt_right">.2</td>
+<td headers="Drug use stub_1_6 Pretest_m2" class="gt_row gt_right">.117</td>
+<td headers="Drug use stub_1_6 Pretest_sd2" class="gt_row gt_right">.12</td>
+<td headers="Drug use stub_1_6 Posttest_m2" class="gt_row gt_right">1</td>
+<td headers="Drug use stub_1_6 Posttest_sd2" class="gt_row gt_right">.5</td>
+<td headers="Drug use stub_1_6 Diff_m2" class="gt_row gt_right">.4</td>
+<td headers="Drug use stub_1_6 Diff_sd2" class="gt_row gt_right">.2</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Show the <code>rep</code> function and its importance</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"hej"</span>, <span class="fl">6</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "hej" "hej" "hej" "hej" "hej" "hej"</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="enter-data-from-fisher-bentley-1996">Enter data from Fisher &amp; Bentley (1996)<a class="anchor" aria-label="anchor" href="#enter-data-from-fisher-bentley-1996"></a>
@@ -130,7 +712,7 @@ SD^2_{C,post} - SD^2_{C,diff}}{2 \times SD_{C,pre} \times SD_{C,post}}
 <p>We will later on pool these correlation estimates. In order to get
 one <span class="math inline">\(\rho_{pulled}\)</span> for each
 comparison and each outcome: To do so - INTRODUCE log transformation</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="va">Fisher1996</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
 <span>  </span>
@@ -254,7 +836,7 @@ comparison and each outcome: To do so - INTRODUCE log transformation</p>
 <h2 id="calculating-cohens-d-and-hedges-g">Calculating Cohens’ <em>d</em> and Hedges’ <em>g</em><a class="anchor" aria-label="anchor" href="#calculating-cohens-d-and-hedges-g"></a>
 </h2>
 <p>Add text</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="va">treat_label_fisher</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">Fisher1996</span><span class="op">$</span><span class="va">treatment</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span></span>
 <span></span>
@@ -325,7 +907,7 @@ comparison and each outcome: To do so - INTRODUCE log transformation</p>
 group only<a class="anchor" aria-label="anchor" href="#cluster-bias-correction-when-there-is-clustering-in-the-treatment-group-only"></a>
 </h2>
 <p>Add text</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="co"># [INSERT EXAMPLE WHEN FUNCTIONS ARE ADDED TO THE PACKAGE]</span></span></code></pre></div>
 </div>
