@@ -1,10 +1,14 @@
 ---
 title: "Entering data, calculating effect sizes, and cluster bias correction when there is clustering in one group only"
+author: "Mikkel H. Vembye"
 date: "Last modified `r Sys.Date()`"
 output: 
   rmarkdown::html_vignette:
     number_sections: true
     toc: true
+bibliography: bibliography.bib
+biblio-style: apa
+link-citations: yes
 vignette: >
   %\VignetteIndexEntry{Entering data, calculating effect sizes, and cluster bias correction when there is clustering in one group only}
   %\VignetteEncoding{UTF-8}
@@ -17,7 +21,7 @@ editor_options:
   chunk_output_type: console
 ---
 
-```{r, include = FALSE}
+```{r, include = FALSE, }
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -53,7 +57,7 @@ options(dplyr.summarise.inform = FALSE) # Avoids summarize info from tidyverse
 
 ```
 
-# Fisher & Bentley (1996) data and structure
+## Fisher & Bentley [-@Fisher1996] data and structure
 
 Talk about the data structure with measures (i.e., pretest, posttest, and differences measures) nested within treatment groups (i.e., Disease-and-recovery group, Cognitive-behavioral group, and the Usual group treatment) which are nested within outcomes (i.e., Alcohol use, Drug use, Social and family, Psychological functioning) which again is nested within setting (i.e, inpatient vs. outpatient). 
 
@@ -83,7 +87,8 @@ tibble(
 ) |> 
 gt(rowname_col = "groups", groupname_col = "outcome") |> 
   tab_header(
-    title = md("**Table 1**")
+    title = md("**Table 1**"),
+    subtitle = md("*Reproduced from Table 4 in Fisher (1996, p. 1248)*")
   ) |> 
   opt_align_table_header(align = "left") |> 
   tab_spanner(
@@ -132,10 +137,7 @@ gt(rowname_col = "groups", groupname_col = "outcome") |>
     Diff_m2 = "Mean",
     Diff_sd2 = "SD",
   ) |> 
-  tab_stubhead(label = md("Subscale and<br>therapy group")) |> 
-  tab_source_note(
-    source_note = "Source: Reproduced from Table 4 in Fisher (1996, p. 1248)."
-  ) 
+  tab_stubhead(label = md("Subscale and<br>therapy group")) 
 
   
 
@@ -154,6 +156,8 @@ rep("hej", 6)
 
 # Enter data from Fisher & Bentley (1996)
 
+Test @Fisher1996
+
 The practice, we often use when we enter data for studies is to name the data object using the first author's surname and the year of the publication, i.e., an object with the following structure: `AuthorYear`. For the present study used in this vignette this guideline means that we will coin the data object `Fisher1996`. One important part of calculating effect size is to make clear documentation of how and from where we obtained data we use for effect size calculation. At a minimum you much write some like "Find data in Table 4 (p. 1248)" before the codes/chunk in which construct the result data. In some cases when studies provide enough information to calculation the pre-post test correlation, $\rho$, the first calculation can be done when entering the data. When studies, such as Fisher (insert reference), report raw pre and post test means and standard deviations (SDs) plus the mean difference and its standard error, we can use the correlation formulas given in [Chapter 6 of the Cochrane Handbook](https://training.cochrane.org/handbook/current/chapter-06). For the treatment group, we can calculated the pre-post test correlation, $\rho$ via       
 $$ \rho_T = \frac{SD^2_{T,pre} + SD^2_{T,post} - SD^2_{T,diff}}{2 \times SD_{T,pre} \times SD_{T,post}} $$
 
@@ -161,7 +165,7 @@ and for the control group
 
 $$ \rho_C = \frac{SD^2_{C,pre} + SD^2_{C,post} - SD^2_{C,diff}}{2 \times SD_{C,pre} \times SD_{C,post}} $$   
 
-We will later on pool these correlation estimates. In order to get one $\rho_{pulled}$ for each comparison and each outcome: To do so - INTRODUCE log transformation
+We will later on pool these correlation estimates. In order to get one $\rho_{pulled}$ for each comparison and each outcome: To do so - INTRODUCE log transformation refer to @Borenstein2009 (to VIVE students: Find e-version of this book in our literature folder)
 
 ```{r}
 
@@ -317,5 +321,3 @@ Add text
 ```
 
 # Reference 
-
-Fisher, M. S., & Bentley, K. J. (1996). Two group therapy models for clients with a dual diagnosis of substance abuse and personality disorder. *Psychiatric services*, 47(6) <https://doi.org/10.1176/ps.47.11.1244>
