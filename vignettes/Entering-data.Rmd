@@ -34,7 +34,7 @@ options(dplyr.summarise.inform = FALSE)
 
 This vignette/article provides examples of how to enter data from rather complex result tables and how to calculate effect size and conduct cluster bias correction for such data, using functions from the `VIVECampbell` R package. 
 
-## Loading necessary packages
+## Loading necessary packages and helpfull options
 
 ```{r setup, message=FALSE, warning=FALSE}
 #install.packages("devtools")
@@ -44,6 +44,13 @@ library(VIVECampbell)
 library(purrr)
 library(dplyr)
 library(gt)
+
+options(pillar.sigfig = 4) # Ensure tibble include 4 digits
+options(tibble.width = Inf) # Ensure that all colums are printed 
+options(dplyr.print_min = 310) # Specifying the number of row printed
+options(scipen = 10) # Specified how many digits are printed be R shall preint scientific numbers
+options(dplyr.summarise.inform = FALSE) # Avoids summarize info from tidyverse
+
 ```
 
 # Fisher & Bentley (1996) data and structure
