@@ -36,6 +36,9 @@ This vignette/article provides examples of how to enter data from rather complex
 ## Loading necessary packages
 
 ```{r setup, message=FALSE}
+#install.packages("devtools")
+#devtools::install_github("MikkelVembye/VIVECampbell")
+
 library(VIVECampbell)
 library(purrr)
 library(dplyr)
@@ -43,14 +46,14 @@ library(dplyr)
 
 # Enter data from Fisher & Bentley (1996)
 
-The practice, we often use when we enter data for studies is to name the data object using the first authors surname and the year of the publication, i.e., an object with the following structure: `AuthorYear`. For the present study used in this vignette this guideline means that we will coin the data object `Fisher1996`. One important part of calculating effect size is to make clear documentation of how and from where we obtained data we use for effect size calculation. At a minimum you much write some like "Find data in Table 4 (p. 1248)" before the codes/chunk in which construct the result data. In some cases when studies provide enough information to calculation the pre-post test correlation, $\rho$, the first calculation can be done when entering the data. When studies, such as Fisher (insert reference), report raw pre and post test means and standard deviations (SDs) plus the mean difference and its standard error, we can use the correlation formulas given in [Chapter 6 of the Cochrane Handbook](https://training.cochrane.org/handbook/current/chapter-06). For the treatment group, we can calculated the pre-post test correlation, $\rho$ via       
+The practice, we often use when we enter data for studies is to name the data object using the first author's surname and the year of the publication, i.e., an object with the following structure: `AuthorYear`. For the present study used in this vignette this guideline means that we will coin the data object `Fisher1996`. One important part of calculating effect size is to make clear documentation of how and from where we obtained data we use for effect size calculation. At a minimum you much write some like "Find data in Table 4 (p. 1248)" before the codes/chunk in which construct the result data. In some cases when studies provide enough information to calculation the pre-post test correlation, $\rho$, the first calculation can be done when entering the data. When studies, such as Fisher (insert reference), report raw pre and post test means and standard deviations (SDs) plus the mean difference and its standard error, we can use the correlation formulas given in [Chapter 6 of the Cochrane Handbook](https://training.cochrane.org/handbook/current/chapter-06). For the treatment group, we can calculated the pre-post test correlation, $\rho$ via       
 $$ \rho_T = \frac{SD^2_{T,pre} + SD^2_{T,post} - SD^2_{T,diff}}{2 \times SD_{T,pre} \times SD_{T,post}} $$
 
 and for the control group
 
 $$ \rho_C = \frac{SD^2_{C,pre} + SD^2_{C,post} - SD^2_{C,diff}}{2 \times SD_{C,pre} \times SD_{C,post}} $$   
 
-We will later on pool these correlation estimates. To do so - INTRODUCE log transformation
+We will later on pool these correlation estimates. In order to get one $\rho_{pulled}$ for each comparison and each outcome: To do so - INTRODUCE log transformation
 
 ```{r}
 
@@ -68,6 +71,9 @@ Fisher1996 <- tibble::tibble(
     N = 9, 
     
     m_pre = c(
+      
+      # All values entered below follow the same structure as presented here
+      
       .469, .441, .349, # Alcohol use - inpatient
       .725, .598, .682, # Alcohol use - outpatient
       
