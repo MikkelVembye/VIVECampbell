@@ -29,8 +29,7 @@ rho <- 0.1
 NT <- 60
 n <- 5
 
-raw_calc <- ((N-2)*(1-rho) + (NT-n)*rho)^2 /
-  ( (N-2)*(1-rho)^2 + (NT-n)*n*rho^2 + 2*(NT-n)*(1-rho)*rho )
+raw_calc <- ((N-2)*(1-rho) + (NT-n)*rho)^2 / ( (N-2)*(1-rho)^2 + (NT-n)*n*rho^2 + 2*(NT-n)*(1-rho)*rho )
 
 df == round(raw_calc, 2)
 

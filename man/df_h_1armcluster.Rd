@@ -2,7 +2,7 @@
 % Please edit documentation in R/dfs.R
 \name{df_h_1armcluster}
 \alias{df_h_1armcluster}
-\title{'Degrees of freedom calculation for cluster bias correction when there is clustering in one treatment group only'}
+\title{Degrees of freedom calculation for cluster bias correction when there is clustering in one treatment group only}
 \usage{
 df_h_1armcluster(N_total, ICC, N_grp, avg_grp_size = NULL, n_clusters = NULL)
 }
@@ -24,8 +24,36 @@ Returns a numerical values indicating the cluster adjusted degrees of freedom.
 This function calculates the degrees of freedom for studies
 with clustering in one treatment group only, using Equation (7) from Hedges & Citkowicz (2015).
 }
+\details{
+When there is clustering in one treatment group only the \eqn{N-2}{N-2} degrees of freedom
+will be a rather liberal choice, underestimating the true variance of (Hedges') \eqn{g_T}{g-T}.
+Therefore, Hedges & Citkowicz (2015) suggest obtaining the degrees of freedom from
+
+\deqn{ h = \frac{[(N-2)(1-\rho_{ICC}) + (N^T-n)\rho_{ICC}]^2}
+{(N-2)(1-\rho_{ICC})^2 + (N^T-n)n\rho^2_{ICC} + 2(N^T-n)(1-\rho_{ICC})\rho_{ICC}}.}
+
+where \eqn{N}{N} is the total sample size, \eqn{N^T}{N-T} is the sample size of the treatment group,
+containg clustering, \eqn{n}{n} is average cluster size and
+\eqn{\rho_{ICC}}{\rho-icc} is the (impute) intraclass correlation. \cr \cr
+\emph{NOTE}: Read Taylor et al. (2020) to understand why we use the \eqn{g_T}{g-T} notation.
+}
 \examples{
-df_h_1armcluster(N_total = 100, ICC = 0.1, N_grp = 60, avg_grp_size = 5)
+df <- df_h_1armcluster(N_total = 100, ICC = 0.1, N_grp = 60, avg_grp_size = 5)
+df
+
+
+# Testing function
+N <- 100
+rho <- 0.1
+NT <- 60
+n <- 5
+
+df_raw <- ((N-2)*(1-rho) + (NT-n)*rho)^2 /
+          ( (N-2)*(1-rho)^2 + (NT-n)*n*rho^2 + 2*(NT-n)*(1-rho)*rho )
+
+round(df_raw, 2)
+
+
 }
 \references{
 Hedges, L. V., & Citkowicz, M (2015).

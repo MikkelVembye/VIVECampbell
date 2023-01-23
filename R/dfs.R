@@ -3,17 +3,40 @@
 # WWC and Pustejovsky calculation
 ###################################################
 
-#' @title 'Degrees of freedom calculation for cluster bias correction for standardized mean differences'
+#' @title Degrees of freedom calculation for cluster bias correction for standardized mean differences
 #'
 #' @description This function calculates the degrees of freedom for studies
 #' with clustering, using Equation (E.21) from WWC (2022, p. 171). Can also be found
 #' as h in WWC (2021). When \code{df_type = "Pustejovsky"}, the function calculates the
-#' degrees of freedom, using the upsilon formula from Pustejovsky (2016). Find under
-#' the Cluster randomized trials section.
+#' degrees of freedom, using the upsilon formula from Pustejovsky (2016, find under
+#' the Cluster randomized trials section). See further details below.
+#'
+#' @details When clustering is present the N-2 degrees of freedom will be a rather liberal choice,
+#' underestimating the true variance of (Hedges') \eqn{g_T}{g-T}. Instead the degrees of freedom
+#' can be calculated in at least to different way. The What Works
+#' Clearinghouse suggest using the following formula
+#'
+#' \deqn{ h = \frac{[(N-2)-2(n-1)\rho_{ICC}]^2}
+#' {(N-2)(1-\rho_{ICC})^2 + n(N-2n)\rho^2_{ICC} + 2(N-2n)\rho_{ICC}(1-\rho_{ICC})}.}
+#'
+#' where \eqn{N}{N} is the total sample size, \eqn{n}{n} is average cluster size and
+#' \eqn{\rho_{ICC}}{\rho-icc} is the (impute) intraclass correlation. Alternatively
+#' Pustejovsky (2016) suggest using the following formula to calculate degrees of freedom
+#' cluster randomized trials
+#' \deqn{ \upsilon = \frac{n^2M(M-2)}
+#' {M[(n-1)\rho^2_{ICC} + 1]^2 + (M-2)(n-1)(1-\rho^2_{ICC})^2}.}
+#'
+#' where \eqn{M}{M} is the number of cluster which can also be calculated from \eqn{N/n}{N/n}. \cr \cr
+#' \emph{NOTE}: Read Taylor et al. (2020) to understand why we use the \eqn{g_T}{g-T} notation.
 #'
 #' @references Pustejovsky (2016).
 #' Alternative formulas for the standardized mean difference.
 #' \url{https://www.jepusto.com/alternative-formulas-for-the-smd/}
+#'
+#' Taylor, J.A., Pigott, T.D., & Williams, R. (2020)
+#' Promoting Knowledge Accumulation About Intervention Effects:
+#' Exploring Strategies for Standardizing Statistical Approaches and Effect Size Reporting.
+#' \emph{Educational Researcher}, 51(1), 72-80. \doi{10.3102/0013189X211051319}
 #'
 #' What Works Clearinghouse (2022).
 #' What Works Clearinghouse Procedures and Standards Handbook, Version 5.0.
@@ -134,10 +157,22 @@ df_h <- function(N_total, ICC, avg_grp_size = NULL, n_clusters = NULL, df_type =
 ###################################################
 
 
-#' @title 'Degrees of freedom calculation for cluster bias correction when there is clustering in one treatment group only'
+#' @title Degrees of freedom calculation for cluster bias correction when there is clustering in one treatment group only
 #'
 #' @description This function calculates the degrees of freedom for studies
 #' with clustering in one treatment group only, using Equation (7) from Hedges & Citkowicz (2015).
+#'
+#' @details When there is clustering in one treatment group only the \eqn{N-2}{N-2} degrees of freedom
+#' will be a rather liberal choice, underestimating the true variance of (Hedges') \eqn{g_T}{g-T}.
+#' Therefore, Hedges & Citkowicz (2015) suggest obtaining the degrees of freedom from
+#'
+#' \deqn{ h = \frac{[(N-2)(1-\rho_{ICC}) + (N^T-n)\rho_{ICC}]^2}
+#' {(N-2)(1-\rho_{ICC})^2 + (N^T-n)n\rho^2_{ICC} + 2(N^T-n)(1-\rho_{ICC})\rho_{ICC}}.}
+#'
+#' where \eqn{N}{N} is the total sample size, \eqn{N^T}{N-T} is the sample size of the treatment group,
+#' containg clustering, \eqn{n}{n} is average cluster size and
+#' \eqn{\rho_{ICC}}{\rho-icc} is the (impute) intraclass correlation. \cr \cr
+#' \emph{NOTE}: Read Taylor et al. (2020) to understand why we use the \eqn{g_T}{g-T} notation.
 #'
 #'
 #' @references Hedges, L. V., & Citkowicz, M (2015).
@@ -155,7 +190,22 @@ df_h <- function(N_total, ICC, avg_grp_size = NULL, n_clusters = NULL, df_type =
 #' @export
 #'
 #' @examples
-#' df_h_1armcluster(N_total = 100, ICC = 0.1, N_grp = 60, avg_grp_size = 5)
+#' df <- df_h_1armcluster(N_total = 100, ICC = 0.1, N_grp = 60, avg_grp_size = 5)
+#' df
+#'
+#'
+#' # Testing function
+#' N <- 100
+#' rho <- 0.1
+#' NT <- 60
+#' n <- 5
+#'
+#' df_raw <- ((N-2)*(1-rho) + (NT-n)*rho)^2 /
+#'           ( (N-2)*(1-rho)^2 + (NT-n)*n*rho^2 + 2*(NT-n)*(1-rho)*rho )
+#'
+#' round(df_raw, 2)
+#'
+#'
 
 
 df_h_1armcluster <-
