@@ -11,7 +11,7 @@
 #' degrees of freedom, using the upsilon formula from Pustejovsky (2016, find under
 #' the Cluster randomized trials section). See further details below.
 #'
-#' @details When clustering is present the N-2 degrees of freedom will be a rather liberal choice,
+#' @details When clustering is present the \eqn{N-2}{N-2} degrees of freedom will be a rather liberal choice,
 #' underestimating the true variance of (Hedges') \eqn{g_T}{g-T}. Instead the degrees of freedom
 #' can be calculated in at least to different way. The What Works
 #' Clearinghouse suggest using the following formula
