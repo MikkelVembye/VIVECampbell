@@ -336,7 +336,7 @@ Add text
 
 # Visualize effect size data 
 
-```{r, fig.height=5, fig.width=7}
+```{r, fig.height=5.5, fig.width=8}
 
 Fisher1996_est |> 
   tidyr::pivot_longer(
