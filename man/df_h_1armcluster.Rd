@@ -59,4 +59,9 @@ round(df_raw, 2)
 Hedges, L. V., & Citkowicz, M (2015).
 Estimating effect size when there is clustering in one treatment groups.
 \emph{Behavior Research Methods}, 47(4), 1295-1308. \doi{10.3758/s13428-014-0538-z}
+
+Taylor, J.A., Pigott, T.D., & Williams, R. (2020)
+Promoting Knowledge Accumulation About Intervention Effects:
+Exploring Strategies for Standardizing Statistical Approaches and Effect Size Reporting.
+\emph{Educational Researcher}, 51(1), 72-80. \doi{10.3102/0013189X211051319}
 }

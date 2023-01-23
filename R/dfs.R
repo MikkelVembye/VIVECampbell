@@ -182,6 +182,12 @@ df_h <- function(N_total, ICC, avg_grp_size = NULL, n_clusters = NULL, df_type =
 #' Estimating effect size when there is clustering in one treatment groups.
 #' \emph{Behavior Research Methods}, 47(4), 1295-1308. \doi{10.3758/s13428-014-0538-z}
 #'
+#' Taylor, J.A., Pigott, T.D., & Williams, R. (2020)
+#' Promoting Knowledge Accumulation About Intervention Effects:
+#' Exploring Strategies for Standardizing Statistical Approaches and Effect Size Reporting.
+#' \emph{Educational Researcher}, 51(1), 72-80. \doi{10.3102/0013189X211051319}
+#'
+#'
 #' @param N_total Numerical value indicating the total sample size of the study.
 #' @param ICC Numerical value indicating the intra-class correlation (ICC) value.
 #' @param N_grp Numerical value indicating the sample size of the arm/group containing clustering.
