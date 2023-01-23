@@ -16,6 +16,7 @@ vignette: >
   %\VignetteDepends{tibble}
   %\VignetteDepends{purrr}
   %\VignetteDepends{tidyr}
+  %\VignetteDepends{ggplot2}
   %\VignetteDepends{gt}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
@@ -52,6 +53,7 @@ library(purrr)
 library(dplyr)
 library(tidyr)
 library(gt)
+library(ggplot2)
 
 options(pillar.sigfig = 4) # Ensure tibble include 4 digits
 options(tibble.width = Inf) # Ensure that all columns are printed 
@@ -334,14 +336,27 @@ Add text
 
 # Visualize effect size data 
 
-```{r}
+```{r, fig.height=5, fig.width=7}
 
 Fisher1996_est |> 
   tidyr::pivot_longer(
     cols = -c(study:diff_c, J),
     names_to = c('.value', 'Category'), 
     names_sep = '_'
-  )
+  ) |> 
+  mutate(
+    CI_L = es - se * qnorm(.975),
+    CI_U = es + se * qnorm(.975)
+  ) |> 
+  ggplot(aes(x = es, y = Category, xmin = CI_L, xmax = CI_U,
+        color = treatment)) + 
+  geom_pointrange(position = position_dodge2(width = 0.5, padding = 0.5)) +
+  geom_vline(xintercept = 0, linetype = "dashed", color = "black", alpha = 0.5) +
+  facet_grid(Setting~Outcome, scales = "free") +
+  theme_bw() +
+  theme(legend.position = "bottom") +
+  ylab("Effect size type")
+  
 
 ```
 

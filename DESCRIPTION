@@ -31,5 +31,6 @@ Suggests:
     tibble,
     readxl,
     gt,
-    tidyr
+    tidyr,
+    ggplot2
 VignetteBuilder: knitr
