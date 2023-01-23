@@ -76,7 +76,7 @@
                         <h4 data-toc-skip class="author">Mikkel H.
 Vembye</h4>
             
-            <h4 data-toc-skip class="date">Last modified 2023-01-20</h4>
+            <h4 data-toc-skip class="date">Last modified 2023-01-23</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/MikkelVembye/VIVECampbell/blob/HEAD/vignettes/Entering-data.Rmd" class="external-link"><code>vignettes/Entering-data.Rmd</code></a></small>
       <div class="d-none name"><code>Entering-data.Rmd</code></div>
@@ -94,6 +94,11 @@ conduct cluster bias correction for such data, using functions from the
 <div class="section level3">
 <h3 id="loading-necessary-packages-and-helpfull-options">Loading necessary packages and helpfull options<a class="anchor" aria-label="anchor" href="#loading-necessary-packages-and-helpfull-options"></a>
 </h3>
+<p>NOTE: If you haven’t previously worked with R, I recommend that you
+start reading <a href="https://mikkelvembye.github.io/VIVECampbell/articles/meta-analysis-in-R.html">“Kom
+godt i gang med metaanalyse i R”</a> and embark on the first chapters of
+<a href="https://r4ds.had.co.nz/" class="external-link">R4DS</a>. The most important package
+to learn at this stage is by all means <a href="https://dplyr.tidyverse.org/" class="external-link"><code>dplyr</code></a>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#install.packages("devtools")</span></span>
 <span><span class="co">#devtools::install_github("MikkelVembye/VIVECampbell")</span></span>
@@ -101,6 +106,7 @@ conduct cluster bias correction for such data, using functions from the
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mikkelvembye.github.io/VIVECampbell/">VIVECampbell</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://purrr.tidyverse.org/" class="external-link">purrr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org" class="external-link">tidyr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://gt.rstudio.com/" class="external-link">gt</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>pillar.sigfig <span class="op">=</span> <span class="fl">4</span><span class="op">)</span> <span class="co"># Ensure tibble include 4 digits</span></span>
@@ -116,17 +122,17 @@ structure<a class="anchor" aria-label="anchor" href="#fisher-bentley--fisher1996
 <p>Talk about the data structure with measures (i.e., pretest, posttest,
 and differences measures) nested within treatment groups (i.e.,
 Disease-and-recovery group, Cognitive-behavioral group, and the Usual
-group treatment) which are nested within outcomes (i.e., Alcohol use,
-Drug use, Social and family, Psychological functioning) which again is
-nested within setting (i.e, inpatient vs. outpatient).</p>
+group treatment) which are nested within setting (i.e, inpatient
+vs. outpatient), which again is nested within setting (i.e., Alcohol
+use, Drug use, Social and family, Psychological functioning).</p>
 <p>Important for understanding the use of <code>group_by</code>
 function, when we calculate effect sizes.</p>
-<div id="qaypnpnwob" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="kribtajkka" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#qaypnpnwob .gt_table {
+#kribtajkka .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -151,7 +157,7 @@ function, when we calculate effect sizes.</p>
   border-left-color: #D3D3D3;
 }
 
-#qaypnpnwob .gt_heading {
+#kribtajkka .gt_heading {
   background-color: #FFFFFF;
   text-align: left;
   border-bottom-color: #FFFFFF;
@@ -163,12 +169,12 @@ function, when we calculate effect sizes.</p>
   border-right-color: #D3D3D3;
 }
 
-#qaypnpnwob .gt_caption {
+#kribtajkka .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#qaypnpnwob .gt_title {
+#kribtajkka .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -180,7 +186,7 @@ function, when we calculate effect sizes.</p>
   border-bottom-width: 0;
 }
 
-#qaypnpnwob .gt_subtitle {
+#kribtajkka .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -192,13 +198,13 @@ function, when we calculate effect sizes.</p>
   border-top-width: 0;
 }
 
-#qaypnpnwob .gt_bottom_border {
+#kribtajkka .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#qaypnpnwob .gt_col_headings {
+#kribtajkka .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -213,7 +219,7 @@ function, when we calculate effect sizes.</p>
   border-right-color: #D3D3D3;
 }
 
-#qaypnpnwob .gt_col_heading {
+#kribtajkka .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -233,7 +239,7 @@ function, when we calculate effect sizes.</p>
   overflow-x: hidden;
 }
 
-#qaypnpnwob .gt_column_spanner_outer {
+#kribtajkka .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -245,15 +251,15 @@ function, when we calculate effect sizes.</p>
   padding-right: 4px;
 }
 
-#qaypnpnwob .gt_column_spanner_outer:first-child {
+#kribtajkka .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#qaypnpnwob .gt_column_spanner_outer:last-child {
+#kribtajkka .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#qaypnpnwob .gt_column_spanner {
+#kribtajkka .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -265,7 +271,7 @@ function, when we calculate effect sizes.</p>
   width: 100%;
 }
 
-#qaypnpnwob .gt_group_heading {
+#kribtajkka .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -291,7 +297,7 @@ function, when we calculate effect sizes.</p>
   text-align: left;
 }
 
-#qaypnpnwob .gt_empty_group_heading {
+#kribtajkka .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -306,15 +312,15 @@ function, when we calculate effect sizes.</p>
   vertical-align: middle;
 }
 
-#qaypnpnwob .gt_from_md > :first-child {
+#kribtajkka .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#qaypnpnwob .gt_from_md > :last-child {
+#kribtajkka .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#qaypnpnwob .gt_row {
+#kribtajkka .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -333,7 +339,7 @@ function, when we calculate effect sizes.</p>
   overflow-x: hidden;
 }
 
-#qaypnpnwob .gt_stub {
+#kribtajkka .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -346,7 +352,7 @@ function, when we calculate effect sizes.</p>
   padding-right: 5px;
 }
 
-#qaypnpnwob .gt_stub_row_group {
+#kribtajkka .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -360,11 +366,11 @@ function, when we calculate effect sizes.</p>
   vertical-align: top;
 }
 
-#qaypnpnwob .gt_row_group_first td {
+#kribtajkka .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#qaypnpnwob .gt_summary_row {
+#kribtajkka .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -374,16 +380,16 @@ function, when we calculate effect sizes.</p>
   padding-right: 5px;
 }
 
-#qaypnpnwob .gt_first_summary_row {
+#kribtajkka .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#qaypnpnwob .gt_first_summary_row.thick {
+#kribtajkka .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#qaypnpnwob .gt_last_summary_row {
+#kribtajkka .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -393,7 +399,7 @@ function, when we calculate effect sizes.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#qaypnpnwob .gt_grand_summary_row {
+#kribtajkka .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -403,7 +409,7 @@ function, when we calculate effect sizes.</p>
   padding-right: 5px;
 }
 
-#qaypnpnwob .gt_first_grand_summary_row {
+#kribtajkka .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -413,11 +419,11 @@ function, when we calculate effect sizes.</p>
   border-top-color: #D3D3D3;
 }
 
-#qaypnpnwob .gt_striped {
+#kribtajkka .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#qaypnpnwob .gt_table_body {
+#kribtajkka .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -426,7 +432,7 @@ function, when we calculate effect sizes.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#qaypnpnwob .gt_footnotes {
+#kribtajkka .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -440,7 +446,7 @@ function, when we calculate effect sizes.</p>
   border-right-color: #D3D3D3;
 }
 
-#qaypnpnwob .gt_footnote {
+#kribtajkka .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -449,7 +455,7 @@ function, when we calculate effect sizes.</p>
   padding-right: 5px;
 }
 
-#qaypnpnwob .gt_sourcenotes {
+#kribtajkka .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -463,7 +469,7 @@ function, when we calculate effect sizes.</p>
   border-right-color: #D3D3D3;
 }
 
-#qaypnpnwob .gt_sourcenote {
+#kribtajkka .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -471,64 +477,64 @@ function, when we calculate effect sizes.</p>
   padding-right: 5px;
 }
 
-#qaypnpnwob .gt_left {
+#kribtajkka .gt_left {
   text-align: left;
 }
 
-#qaypnpnwob .gt_center {
+#kribtajkka .gt_center {
   text-align: center;
 }
 
-#qaypnpnwob .gt_right {
+#kribtajkka .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#qaypnpnwob .gt_font_normal {
+#kribtajkka .gt_font_normal {
   font-weight: normal;
 }
 
-#qaypnpnwob .gt_font_bold {
+#kribtajkka .gt_font_bold {
   font-weight: bold;
 }
 
-#qaypnpnwob .gt_font_italic {
+#kribtajkka .gt_font_italic {
   font-style: italic;
 }
 
-#qaypnpnwob .gt_super {
+#kribtajkka .gt_super {
   font-size: 65%;
 }
 
-#qaypnpnwob .gt_footnote_marks {
+#kribtajkka .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-#qaypnpnwob .gt_asterisk {
+#kribtajkka .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#qaypnpnwob .gt_indent_1 {
+#kribtajkka .gt_indent_1 {
   text-indent: 5px;
 }
 
-#qaypnpnwob .gt_indent_2 {
+#kribtajkka .gt_indent_2 {
   text-indent: 10px;
 }
 
-#qaypnpnwob .gt_indent_3 {
+#kribtajkka .gt_indent_3 {
   text-indent: 15px;
 }
 
-#qaypnpnwob .gt_indent_4 {
+#kribtajkka .gt_indent_4 {
   text-indent: 20px;
 }
 
-#qaypnpnwob .gt_indent_5 {
+#kribtajkka .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -697,7 +703,6 @@ function, when we calculate effect sizes.</p>
 <div class="section level2">
 <h2 id="enter-data-from-fisher-bentley-1996">Enter data from Fisher &amp; Bentley (1996)<a class="anchor" aria-label="anchor" href="#enter-data-from-fisher-bentley-1996"></a>
 </h2>
-<p>Test <span class="citation">Fisher and Bentley (<a href="#ref-Fisher1996" role="doc-biblioref">1996</a>)</span></p>
 <p>The practice, we often use when we enter data for studies is to name
 the data object using the first author’s surname and the year of the
 publication, i.e., an object with the following structure:
@@ -729,9 +734,9 @@ of this book in our literature folder)</p>
 <code class="sourceCode R"><span></span>
 <span><span class="va">Fisher1996</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
 <span>  </span>
-<span>  Setting <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Inpatient"</span>, <span class="st">"Outpatient"</span><span class="op">)</span>, each <span class="op">=</span> <span class="fl">3</span>, <span class="fl">2</span><span class="op">)</span>,</span>
-<span>  </span>
 <span>  Outcome <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Alcohol use"</span>, <span class="st">"Drug use"</span><span class="op">)</span>, each <span class="op">=</span> <span class="fl">6</span><span class="op">)</span>,</span>
+<span>  </span>
+<span>  Setting <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Inpatient"</span>, <span class="st">"Outpatient"</span><span class="op">)</span>, each <span class="op">=</span> <span class="fl">3</span>, <span class="fl">2</span><span class="op">)</span>,</span>
 <span>  </span>
 <span>  treatment <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Disease"</span>, <span class="st">"Cognitive"</span>, <span class="st">"TAU"</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span>,</span>
 <span>  </span>
@@ -816,20 +821,20 @@ of this book in our literature folder)</p>
 <span>    </span>
 <span><span class="op">)</span>; <span class="va">Fisher1996</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 12 × 15</span></span></span>
-<span><span class="co">#&gt;    Setting    Outcome     treatment     N m_pre sd_pre m_post sd_post m_diff</span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> Inpatient  Alcohol use Disease       9 0.469   0.12  0.07     0.11  0.399</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> Inpatient  Alcohol use Cognitive     9 0.441   0.13  0.018    0.05  0.423</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> Inpatient  Alcohol use TAU           9 0.349   0.22  0.141    0.21  0.208</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> Outpatient Alcohol use Disease       9 0.725   0.11  0.521    0.11  0.204</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> Outpatient Alcohol use Cognitive     9 0.598   0.16  0.152    0.15  0.446</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> Outpatient Alcohol use TAU           9 0.682   0.17  0.492    0.27  0.19 </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> Inpatient  Drug use    Disease       9 0.107   0.09  0.001    0.01  0.106</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> Inpatient  Drug use    Cognitive     9 0.116   0.1   0.008    0.02  0.108</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> Inpatient  Drug use    TAU           9 0.117   0.12  0.087    0.12  0.03 </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> Outpatient Drug use    Disease       9 0.219   0.11  0.167    0.1   0.052</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> Outpatient Drug use    Cognitive     9 0.2     0.12  0.044    0.05  0.196</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> Outpatient Drug use    TAU           9 0.322   0.05  0.216    0.15  0.106</span></span>
+<span><span class="co">#&gt;    Outcome     Setting    treatment     N m_pre sd_pre m_post sd_post m_diff</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> Alcohol use Inpatient  Disease       9 0.469   0.12  0.07     0.11  0.399</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> Alcohol use Inpatient  Cognitive     9 0.441   0.13  0.018    0.05  0.423</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> Alcohol use Inpatient  TAU           9 0.349   0.22  0.141    0.21  0.208</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> Alcohol use Outpatient Disease       9 0.725   0.11  0.521    0.11  0.204</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> Alcohol use Outpatient Cognitive     9 0.598   0.16  0.152    0.15  0.446</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> Alcohol use Outpatient TAU           9 0.682   0.17  0.492    0.27  0.19 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> Drug use    Inpatient  Disease       9 0.107   0.09  0.001    0.01  0.106</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> Drug use    Inpatient  Cognitive     9 0.116   0.1   0.008    0.02  0.108</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> Drug use    Inpatient  TAU           9 0.117   0.12  0.087    0.12  0.03 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> Drug use    Outpatient Disease       9 0.219   0.11  0.167    0.1   0.052</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> Drug use    Outpatient Cognitive     9 0.2     0.12  0.044    0.05  0.196</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> Drug use    Outpatient TAU           9 0.322   0.05  0.216    0.15  0.106</span></span>
 <span><span class="co">#&gt;    sd_diff mean_diff_test       r     sdg       z      v</span></span>
 <span><span class="co">#&gt;      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>    0.02          0.399 0.988<span style="text-decoration: underline;">6</span>  0.132<span style="text-decoration: underline;">7</span>  2.582   0.166<span style="text-decoration: underline;">7</span></span></span>
@@ -844,6 +849,7 @@ of this book in our literature folder)</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>    0.02          0.052 0.986<span style="text-decoration: underline;">4</span>  0.121<span style="text-decoration: underline;">1</span>  2.491   0.166<span style="text-decoration: underline;">7</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span>    0.08          0.156 0.875   0.160<span style="text-decoration: underline;">0</span>  1.354   0.166<span style="text-decoration: underline;">7</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span>    0.11          0.106 0.86    0.207<span style="text-decoration: underline;">9</span>  1.293   0.166<span style="text-decoration: underline;">7</span></span></span></code></pre></div>
+<p>SHOW DIFFERENT ORDER WITH</p>
 </div>
 <div class="section level2">
 <h2 id="calculating-cohens-d-and-hedges-g">Calculating Cohens’ <em>d</em> and Hedges’ <em>g</em><a class="anchor" aria-label="anchor" href="#calculating-cohens-d-and-hedges-g"></a>
@@ -878,13 +884,21 @@ of this book in our literature folder)</p>
 <span>      diff_t <span class="op">=</span> <span class="va">m_post</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">-</span> <span class="va">m_pre</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>,</span>
 <span>      diff_c <span class="op">=</span> <span class="va">m_post</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span> <span class="op">-</span> <span class="va">m_pre</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>,</span>
 <span>      </span>
-<span>      d <span class="op">=</span> <span class="op">(</span><span class="va">diff_t</span> <span class="op">-</span> <span class="va">diff_c</span><span class="op">)</span> <span class="op">/</span> <span class="va">s_pool</span>,</span>
-<span>      vd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="va">N</span><span class="op">)</span> <span class="op">*</span> <span class="op">(</span><span class="fl">2</span><span class="op">*</span><span class="op">(</span><span class="fl">1</span><span class="op">-</span><span class="va">ppcor</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="va">d</span><span class="op">^</span><span class="fl">2</span><span class="op">/</span><span class="op">(</span><span class="fl">2</span><span class="op">*</span><span class="va">df_ind</span><span class="op">)</span>,</span>
-<span>      se <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="va">vd</span><span class="op">)</span></span>
+<span>      es_d <span class="op">=</span> <span class="op">(</span><span class="va">diff_t</span> <span class="op">-</span> <span class="va">diff_c</span><span class="op">)</span> <span class="op">/</span> <span class="va">s_pool</span>,</span>
+<span>      v_d <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="va">N</span><span class="op">)</span> <span class="op">*</span> <span class="op">(</span><span class="fl">2</span><span class="op">*</span><span class="op">(</span><span class="fl">1</span><span class="op">-</span><span class="va">ppcor</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="va">es_d</span><span class="op">^</span><span class="fl">2</span><span class="op">/</span><span class="op">(</span><span class="fl">2</span><span class="op">*</span><span class="va">df_ind</span><span class="op">)</span>,</span>
+<span>      se_d <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="va">v_d</span><span class="op">)</span>,</span>
+<span>      W_d <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="va">N</span><span class="op">)</span> <span class="op">*</span> <span class="op">(</span><span class="fl">2</span><span class="op">*</span><span class="op">(</span><span class="fl">1</span><span class="op">-</span><span class="va">ppcor</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>      </span>
+<span>      J <span class="op">=</span> <span class="fl">1</span> <span class="op">-</span> <span class="fl">3</span><span class="op">/</span><span class="op">(</span><span class="fl">4</span><span class="op">*</span><span class="va">df_ind</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span>,</span>
+<span>      </span>
+<span>      es_g <span class="op">=</span> <span class="va">J</span> <span class="op">*</span> <span class="va">es_d</span>,</span>
+<span>      v_g <span class="op">=</span> <span class="va">J</span><span class="op">^</span><span class="fl">2</span> <span class="op">*</span> <span class="va">v_d</span>, </span>
+<span>      se_g <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="va">v_g</span><span class="op">)</span>,</span>
+<span>      W_g <span class="op">=</span> <span class="va">J</span><span class="op">^</span><span class="fl">2</span><span class="op">*</span> <span class="va">W_d</span>,</span>
+<span>      </span>
+<span>      .groups <span class="op">=</span> <span class="st">"drop"</span></span>
 <span>      </span>
 <span>    <span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/relocate.html" class="external-link">relocate</a></span><span class="op">(</span><span class="va">study</span><span class="op">)</span></span>
 <span>  </span>
 <span><span class="op">}</span></span>
@@ -893,7 +907,7 @@ of this book in our literature folder)</p>
 <span>  <span class="fu"><a href="https://purrr.tidyverse.org/reference/map_dfr.html" class="external-link">map_dfr</a></span><span class="op">(</span><span class="va">treat_label_fisher</span>, <span class="op">~</span> <span class="fu">fisher_function</span><span class="op">(</span>label <span class="op">=</span> <span class="va">.x</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">Fisher1996_est</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 8 × 17</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 8 × 23</span></span></span>
 <span><span class="co">#&gt;   study      Setting    Outcome     treatment es_method         M  ppcor    Nt</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Fisher1996 Inpatient  Alcohol use Cognitive diff-in-diffs 1.866 0.953<span style="text-decoration: underline;">3</span>     9</span></span>
@@ -904,16 +918,26 @@ of this book in our literature folder)</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> Fisher1996 Inpatient  Drug use    Disease   diff-in-diffs 1.269 0.853<span style="text-decoration: underline;">4</span>     9</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">7</span> Fisher1996 Outpatient Alcohol use Disease   diff-in-diffs 2.660 0.990<span style="text-decoration: underline;">3</span>     9</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">8</span> Fisher1996 Outpatient Drug use    Disease   diff-in-diffs 1.892 0.955<span style="text-decoration: underline;">5</span>     9</span></span>
-<span><span class="co">#&gt;      Nc N_tot df_ind  s_pool diff_t diff_c        d       vd      se</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>     9    18     18 0.143<span style="text-decoration: underline;">9</span>  -<span style="color: #BB0000;">0.423</span> -<span style="color: #BB0000;">0.208</span> -<span style="color: #BB0000;">1.494</span>   0.082<span style="text-decoration: underline;">77</span>  0.287<span style="text-decoration: underline;">7</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>     9    18     18 0.081<span style="text-decoration: underline;">10</span> -<span style="color: #BB0000;">0.108</span> -<span style="color: #BB0000;">0.03</span>  -<span style="color: #BB0000;">0.961</span><span style="color: #BB0000; text-decoration: underline;">7</span>  0.062<span style="text-decoration: underline;">70</span>  0.250<span style="text-decoration: underline;">4</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>     9    18     18 0.205<span style="text-decoration: underline;">9</span>  -<span style="color: #BB0000;">0.446</span> -<span style="color: #BB0000;">0.19</span>  -<span style="color: #BB0000;">1.243</span>   0.048<span style="text-decoration: underline;">26</span>  0.219<span style="text-decoration: underline;">7</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>     9    18     18 0.105<span style="text-decoration: underline;">4</span>  -<span style="color: #BB0000;">0.156</span> -<span style="color: #BB0000;">0.106</span> -<span style="color: #BB0000;">0.474</span><span style="color: #BB0000; text-decoration: underline;">3</span>  0.065<span style="text-decoration: underline;">05</span>  0.255<span style="text-decoration: underline;">1</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span>     9    18     18 0.158<span style="text-decoration: underline;">0</span>  -<span style="color: #BB0000;">0.399</span> -<span style="color: #BB0000;">0.208</span> -<span style="color: #BB0000;">1.209</span>   0.046<span style="text-decoration: underline;">61</span>  0.215<span style="text-decoration: underline;">9</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span>     9    18     18 0.080<span style="text-decoration: underline;">28</span> -<span style="color: #BB0000;">0.106</span> -<span style="color: #BB0000;">0.03</span>  -<span style="color: #BB0000;">0.946</span><span style="color: #BB0000; text-decoration: underline;">7</span>  0.090<span style="text-decoration: underline;">05</span>  0.300<span style="text-decoration: underline;">1</span> </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">7</span>     9    18     18 0.194<span style="text-decoration: underline;">4</span>  -<span style="color: #BB0000;">0.204</span> -<span style="color: #BB0000;">0.19</span>  -<span style="color: #BB0000;">0.072</span><span style="color: #BB0000; text-decoration: underline;">03</span> 0.004<span style="text-decoration: underline;">473</span> 0.066<span style="text-decoration: underline;">88</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">8</span>     9    18     18 0.120<span style="text-decoration: underline;">2</span>  -<span style="color: #BB0000;">0.052</span> -<span style="color: #BB0000;">0.106</span>  0.449<span style="text-decoration: underline;">3</span>  0.025<span style="text-decoration: underline;">36</span>  0.159<span style="text-decoration: underline;">3</span></span></span></code></pre></div>
+<span><span class="co">#&gt;      Nc N_tot df_ind  s_pool diff_t diff_c     es_d      v_d    se_d      W_d</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>     9    18     18 0.143<span style="text-decoration: underline;">9</span>  -<span style="color: #BB0000;">0.423</span> -<span style="color: #BB0000;">0.208</span> -<span style="color: #BB0000;">1.494</span>   0.082<span style="text-decoration: underline;">77</span>  0.287<span style="text-decoration: underline;">7</span>  0.020<span style="text-decoration: underline;">77</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>     9    18     18 0.081<span style="text-decoration: underline;">10</span> -<span style="color: #BB0000;">0.108</span> -<span style="color: #BB0000;">0.03</span>  -<span style="color: #BB0000;">0.961</span><span style="color: #BB0000; text-decoration: underline;">7</span>  0.062<span style="text-decoration: underline;">70</span>  0.250<span style="text-decoration: underline;">4</span>  0.037<span style="text-decoration: underline;">01</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>     9    18     18 0.205<span style="text-decoration: underline;">9</span>  -<span style="color: #BB0000;">0.446</span> -<span style="color: #BB0000;">0.19</span>  -<span style="color: #BB0000;">1.243</span>   0.048<span style="text-decoration: underline;">26</span>  0.219<span style="text-decoration: underline;">7</span>  0.005<span style="text-decoration: underline;">321</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>     9    18     18 0.105<span style="text-decoration: underline;">4</span>  -<span style="color: #BB0000;">0.156</span> -<span style="color: #BB0000;">0.106</span> -<span style="color: #BB0000;">0.474</span><span style="color: #BB0000; text-decoration: underline;">3</span>  0.065<span style="text-decoration: underline;">05</span>  0.255<span style="text-decoration: underline;">1</span>  0.058<span style="text-decoration: underline;">80</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span>     9    18     18 0.158<span style="text-decoration: underline;">0</span>  -<span style="color: #BB0000;">0.399</span> -<span style="color: #BB0000;">0.208</span> -<span style="color: #BB0000;">1.209</span>   0.046<span style="text-decoration: underline;">61</span>  0.215<span style="text-decoration: underline;">9</span>  0.006<span style="text-decoration: underline;">037</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span>     9    18     18 0.080<span style="text-decoration: underline;">28</span> -<span style="color: #BB0000;">0.106</span> -<span style="color: #BB0000;">0.03</span>  -<span style="color: #BB0000;">0.946</span><span style="color: #BB0000; text-decoration: underline;">7</span>  0.090<span style="text-decoration: underline;">05</span>  0.300<span style="text-decoration: underline;">1</span>  0.065<span style="text-decoration: underline;">16</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">7</span>     9    18     18 0.194<span style="text-decoration: underline;">4</span>  -<span style="color: #BB0000;">0.204</span> -<span style="color: #BB0000;">0.19</span>  -<span style="color: #BB0000;">0.072</span><span style="color: #BB0000; text-decoration: underline;">03</span> 0.004<span style="text-decoration: underline;">473</span> 0.066<span style="text-decoration: underline;">88</span> 0.004<span style="text-decoration: underline;">329</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">8</span>     9    18     18 0.120<span style="text-decoration: underline;">2</span>  -<span style="color: #BB0000;">0.052</span> -<span style="color: #BB0000;">0.106</span>  0.449<span style="text-decoration: underline;">3</span>  0.025<span style="text-decoration: underline;">36</span>  0.159<span style="text-decoration: underline;">3</span>  0.019<span style="text-decoration: underline;">76</span> </span></span>
+<span><span class="co">#&gt;        J     es_g      v_g    se_g      W_g</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 0.957<span style="text-decoration: underline;">7</span> -<span style="color: #BB0000;">1.431</span>   0.075<span style="text-decoration: underline;">92</span>  0.275<span style="text-decoration: underline;">5</span>  0.019<span style="text-decoration: underline;">05</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 0.957<span style="text-decoration: underline;">7</span> -<span style="color: #BB0000;">0.921</span><span style="color: #BB0000; text-decoration: underline;">1</span>  0.057<span style="text-decoration: underline;">51</span>  0.239<span style="text-decoration: underline;">8</span>  0.033<span style="text-decoration: underline;">94</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 0.957<span style="text-decoration: underline;">7</span> -<span style="color: #BB0000;">1.191</span>   0.044<span style="text-decoration: underline;">26</span>  0.210<span style="text-decoration: underline;">4</span>  0.004<span style="text-decoration: underline;">881</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 0.957<span style="text-decoration: underline;">7</span> -<span style="color: #BB0000;">0.454</span><span style="color: #BB0000; text-decoration: underline;">3</span>  0.059<span style="text-decoration: underline;">67</span>  0.244<span style="text-decoration: underline;">3</span>  0.053<span style="text-decoration: underline;">94</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> 0.957<span style="text-decoration: underline;">7</span> -<span style="color: #BB0000;">1.157</span>   0.042<span style="text-decoration: underline;">75</span>  0.206<span style="text-decoration: underline;">8</span>  0.005<span style="text-decoration: underline;">538</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> 0.957<span style="text-decoration: underline;">7</span> -<span style="color: #BB0000;">0.906</span><span style="color: #BB0000; text-decoration: underline;">7</span>  0.082<span style="text-decoration: underline;">60</span>  0.287<span style="text-decoration: underline;">4</span>  0.059<span style="text-decoration: underline;">77</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">7</span> 0.957<span style="text-decoration: underline;">7</span> -<span style="color: #BB0000;">0.068</span><span style="color: #BB0000; text-decoration: underline;">99</span> 0.004<span style="text-decoration: underline;">103</span> 0.064<span style="text-decoration: underline;">06</span> 0.003<span style="text-decoration: underline;">971</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">8</span> 0.957<span style="text-decoration: underline;">7</span>  0.430<span style="text-decoration: underline;">3</span>  0.023<span style="text-decoration: underline;">27</span>  0.152<span style="text-decoration: underline;">5</span>  0.018<span style="text-decoration: underline;">12</span></span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="cluster-bias-correction-when-there-is-clustering-in-the-treatment-group-only">Cluster bias correction when there is clustering in the treatment
@@ -923,6 +947,73 @@ group only<a class="anchor" aria-label="anchor" href="#cluster-bias-correction-w
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="co"># [INSERT EXAMPLE WHEN FUNCTIONS ARE ADDED TO THE PACKAGE]</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="visualize-effect-size-data">Visualize effect size data<a class="anchor" aria-label="anchor" href="#visualize-effect-size-data"></a>
+</h2>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="va">Fisher1996_est</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html" class="external-link">pivot_longer</a></span><span class="op">(</span></span>
+<span>    cols <span class="op">=</span> <span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">study</span><span class="op">:</span><span class="va">diff_c</span>, <span class="va">J</span><span class="op">)</span>,</span>
+<span>    names_to <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'.value'</span>, <span class="st">'Category'</span><span class="op">)</span>, </span>
+<span>    names_sep <span class="op">=</span> <span class="st">'_'</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 16 × 20</span></span></span>
+<span><span class="co">#&gt;    study      Setting    Outcome     treatment es_method         M  ppcor    Nt</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> Fisher1996 Inpatient  Alcohol use Cognitive diff-in-diffs 1.866 0.953<span style="text-decoration: underline;">3</span>     9</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> Fisher1996 Inpatient  Alcohol use Cognitive diff-in-diffs 1.866 0.953<span style="text-decoration: underline;">3</span>     9</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> Fisher1996 Inpatient  Drug use    Cognitive diff-in-diffs 1.568 0.916<span style="text-decoration: underline;">7</span>     9</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> Fisher1996 Inpatient  Drug use    Cognitive diff-in-diffs 1.568 0.916<span style="text-decoration: underline;">7</span>     9</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> Fisher1996 Outpatient Alcohol use Cognitive diff-in-diffs 2.556 0.988<span style="text-decoration: underline;">0</span>     9</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> Fisher1996 Outpatient Alcohol use Cognitive diff-in-diffs 2.556 0.988<span style="text-decoration: underline;">0</span>     9</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> Fisher1996 Outpatient Drug use    Cognitive diff-in-diffs 1.324 0.867<span style="text-decoration: underline;">7</span>     9</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> Fisher1996 Outpatient Drug use    Cognitive diff-in-diffs 1.324 0.867<span style="text-decoration: underline;">7</span>     9</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> Fisher1996 Inpatient  Alcohol use Disease   diff-in-diffs 2.493 0.986<span style="text-decoration: underline;">4</span>     9</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> Fisher1996 Inpatient  Alcohol use Disease   diff-in-diffs 2.493 0.986<span style="text-decoration: underline;">4</span>     9</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> Fisher1996 Inpatient  Drug use    Disease   diff-in-diffs 1.269 0.853<span style="text-decoration: underline;">4</span>     9</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> Fisher1996 Inpatient  Drug use    Disease   diff-in-diffs 1.269 0.853<span style="text-decoration: underline;">4</span>     9</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span> Fisher1996 Outpatient Alcohol use Disease   diff-in-diffs 2.660 0.990<span style="text-decoration: underline;">3</span>     9</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span> Fisher1996 Outpatient Alcohol use Disease   diff-in-diffs 2.660 0.990<span style="text-decoration: underline;">3</span>     9</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span> Fisher1996 Outpatient Drug use    Disease   diff-in-diffs 1.892 0.955<span style="text-decoration: underline;">5</span>     9</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">16</span> Fisher1996 Outpatient Drug use    Disease   diff-in-diffs 1.892 0.955<span style="text-decoration: underline;">5</span>     9</span></span>
+<span><span class="co">#&gt;       Nc N_tot df_ind  s_pool diff_t diff_c      J Category       es        v</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>     9    18     18 0.143<span style="text-decoration: underline;">9</span>  -<span style="color: #BB0000;">0.423</span> -<span style="color: #BB0000;">0.208</span> 0.957<span style="text-decoration: underline;">7</span> d        -<span style="color: #BB0000;">1.494</span>   0.082<span style="text-decoration: underline;">77</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>     9    18     18 0.143<span style="text-decoration: underline;">9</span>  -<span style="color: #BB0000;">0.423</span> -<span style="color: #BB0000;">0.208</span> 0.957<span style="text-decoration: underline;">7</span> g        -<span style="color: #BB0000;">1.431</span>   0.075<span style="text-decoration: underline;">92</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>     9    18     18 0.081<span style="text-decoration: underline;">10</span> -<span style="color: #BB0000;">0.108</span> -<span style="color: #BB0000;">0.03</span>  0.957<span style="text-decoration: underline;">7</span> d        -<span style="color: #BB0000;">0.961</span><span style="color: #BB0000; text-decoration: underline;">7</span>  0.062<span style="text-decoration: underline;">70</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>     9    18     18 0.081<span style="text-decoration: underline;">10</span> -<span style="color: #BB0000;">0.108</span> -<span style="color: #BB0000;">0.03</span>  0.957<span style="text-decoration: underline;">7</span> g        -<span style="color: #BB0000;">0.921</span><span style="color: #BB0000; text-decoration: underline;">1</span>  0.057<span style="text-decoration: underline;">51</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>     9    18     18 0.205<span style="text-decoration: underline;">9</span>  -<span style="color: #BB0000;">0.446</span> -<span style="color: #BB0000;">0.19</span>  0.957<span style="text-decoration: underline;">7</span> d        -<span style="color: #BB0000;">1.243</span>   0.048<span style="text-decoration: underline;">26</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>     9    18     18 0.205<span style="text-decoration: underline;">9</span>  -<span style="color: #BB0000;">0.446</span> -<span style="color: #BB0000;">0.19</span>  0.957<span style="text-decoration: underline;">7</span> g        -<span style="color: #BB0000;">1.191</span>   0.044<span style="text-decoration: underline;">26</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>     9    18     18 0.105<span style="text-decoration: underline;">4</span>  -<span style="color: #BB0000;">0.156</span> -<span style="color: #BB0000;">0.106</span> 0.957<span style="text-decoration: underline;">7</span> d        -<span style="color: #BB0000;">0.474</span><span style="color: #BB0000; text-decoration: underline;">3</span>  0.065<span style="text-decoration: underline;">05</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>     9    18     18 0.105<span style="text-decoration: underline;">4</span>  -<span style="color: #BB0000;">0.156</span> -<span style="color: #BB0000;">0.106</span> 0.957<span style="text-decoration: underline;">7</span> g        -<span style="color: #BB0000;">0.454</span><span style="color: #BB0000; text-decoration: underline;">3</span>  0.059<span style="text-decoration: underline;">67</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>     9    18     18 0.158<span style="text-decoration: underline;">0</span>  -<span style="color: #BB0000;">0.399</span> -<span style="color: #BB0000;">0.208</span> 0.957<span style="text-decoration: underline;">7</span> d        -<span style="color: #BB0000;">1.209</span>   0.046<span style="text-decoration: underline;">61</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>     9    18     18 0.158<span style="text-decoration: underline;">0</span>  -<span style="color: #BB0000;">0.399</span> -<span style="color: #BB0000;">0.208</span> 0.957<span style="text-decoration: underline;">7</span> g        -<span style="color: #BB0000;">1.157</span>   0.042<span style="text-decoration: underline;">75</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span>     9    18     18 0.080<span style="text-decoration: underline;">28</span> -<span style="color: #BB0000;">0.106</span> -<span style="color: #BB0000;">0.03</span>  0.957<span style="text-decoration: underline;">7</span> d        -<span style="color: #BB0000;">0.946</span><span style="color: #BB0000; text-decoration: underline;">7</span>  0.090<span style="text-decoration: underline;">05</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span>     9    18     18 0.080<span style="text-decoration: underline;">28</span> -<span style="color: #BB0000;">0.106</span> -<span style="color: #BB0000;">0.03</span>  0.957<span style="text-decoration: underline;">7</span> g        -<span style="color: #BB0000;">0.906</span><span style="color: #BB0000; text-decoration: underline;">7</span>  0.082<span style="text-decoration: underline;">60</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span>     9    18     18 0.194<span style="text-decoration: underline;">4</span>  -<span style="color: #BB0000;">0.204</span> -<span style="color: #BB0000;">0.19</span>  0.957<span style="text-decoration: underline;">7</span> d        -<span style="color: #BB0000;">0.072</span><span style="color: #BB0000; text-decoration: underline;">03</span> 0.004<span style="text-decoration: underline;">473</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span>     9    18     18 0.194<span style="text-decoration: underline;">4</span>  -<span style="color: #BB0000;">0.204</span> -<span style="color: #BB0000;">0.19</span>  0.957<span style="text-decoration: underline;">7</span> g        -<span style="color: #BB0000;">0.068</span><span style="color: #BB0000; text-decoration: underline;">99</span> 0.004<span style="text-decoration: underline;">103</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span>     9    18     18 0.120<span style="text-decoration: underline;">2</span>  -<span style="color: #BB0000;">0.052</span> -<span style="color: #BB0000;">0.106</span> 0.957<span style="text-decoration: underline;">7</span> d         0.449<span style="text-decoration: underline;">3</span>  0.025<span style="text-decoration: underline;">36</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">16</span>     9    18     18 0.120<span style="text-decoration: underline;">2</span>  -<span style="color: #BB0000;">0.052</span> -<span style="color: #BB0000;">0.106</span> 0.957<span style="text-decoration: underline;">7</span> g         0.430<span style="text-decoration: underline;">3</span>  0.023<span style="text-decoration: underline;">27</span> </span></span>
+<span><span class="co">#&gt;         se        W</span></span>
+<span><span class="co">#&gt;      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 0.287<span style="text-decoration: underline;">7</span>  0.020<span style="text-decoration: underline;">77</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 0.275<span style="text-decoration: underline;">5</span>  0.019<span style="text-decoration: underline;">05</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 0.250<span style="text-decoration: underline;">4</span>  0.037<span style="text-decoration: underline;">01</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 0.239<span style="text-decoration: underline;">8</span>  0.033<span style="text-decoration: underline;">94</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 0.219<span style="text-decoration: underline;">7</span>  0.005<span style="text-decoration: underline;">321</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 0.210<span style="text-decoration: underline;">4</span>  0.004<span style="text-decoration: underline;">881</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 0.255<span style="text-decoration: underline;">1</span>  0.058<span style="text-decoration: underline;">80</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 0.244<span style="text-decoration: underline;">3</span>  0.053<span style="text-decoration: underline;">94</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 0.215<span style="text-decoration: underline;">9</span>  0.006<span style="text-decoration: underline;">037</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 0.206<span style="text-decoration: underline;">8</span>  0.005<span style="text-decoration: underline;">538</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> 0.300<span style="text-decoration: underline;">1</span>  0.065<span style="text-decoration: underline;">16</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> 0.287<span style="text-decoration: underline;">4</span>  0.059<span style="text-decoration: underline;">77</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span> 0.066<span style="text-decoration: underline;">88</span> 0.004<span style="text-decoration: underline;">329</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span> 0.064<span style="text-decoration: underline;">06</span> 0.003<span style="text-decoration: underline;">971</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span> 0.159<span style="text-decoration: underline;">3</span>  0.019<span style="text-decoration: underline;">76</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">16</span> 0.152<span style="text-decoration: underline;">5</span>  0.018<span style="text-decoration: underline;">12</span></span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 class="unnumbered" id="reference">Reference<a class="anchor" aria-label="anchor" href="#reference"></a>
