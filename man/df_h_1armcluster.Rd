@@ -29,12 +29,12 @@ When there is clustering in one treatment group only the \eqn{N-2}{N-2} degrees 
 will be a rather liberal choice, underestimating the true variance of (Hedges') \eqn{g_T}{g-T}.
 Therefore, Hedges & Citkowicz (2015) suggest obtaining the degrees of freedom from
 
-\deqn{ h = \frac{[(N-2)(1-\rho_{ICC}) + (N^T-n)\rho_{ICC}]^2}
-{(N-2)(1-\rho_{ICC})^2 + (N^T-n)n\rho^2_{ICC} + 2(N^T-n)(1-\rho_{ICC})\rho_{ICC}}.}
+\deqn{ h = \frac{[(N-2)(1-\rho) + (N^T-n)\rho]^2}
+{(N-2)(1-\rho)^2 + (N^T-n)n\rho^2 + 2(N^T-n)(1-\rho)\rho}.}
 
 where \eqn{N}{N} is the total sample size, \eqn{N^T}{N-T} is the sample size of the treatment group,
 containg clustering, \eqn{n}{n} is average cluster size and
-\eqn{\rho_{ICC}}{\rho-icc} is the (impute) intraclass correlation. \cr \cr
+\eqn{\rho}{\rho} is the (imputed) intraclass correlation. \cr \cr
 \emph{NOTE}: Read Taylor et al. (2020) to understand why we use the \eqn{g_T}{g-T} notation.
 }
 \examples{

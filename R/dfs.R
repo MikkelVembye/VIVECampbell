@@ -16,15 +16,15 @@
 #' can be calculated in at least to different way. The What Works
 #' Clearinghouse suggest using the following formula
 #'
-#' \deqn{ h = \frac{[(N-2)-2(n-1)\rho_{ICC}]^2}
-#' {(N-2)(1-\rho_{ICC})^2 + n(N-2n)\rho^2_{ICC} + 2(N-2n)\rho_{ICC}(1-\rho_{ICC})}.}
+#' \deqn{ h = \frac{[(N-2)-2(n-1)\rho]^2}
+#' {(N-2)(1-\rho)^2 + n(N-2n)\rho^2 + 2(N-2n)\rho(1-\rho)}.}
 #'
 #' where \eqn{N}{N} is the total sample size, \eqn{n}{n} is average cluster size and
-#' \eqn{\rho_{ICC}}{\rho-icc} is the (impute) intraclass correlation. Alternatively
+#' \eqn{\rho}{\rho} is the (imputed) intraclass correlation. Alternatively
 #' Pustejovsky (2016) suggest using the following formula to calculate degrees of freedom
 #' cluster randomized trials
 #' \deqn{ \upsilon = \frac{n^2M(M-2)}
-#' {M[(n-1)\rho^2_{ICC} + 1]^2 + (M-2)(n-1)(1-\rho^2_{ICC})^2}.}
+#' {M[(n-1)\rho^2 + 1]^2 + (M-2)(n-1)(1-\rho^2)^2}.}
 #'
 #' where \eqn{M}{M} is the number of cluster which can also be calculated from \eqn{N/n}{N/n}. \cr \cr
 #' \emph{NOTE}: Read Taylor et al. (2020) to understand why we use the \eqn{g_T}{g-T} notation.
@@ -59,6 +59,9 @@
 #'
 #' @examples
 #' df_h(N_total = 100, ICC = 0.1, avg_grp_size = 5)
+#'
+#' df_h(N_total = 100, ICC = 0.1, avg_grp_size = 5, df_type = "Pustejovsky")
+#'
 
 df_h <- function(N_total, ICC, avg_grp_size = NULL, n_clusters = NULL, df_type = "WWC"){
 
@@ -166,12 +169,12 @@ df_h <- function(N_total, ICC, avg_grp_size = NULL, n_clusters = NULL, df_type =
 #' will be a rather liberal choice, underestimating the true variance of (Hedges') \eqn{g_T}{g-T}.
 #' Therefore, Hedges & Citkowicz (2015) suggest obtaining the degrees of freedom from
 #'
-#' \deqn{ h = \frac{[(N-2)(1-\rho_{ICC}) + (N^T-n)\rho_{ICC}]^2}
-#' {(N-2)(1-\rho_{ICC})^2 + (N^T-n)n\rho^2_{ICC} + 2(N^T-n)(1-\rho_{ICC})\rho_{ICC}}.}
+#' \deqn{ h = \frac{[(N-2)(1-\rho) + (N^T-n)\rho]^2}
+#' {(N-2)(1-\rho)^2 + (N^T-n)n\rho^2 + 2(N^T-n)(1-\rho)\rho}.}
 #'
 #' where \eqn{N}{N} is the total sample size, \eqn{N^T}{N-T} is the sample size of the treatment group,
 #' containg clustering, \eqn{n}{n} is average cluster size and
-#' \eqn{\rho_{ICC}}{\rho-icc} is the (impute) intraclass correlation. \cr \cr
+#' \eqn{\rho}{\rho} is the (imputed) intraclass correlation. \cr \cr
 #' \emph{NOTE}: Read Taylor et al. (2020) to understand why we use the \eqn{g_T}{g-T} notation.
 #'
 #'
