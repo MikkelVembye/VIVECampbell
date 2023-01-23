@@ -30,5 +30,6 @@ Suggests:
     purrr,
     tibble,
     readxl,
-    gt
+    gt,
+    tidyr
 VignetteBuilder: knitr
