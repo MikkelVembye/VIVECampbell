@@ -110,14 +110,14 @@ which uses the upsilon formula from Pustejovsky (2016).</p></dd>
 underestimating the true variance of (Hedges') \(g_T\). Instead the degrees of freedom
 can be calculated in at least to different way. The What Works
 Clearinghouse suggest using the following formula</p>
-<p>$$ h = \frac{[(N-2)-2(n-1)\rho_{ICC}]^2}
-{(N-2)(1-\rho_{ICC})^2 + n(N-2n)\rho^2_{ICC} + 2(N-2n)\rho_{ICC}(1-\rho_{ICC})}.$$</p>
+<p>$$ h = \frac{[(N-2)-2(n-1)\rho]^2}
+{(N-2)(1-\rho)^2 + n(N-2n)\rho^2 + 2(N-2n)\rho(1-\rho)}.$$</p>
 <p>where \(N\) is the total sample size, \(n\) is average cluster size and
-\(\rho_{ICC}\) is the (impute) intraclass correlation. Alternatively
+\(\rho\) is the (imputed) intraclass correlation. Alternatively
 Pustejovsky (2016) suggest using the following formula to calculate degrees of freedom
 cluster randomized trials
 $$ \upsilon = \frac{n^2M(M-2)}
-{M[(n-1)\rho^2_{ICC} + 1]^2 + (M-2)(n-1)(1-\rho^2_{ICC})^2}.$$</p>
+{M[(n-1)\rho^2 + 1]^2 + (M-2)(n-1)(1-\rho^2)^2}.$$</p>
 <p>where \(M\) is the number of cluster which can also be calculated from \(N/n\). <br><br><em>NOTE</em>: Read Taylor et al. (2020) to understand why we use the \(g_T\) notation.</p>
     </div>
     <div class="section level2">
@@ -143,6 +143,10 @@ Supplement document for Appendix E and the What Works Clearinghouse procedures h
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">df_h</span><span class="op">(</span>N_total <span class="op">=</span> <span class="fl">100</span>, ICC <span class="op">=</span> <span class="fl">0.1</span>, avg_grp_size <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 94.4</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">df_h</span><span class="op">(</span>N_total <span class="op">=</span> <span class="fl">100</span>, ICC <span class="op">=</span> <span class="fl">0.1</span>, avg_grp_size <span class="op">=</span> <span class="fl">5</span>, df_type <span class="op">=</span> <span class="st">"Pustejovsky"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 92.29</span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
