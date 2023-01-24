@@ -24,12 +24,14 @@ reference:
 
 article:
   - title: VIVE specific content
+    desc: test
     navbar: Danish
     contents:
     - Github
     - meta-analysis-in-R
 
   - title: Effect size calculation
+    desc: test2
     navbar: Engelish
     contents:
     - Entering-data
