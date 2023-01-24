@@ -22,18 +22,3 @@ reference:
       - Dietrichson2021_data
       - fadeout
 
-articles:
-  - title: "VIVE specific content"
-    navbar: ~
-    contents:
-    - articles/Github.Rmd
-    - articles/meta-analysis-in-R.Rmd
-
-  - title: "Effect size calculation"
-    navbar: ~
-    contents:
-    - Entering-data.Rmd
-
- - title: "Get started"
-   contents:
-   - VIVECampbell.Rmd
