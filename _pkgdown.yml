@@ -22,16 +22,14 @@ reference:
       - Dietrichson2021_data
       - fadeout
 
-article:
-  - title: "VIVE specific content"
-    desc: "test"
+articles:
+  - title: VIVE specific content
     navbar: ~
     contents:
     - Github
     - meta-analysis-in-R
 
-  - title: "Effect size calculation"
-    desc: "test2"
+  - title: Effect size calculation
     navbar: ~
     contents:
     - Entering-data
