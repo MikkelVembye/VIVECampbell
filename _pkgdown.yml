@@ -22,3 +22,23 @@ reference:
       - Dietrichson2021_data
       - fadeout
 
+articles:
+ - title: Get started
+   navbar: ~
+   contents:
+   - VIVECampbell
+
+ - title: VIVE content
+   navbar: VIVEspecificcontet
+   contents:
+   - articles/Github
+   - articles/meta-analysis-in-R
+
+ - title: ES calc
+   navbar: Effectsizecalc
+   contents:
+   - Entering-data
+
+
+
+
