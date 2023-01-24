@@ -1,5 +1,5 @@
 ---
-title: "Kobling til GitHub plus adgang til Adobe Pro"
+title: "Forbind GitHub og RStudio plus adgang til Adobe Pro"
 author: "Mikkel H. Vembye"
 date: "Last modified `r Sys.Date()`"
 ---
