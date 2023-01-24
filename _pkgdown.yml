@@ -29,13 +29,13 @@ articles:
    - VIVECampbell
 
  - title: VIVE content
-   navbar: VIVEspecificcontet
+   navbar: VIVE specific contet
    contents:
    - articles/Github
    - articles/meta-analysis-in-R
 
- - title: ES calc
-   navbar: Effectsizecalc
+ - title: Effect size calc
+   navbar: Effect size calculation
    contents:
    - Entering-data
 
