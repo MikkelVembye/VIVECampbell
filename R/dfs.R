@@ -11,25 +11,40 @@
 #' degrees of freedom, using the upsilon formula from Pustejovsky (2016, find under
 #' the Cluster randomized trials section). See further details below.
 #'
-#' @details When clustering is present the \eqn{N-2}{N-2} degrees of freedom will be a rather liberal choice,
-#' underestimating the true variance of (Hedges') \eqn{g_T}{g-T}. Instead the degrees of freedom
-#' can be calculated in at least to different way. The What Works
-#' Clearinghouse suggest using the following formula
+#' @details When clustering is present the \eqn{N-2}{N-2} degrees of freedom (\eqn{df}{df}) will be a rather liberal choice,
+#' partly overestimating the small sample corrector \eqn{J}{J} and partly underestimating
+#' the true variance of (Hedges') \eqn{g_T}{g-T}. The impact of the calculated \eqn{df}{df} will be most
+#' consequential for small (sample) studies. To overcome these issue, \eqn{df}{df}
+#' can instead be calculated in at least to different way. The What Works
+#' Clearinghouse suggests using the following formula
 #'
 #' \deqn{ h = \frac{[(N-2)-2(n-1)\rho]^2}
 #' {(N-2)(1-\rho)^2 + n(N-2n)\rho^2 + 2(N-2n)\rho(1-\rho)}.}
 #'
 #' where \eqn{N}{N} is the total sample size, \eqn{n}{n} is average cluster size and
-#' \eqn{\rho}{\rho} is the (imputed) intraclass correlation. Alternatively
-#' Pustejovsky (2016) suggest using the following formula to calculate degrees of freedom
+#' \eqn{\rho}{\rho} is the (imputed) intraclass correlation. Alternatively,
+#' Pustejovsky (2016) suggests using the following formula to calculate degrees of freedom
 #' cluster randomized trials
+#'
 #' \deqn{ \upsilon = \frac{n^2M(M-2)}
 #' {M[(n-1)\rho^2 + 1]^2 + (M-2)(n-1)(1-\rho^2)^2}.}
 #'
-#' where \eqn{M}{M} is the number of cluster which can also be calculated from \eqn{N/n}{N/n}. \cr \cr
-#' \emph{NOTE}: Read Taylor et al. (2020) to understand why we use the \eqn{g_T}{g-T} notation.
+#' where \eqn{M}{M} is the number of cluster which can also be calculated from \eqn{N/n}{N/n}. \cr
 #'
-#' @references Pustejovsky (2016).
+#' @note Read Taylor et al. (2020) to understand why we use the \eqn{g_T}{g-T} notation.
+#' Find suggestions for how and which ICC values to impute when these are unknown (Hedges & Hedberg, 2007, 2013).
+#'
+#' @references Hedges, L. V., & Hedberg, E. C. (2007).
+#' Intraclass correlation values for planning group-randomized trials in education.
+#' \emph{Educational Evaluation and Policy Analysis}, 29(1), 60–87.
+#' \doi{10.3102/0162373707299706}
+#'
+#' Hedges, L. V., & Hedberg, E. C. (2013).
+#' Intraclass Correlations and Covariate Outcome Correlations for Planning
+#' Two- and Three-Level Cluster-Randomized Experiments in Education.
+#' \emph{Evaluation Review}, 37(6), 445–489. \doi{10.1177/0193841X14529126}
+#'
+#' Pustejovsky (2016).
 #' Alternative formulas for the standardized mean difference.
 #' \url{https://www.jepusto.com/alternative-formulas-for-the-smd/}
 #'
@@ -38,15 +53,15 @@
 #' Exploring Strategies for Standardizing Statistical Approaches and Effect Size Reporting.
 #' \emph{Educational Researcher}, 51(1), 72-80. \doi{10.3102/0013189X211051319}
 #'
-#' What Works Clearinghouse (2022).
-#' What Works Clearinghouse Procedures and Standards Handbook, Version 5.0.
-#' \emph{Institute of Education Science}.
-#' \url{https://ies.ed.gov/ncee/wwc/Docs/referenceresources/Final_WWC-HandbookVer5_0-0-508.pdf}
-#'
 #' What Works Clearinghouse (2021).
 #' Supplement document for Appendix E and the What Works Clearinghouse procedures handbook, version 4.1
 #' \emph{Institute of Education Science}.
 #' \url{https://ies.ed.gov/ncee/wwc/Docs/referenceresources/WWC-41-Supplement-508_09212020.pdf}
+#'
+#' What Works Clearinghouse (2022).
+#' What Works Clearinghouse Procedures and Standards Handbook, Version 5.0.
+#' \emph{Institute of Education Science}.
+#' \url{https://ies.ed.gov/ncee/wwc/Docs/referenceresources/Final_WWC-HandbookVer5_0-0-508.pdf}
 #'
 #' @template dfs-arg
 #' @param df_type Character indicating how the degrees of freedom are calculated.
@@ -165,22 +180,35 @@ df_h <- function(N_total, ICC, avg_grp_size = NULL, n_clusters = NULL, df_type =
 #' @description This function calculates the degrees of freedom for studies
 #' with clustering in one treatment group only, using Equation (7) from Hedges & Citkowicz (2015).
 #'
-#' @details When there is clustering in one treatment group only the \eqn{N-2}{N-2} degrees of freedom
-#' will be a rather liberal choice, underestimating the true variance of (Hedges') \eqn{g_T}{g-T}.
-#' Therefore, Hedges & Citkowicz (2015) suggest obtaining the degrees of freedom from
+#' @details When clustering is present the \eqn{N-2}{N-2} degrees of freedom (\eqn{df}{df}) will be a rather liberal choice,
+#' partly overestimating the small sample corrector \eqn{J}{J} and partly underestimating
+#' the true variance of (Hedges') \eqn{g_T}{g-T}. The impact of the calculated \eqn{df}{df} will be most
+#' consequential for small (sample) studies. To overcome these issue,
+#' Hedges & Citkowicz (2015) suggest obtaining the degrees of freedom from
 #'
 #' \deqn{ h = \frac{[(N-2)(1-\rho) + (N^T-n)\rho]^2}
 #' {(N-2)(1-\rho)^2 + (N^T-n)n\rho^2 + 2(N^T-n)(1-\rho)\rho}.}
 #'
 #' where \eqn{N}{N} is the total sample size, \eqn{N^T}{N-T} is the sample size of the treatment group,
 #' containg clustering, \eqn{n}{n} is average cluster size and
-#' \eqn{\rho}{\rho} is the (imputed) intraclass correlation. \cr \cr
-#' \emph{NOTE}: Read Taylor et al. (2020) to understand why we use the \eqn{g_T}{g-T} notation.
+#' \eqn{\rho}{\rho} is the (imputed) intraclass correlation.
 #'
+#' @note Read Taylor et al. (2020) to understand why we use the \eqn{g_T}{g-T} notation.
+#' Find suggestions for how and which ICC values to impute when these are unknown (Hedges & Hedberg, 2007, 2013).
 #'
 #' @references Hedges, L. V., & Citkowicz, M (2015).
 #' Estimating effect size when there is clustering in one treatment groups.
 #' \emph{Behavior Research Methods}, 47(4), 1295-1308. \doi{10.3758/s13428-014-0538-z}
+#'
+#' Hedges, L. V., & Hedberg, E. C. (2007).
+#' Intraclass correlation values for planning group-randomized trials in education.
+#' \emph{Educational Evaluation and Policy Analysis}, 29(1), 60–87.
+#' \doi{10.3102/0162373707299706}
+#'
+#' Hedges, L. V., & Hedberg, E. C. (2013).
+#' Intraclass Correlations and Covariate Outcome Correlations for Planning
+#' Two- and Three-Level Cluster-Randomized Experiments in Education.
+#' \emph{Evaluation Review}, 37(6), 445–489. \doi{10.1177/0193841X14529126}
 #'
 #' Taylor, J.A., Pigott, T.D., & Williams, R. (2020)
 #' Promoting Knowledge Accumulation About Intervention Effects:
