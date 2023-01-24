@@ -23,15 +23,15 @@ reference:
       - fadeout
 
 article:
-  - title: VIVE specific content
-    desc: test
-    navbar: Danish
+  - title: "VIVE specific content"
+    desc: "test"
+    navbar: ~
     contents:
-    - articles/Github.Rmd
-    - articles/meta-analysis-in-R.Rmd
+    - Github
+    - meta-analysis-in-R
 
-  - title: Effect size calculation
-    desc: test2
-    navbar: Engelish
+  - title: "Effect size calculation"
+    desc: "test2"
+    navbar: ~
     contents:
-    - Entering-data.Rmd
+    - Entering-data
