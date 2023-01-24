@@ -5,10 +5,15 @@ development:
   mode: auto
 
 reference:
-  - title: "Degrees of freedom calculation in cluster designed studies"
-    desc: "Functions for performing degrees of freedom calculation in cluster designed studies"
+  - title: "Cluster-bias correction"
+    desc: "Functions for caclulating effect sizes and sampling variances from cluster-designed studies"
     contents:
       - df_h
+
+  - title: "Cluster-bias correction when there is clustering in one treatment group only"
+    desc: "Functions for caclulating effect sizes and sampling variances from cluster-designed studies when there is clustering in one treatment group only"
+    contents:
+      - gamma_1armcluster
       - df_h_1armcluster
 
   - title: "Datasets"
