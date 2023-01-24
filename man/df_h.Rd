@@ -21,7 +21,7 @@ Default is \code{"WWC"}, which uses WWCs Equation E.21 (2022, p. 171). Alternati
 which uses the upsilon formula from Pustejovsky (2016).}
 }
 \value{
-Returns a numerical values indicating the cluster adjusted degrees of freedom.
+Returns a numerical value indicating the cluster adjusted degrees of freedom.
 }
 \description{
 This function calculates the degrees of freedom for studies
@@ -34,12 +34,12 @@ the Cluster randomized trials section). See further details below.
 When clustering is present the \eqn{N-2}{N-2} degrees of freedom (\eqn{df}{df}) will be a rather liberal choice,
 partly overestimating the small sample corrector \eqn{J}{J} and partly underestimating
 the true variance of (Hedges') \eqn{g_T}{g-T}. The impact of the calculated \eqn{df}{df} will be most
-consequential for small (sample) studies. To overcome these issue, \eqn{df}{df}
+consequential for small (sample) studies. To overcome these issues, \eqn{df}{df}
 can instead be calculated in at least to different way. The What Works
 Clearinghouse suggests using the following formula
 
 \deqn{ h = \frac{[(N-2)-2(n-1)\rho]^2}
-{(N-2)(1-\rho)^2 + n(N-2n)\rho^2 + 2(N-2n)\rho(1-\rho)}.}
+{(N-2)(1-\rho)^2 + n(N-2n)\rho^2 + 2(N-2n)\rho(1-\rho)}}
 
 where \eqn{N}{N} is the total sample size, \eqn{n}{n} is average cluster size and
 \eqn{\rho}{\rho} is the (imputed) intraclass correlation. Alternatively,
@@ -47,7 +47,7 @@ Pustejovsky (2016) suggests using the following formula to calculate degrees of 
 cluster randomized trials
 
 \deqn{ \upsilon = \frac{n^2M(M-2)}
-{M[(n-1)\rho^2 + 1]^2 + (M-2)(n-1)(1-\rho^2)^2}.}
+{M[(n-1)\rho^2 + 1]^2 + (M-2)(n-1)(1-\rho^2)^2}}
 
 where \eqn{M}{M} is the number of cluster which can also be calculated from \eqn{N/n}{N/n}. \cr
 }

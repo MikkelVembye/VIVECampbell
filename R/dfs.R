@@ -14,12 +14,12 @@
 #' @details When clustering is present the \eqn{N-2}{N-2} degrees of freedom (\eqn{df}{df}) will be a rather liberal choice,
 #' partly overestimating the small sample corrector \eqn{J}{J} and partly underestimating
 #' the true variance of (Hedges') \eqn{g_T}{g-T}. The impact of the calculated \eqn{df}{df} will be most
-#' consequential for small (sample) studies. To overcome these issue, \eqn{df}{df}
+#' consequential for small (sample) studies. To overcome these issues, \eqn{df}{df}
 #' can instead be calculated in at least to different way. The What Works
 #' Clearinghouse suggests using the following formula
 #'
 #' \deqn{ h = \frac{[(N-2)-2(n-1)\rho]^2}
-#' {(N-2)(1-\rho)^2 + n(N-2n)\rho^2 + 2(N-2n)\rho(1-\rho)}.}
+#' {(N-2)(1-\rho)^2 + n(N-2n)\rho^2 + 2(N-2n)\rho(1-\rho)}}
 #'
 #' where \eqn{N}{N} is the total sample size, \eqn{n}{n} is average cluster size and
 #' \eqn{\rho}{\rho} is the (imputed) intraclass correlation. Alternatively,
@@ -27,7 +27,7 @@
 #' cluster randomized trials
 #'
 #' \deqn{ \upsilon = \frac{n^2M(M-2)}
-#' {M[(n-1)\rho^2 + 1]^2 + (M-2)(n-1)(1-\rho^2)^2}.}
+#' {M[(n-1)\rho^2 + 1]^2 + (M-2)(n-1)(1-\rho^2)^2}}
 #'
 #' where \eqn{M}{M} is the number of cluster which can also be calculated from \eqn{N/n}{N/n}. \cr
 #'
@@ -68,7 +68,7 @@
 #' Default is \code{"WWC"}, which uses WWCs Equation E.21 (2022, p. 171). Alternative is \code{"Pustejovsky"},
 #' which uses the upsilon formula from Pustejovsky (2016).
 #'
-#' @return Returns a numerical values indicating the cluster adjusted degrees of freedom.
+#' @return Returns a numerical value indicating the cluster adjusted degrees of freedom.
 #'
 #' @export
 #'
@@ -183,11 +183,11 @@ df_h <- function(N_total, ICC, avg_grp_size = NULL, n_clusters = NULL, df_type =
 #' @details When clustering is present the \eqn{N-2}{N-2} degrees of freedom (\eqn{df}{df}) will be a rather liberal choice,
 #' partly overestimating the small sample corrector \eqn{J}{J} and partly underestimating
 #' the true variance of (Hedges') \eqn{g_T}{g-T}. The impact of the calculated \eqn{df}{df} will be most
-#' consequential for small (sample) studies. To overcome these issue,
+#' consequential for small (sample) studies. To overcome these issues,
 #' Hedges & Citkowicz (2015) suggest obtaining the degrees of freedom from
 #'
 #' \deqn{ h = \frac{[(N-2)(1-\rho) + (N^T-n)\rho]^2}
-#' {(N-2)(1-\rho)^2 + (N^T-n)n\rho^2 + 2(N^T-n)(1-\rho)\rho}.}
+#' {(N-2)(1-\rho)^2 + (N^T-n)n\rho^2 + 2(N^T-n)(1-\rho)\rho}}
 #'
 #' where \eqn{N}{N} is the total sample size, \eqn{N^T}{N-T} is the sample size of the treatment group,
 #' containg clustering, \eqn{n}{n} is average cluster size and
@@ -222,7 +222,7 @@ df_h <- function(N_total, ICC, avg_grp_size = NULL, n_clusters = NULL, df_type =
 #' @param avg_grp_size Numerical value indicating the average cluster size.
 #' @param n_clusters Numerical value indicating the number of clusters in the treatment group.
 #'
-#' @return Returns a numerical values indicating the cluster adjusted degrees of freedom.
+#' @return Returns a numerical value indicating the cluster adjusted degrees of freedom.
 #'
 #' @export
 #'

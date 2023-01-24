@@ -18,7 +18,7 @@ df_h_1armcluster(N_total, ICC, N_grp, avg_grp_size = NULL, n_clusters = NULL)
 \item{n_clusters}{Numerical value indicating the number of clusters in the treatment group.}
 }
 \value{
-Returns a numerical values indicating the cluster adjusted degrees of freedom.
+Returns a numerical value indicating the cluster adjusted degrees of freedom.
 }
 \description{
 This function calculates the degrees of freedom for studies
@@ -28,11 +28,11 @@ with clustering in one treatment group only, using Equation (7) from Hedges & Ci
 When clustering is present the \eqn{N-2}{N-2} degrees of freedom (\eqn{df}{df}) will be a rather liberal choice,
 partly overestimating the small sample corrector \eqn{J}{J} and partly underestimating
 the true variance of (Hedges') \eqn{g_T}{g-T}. The impact of the calculated \eqn{df}{df} will be most
-consequential for small (sample) studies. To overcome these issue,
+consequential for small (sample) studies. To overcome these issues,
 Hedges & Citkowicz (2015) suggest obtaining the degrees of freedom from
 
 \deqn{ h = \frac{[(N-2)(1-\rho) + (N^T-n)\rho]^2}
-{(N-2)(1-\rho)^2 + (N^T-n)n\rho^2 + 2(N^T-n)(1-\rho)\rho}.}
+{(N-2)(1-\rho)^2 + (N^T-n)n\rho^2 + 2(N^T-n)(1-\rho)\rho}}
 
 where \eqn{N}{N} is the total sample size, \eqn{N^T}{N-T} is the sample size of the treatment group,
 containg clustering, \eqn{n}{n} is average cluster size and

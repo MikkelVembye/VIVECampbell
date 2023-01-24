@@ -2,3 +2,4 @@
 
 export(df_h)
 export(df_h_1armcluster)
+export(gamma_1armcluster)
