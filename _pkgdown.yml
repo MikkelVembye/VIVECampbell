@@ -27,11 +27,11 @@ article:
     desc: test
     navbar: Danish
     contents:
-    - Github
-    - meta-analysis-in-R
+    - articles/Github.Rmd
+    - articles/meta-analysis-in-R.Rmd
 
   - title: Effect size calculation
     desc: test2
     navbar: Engelish
     contents:
-    - Entering-data
+    - Entering-data.Rmd
