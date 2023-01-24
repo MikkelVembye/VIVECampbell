@@ -23,17 +23,17 @@ reference:
       - fadeout
 
 articles:
-  - title: VIVE specific content
+  - title: "VIVE specific content"
     navbar: ~
     contents:
-    - Github
-    - meta-analysis-in-R
+    - articles/Github.Rmd
+    - articles/meta-analysis-in-R.Rmd
 
-  - title: Effect size calculation
+  - title: "Effect size calculation"
     navbar: ~
     contents:
-    - Entering-data
+    - Entering-data.Rmd
 
- - title: Get started
+ - title: "Get started"
    contents:
-   - VIVECampbell
+   - VIVECampbell.Rmd
