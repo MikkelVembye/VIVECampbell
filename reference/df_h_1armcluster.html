@@ -90,17 +90,17 @@ with clustering in one treatment group only, using Equation (7) from Hedges &amp
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>Returns a numerical values indicating the cluster adjusted degrees of freedom.</p>
+<p>Returns a numerical value indicating the cluster adjusted degrees of freedom.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>When clustering is present the \(N-2\) degrees of freedom (\(df\)) will be a rather liberal choice,
 partly overestimating the small sample corrector \(J\) and partly underestimating
 the true variance of (Hedges') \(g_T\). The impact of the calculated \(df\) will be most
-consequential for small (sample) studies. To overcome these issue,
+consequential for small (sample) studies. To overcome these issues,
 Hedges &amp; Citkowicz (2015) suggest obtaining the degrees of freedom from</p>
 <p>$$ h = \frac{[(N-2)(1-\rho) + (N^T-n)\rho]^2}
-{(N-2)(1-\rho)^2 + (N^T-n)n\rho^2 + 2(N^T-n)(1-\rho)\rho}.$$</p>
+{(N-2)(1-\rho)^2 + (N^T-n)n\rho^2 + 2(N^T-n)(1-\rho)\rho}$$</p>
 <p>where \(N\) is the total sample size, \(N^T\) is the sample size of the treatment group,
 containg clustering, \(n\) is average cluster size and
 \(\rho\) is the (imputed) intraclass correlation.</p>

@@ -102,24 +102,24 @@ which uses the upsilon formula from Pustejovsky (2016).</p></dd>
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>Returns a numerical values indicating the cluster adjusted degrees of freedom.</p>
+<p>Returns a numerical value indicating the cluster adjusted degrees of freedom.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>When clustering is present the \(N-2\) degrees of freedom (\(df\)) will be a rather liberal choice,
 partly overestimating the small sample corrector \(J\) and partly underestimating
 the true variance of (Hedges') \(g_T\). The impact of the calculated \(df\) will be most
-consequential for small (sample) studies. To overcome these issue, \(df\)
+consequential for small (sample) studies. To overcome these issues, \(df\)
 can instead be calculated in at least to different way. The What Works
 Clearinghouse suggests using the following formula</p>
 <p>$$ h = \frac{[(N-2)-2(n-1)\rho]^2}
-{(N-2)(1-\rho)^2 + n(N-2n)\rho^2 + 2(N-2n)\rho(1-\rho)}.$$</p>
+{(N-2)(1-\rho)^2 + n(N-2n)\rho^2 + 2(N-2n)\rho(1-\rho)}$$</p>
 <p>where \(N\) is the total sample size, \(n\) is average cluster size and
 \(\rho\) is the (imputed) intraclass correlation. Alternatively,
 Pustejovsky (2016) suggests using the following formula to calculate degrees of freedom
 cluster randomized trials</p>
 <p>$$ \upsilon = \frac{n^2M(M-2)}
-{M[(n-1)\rho^2 + 1]^2 + (M-2)(n-1)(1-\rho^2)^2}.$$</p>
+{M[(n-1)\rho^2 + 1]^2 + (M-2)(n-1)(1-\rho^2)^2}$$</p>
 <p>where \(M\) is the number of cluster which can also be calculated from \(N/n\). <br></p>
     </div>
     <div class="section level2">
