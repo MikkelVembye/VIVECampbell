@@ -106,37 +106,52 @@ which uses the upsilon formula from Pustejovsky (2016).</p></dd>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>When clustering is present the \(N-2\) degrees of freedom will be a rather liberal choice,
-underestimating the true variance of (Hedges') \(g_T\). Instead the degrees of freedom
-can be calculated in at least to different way. The What Works
-Clearinghouse suggest using the following formula</p>
+    <p>When clustering is present the \(N-2\) degrees of freedom (\(df\)) will be a rather liberal choice,
+partly overestimating the small sample corrector \(J\) and partly underestimating
+the true variance of (Hedges') \(g_T\). The impact of the calculated \(df\) will be most
+consequential for small (sample) studies. To overcome these issue, \(df\)
+can instead be calculated in at least to different way. The What Works
+Clearinghouse suggests using the following formula</p>
 <p>$$ h = \frac{[(N-2)-2(n-1)\rho]^2}
 {(N-2)(1-\rho)^2 + n(N-2n)\rho^2 + 2(N-2n)\rho(1-\rho)}.$$</p>
 <p>where \(N\) is the total sample size, \(n\) is average cluster size and
-\(\rho\) is the (imputed) intraclass correlation. Alternatively
-Pustejovsky (2016) suggest using the following formula to calculate degrees of freedom
-cluster randomized trials
-$$ \upsilon = \frac{n^2M(M-2)}
+\(\rho\) is the (imputed) intraclass correlation. Alternatively,
+Pustejovsky (2016) suggests using the following formula to calculate degrees of freedom
+cluster randomized trials</p>
+<p>$$ \upsilon = \frac{n^2M(M-2)}
 {M[(n-1)\rho^2 + 1]^2 + (M-2)(n-1)(1-\rho^2)^2}.$$</p>
-<p>where \(M\) is the number of cluster which can also be calculated from \(N/n\). <br><br><em>NOTE</em>: Read Taylor et al. (2020) to understand why we use the \(g_T\) notation.</p>
+<p>where \(M\) is the number of cluster which can also be calculated from \(N/n\). <br></p>
+    </div>
+    <div class="section level2">
+    <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
+    <p>Read Taylor et al. (2020) to understand why we use the \(g_T\) notation.
+Find suggestions for how and which ICC values to impute when these are unknown (Hedges &amp; Hedberg, 2007, 2013).</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
-    <p>Pustejovsky (2016).
+    <p>Hedges, L. V., &amp; Hedberg, E. C. (2007).
+Intraclass correlation values for planning group-randomized trials in education.
+<em>Educational Evaluation and Policy Analysis</em>, 29(1), 60–87.
+<a href="https://doi.org/10.3102/0162373707299706" class="external-link">doi:10.3102/0162373707299706</a></p>
+<p>Hedges, L. V., &amp; Hedberg, E. C. (2013).
+Intraclass Correlations and Covariate Outcome Correlations for Planning
+Two- and Three-Level Cluster-Randomized Experiments in Education.
+<em>Evaluation Review</em>, 37(6), 445–489. <a href="https://doi.org/10.1177/0193841X14529126" class="external-link">doi:10.1177/0193841X14529126</a></p>
+<p>Pustejovsky (2016).
 Alternative formulas for the standardized mean difference.
 <a href="https://www.jepusto.com/alternative-formulas-for-the-smd/" class="external-link">https://www.jepusto.com/alternative-formulas-for-the-smd/</a></p>
 <p>Taylor, J.A., Pigott, T.D., &amp; Williams, R. (2020)
 Promoting Knowledge Accumulation About Intervention Effects:
 Exploring Strategies for Standardizing Statistical Approaches and Effect Size Reporting.
 <em>Educational Researcher</em>, 51(1), 72-80. <a href="https://doi.org/10.3102/0013189X211051319" class="external-link">doi:10.3102/0013189X211051319</a></p>
-<p>What Works Clearinghouse (2022).
-What Works Clearinghouse Procedures and Standards Handbook, Version 5.0.
-<em>Institute of Education Science</em>.
-<a href="https://ies.ed.gov/ncee/wwc/Docs/referenceresources/Final_WWC-HandbookVer5_0-0-508.pdf" class="external-link">https://ies.ed.gov/ncee/wwc/Docs/referenceresources/Final_WWC-HandbookVer5_0-0-508.pdf</a></p>
 <p>What Works Clearinghouse (2021).
 Supplement document for Appendix E and the What Works Clearinghouse procedures handbook, version 4.1
 <em>Institute of Education Science</em>.
 <a href="https://ies.ed.gov/ncee/wwc/Docs/referenceresources/WWC-41-Supplement-508_09212020.pdf" class="external-link">https://ies.ed.gov/ncee/wwc/Docs/referenceresources/WWC-41-Supplement-508_09212020.pdf</a></p>
+<p>What Works Clearinghouse (2022).
+What Works Clearinghouse Procedures and Standards Handbook, Version 5.0.
+<em>Institute of Education Science</em>.
+<a href="https://ies.ed.gov/ncee/wwc/Docs/referenceresources/Final_WWC-HandbookVer5_0-0-508.pdf" class="external-link">https://ies.ed.gov/ncee/wwc/Docs/referenceresources/Final_WWC-HandbookVer5_0-0-508.pdf</a></p>
     </div>
 
     <div class="section level2">

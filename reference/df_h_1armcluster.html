@@ -94,20 +94,35 @@ with clustering in one treatment group only, using Equation (7) from Hedges &amp
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>When there is clustering in one treatment group only the \(N-2\) degrees of freedom
-will be a rather liberal choice, underestimating the true variance of (Hedges') \(g_T\).
-Therefore, Hedges &amp; Citkowicz (2015) suggest obtaining the degrees of freedom from</p>
+    <p>When clustering is present the \(N-2\) degrees of freedom (\(df\)) will be a rather liberal choice,
+partly overestimating the small sample corrector \(J\) and partly underestimating
+the true variance of (Hedges') \(g_T\). The impact of the calculated \(df\) will be most
+consequential for small (sample) studies. To overcome these issue,
+Hedges &amp; Citkowicz (2015) suggest obtaining the degrees of freedom from</p>
 <p>$$ h = \frac{[(N-2)(1-\rho) + (N^T-n)\rho]^2}
 {(N-2)(1-\rho)^2 + (N^T-n)n\rho^2 + 2(N^T-n)(1-\rho)\rho}.$$</p>
 <p>where \(N\) is the total sample size, \(N^T\) is the sample size of the treatment group,
 containg clustering, \(n\) is average cluster size and
-\(\rho\) is the (imputed) intraclass correlation. <br><br><em>NOTE</em>: Read Taylor et al. (2020) to understand why we use the \(g_T\) notation.</p>
+\(\rho\) is the (imputed) intraclass correlation.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
+    <p>Read Taylor et al. (2020) to understand why we use the \(g_T\) notation.
+Find suggestions for how and which ICC values to impute when these are unknown (Hedges &amp; Hedberg, 2007, 2013).</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
     <p>Hedges, L. V., &amp; Citkowicz, M (2015).
 Estimating effect size when there is clustering in one treatment groups.
 <em>Behavior Research Methods</em>, 47(4), 1295-1308. <a href="https://doi.org/10.3758/s13428-014-0538-z" class="external-link">doi:10.3758/s13428-014-0538-z</a></p>
+<p>Hedges, L. V., &amp; Hedberg, E. C. (2007).
+Intraclass correlation values for planning group-randomized trials in education.
+<em>Educational Evaluation and Policy Analysis</em>, 29(1), 60–87.
+<a href="https://doi.org/10.3102/0162373707299706" class="external-link">doi:10.3102/0162373707299706</a></p>
+<p>Hedges, L. V., &amp; Hedberg, E. C. (2013).
+Intraclass Correlations and Covariate Outcome Correlations for Planning
+Two- and Three-Level Cluster-Randomized Experiments in Education.
+<em>Evaluation Review</em>, 37(6), 445–489. <a href="https://doi.org/10.1177/0193841X14529126" class="external-link">doi:10.1177/0193841X14529126</a></p>
 <p>Taylor, J.A., Pigott, T.D., &amp; Williams, R. (2020)
 Promoting Knowledge Accumulation About Intervention Effects:
 Exploring Strategies for Standardizing Statistical Approaches and Effect Size Reporting.
