@@ -124,13 +124,17 @@ for the group without clustering, and \(S_T\) is the standard deviation ignoring
 fact that \(S_T\) systematically underestimates the true standard deviation, \(\sigma_T\),
 the cluster-adjusted effect size can be obtained from</p>
 <p>$$g_T = g_{naive}\sqrt{\gamma}$$</p>
-<p>if clustering is properly adjusted for, the sampling variance of \(g_T\) is given by</p>
-<p>$$v_{g^T} = \left(\dfrac{1}{N^T} + \dfrac{1}{N^C}\right) \gamma + \dfrac{g^2_T}{2h} $$</p>
+<p>if a study properly adjusted for clustering, the sampling variance of \(g_T\),
+(when based on posttest measures only) is given by</p>
+<p>$$v_{g_T} = \left(\dfrac{1}{N^T} + \dfrac{1}{N^C}\right) \gamma + \dfrac{g^2_T}{2h} $$</p>
 <p>where \(N^T\) is the sample size of the treatment group containing clustering and \(h\) is
 given by</p>
 <p>$$ h = \dfrac{[(N-2)(1-\rho) + (N^T-n)\rho]^2}
 {(N-2)(1-\rho)^2 + (N^T-n)n\rho^2 + 2(N^T-n)(1-\rho)\rho}$$</p>
-<p>where \(N\) is the total sample size.</p>
+<p>where \(N\) is the total sample size. <br><br></p>
+<p>The reason why we do not multiply \(J^2\) to \(v_{g_T}\), as suggested by Borenstein et al. (2009, 27),
+is that Hedges et al. (2023, p. 12) showed in a simulation that multiplying \(J^2\) to
+\(v_{g_T}\) underestimates the true variance.</p>
     </div>
     <div class="section level2">
     <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
@@ -139,7 +143,10 @@ Find suggestions for how and which ICC values to impute when these are unknown (
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
-    <p>Hedges, L. V. (2007).
+    <p>Borenstein, M., Hedges, L. V., Higgins, J. P. T., &amp; Rothstein, H. R. (2009).
+<em>Introduction to meta-analysis</em> (1st ed.).
+John Wiley &amp; Sons.</p>
+<p>Hedges, L. V. (2007).
 Effect sizes in cluster-randomized designs.
 <em>Journal of Educational and Behavioral Statistics</em>, 32(4), 341–370.
 <a href="https://doi.org/10.3102/1076998606298043" class="external-link">doi:10.3102/1076998606298043</a></p>
@@ -158,6 +165,10 @@ Intraclass correlation values for planning group-randomized trials in education.
 Intraclass correlations and covariate outcome correlations for planning
 two- and three-Level cluster-randomized experiments in education.
 <em>Evaluation Review</em>, 37(6), 445–489. <a href="https://doi.org/10.1177/0193841X14529126" class="external-link">doi:10.1177/0193841X14529126</a></p>
+<p>Hedges, L. V, Tipton, E., Zejnullahi, R., &amp; Diaz, K. G. (2023).
+Effect sizes in ANCOVA and difference-in-differences designs.
+<em>British Journal of Mathematical and Statistical Psychology</em>.
+<a href="https://doi.org/10.1111/bmsp.12296" class="external-link">doi:10.1111/bmsp.12296</a></p>
 <p>Taylor, J.A., Pigott, T.D., &amp; Williams, R. (2020)
 Promoting knowledge accumulation about intervention effects:
 Exploring strategies for standardizing statistical approaches and effect size reporting.
