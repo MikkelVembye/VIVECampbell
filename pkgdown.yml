@@ -5,8 +5,9 @@ articles:
   Entering-data: Entering-data.html
   VIVECampbell: VIVECampbell.html
   Github: Github.html
+  Pooling-subgroups: Pooling-subgroups.html
   meta-analysis-in-R: meta-analysis-in-R.html
-last_built: 2023-01-25T15:17Z
+last_built: 2023-01-25T20:48Z
 urls:
   reference: https://mikkelvembye.github.io/VIVECampbell/reference
   article: https://mikkelvembye.github.io/VIVECampbell/articles
