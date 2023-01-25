@@ -25,8 +25,8 @@
 #' where \eqn{J = 1 - 3/(4df-1)}, \eqn{\bar{Y}^T_{\bullet\bullet}} it the average treatment effect for the
 #' treatment group containing clustering, \eqn{\bar{Y}^C_{\bullet}} is the average treatment effect
 #' for the group without clustering, and \eqn{S_T} is the standard deviation ignoring clustering. To account for the
-#' fact that \eqn{S_T} systematically underestimates the true standard deviation, \eqn{\sigma_T},
-#' the cluster-adjusted effect size can be obtained from
+#' fact that \eqn{S_T} systematically underestimates the true standard deviation, \eqn{\sigma_T}, making \eqn{g} larger than the true
+#' values of \eqn{g}, i.e., \eqn{\delta}, the cluster-adjusted effect size can be obtained from
 #'
 #' \deqn{g_T = g_{naive}\sqrt{\gamma}}
 #'
@@ -125,7 +125,7 @@ gamma_1armcluster <- function(N_total, Nc, avg_grp_size, ICC, sqrt = TRUE){
   N <- N_total
   rho <- ICC
 
-  gamma <- 1 - (((Nc + n-2)*rho)/(N-2))
+  gamma <- 1 - (Nc + n-2)*rho/(N-2)
 
 
   if (sqrt){
@@ -137,3 +137,112 @@ gamma_1armcluster <- function(N_total, Nc, avg_grp_size, ICC, sqrt = TRUE){
   round(res, 3)
 
 }
+
+
+
+#' @title Calculating the design effect to cluster bias adjusted sampling variances when there is clustering in one treatment group only
+#'
+#' @description Hej
+#'
+#' @details Equation
+#'
+#' \deqn{\eta  = 1 + \left( \dfrac{nN^C}{N}-1 \right)\rho }
+#'
+#' @note Read Taylor et al. (2020) to understand why we use the \eqn{g_T}{g-T} notation.
+#' Find suggestions for how and which ICC values to impute when these are unknown (Hedges & Hedberg, 2007, 2013).
+#'
+#' @references Borenstein, M., Hedges, L. V., Higgins, J. P. T., & Rothstein, H. R. (2009).
+#' \emph{Introduction to meta-analysis} (1st ed.).
+#' John Wiley & Sons.
+#'
+#' Hedges, L. V. (2007).
+#' Effect sizes in cluster-randomized designs.
+#' \emph{Journal of Educational and Behavioral Statistics}, 32(4), 341–370.
+#' \doi{10.3102/1076998606298043}
+#'
+#' Hedges, L. V. (2011).
+#' Effect sizes in three-level cluster-randomized experiments.
+#' \emph{Journal of Educational and Behavioral Statistics}, 36(3), 346–380.
+#' \doi{10.3102/1076998610376617}
+#'
+#' Hedges, L. V., & Citkowicz, M (2015).
+#' Estimating effect size when there is clustering in one treatment groups.
+#' \emph{Behavior Research Methods}, 47(4), 1295-1308. \doi{10.3758/s13428-014-0538-z}
+#'
+#' Hedges, L. V., & Hedberg, E. C. (2007).
+#' Intraclass correlation values for planning group-randomized trials in education.
+#' \emph{Educational Evaluation and Policy Analysis}, 29(1), 60–87.
+#' \doi{10.3102/0162373707299706}
+#'
+#' Hedges, L. V., & Hedberg, E. C. (2013).
+#' Intraclass correlations and covariate outcome correlations for planning
+#' two- and three-Level cluster-randomized experiments in education.
+#' \emph{Evaluation Review}, 37(6), 445–489. \doi{10.1177/0193841X14529126}
+#'
+#' Hedges, L. V, Tipton, E., Zejnullahi, R., & Diaz, K. G. (2023).
+#' Effect sizes in ANCOVA and difference-in-differences designs.
+#' \emph{British Journal of Mathematical and Statistical Psychology}.
+#' \doi{10.1111/bmsp.12296}
+#'
+#' Taylor, J.A., Pigott, T.D., & Williams, R. (2020)
+#' Promoting knowledge accumulation about intervention effects:
+#' Exploring strategies for standardizing statistical approaches and effect size reporting.
+#' \emph{Educational Researcher}, 51(1), 72-80. \doi{10.3102/0013189X211051319}
+#'
+#' What Works Clearinghouse (2021).
+#' Supplement document for Appendix E and the What Works Clearinghouse procedures handbook, version 4.1
+#' \emph{Institute of Education Science}.
+#' \url{https://ies.ed.gov/ncee/wwc/Docs/referenceresources/WWC-41-Supplement-508_09212020.pdf}
+#'
+#'
+#' @param N_total Numerical value indicating the total sample size of the study.
+#' @param Nc Numerical value indicating the sample size of the arm/group that does not contain clustering.
+#' @param avg_grp_size Numerical value indicating the average cluster size.
+#' @param ICC Numerical value indicating the intra-class correlation (ICC) value.
+#' @param sqrt Logical indicating if the square root of eta should be calculated. Default = \code{FALSE}.
+#' Use the function if you want to calculate the standard error (SE) instead of the variance.
+#'
+#' @seealso \code{\link{gamma_1armcluster}}
+#'
+#' @export
+#'
+#' @examples
+#'
+#' N <- 100
+#' Nc <- 40
+#' n <- 5
+#' rho <- 0.1
+#'
+#' eta_1armcluster(N_total = N, Nc = Nc, avg_grp_size = n, ICC = rho)
+#'
+#' # Testing function
+#' round(1 + (n*Nc/N - 1)*rho, 3)
+#'
+
+eta_1armcluster <- function(N_total, Nc, avg_grp_size, ICC, sqrt = FALSE){
+
+  N <- N_total
+  n <- avg_grp_size
+  rho <- ICC
+
+  eta <- 1 + (n*Nc/N - 1)*rho
+
+  if (sqrt){
+    res <- sqrt(eta)
+  } else {
+    res <- eta
+  }
+
+  round(res, 3)
+
+}
+
+
+
+
+
+
+
+
+
+

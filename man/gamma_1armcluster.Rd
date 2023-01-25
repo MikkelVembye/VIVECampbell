@@ -47,8 +47,8 @@ Then let the naive estimator of Hedges' \eqn{g}{g} be
 where \eqn{J = 1 - 3/(4df-1)}, \eqn{\bar{Y}^T_{\bullet\bullet}} it the average treatment effect for the
 treatment group containing clustering, \eqn{\bar{Y}^C_{\bullet}} is the average treatment effect
 for the group without clustering, and \eqn{S_T} is the standard deviation ignoring clustering. To account for the
-fact that \eqn{S_T} systematically underestimates the true standard deviation, \eqn{\sigma_T},
-the cluster-adjusted effect size can be obtained from
+fact that \eqn{S_T} systematically underestimates the true standard deviation, \eqn{\sigma_T}, making \eqn{g} larger than the true
+values of \eqn{g}, i.e., \eqn{\delta}, the cluster-adjusted effect size can be obtained from
 
 \deqn{g_T = g_{naive}\sqrt{\gamma}}
 
