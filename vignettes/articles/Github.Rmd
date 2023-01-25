@@ -37,5 +37,13 @@ God fornøjelse.
 
 ## Adgang til Adobe Reader Pro
 
-Når vi skal trække information og data ud af ældre artikler, er det en klar fordel at have programmet Adobe Reader Pro, således ældre pdf'er skal konverteres om til Word-format. For at få adgang til dette program skal du først bede [Niels](https://www.vive.dk/da/medarbejdere/niels-koldsoe-1738/?limit=20&offset=0) om at få oprettet en profil på Adobe. Derefter downloader du Adobe Creative Cloud i Software Centeret, hvori du har adgang til at opdatere din Adobe Reader til pro-versionen. 
+Når vi skal trække information og data ud af ældre artikler, er det en klar fordel at have programmet Adobe Reader Pro, således ældre pdf'er skal konverteres om til Word-format. For at få adgang til dette program skal du først bede [Niels](https://www.vive.dk/da/medarbejdere/niels-koldsoe-1738/?limit=20&offset=0) om at få oprettet en profil på Adobe. Derefter downloader du Adobe Creative Cloud i Software Centeret. Se herunder 
 
+![][adobe]
+
+Åben derefter Adobe Creative Cloud, hvori du har adgang til at opdatere din Adobe Reader til pro-versionen. Se nedenfor.
+
+![][creative_cloud]
+
+[adobe]: pictures/softcenter_adobe_crea.png
+[creative_cloud]: pictures/creative_cloud.png
