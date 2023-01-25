@@ -29,7 +29,7 @@ articles:
    - VIVECampbell
 
  - title: VIVE content
-   navbar: VIVE specific contet
+   navbar: VIVE specific content
    contents:
    - articles/Github
    - articles/meta-analysis-in-R
