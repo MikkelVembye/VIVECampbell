@@ -64,6 +64,10 @@ given by
 
 where \eqn{N}{N} is the total sample size.
 }
+\note{
+Read Taylor et al. (2020) to understand why we use the \eqn{g_T}{g-T} notation.
+Find suggestions for how and which ICC values to impute when these are unknown (Hedges & Hedberg, 2007, 2013).
+}
 \examples{
 
 N <- 100
@@ -91,6 +95,21 @@ Effect sizes in three-level cluster-randomized experiments.
 Hedges, L. V., & Citkowicz, M (2015).
 Estimating effect size when there is clustering in one treatment groups.
 \emph{Behavior Research Methods}, 47(4), 1295-1308. \doi{10.3758/s13428-014-0538-z}
+
+Hedges, L. V., & Hedberg, E. C. (2007).
+Intraclass correlation values for planning group-randomized trials in education.
+\emph{Educational Evaluation and Policy Analysis}, 29(1), 60–87.
+\doi{10.3102/0162373707299706}
+
+Hedges, L. V., & Hedberg, E. C. (2013).
+Intraclass Correlations and Covariate Outcome Correlations for Planning
+Two- and Three-Level Cluster-Randomized Experiments in Education.
+\emph{Evaluation Review}, 37(6), 445–489. \doi{10.1177/0193841X14529126}
+
+Taylor, J.A., Pigott, T.D., & Williams, R. (2020)
+Promoting Knowledge Accumulation About Intervention Effects:
+Exploring Strategies for Standardizing Statistical Approaches and Effect Size Reporting.
+\emph{Educational Researcher}, 51(1), 72-80. \doi{10.3102/0013189X211051319}
 
 What Works Clearinghouse (2021).
 Supplement document for Appendix E and the What Works Clearinghouse procedures handbook, version 4.1
