@@ -1,7 +1,7 @@
 #' @title Small number of clusters correction when there is clustering in one treatment group only
 #'
 #' @description This function calculates a small cluster-design adjustment factor which can be used
-#' to adjusted effect sizes and their sampling variances from cluster-design studies
+#' to adjusted effect sizes (independently of how clustering is handled) and the sampling variances from cluster-design studies
 #' that adequately handles clustering. This factor can be found in second term of Equation (5)
 #' from from Hedges & Citkowicz (2015, p. 1298). The factor in denoted as \eqn{\gamma}{\gamma} in WWC (2021).
 #' The same notion is used here and gave name to the function.
