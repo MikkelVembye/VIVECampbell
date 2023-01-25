@@ -71,12 +71,12 @@ Intraclass correlation values for planning group-randomized trials in education.
 \doi{10.3102/0162373707299706}
 
 Hedges, L. V., & Hedberg, E. C. (2013).
-Intraclass Correlations and Covariate Outcome Correlations for Planning
-Two- and Three-Level Cluster-Randomized Experiments in Education.
+Intraclass correlations and covariate outcome correlations for planning
+two- and three-Level cluster-randomized experiments in education.
 \emph{Evaluation Review}, 37(6), 445–489. \doi{10.1177/0193841X14529126}
 
 Taylor, J.A., Pigott, T.D., & Williams, R. (2020)
-Promoting Knowledge Accumulation About Intervention Effects:
-Exploring Strategies for Standardizing Statistical Approaches and Effect Size Reporting.
+Promoting knowledge accumulation about intervention effects:
+Exploring strategies for standardizing statistical approaches and effect size reporting.
 \emph{Educational Researcher}, 51(1), 72-80. \doi{10.3102/0013189X211051319}
 }
