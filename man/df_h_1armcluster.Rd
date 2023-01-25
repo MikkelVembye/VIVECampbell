@@ -31,7 +31,7 @@ the true variance of (Hedges') \eqn{g_T}{g-T}. The impact of the calculated \eqn
 consequential for small (sample) studies. To overcome these issues,
 Hedges & Citkowicz (2015) suggest obtaining the degrees of freedom from
 
-\deqn{ h = \frac{[(N-2)(1-\rho) + (N^T-n)\rho]^2}
+\deqn{ h = \dfrac{[(N-2)(1-\rho) + (N^T-n)\rho]^2}
 {(N-2)(1-\rho)^2 + (N^T-n)n\rho^2 + 2(N^T-n)(1-\rho)\rho}}
 
 where \eqn{N}{N} is the total sample size, \eqn{N^T}{N-T} is the sample size of the treatment group,

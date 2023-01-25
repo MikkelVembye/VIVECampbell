@@ -38,7 +38,7 @@ consequential for small (sample) studies. To overcome these issues, \eqn{df}{df}
 can instead be calculated in at least to different way. The What Works
 Clearinghouse suggests using the following formula
 
-\deqn{ h = \frac{[(N-2)-2(n-1)\rho]^2}
+\deqn{ h = \dfrac{[(N-2)-2(n-1)\rho]^2}
 {(N-2)(1-\rho)^2 + n(N-2n)\rho^2 + 2(N-2n)\rho(1-\rho)}}
 
 where \eqn{N}{N} is the total sample size, \eqn{n}{n} is average cluster size and
@@ -46,7 +46,7 @@ where \eqn{N}{N} is the total sample size, \eqn{n}{n} is average cluster size an
 Pustejovsky (2016) suggests using the following formula to calculate degrees of freedom
 cluster randomized trials
 
-\deqn{ \upsilon = \frac{n^2M(M-2)}
+\deqn{ \upsilon = \dfrac{n^2M(M-2)}
 {M[(n-1)\rho^2 + 1]^2 + (M-2)(n-1)(1-\rho^2)^2}}
 
 where \eqn{M}{M} is the number of cluster which can also be calculated from \eqn{N/n}{N/n}. \cr
