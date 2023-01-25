@@ -65,8 +65,8 @@ given by
 
 where \eqn{N}{N} is the total sample size. \cr\cr
 
-The reason why we do not multiply \eqn{J^2} to \eqn{v_{g_T}}, as suggested by Borenstein et al. (2009, p. 27),
-is that Hedges et al. (2023, p. 12) showed in a simulation that multiplying \eqn{J^2} to
+The reason why we do not multiply \eqn{J^2} to \eqn{v_{g_T}}, as otherwise suggested by Borenstein et al. (2009, p. 27)
+and Hedges & Citkowitz (2015, p. 1299), is that Hedges et al. (2023, p. 12) showed in a simulation that multiplying \eqn{J^2} to
 \eqn{v_{g_T}} underestimates the true variance.
 }
 \note{
