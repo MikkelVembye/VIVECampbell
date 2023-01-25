@@ -27,9 +27,10 @@ The same notion is used here and gave name to the function.
 \details{
 Equation
 
-\deqn{\eta  = 1 + \left( \dfrac{nN^C}{N}-1 \right)\rho } \cr\tabular{cc}{
-   Clustered adjusted \tab Not cluster adjusted \cr
-   \eqn{\gamma = 1 + 2} \tab \eqn{\eta= 1 + 2} \cr
+\deqn{\eta  = 1 + \left( \dfrac{nN^C}{N}-1 \right)\rho } \cr\tabular{lcc}{
+   \strong{Calculation type} \tab \strong{Clustered adjusted} \tab \strong{Not cluster adjusted} \cr
+   ANCOVA\if{html}{\out{<br>}}test \tab \eqn{\gamma = 1 + 2} \tab \eqn{\eta= 1 + 2} \cr
+   DiD \tab \eqn{\gamma = 1 + 3} \tab \eqn{\eta= 1 + 3} \cr
 }
 }
 \note{

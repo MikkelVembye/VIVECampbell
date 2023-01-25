@@ -153,9 +153,10 @@ gamma_1armcluster <- function(N_total, Nc, avg_grp_size, ICC, sqrt = TRUE){
 #' \deqn{\eta  = 1 + \left( \dfrac{nN^C}{N}-1 \right)\rho } \cr
 #'
 #'
-#'  | Clustered adjusted   | Not cluster adjusted  |
-#'  | :------------------: | :-------------------: |
-#'  | \eqn{\gamma = 1 + 2} | \eqn{\eta= 1 + 2}     |
+#' |   **Calculation type**     | **Clustered adjusted**   | **Not cluster adjusted**  |
+#' | --------------------       | :------------------:     | :-------------------:     |
+#' | ANCOVA<br>test             | \eqn{\gamma = 1 + 2}     | \eqn{\eta= 1 + 2}         |
+#' | DiD                        | \eqn{\gamma = 1 + 3}     | \eqn{\eta= 1 + 3}         |
 #'
 #'
 #' @note Read Taylor et al. (2020) to understand why we use the \eqn{g_T}{g-T} notation.
