@@ -52,9 +52,10 @@ the cluster-adjusted effect size can be obtained from
 
 \deqn{g_T = g_{naive}\sqrt{\gamma}}
 
-if clustering is properly adjusted for, the sampling variance of \eqn{g_T} is given by
+if a study properly adjusted for clustering, the sampling variance of \eqn{g_T},
+(when based on posttest measures only) is given by
 
-\deqn{v_{g^T} = \left(\dfrac{1}{N^T} + \dfrac{1}{N^C}\right) \gamma + \dfrac{g^2_T}{2h} }
+\deqn{v_{g_T} = \left(\dfrac{1}{N^T} + \dfrac{1}{N^C}\right) \gamma + \dfrac{g^2_T}{2h} }
 
 where \eqn{N^T} is the sample size of the treatment group containing clustering and \eqn{h} is
 given by
@@ -62,7 +63,11 @@ given by
 \deqn{ h = \dfrac{[(N-2)(1-\rho) + (N^T-n)\rho]^2}
 {(N-2)(1-\rho)^2 + (N^T-n)n\rho^2 + 2(N^T-n)(1-\rho)\rho}}
 
-where \eqn{N}{N} is the total sample size.
+where \eqn{N}{N} is the total sample size. \cr\cr
+
+The reason why we do not multiply \eqn{J^2} to \eqn{v_{g_T}}, as suggested by Borenstein et al. (2009, 27),
+is that Hedges et al. (2023, p. 12) showed in a simulation that multiplying \eqn{J^2} to
+\eqn{v_{g_T}} underestimates the true variance.
 }
 \note{
 Read Taylor et al. (2020) to understand why we use the \eqn{g_T}{g-T} notation.
@@ -82,6 +87,10 @@ sqrt(1 - (((Nc + n-2)*rho)/(N-2))) |> round(3)
 
 }
 \references{
+Borenstein, M., Hedges, L. V., Higgins, J. P. T., & Rothstein, H. R. (2009).
+\emph{Introduction to meta-analysis} (1st ed.).
+John Wiley & Sons.
+
 Hedges, L. V. (2007).
 Effect sizes in cluster-randomized designs.
 \emph{Journal of Educational and Behavioral Statistics}, 32(4), 341–370.
@@ -105,6 +114,11 @@ Hedges, L. V., & Hedberg, E. C. (2013).
 Intraclass correlations and covariate outcome correlations for planning
 two- and three-Level cluster-randomized experiments in education.
 \emph{Evaluation Review}, 37(6), 445–489. \doi{10.1177/0193841X14529126}
+
+Hedges, L. V, Tipton, E., Zejnullahi, R., & Diaz, K. G. (2023).
+Effect sizes in ANCOVA and difference-in-differences designs.
+\emph{British Journal of Mathematical and Statistical Psychology}.
+\doi{10.1111/bmsp.12296}
 
 Taylor, J.A., Pigott, T.D., & Williams, R. (2020)
 Promoting knowledge accumulation about intervention effects:
