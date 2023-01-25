@@ -1,0 +1,102 @@
+---
+title: "Pooling across (multiple) subgroups"
+author: "James E. Pustejovsky"
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, include=FALSE}
+library(VIVECampbell)
+```
+
+
+Say that we have means and SDs at pre-test and post-test for participants in each of two conditions, 0 and 1, and furthermore that these summary statistics are reported separately for two different sub-groups, $A$ and $B$. Let $n_{gj}$ be the sample size for sub-group $g = A, B$ in condition $j = 0, 1$. Let $\bar{y}_{gjt}$ be the sample mean of the outcome at time $t = 0,1$ (where $t = 0$ is the pre-test and $t = 1$ is the post-test), and let $s_{gjt}$ be the sample standard deviation at time $t = 0,1$. 
+
+To recover the summary statistics for the _full_ sample (pooled across sub-groups), we can do the following: 
+
+* The total sample size in condition $j$ is 
+    $$
+    n_{\bullet j} = n_{Aj} + n_{Bj}.
+    $$
+* The average outcome in condition $j$ at time $t$ is 
+    $$
+    y_{\bullet jt} = \frac{n_{Aj} \bar{y}_{Ajt} + n_{Bj} \bar{y}_{Bjt}}{n_{\bullet j}}.
+    $$
+* The full-sample variance in condition $j$ at time $t$ is
+    $$
+    s_{\bullet jt}^2 = \frac{1}{n_{\bullet j} - 1} \left[(n_{Aj} - 1) s_{Ajt}^2 + (n_{Bj} - 1) s_{Bjt}^2 + \frac{n_{Aj} n_{Bj}}{n_{\bullet j}} (\bar{y}_{Ajt} - \bar{y}_{Bjt})^2 \right]
+    $$
+    
+    
+From these "rehydrated" summary statistics, one could calculate a standardized mean difference at post-test, adjusting for pre-test differences, by taking
+$$
+d_p = \frac{\left(\bar{y}_{\bullet 11} - \bar{y}_{\bullet 01}\right) - \left(\bar{y}_{\bullet 10} - \bar{y}_{\bullet 00}\right)}{s_{\bullet \bullet 1}}
+$$
+where
+$$
+s_{\bullet \bullet 1} = \sqrt{\frac{1}{n_{\bullet 0} + n_{\bullet 1}} \left[ (n_{\bullet 0} - 1) s_{\bullet 01}^2 + (n_{\bullet 1} - 1) s_{\bullet 11}^2\right]},
+$$
+i.e., the pooled sample standard deviation at post-test. The sampling variance of $d_p$ can be approximated as
+$$
+\text{Var}(d_p) \approx 2\left(1 - \rho\right)\left(\frac{1}{n_{\bullet 0}} + \frac{1}{n_{\bullet 1}}\right) + \frac{d^2}{2\left(n_{\bullet 0} + n_{\bullet 1} - 2\right)},
+$$
+where $\rho$ is the correlation between the pre-test and the post-test within each condition and each sub-group.
+
+Alternately, one could take a slightly different approach to calculating the numerator of the SMD, by instead calculating adjusted mean differences across sub-groups, and then taking their weighted average with weights corresponding to the total sample size of the sub-group. This amounts to using a mean difference that adjusts for sub-group differences. Denote the difference-in-differences within each subgroup as 
+$$
+DD_{g} = \left(\bar{y}_{g11} - \bar{y}_{g01}\right) - \left(\bar{y}_{g10} - \bar{y}_{g00}\right).
+$$
+Then the average difference-in-differences is
+$$
+DD_{\bullet} = \frac{1}{n_{\bullet \bullet}}\left[n_{A\bullet} DD_{A} + n_{B\bullet} DD_{B} \right],
+$$
+where $n_{g\bullet} = n_{g 0} + n_{g 1}$ and $n_{\bullet \bullet} = n_{A\bullet} + n_{B\bullet} = n_{\bullet 0} + n_{\bullet 1}$. This average difference-in-differences could then be used in the numerator of the SMD, as
+$$
+d_{sg} = \frac{DD_\bullet}{s_{\bullet \bullet 1}}.
+$$
+The sampling variance of $d_{sg}$ can be approximated as
+$$
+\text{Var}(d_{sg}) \approx \frac{2\left(1 - \rho\right)}{n_{\bullet \bullet}^2}\left[\frac{n_{A\bullet}^3}{n_{A0} n_{A1}} + \frac{n_{B\bullet}^3}{n_{B0} n_{B1}}\right] + \frac{d^2}{2\left(n_{\bullet \bullet} - 2\right)}.
+$$
+
+# Multiple sub-groups
+
+Now suppose that we have the same data as above, but reported separately for $G$ different sub-groups, indexed by $g = 1,...,G$. Let $n_{gj}$ be the sample size for sub-group $g = 1,...,G$ in condition $j = 0, 1$. Let $\bar{y}_{gjt}$ be the sample mean of the outcome at time $t = 0,1$ (where $t = 0$ is the pre-test and $t = 1$ is the post-test), and let $s_{gjt}$ be the sample standard deviation at time $t = 0,1$. 
+
+To recover the summary statistics for the _full_ sample (pooled across sub-groups), we can do the following: 
+
+* The total sample size in condition $j$ is 
+    $$
+    n_{\bullet j} = \sum_{g = 1}^G n_{gj}.
+    $$
+* The average outcome in condition $j$ at time $t$ is 
+    $$
+    y_{\bullet jt} = \frac{1}{n_{\bullet j}} \sum_{g = 1}^G n_{gj} \bar{y}_{gjt}.
+    $$
+* The full-sample variance in condition $j$ at time $t$ is
+    $$
+    s_{\bullet jt}^2 = \frac{1}{n_{\bullet j} - 1} \sum_{g = 1}^G \left[\left(n_{gj}  - 1 \right) s_{gjt}^2 + n_{gj}\left(\bar{y}_{gjt} - \bar{y}_{\bullet jt}\right)^2\right]
+    $$
+    
+  
+From these "rehydrated" summary statistics, one could calculate a standardized mean difference at post-test, adjusting for pre-test differences, as described above.
+
+Alternately, one could calculate the numerator of the SMD as the adjusted mean difference, pooled across sub-groups. The average difference-in-differences is
+$$
+DD_{\bullet} = \frac{1}{n_{\bullet \bullet}} \sum_{g=1}^G n_{g \bullet} \ DD_{g},
+$$
+where $n_{g\bullet} = n_{g 0} + n_{g 1}$ and $n_{\bullet \bullet} = \sum_{g = 1}^G n_{g\bullet}$. This average difference-in-differences could then be used in the numerator of the SMD, as
+$$
+d_{sg} = \frac{DD_\bullet}{s_{\bullet \bullet 1}}.
+$$
+The sampling variance of $d_{sg}$ can be approximated as
+$$
+\text{Var}(d_{sg}) \approx 2\left(1 - \rho\right)\left[\sum_{g=1}^G \frac{n_{g\bullet}^2}{n_{\bullet \bullet}^2} \left(\frac{1}{n_{g0}} + \frac{1}{n_{g1}}\right)\right] + \frac{d^2}{2\left(n_{\bullet \bullet} - 2\right)}.
+$$
+
+# INSERT EMPIRICAL EXAMPLE
