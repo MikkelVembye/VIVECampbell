@@ -45,5 +45,7 @@ Når vi skal trække information og data ud af ældre artikler, er det en klar f
 
 ![][creative_cloud]
 
-[adobe]: pictures/softcenter_adobe_crea.png
+Du skulle nu gerne kunne se, når du åbner din Adobe Reader igen, at denne er opdateret til Pro. 
+
+[adobe]: pictures/softcenter.png 
 [creative_cloud]: pictures/creative_cloud.png
