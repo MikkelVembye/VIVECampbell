@@ -15,16 +15,22 @@ eta_1armcluster(N_total, Nc, avg_grp_size, ICC, sqrt = FALSE)
 
 \item{ICC}{Numerical value indicating the intra-class correlation (ICC) value.}
 
-\item{sqrt}{Logical indicating if the square root of eta should be calculated. Default = \code{FALSE}.
-Use the function if you want to adjust the standard error (SE) instead of the variance.}
+\item{sqrt}{Logical indicating if the square root of gamma should be calculated. Default = \code{TRUE}}
 }
 \description{
-Hej
+The function calculates the design effect used to cluster bias adjust
+sampling variance estimates that does not take into account clustering in one
+treatment group. The design effect is given as the second term in Equation (6)
+in Hedges & Citkowitz (2015, p. 6). The design effect is denoted as \eqn{\eta} in WWC (2021).
+The same notion is used here and gave name to the function.
 }
 \details{
 Equation
 
-\deqn{\eta  = 1 + \left( \dfrac{nN^C}{N}-1 \right)\rho }
+\deqn{\eta  = 1 + \left( \dfrac{nN^C}{N}-1 \right)\rho } \cr\tabular{cc}{
+   Clustered adjusted \tab Not cluster adjusted \cr
+   \eqn{\gamma = 1 + 2} \tab \eqn{\eta= 1 + 2} \cr
+}
 }
 \note{
 Read Taylor et al. (2020) to understand why we use the \eqn{g_T}{g-T} notation.
@@ -88,5 +94,5 @@ Supplement document for Appendix E and the What Works Clearinghouse procedures h
 \url{https://ies.ed.gov/ncee/wwc/Docs/referenceresources/WWC-41-Supplement-508_09212020.pdf}
 }
 \seealso{
-\code{\link{gamma_1armcluster}}
+For studies that adequately handle clustering, see \code{\link{gamma_1armcluster}}
 }

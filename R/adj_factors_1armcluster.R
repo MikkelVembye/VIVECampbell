@@ -3,7 +3,7 @@
 #' @description This function calculates a small cluster-design adjustment factor which can be used
 #' to adjusted effect sizes (independently of how clustering is handled) and the sampling variances from cluster-design studies
 #' that adequately handles clustering. This factor can be found in second term of Equation (5)
-#' from from Hedges & Citkowicz (2015, p. 1298). The factor in denoted as \eqn{\gamma}{\gamma} in WWC (2021).
+#' from from Hedges & Citkowicz (2015, p. 1298). The factor is denoted as \eqn{\gamma}{\gamma} in WWC (2021).
 #' The same notion is used here and gave name to the function.
 #'
 #' @details When calculating effect sizes from cluster-designed studies, it recommended
@@ -142,11 +142,21 @@ gamma_1armcluster <- function(N_total, Nc, avg_grp_size, ICC, sqrt = TRUE){
 
 #' @title Calculating the design effect to cluster bias adjusted sampling variances when there is clustering in one treatment group only
 #'
-#' @description Hej
+#' @description The function calculates the design effect used to cluster bias adjust
+#' sampling variance estimates that does not take into account clustering in one
+#' treatment group. The design effect is given as the second term in Equation (6)
+#' in Hedges & Citkowitz (2015, p. 6). The design effect is denoted as \eqn{\eta} in WWC (2021).
+#' The same notion is used here and gave name to the function.
 #'
 #' @details Equation
 #'
-#' \deqn{\eta  = 1 + \left( \dfrac{nN^C}{N}-1 \right)\rho }
+#' \deqn{\eta  = 1 + \left( \dfrac{nN^C}{N}-1 \right)\rho } \cr
+#'
+#'
+#'  | Clustered adjusted   | Not cluster adjusted  |
+#'  | :------------------: | :-------------------: |
+#'  | \eqn{\gamma = 1 + 2} | \eqn{\eta= 1 + 2}     |
+#'
 #'
 #' @note Read Taylor et al. (2020) to understand why we use the \eqn{g_T}{g-T} notation.
 #' Find suggestions for how and which ICC values to impute when these are unknown (Hedges & Hedberg, 2007, 2013).
@@ -194,15 +204,9 @@ gamma_1armcluster <- function(N_total, Nc, avg_grp_size, ICC, sqrt = TRUE){
 #' \emph{Institute of Education Science}.
 #' \url{https://ies.ed.gov/ncee/wwc/Docs/referenceresources/WWC-41-Supplement-508_09212020.pdf}
 #'
+#' @inheritParams gamma_1armcluster
 #'
-#' @param N_total Numerical value indicating the total sample size of the study.
-#' @param Nc Numerical value indicating the sample size of the arm/group that does not contain clustering.
-#' @param avg_grp_size Numerical value indicating the average cluster size.
-#' @param ICC Numerical value indicating the intra-class correlation (ICC) value.
-#' @param sqrt Logical indicating if the square root of eta should be calculated. Default = \code{FALSE}.
-#' Use the function if you want to adjust the standard error (SE) instead of the variance.
-#'
-#' @seealso \code{\link{gamma_1armcluster}}
+#' @seealso For studies that adequately handle clustering, see \code{\link{gamma_1armcluster}}
 #'
 #' @export
 #'
