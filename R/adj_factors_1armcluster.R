@@ -200,7 +200,7 @@ gamma_1armcluster <- function(N_total, Nc, avg_grp_size, ICC, sqrt = TRUE){
 #' @param avg_grp_size Numerical value indicating the average cluster size.
 #' @param ICC Numerical value indicating the intra-class correlation (ICC) value.
 #' @param sqrt Logical indicating if the square root of eta should be calculated. Default = \code{FALSE}.
-#' Use the function if you want to calculate the standard error (SE) instead of the variance.
+#' Use the function if you want to adjust the standard error (SE) instead of the variance.
 #'
 #' @seealso \code{\link{gamma_1armcluster}}
 #'

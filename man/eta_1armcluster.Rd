@@ -16,7 +16,7 @@ eta_1armcluster(N_total, Nc, avg_grp_size, ICC, sqrt = FALSE)
 \item{ICC}{Numerical value indicating the intra-class correlation (ICC) value.}
 
 \item{sqrt}{Logical indicating if the square root of eta should be calculated. Default = \code{FALSE}.
-Use the function if you want to calculate the standard error (SE) instead of the variance.}
+Use the function if you want to adjust the standard error (SE) instead of the variance.}
 }
 \description{
 Hej
