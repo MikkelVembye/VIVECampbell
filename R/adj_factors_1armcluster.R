@@ -1,15 +1,26 @@
 #' @title Calculating the second term of Equation (5) from from Hedges & Citkowicz (2015, p. 1298)
 #'
-#' @description This function calculates a small cluster-design corrector which can be used
-#' to adjusted effect sizes from cluster-design studies and add to variance estimate from
-#' studies that adequately handles clustering. This factor in denoted a \eqn{\gamma}{\gamma} in
+#' @description This function calculates a small cluster-design adjement factor which can be used
+#' to adjusted effect sizes and their sampling variances from cluster-design studies
+#' that adequately handles clustering. This factor in denoted a \eqn{\gamma}{\gamma} in
 #' WWC (2021). The same notion is used here.
 #'
-#' @details Add formula
+#' @details When calculating effect sizes from cluster-designed studies, it recommended
+#' (Hedges, 2007, 2011; Hedges & Citkowitz, 2015; WWC, 2021) to add an adjustment factor, \eqn{\gamma}{\gamma}
+#' to \eqn{d}{d} whether or not cluster is adequately handled in the studies. Even if clustering
+#' is adequately handled, WWC also recommend to use \eqn{\gamma}{\gamma} to adjust for
+#' the variance component. The adjustment factor gamma is given by
 #'
-#' \deqn{\gamma  = 1 - \frac{(N^C+n-2)\rho}{N_2}}
+#' \deqn{\gamma  = 1 - \dfrac{(N^C+n-2)\rho}{N_2}}
 #'
-#' Show how to use it with es and var
+#' where \eqn{N^C}{N-C} is the sample size of the group without clustering, \eqn{n}{n} is
+#' the average cluster size, and \eqn{\rho}{\rho} is the (often imputed) intraclass correlation.
+#'
+#' Then let the naive estimator of Hedges' \eqn{g}{g} be
+#'
+#' \deqn{g_{naive} = J\times \left(\dfrac{\bar{Y}^T_{\bullet\bullet} - \bar{Y}^C_{\bullet}}{S_T} \right)}
+#'
+#' where..
 #'
 #'
 #' @references Hedges, L. V., & Citkowicz, M (2015).
