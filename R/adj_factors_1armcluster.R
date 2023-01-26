@@ -153,11 +153,11 @@ gamma_1armcluster <- function(N_total, Nc, avg_grp_size, ICC, sqrt = TRUE){
 #' \deqn{\eta  = 1 + \left( \dfrac{nN^C}{N}-1 \right)\rho } \cr
 #'
 #'
-#' |   **Calculation type**     | **Clustered adjusted**   | **Not cluster adjusted**  |
-#' | --------------------       | :------------------:     | :-------------------:     |
-#' | ANCOVA<br>test             | \eqn{\gamma = 1 + 2}     | \eqn{\eta= 1 + 2}         |
-#' | DiD                        | \eqn{\gamma = 1 + 3}     | \eqn{\eta= 1 + 3}         |
-#'
+#' |   **Calculation type/reported**  | **Cluster adjusted**                                                              | **Not cluster adjusted**                                                  |
+#' | --------------------             | ------------------                                                                 | -------------------                                                             |
+#' | ANCOVA<br>\eqn{R^2, N^T, N^C}    | \eqn{(1-R^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_T}{2h}    } | \eqn{(1-R^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_T}{2h}}|
+#' | <br>ANCOVA<br>\eqn{F, t, N^T, N^C}   | \eqn{\left(\frac{g^2_T}{F}\right) \gamma + \frac{g^2_T}{2h}}                       | \eqn{\left(\frac{g^2_T}{F}\right) \eta + \frac{g^2_T}{2h}}                      |
+#' Note:
 #'
 #' @note Read Taylor et al. (2020) to understand why we use the \eqn{g_T}{g-T} notation.
 #' Find suggestions for how and which ICC values to impute when these are unknown (Hedges & Hedberg, 2007, 2013).

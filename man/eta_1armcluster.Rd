@@ -27,10 +27,11 @@ The same notion is used here and gave name to the function.
 \details{
 Equation
 
-\deqn{\eta  = 1 + \left( \dfrac{nN^C}{N}-1 \right)\rho } \cr\tabular{lcc}{
-   \strong{Calculation type} \tab \strong{Clustered adjusted} \tab \strong{Not cluster adjusted} \cr
-   ANCOVA\if{html}{\out{<br>}}test \tab \eqn{\gamma = 1 + 2} \tab \eqn{\eta= 1 + 2} \cr
-   DiD \tab \eqn{\gamma = 1 + 3} \tab \eqn{\eta= 1 + 3} \cr
+\deqn{\eta  = 1 + \left( \dfrac{nN^C}{N}-1 \right)\rho } \cr\tabular{lll}{
+   \strong{Calculation type/reported} \tab \strong{Cluster adjusted} \tab \strong{Not cluster adjusted} \cr
+   ANCOVA\if{html}{\out{<br>}}\eqn{R^2, N^T, N^C} \tab \eqn{(1-R^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_T}{2h}    } \tab \eqn{(1-R^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_T}{2h}} \cr
+   \if{html}{\out{<br>}}ANCOVA\if{html}{\out{<br>}}\eqn{F, t, N^T, N^C} \tab \eqn{\left(\frac{g^2_T}{F}\right) \gamma + \frac{g^2_T}{2h}} \tab \eqn{\left(\frac{g^2_T}{F}\right) \eta + \frac{g^2_T}{2h}} \cr
+   Note: \tab  \tab  \cr
 }
 }
 \note{
