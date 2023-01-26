@@ -1,6 +1,6 @@
 ---
 title: "An ANCOVA puzzler"
-authors: "James E. Pustejovsky"
+author: "James E. Pustejovsky"
 ---
 
 ```{r, include = FALSE}
