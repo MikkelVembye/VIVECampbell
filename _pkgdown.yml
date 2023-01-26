@@ -43,6 +43,8 @@ articles:
    - articles/Pooling-subgroups
    - articles/ancova-puzzler
 
-
+- title: Other
+  contents:
+  - articles/ideas-and-todos
 
 
