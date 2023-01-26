@@ -103,18 +103,56 @@ The same notion is used here and gave name to the function.</p>
 </dl></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>Equation</p>
+    <p>When calculating effect sizes from cluster-designed studies that do not
+properly account for clustering in one treatment group, it recommended
+(Hedges, 2007, 2011; Hedges &amp; Citkowitz, 2015; WWC, 2021) to multiply a design effect, \(\eta\)
+to the first term of the variance \(g_T\) that captures the contribution of the variance of
+mean effect difference. The design effect when there is clustering in one
+treatment group only is given by</p>
 <p>$$\eta  = 1 + \left( \dfrac{nN^C}{N}-1 \right)\rho $$ <br></p>
-<p><em><strong>Table 1</strong></em><br><em>Sampling variance estimates for \(g_T\) across various models for handling cluster, estimation techniques, and reported quantities.</em></p><table class="table table"><tr><td><strong>Calculation type/<br>reported quantities</strong></td><td><strong>Cluster-adjusted (model)<br>sampling variance</strong></td><td><strong>Not cluster-adjusted (model)<br>sampling variance</strong></td></tr><tr><td>ANCOVA, adj. means<br>\(R^2, N^T, N^C\)</td><td>\((1-R^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_T}{2h}.\)</td><td>\((1-R^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_T}{2h}.\)</td></tr><tr><td>ANCOVA, adj. means<br>\(R^2_{imputed}, N^T, N^C\)</td><td>\((1-0^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_T}{2h}.\)</td><td>\((1-0^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_T}{2h}.\)</td></tr><tr><td>ANCOVA, adj. means<br>\(F, (t^2), N^T, N^C\)</td><td>\(\left(\frac{g^2_T}{F}\right) \gamma + \frac{g^2_T}{2h}.\)</td><td>\(\left(\frac{g^2_T}{F}\right) \eta + \frac{g^2_T}{2h}.\)</td></tr><tr><td>Reg coef<br>\(SE, S_T, N^T, N^C\)</td><td>\(\left(\frac{SE}{S_T}\right)^2 \gamma + \frac{g^2_T}{2h}.\)</td><td>\(\left(\frac{SE}{S_T}\right)^2 \eta + \frac{g^2_T}{2h}.\)</td></tr><tr><td>Standardized reg coef<br>\(SE_{std}, N^T, N^C\)</td><td>\(SE^2_{std} \gamma + \frac{g^2_T}{2h}.\)</td><td>\(SE^2_{std} \eta + \frac{g^2_T}{2h}.\)</td></tr><tr><td>DiD, gain scores<br>\(r, N^T, N^C\)</td><td>\(2(1-r) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_T}{2h}.\)</td><td>\(2(1-r) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_T}{2h}.\)</td></tr><tr><td>DiD, gain scores<br>\(r_{imputed}, N^T, N^C\)</td><td>\(2(1-.5) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_T}{2h}.\)</td><td>\(2(1-.5) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_T}{2h}.\)</td></tr></table><p><em>Note</em>: \(R^2\) "is the multiple correlation between the covariates and the outcome" (WWC, 2021),
-\(\gamma = 1 - (N^C+n-2)\rho/N-2\), see <code><a href="gamma_1armcluster.html">gamma_1armcluster</a></code>, and \(r\) is the pre-posttest correlation.</p>
-<p>Furthermore, \(\eta\) can be used to correct effect size difference-in-differences as given
-in Table 2</p>
-<p><em><strong>Table 2</strong></em><br><em>Sampling variance estimates for effect size difference-in-differences</em></p><table class="table table"><tr><td><strong>Calculation type/<br>reported quantities</strong></td><td><strong>Cluster-adjusted (model)<br>sampling variance</strong></td><td><strong>Not cluster-adjusted (model)<br>sampling variance</strong></td></tr><tr><td>Effect size DiD<br>\(r, N^T, N^C\)</td><td>\(2(1-r) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_{post} + g^2_{pre}r^2 - 2g_{pre}g_{post}r^2}{2h}.\)</td><td>\(2(1-r) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_{post} + g^2_{pre}r^2 - 2g_{pre}g_{post}r^2}{2h}.\)</td></tr><tr><td>Effect size DiD<br>\(r_{imputed}, N^T, N^C\)</td><td>\(2(1-.5) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_{post} + g^2_{pre}r^2 - 2g_{pre}g_{post}r^2}{2h}.\)</td><td>\(2(1-.5) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_{post} + g^2_{pre}r^2 - 2g_{pre}g_{post}r^2}{2h}.\)</td></tr></table></div>
+<p>where \(N\) is the total samples size, \(N^C\) is the sample size of the group without clustering, \(n\) is
+the average cluster size, and \(\rho\) is the (often imputed) intraclass correlation.</p>
+    </div>
     <div class="section level2">
     <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
     <p>Read Taylor et al. (2020) to understand why we use the \(g_T\) notation.
 Find suggestions for how and which ICC values to impute when these are unknown (Hedges &amp; Hedberg, 2007, 2013).</p>
     </div>
+    <div class="section level2">
+    <h2 id="multiplying-design-effect-to-posttest-measures">Multiplying design effect to posttest measures<a class="anchor" aria-label="anchor" href="#multiplying-design-effect-to-posttest-measures"></a></h2>
+    
+
+
+<p>To see illustrate this procedure, let the naive estimator of Hedges' \(g\) be</p>
+<p>$$g_{naive} = J\times \left(\dfrac{\bar{Y}^T_{\bullet\bullet} - \bar{Y}^C_{\bullet}}{S_T} \right)$$</p>
+<p>where \(J = 1 - 3/(4df-1)\), \(\bar{Y}^T_{\bullet\bullet}\) it the average treatment effect for the
+treatment group containing clustering, \(\bar{Y}^C_{\bullet}\) is the average treatment effect
+for the group without clustering, and \(S_T\) is the standard deviation ignoring clustering. To account for the
+fact that \(S_T\) systematically underestimates the true standard deviation, \(\sigma_T\), making \(g\) larger than the true
+values of \(g\), i.e., \(\delta\), the cluster-adjusted effect size can be obtained from</p>
+<p>$$g_T = g_{naive}\sqrt{1 - \dfrac{(N^C+n-2)\rho}{N-2}}$$</p>
+<p>if a study did not properly adjust for clustering, the sampling variance of \(g_T\),
+(when based on posttest measures only) is given by</p>
+<p>$$v_{g_T} = \left(\dfrac{1}{N^T} + \dfrac{1}{N^C}\right) \gamma + \dfrac{g^2_T}{2h} $$</p>
+<p>where \(N^T\) is the sample size of the treatment group containing clustering and \(h\) is
+given by</p>
+<p>$$ h = \dfrac{[(N-2)(1-\rho) + (N^T-n)\rho]^2}
+{(N-2)(1-\rho)^2 + (N^T-n)n\rho^2 + 2(N^T-n)(1-\rho)\rho}$$</p>
+<p>where \(N\) is the total sample size. <br><br></p>
+<p>The reason why we do not multiply \(J^2\) to \(v_{g_T}\), as otherwise suggested by Borenstein et al. (2009, p. 27)
+and Hedges &amp; Citkowitz (2015, p. 1299), is that Hedges et al. (2023, p. 12) showed in a simulation that multiplying \(J^2\) to
+\(v_{g_T}\) underestimates the true variance.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="multiplying-design-effect-to-adjusted-measures">Multiplying design effect to adjusted measures<a class="anchor" aria-label="anchor" href="#multiplying-design-effect-to-adjusted-measures"></a></h2>
+    
+
+
+<p><em><strong>Table 1</strong></em><br><em>Sampling variance estimates for \(g_T\) across various models for handling cluster, estimation techniques, and reported quantities.</em></p><table class="table table"><tr><td><strong>Calculation type/<br>reported quantities</strong></td><td><strong>Cluster-adjusted (model)<br>sampling variance</strong></td><td><strong>Not cluster-adjusted (model)<br>sampling variance</strong></td></tr><tr><td>ANCOVA, adj. means<br>\(R^2, N^T, N^C\)</td><td>\((1-R^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_T}{2h}.\)</td><td>\((1-R^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_T}{2h}.\)</td></tr><tr><td>ANCOVA, adj. means<br>\(R^2_{imputed}, N^T, N^C\)</td><td>\((1-0^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_T}{2h}.\)</td><td>\((1-0^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_T}{2h}.\)</td></tr><tr><td>ANCOVA, adj. means<br>\(F, (t^2), N^T, N^C\)</td><td>\(\left(\frac{g^2_T}{F}\right) \gamma + \frac{g^2_T}{2h}.\)</td><td>\(\left(\frac{g^2_T}{F}\right) \eta + \frac{g^2_T}{2h}.\)</td></tr><tr><td>Reg coef<br>\(SE, S_T, N^T, N^C\)</td><td>\(\left(\frac{SE}{S_T}\right)^2 \gamma + \frac{g^2_T}{2h}.\)</td><td>\(\left(\frac{SE}{S_T}\right)^2 \eta + \frac{g^2_T}{2h}.\)</td></tr><tr><td>Standardized reg coef<br>\(SE_{std}, N^T, N^C\)</td><td>\(SE^2_{std} \gamma + \frac{g^2_T}{2h}.\)</td><td>\(SE^2_{std} \eta + \frac{g^2_T}{2h}.\)</td></tr><tr><td>DiD, gain scores<br>\(r, N^T, N^C\)</td><td>\(2(1-r) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_T}{2h}.\)</td><td>\(2(1-r) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_T}{2h}.\)</td></tr><tr><td>DiD, gain scores<br>\(r_{imputed}, N^T, N^C\)</td><td>\(2(1-.5) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_T}{2h}.\)</td><td>\(2(1-.5) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_T}{2h}.\)</td></tr></table><p><em>Note</em>: \(R^2\) "is the multiple correlation between the covariates and the outcome" (WWC, 2021),
+\(\gamma = 1 - (N^C+n-2)\rho/(N-2)\), see <code><a href="gamma_1armcluster.html">gamma_1armcluster</a></code>, and \(r\) is the pre-posttest correlation.</p>
+<p>Furthermore, \(\eta\) can be used to correct effect size difference-in-differences as given
+in Table 2</p>
+<p><em><strong>Table 2</strong></em><br><em>Sampling variance estimates for effect size difference-in-differences</em></p><table class="table table"><tr><td><strong>Calculation type/<br>reported quantities</strong></td><td><strong>Cluster-adjusted (model)<br>sampling variance</strong></td><td><strong>Not cluster-adjusted (model)<br>sampling variance</strong></td></tr><tr><td>Effect size DiD<br>\(r, N^T, N^C\)</td><td>\(2(1-r) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_{post} + g^2_{pre}r^2 - 2g_{pre}g_{post}r^2}{2h}.\)</td><td>\(2(1-r) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_{post} + g^2_{pre}r^2 - 2g_{pre}g_{post}r^2}{2h}.\)</td></tr><tr><td>Effect size DiD<br>\(r_{imputed}, N^T, N^C\)</td><td>\(2(1-.5) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_{post} + g^2_{pre}r^2 - 2g_{pre}g_{post}r^2}{2h}.\)</td><td>\(2(1-.5) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_{post} + g^2_{pre}r^2 - 2g_{pre}g_{post}r^2}{2h}.\)</td></tr></table></div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
     <p>Borenstein, M., Hedges, L. V., Higgins, J. P. T., &amp; Rothstein, H. R. (2009).
