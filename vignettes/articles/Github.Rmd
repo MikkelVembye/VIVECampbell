@@ -17,7 +17,7 @@ library(VIVECampbell)
 
 ## Kobling til Git og GitHub
 
-For og fremmest skal du downloade R og Rstudio fra softwarecenteret. Det er vigtigt, at du som minimum har Rstudio 2022.02.3-492 og R 4.1.0. Har du ikke det, skal du opdatere, ellers vil du ikke kunne køre vores scripts og dokumenter.  Desuden er der en alvorlig fejl på RStudio 2021.09.2, så kører du på denne version, så SKAL du også opdatere. 
+Først og fremmest skal du downloade R og Rstudio fra softwarecenteret. Det er vigtigt, at du som minimum har Rstudio 2022.02.3-492 og R 4.1.0. Har du ikke det, skal du opdatere, ellers vil du ikke kunne køre vores scripts og dokumenter.  Desuden er der en alvorlig fejl på RStudio 2021.09.2, så kører du på denne version, så SKAL du også opdatere. 
 
 For at kunne forbinde RStudio med Github, skal du dernæst hente Git via https://git-scm.com/. Jeg har hørt, at nogen af vores kollegaer er i stand til at hente Git uden tilladelse fra STATENS IT, så det kan man starte med at prøve. Ellers skal du have fat i [Niels Koldsø](https://www.vive.dk/da/medarbejdere/niels-koldsoe-1738/?limit=20&offset=0) og oprette sag på serviceportalen https://statensitprod.service-now.com/serviceportal/. I tilfælde af at Niels spørger, hvad I skal bruge Git til, skal I bare svare, at det er et versionskontrolprogram og at intet følsom data vil lægge der. 
 

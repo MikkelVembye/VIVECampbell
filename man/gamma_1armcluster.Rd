@@ -40,7 +40,9 @@ treatment group only is given by
 where \eqn{N} is the total samples size, \eqn{N^C}{N-C} is the sample size of the group without clustering, \eqn{n}{n} is
 the average cluster size, and \eqn{\rho}{\rho} is the (often imputed) intraclass correlation.
 
-Then let the naive estimator of Hedges' \eqn{g}{g} be
+\strong{Multiplying \eqn{\gamma} to posttest measures}\if{html}{\out{<br>}}
+
+To illustrate this procedure, let the naive estimator of Hedges' \eqn{g}{g} be
 
 \deqn{g_{naive} = J\times \left(\dfrac{\bar{Y}^T_{\bullet\bullet} - \bar{Y}^C_{\bullet}}{S_T} \right)}
 
@@ -52,7 +54,7 @@ values of \eqn{g}, i.e., \eqn{\delta}, the cluster-adjusted effect size can be o
 
 \deqn{g_T = g_{naive}\sqrt{\gamma}}
 
-if a study properly adjusted for clustering, the sampling variance of \eqn{g_T},
+if a study properly adjusted for clustering, the sampling variance of \eqn{g_T}
 (when based on posttest measures only) is given by
 
 \deqn{v_{g_T} = \left(\dfrac{1}{N^T} + \dfrac{1}{N^C}\right) \gamma + \dfrac{g^2_T}{2h} }
@@ -68,6 +70,39 @@ where \eqn{N}{N} is the total sample size. \cr\cr
 The reason why we do not multiply \eqn{J^2} to \eqn{v_{g_T}}, as otherwise suggested by Borenstein et al. (2009, p. 27)
 and Hedges & Citkowitz (2015, p. 1299), is that Hedges et al. (2023, p. 12) showed in a simulation that multiplying \eqn{J^2} to
 \eqn{v_{g_T}} underestimates the true variance.
+
+\strong{Multiplying \eqn{\gamma} to adjusted measures}\if{html}{\out{<br>}}
+
+We do also use the small number of cluster adjustment factor \eqn{\gamma} for cluster adjustment
+of variance estimates from pre-test and/or covariate adjusted measures.
+See Table 1 below.
+
+\emph{\strong{Table 1}}\if{html}{\out{<br>}}
+\emph{Sampling variance estimates for \eqn{g_T} across various models for handling cluster, estimation techniques, and reported quantities.}\tabular{lll}{
+   \strong{Calculation type/\if{html}{\out{<br>}}reported quantities} \tab \strong{Cluster-adjusted (model)\if{html}{\out{<br>}}sampling variance} \tab \strong{Not cluster-adjusted (model)\if{html}{\out{<br>}}sampling variance} \cr
+   ANCOVA, adj. means\if{html}{\out{<br>}}\eqn{R^2, N^T, N^C} \tab \eqn{(1-R^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_T}{2h}.} \tab \eqn{(1-R^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_T}{2h}.} \cr
+   ANCOVA, adj. means\if{html}{\out{<br>}}\eqn{R^2_{imputed}, N^T, N^C} \tab \eqn{(1-0^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_T}{2h}.} \tab \eqn{(1-0^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_T}{2h}.} \cr
+   ANCOVA, adj. means\if{html}{\out{<br>}}\eqn{F, (t^2), N^T, N^C} \tab \eqn{\left(\frac{g^2_T}{F}\right) \gamma + \frac{g^2_T}{2h}.} \tab \eqn{\left(\frac{g^2_T}{F}\right) \eta + \frac{g^2_T}{2h}.} \cr
+   Reg coef\if{html}{\out{<br>}}\eqn{SE, S_T, N^T, N^C} \tab \eqn{\left(\frac{SE}{S_T}\right)^2 \gamma + \frac{g^2_T}{2h}.} \tab \eqn{\left(\frac{SE}{S_T}\right)^2 \eta + \frac{g^2_T}{2h}.} \cr
+   Standardized reg coef\if{html}{\out{<br>}}\eqn{SE_{std}, N^T, N^C} \tab \eqn{SE^2_{std} \gamma + \frac{g^2_T}{2h}.} \tab \eqn{SE^2_{std} \eta + \frac{g^2_T}{2h}.} \cr
+   DiD, gain scores\if{html}{\out{<br>}}\eqn{r, N^T, N^C} \tab \eqn{2(1-r) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_T}{2h}.} \tab \eqn{2(1-r) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_T}{2h}.} \cr
+   DiD, gain scores\if{html}{\out{<br>}}\eqn{r_{imputed}, N^T, N^C} \tab \eqn{2(1-.5) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_T}{2h}.} \tab \eqn{2(1-.5) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_T}{2h}.} \cr
+}
+
+
+\emph{Note}: \eqn{R^2} "is the multiple correlation between the covariates and the outcome" (WWC, 2021),
+\eqn{\eta = 1 + (nN^C/N-1)\rho}, see \code{\link{eta_1armcluster}}, and \eqn{r} is the pre-posttest correlation.
+
+\strong{Multiplying \eqn{\gamma} to effect size difference-in-differences}\if{html}{\out{<br>}}
+Furthermore, \eqn{\gamma} can be used to correct effect size difference-in-differences as given
+in Table 2
+
+\emph{\strong{Table 2}}\if{html}{\out{<br>}}
+\emph{Sampling variance estimates for effect size difference-in-differences}\tabular{lll}{
+   \strong{Calculation type/\if{html}{\out{<br>}}reported quantities} \tab \strong{Cluster-adjusted (model)\if{html}{\out{<br>}}sampling variance} \tab \strong{Not cluster-adjusted (model)\if{html}{\out{<br>}}sampling variance} \cr
+   Effect size DiD\if{html}{\out{<br>}}\eqn{r, N^T, N^C} \tab \eqn{2(1-r) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_{post} + g^2_{pre}r^2 - 2g_{pre}g_{post}r^2}{2h}.} \tab \eqn{2(1-r) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_{post} + g^2_{pre}r^2 - 2g_{pre}g_{post}r^2}{2h}.} \cr
+   Effect size DiD\if{html}{\out{<br>}}\eqn{r_{imputed}, N^T, N^C} \tab \eqn{2(1-.5) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_{post} + g^2_{pre}r^2 - 2g_{pre}g_{post}r^2}{2h}.} \tab \eqn{2(1-.5) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_{post} + g^2_{pre}r^2 - 2g_{pre}g_{post}r^2}{2h}.} \cr
+}
 }
 \note{
 Read Taylor et al. (2020) to understand why we use the \eqn{g_T}{g-T} notation.

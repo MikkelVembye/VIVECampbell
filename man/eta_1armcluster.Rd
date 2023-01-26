@@ -17,6 +17,10 @@ eta_1armcluster(N_total, Nc, avg_grp_size, ICC, sqrt = FALSE)
 
 \item{sqrt}{Logical indicating if the square root of gamma should be calculated. Default = \code{TRUE}}
 }
+\value{
+Returns a numerical value for the design effect \eqn{\eta}
+when there is clustering in one treatment group only.
+}
 \description{
 The function calculates the design effect used to cluster bias adjust
 sampling variance estimates that does not take into account clustering in one
@@ -32,19 +36,14 @@ to the first term of the variance \eqn{g_T} that captures the contribution of th
 mean effect difference. The design effect when there is clustering in one
 treatment group only is given by
 
-\deqn{\eta  = 1 + \left( \dfrac{nN^C}{N}-1 \right)\rho } \cr
+\deqn{\eta  = 1 + \left( \dfrac{nN^C}{N}-1 \right)\rho }
 
 where \eqn{N} is the total samples size, \eqn{N^C}{N-C} is the sample size of the group without clustering, \eqn{n}{n} is
 the average cluster size, and \eqn{\rho}{\rho} is the (often imputed) intraclass correlation.
-}
-\note{
-Read Taylor et al. (2020) to understand why we use the \eqn{g_T}{g-T} notation.
-Find suggestions for how and which ICC values to impute when these are unknown (Hedges & Hedberg, 2007, 2013).
-}
-\section{Multiplying design effect to posttest measures}{
 
+\strong{Multiplying the design effect to posttest measures}\if{html}{\out{<br>}}
 
-To see illustrate this procedure, let the naive estimator of Hedges' \eqn{g}{g} be
+To illustrate this procedure, let the naive estimator of Hedges' \eqn{g}{g} be
 
 \deqn{g_{naive} = J\times \left(\dfrac{\bar{Y}^T_{\bullet\bullet} - \bar{Y}^C_{\bullet}}{S_T} \right)}
 
@@ -56,10 +55,10 @@ values of \eqn{g}, i.e., \eqn{\delta}, the cluster-adjusted effect size can be o
 
 \deqn{g_T = g_{naive}\sqrt{1 - \dfrac{(N^C+n-2)\rho}{N-2}}}
 
-if a study did not properly adjust for clustering, the sampling variance of \eqn{g_T},
+if a study did not properly adjust for clustering, the sampling variance of \eqn{g_T}
 (when based on posttest measures only) is given by
 
-\deqn{v_{g_T} = \left(\dfrac{1}{N^T} + \dfrac{1}{N^C}\right) \gamma + \dfrac{g^2_T}{2h} }
+\deqn{v_{g_T} = \left(\dfrac{1}{N^T} + \dfrac{1}{N^C}\right) \eta + \dfrac{g^2_T}{2h} }
 
 where \eqn{N^T} is the sample size of the treatment group containing clustering and \eqn{h} is
 given by
@@ -72,10 +71,12 @@ where \eqn{N}{N} is the total sample size. \cr\cr
 The reason why we do not multiply \eqn{J^2} to \eqn{v_{g_T}}, as otherwise suggested by Borenstein et al. (2009, p. 27)
 and Hedges & Citkowitz (2015, p. 1299), is that Hedges et al. (2023, p. 12) showed in a simulation that multiplying \eqn{J^2} to
 \eqn{v_{g_T}} underestimates the true variance.
-}
 
-\section{Multiplying design effect to adjusted measures}{
+\strong{Multiplying the design effect to adjusted measures}\if{html}{\out{<br>}}
 
+We do also use the design effect \eqn{\eta} for cluster-bias adjustment
+of variance estimates from pre-test and/or covariate adjusted measures.
+See Table 1 below.
 
 \emph{\strong{Table 1}}\if{html}{\out{<br>}}
 \emph{Sampling variance estimates for \eqn{g_T} across various models for handling cluster, estimation techniques, and reported quantities.}\tabular{lll}{
@@ -93,6 +94,7 @@ and Hedges & Citkowitz (2015, p. 1299), is that Hedges et al. (2023, p. 12) show
 \emph{Note}: \eqn{R^2} "is the multiple correlation between the covariates and the outcome" (WWC, 2021),
 \eqn{\gamma = 1 - (N^C+n-2)\rho/(N-2)}, see \code{\link{gamma_1armcluster}}, and \eqn{r} is the pre-posttest correlation.
 
+\strong{Multiplying the design effect to effect size difference-in-differences}\if{html}{\out{<br>}}
 Furthermore, \eqn{\eta} can be used to correct effect size difference-in-differences as given
 in Table 2
 
@@ -103,7 +105,10 @@ in Table 2
    Effect size DiD\if{html}{\out{<br>}}\eqn{r_{imputed}, N^T, N^C} \tab \eqn{2(1-.5) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_{post} + g^2_{pre}r^2 - 2g_{pre}g_{post}r^2}{2h}.} \tab \eqn{2(1-.5) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_{post} + g^2_{pre}r^2 - 2g_{pre}g_{post}r^2}{2h}.} \cr
 }
 }
-
+\note{
+Read Taylor et al. (2020) to understand why we use the \eqn{g_T}{g-T} notation.
+Find suggestions for how and which ICC values to impute when these are unknown (Hedges & Hedberg, 2007, 2013).
+}
 \examples{
 
 N <- 100
