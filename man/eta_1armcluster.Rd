@@ -29,15 +29,19 @@ Equation
 
 \deqn{\eta  = 1 + \left( \dfrac{nN^C}{N}-1 \right)\rho } \cr
 
-Table 1\tabular{lll}{
-   \strong{Calculation type\if{html}{\out{<br>}}reported} \tab \strong{Cluster adjusted\if{html}{\out{<br>}}sampling variance} \tab \strong{Not cluster adjusted\if{html}{\out{<br>}}sampling variance} \cr
+\emph{\strong{Table 1}}\tabular{lll}{
+   \strong{Calculation type/\if{html}{\out{<br>}}reported quantities} \tab \strong{Cluster adjusted\if{html}{\out{<br>}}sampling variance} \tab \strong{Not cluster adjusted\if{html}{\out{<br>}}sampling variance} \cr
    ANCOVA, adjusted means\if{html}{\out{<br>}}\eqn{R^2, N^T, N^C} \tab \eqn{(1-R^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_T}{2h}.} \tab \eqn{(1-R^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_T}{2h}.} \cr
    ANCOVA, adjusted means\if{html}{\out{<br>}}\eqn{R^2_{imputed}, N^T, N^C} \tab \eqn{(1-0^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_T}{2h}.} \tab \eqn{(1-0^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_T}{2h}.} \cr
    ANCOVA, adjusted means\if{html}{\out{<br>}}\eqn{F, (t^2), N^T, N^C} \tab \eqn{\left(\frac{g^2_T}{F}\right) \gamma + \frac{g^2_T}{2h}.} \tab \eqn{\left(\frac{g^2_T}{F}\right) \eta + \frac{g^2_T}{2h}.} \cr
-   Non-standradized reg coef\if{html}{\out{<br>}}\eqn{SE, S_T} \tab \eqn{\left(\frac{SE}{S_T}\right)^2 \gamma + \frac{g^2_T}{2h}.} \tab \eqn{\left(\frac{SE}{S_T}\right)^2 \eta + \frac{g^2_T}{2h}.} \cr
-   Standardized reg coef\if{html}{\out{<br>}}\eqn{SE_{std}} \tab \eqn{SE^2_{std} \gamma + \frac{g^2_T}{2h}.} \tab \eqn{SE^2_{std} \eta + \frac{g^2_T}{2h}.} \cr
-   Note: Insert notation \tab  \tab  \cr
+   Non-standradized reg coef\if{html}{\out{<br>}}\eqn{SE, S_T, N^T, N^C} \tab \eqn{\left(\frac{SE}{S_T}\right)^2 \gamma + \frac{g^2_T}{2h}.} \tab \eqn{\left(\frac{SE}{S_T}\right)^2 \eta + \frac{g^2_T}{2h}.} \cr
+   Standardized reg coef\if{html}{\out{<br>}}\eqn{SE_{std}, N^T, N^C} \tab \eqn{SE^2_{std} \gamma + \frac{g^2_T}{2h}.} \tab \eqn{SE^2_{std} \eta + \frac{g^2_T}{2h}.} \cr
+   DiD, gain scores\if{html}{\out{<br>}}\eqn{r, N^T, N^C} \tab \eqn{2(1-r) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_T}{2h}.} \tab \eqn{2(1-r) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_T}{2h}.} \cr
+   DiD, gain scores\if{html}{\out{<br>}}\eqn{r_{imputed}, N^T, N^C} \tab \eqn{2(1-.5) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_T}{2h}.} \tab \eqn{2(1-.5) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_T}{2h}.} \cr
 }
+
+
+\emph{Note}: Refer to \eqn{\gamma}, see \code{\link{gamma_1armcluster}}
 }
 \note{
 Read Taylor et al. (2020) to understand why we use the \eqn{g_T}{g-T} notation.
