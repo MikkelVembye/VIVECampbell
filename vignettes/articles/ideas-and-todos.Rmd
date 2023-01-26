@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
 library(VIVECampbell)
 ```
 
-## **Ideer** 
+## **Fremtidige ideer** 
 
 * Del erfaringer angående EGM, evt. lav kort introduktion til håndtering af data?
 * "Velkommen til VIVE - godt at vide som ny i Campbell-gruppen"?
