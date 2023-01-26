@@ -166,5 +166,5 @@ Supplement document for Appendix E and the What Works Clearinghouse procedures h
 \url{https://ies.ed.gov/ncee/wwc/Docs/referenceresources/WWC-41-Supplement-508_09212020.pdf}
 }
 \seealso{
-\code{\link{df_h_1armcluster}} for further details.
+\code{\link{df_h_1armcluster}}, \code{\link{eta_1armcluster}}.
 }

@@ -167,5 +167,5 @@ Supplement document for Appendix E and the What Works Clearinghouse procedures h
 \url{https://ies.ed.gov/ncee/wwc/Docs/referenceresources/WWC-41-Supplement-508_09212020.pdf}
 }
 \seealso{
-For studies that adequately handle clustering, see \code{\link{gamma_1armcluster}}
+\code{\link{gamma_1armcluster}}, \code{\link{df_h_1armcluster}}
 }

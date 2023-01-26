@@ -136,7 +136,7 @@
 #'
 #' @return Returns a numerical value for the cluster-design adjustment factor, \eqn{\gamma}.
 #'
-#' @seealso \code{\link{df_h_1armcluster}} for further details.
+#' @seealso \code{\link{df_h_1armcluster}}, \code{\link{eta_1armcluster}}.
 #'
 #' @export
 #'
@@ -309,7 +309,7 @@ gamma_1armcluster <- function(N_total, Nc, avg_grp_size, ICC, sqrt = TRUE){
 #' @return Returns a numerical value for the design effect \eqn{\eta}
 #' when there is clustering in one treatment group only.
 #'
-#' @seealso For studies that adequately handle clustering, see \code{\link{gamma_1armcluster}}
+#' @seealso \code{\link{gamma_1armcluster}}, \code{\link{df_h_1armcluster}}
 #'
 #' @export
 #'
