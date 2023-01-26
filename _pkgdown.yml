@@ -43,9 +43,4 @@ articles:
    - articles/Pooling-subgroups
    - articles/ancova-puzzler
 
-  - title: Other
-    navbar: Other
-    contents:
-    - articles/ideas-and-todos
-
 
