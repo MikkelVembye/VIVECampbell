@@ -39,14 +39,21 @@ Equation
    Standardized reg coef\if{html}{\out{<br>}}\eqn{SE_{std}, N^T, N^C} \tab \eqn{SE^2_{std} \gamma + \frac{g^2_T}{2h}.} \tab \eqn{SE^2_{std} \eta + \frac{g^2_T}{2h}.} \cr
    DiD, gain scores\if{html}{\out{<br>}}\eqn{r, N^T, N^C} \tab \eqn{2(1-r) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_T}{2h}.} \tab \eqn{2(1-r) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_T}{2h}.} \cr
    DiD, gain scores\if{html}{\out{<br>}}\eqn{r_{imputed}, N^T, N^C} \tab \eqn{2(1-.5) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_T}{2h}.} \tab \eqn{2(1-.5) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_T}{2h}.} \cr
-   Effect size DiD\if{html}{\out{<br>}}\eqn{r, N^T, N^C} \tab \eqn{2(1-r) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_{post} + g^2_{pre}r^2 - 2g_{pre}g_{post}r^2}{2h}.} \tab \eqn{2(1-r) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_{post} + g^2_{pre}r^2 - 2g_{pre}g_{post}r^2}{2h}.} \cr
-   Effect size DiD\if{html}{\out{<br>}}\eqn{r_{imputed}, N^T, N^C} \tab \eqn{2(1-.5) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_{post} + g^2_{pre}r^2 - 2g_{pre}g_{post}r^2}{2h}.} \tab \eqn{2(1-.5) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_{post} + g^2_{pre}r^2 - 2g_{pre}g_{post}r^2}{2h}.} \cr
+   \emph{Note}: \eqn{R^2} "is the multiple correlation between the covariates and the outcome" (WWC 2021), \tab  \tab  \cr
+   \eqn{\gamma = 1 - (N^C+n-2)\rho/N-2}, see \code{\link{gamma_1armcluster}}, \tab  \tab  \cr
+   and \eqn{r} is the pre-posttest correlation. \tab  \tab  \cr
 }
 
 
-\emph{Note}: \eqn{R^2} "is the multiple correlation between the covariates and the outcome" (WWC 2021),
-\eqn{\gamma = 1 - (N^C+n-2)\rho/N-2}, see \code{\link{gamma_1armcluster}},
-and \eqn{r} is the pre-posttest correlation.
+Furthermore, \eqn{\eta} can be used to correct effect size difference-in-differences as given
+in Table 2
+
+\emph{\strong{Table 2}}\if{html}{\out{<br>}}
+\emph{Sampling variance estimates for effect size difference-in-differences}\tabular{lll}{
+   \strong{Calculation type/\if{html}{\out{<br>}}reported quantities} \tab \strong{Cluster-adjusted (model)\if{html}{\out{<br>}}sampling variance} \tab \strong{Not cluster-adjusted (model)\if{html}{\out{<br>}}sampling variance} \cr
+   Effect size DiD\if{html}{\out{<br>}}\eqn{r, N^T, N^C} \tab \eqn{2(1-r) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_{post} + g^2_{pre}r^2 - 2g_{pre}g_{post}r^2}{2h}.} \tab \eqn{2(1-r) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_{post} + g^2_{pre}r^2 - 2g_{pre}g_{post}r^2}{2h}.} \cr
+   Effect size DiD\if{html}{\out{<br>}}\eqn{r_{imputed}, N^T, N^C} \tab \eqn{2(1-.5) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_{post} + g^2_{pre}r^2 - 2g_{pre}g_{post}r^2}{2h}.} \tab \eqn{2(1-.5) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_{post} + g^2_{pre}r^2 - 2g_{pre}g_{post}r^2}{2h}.} \cr
+}
 }
 \note{
 Read Taylor et al. (2020) to understand why we use the \eqn{g_T}{g-T} notation.
