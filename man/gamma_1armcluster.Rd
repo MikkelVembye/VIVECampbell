@@ -32,12 +32,12 @@ When calculating effect sizes from cluster-designed studies, it recommended
 (Hedges, 2007, 2011; Hedges & Citkowitz, 2015; WWC, 2021) to add an adjustment factor, \eqn{\gamma}{\gamma}
 to \eqn{d}{d} whether or not cluster is adequately handled in the studies. Even if clustering
 is adequately handled, WWC also recommend to use \eqn{\gamma}{\gamma} as a small number of clusters correction
-to the variance component. The adjustment factor gamma when there is clustering in one
+to the variance component. The adjustment factor \eqn{gamma} when there is clustering in one
 treatment group only is given by
 
 \deqn{\gamma  = 1 - \dfrac{(N^C+n-2)\rho}{N-2}}
 
-where \eqn{N^C}{N-C} is the sample size of the group without clustering, \eqn{n}{n} is
+where \eqn{N} is the total samples size, \eqn{N^C}{N-C} is the sample size of the group without clustering, \eqn{n}{n} is
 the average cluster size, and \eqn{\rho}{\rho} is the (often imputed) intraclass correlation.
 
 Then let the naive estimator of Hedges' \eqn{g}{g} be

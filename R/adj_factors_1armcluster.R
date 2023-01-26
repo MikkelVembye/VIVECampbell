@@ -10,12 +10,12 @@
 #' (Hedges, 2007, 2011; Hedges & Citkowitz, 2015; WWC, 2021) to add an adjustment factor, \eqn{\gamma}{\gamma}
 #' to \eqn{d}{d} whether or not cluster is adequately handled in the studies. Even if clustering
 #' is adequately handled, WWC also recommend to use \eqn{\gamma}{\gamma} as a small number of clusters correction
-#' to the variance component. The adjustment factor gamma when there is clustering in one
+#' to the variance component. The adjustment factor \eqn{gamma} when there is clustering in one
 #' treatment group only is given by
 #'
 #' \deqn{\gamma  = 1 - \dfrac{(N^C+n-2)\rho}{N-2}}
 #'
-#' where \eqn{N^C}{N-C} is the sample size of the group without clustering, \eqn{n}{n} is
+#' where \eqn{N} is the total samples size, \eqn{N^C}{N-C} is the sample size of the group without clustering, \eqn{n}{n} is
 #' the average cluster size, and \eqn{\rho}{\rho} is the (often imputed) intraclass correlation.
 #'
 #' Then let the naive estimator of Hedges' \eqn{g}{g} be
@@ -148,9 +148,50 @@ gamma_1armcluster <- function(N_total, Nc, avg_grp_size, ICC, sqrt = TRUE){
 #' in Hedges & Citkowitz (2015, p. 6). The design effect is denoted as \eqn{\eta} in WWC (2021).
 #' The same notion is used here and gave name to the function.
 #'
-#' @details Equation
+#' @details  When calculating effect sizes from cluster-designed studies that do not
+#' properly account for clustering in one treatment group, it recommended
+#' (Hedges, 2007, 2011; Hedges & Citkowitz, 2015; WWC, 2021) to multiply a design effect, \eqn{\eta}
+#' to the first term of the variance \eqn{g_T} that captures the contribution of the variance of
+#' mean effect difference. The design effect when there is clustering in one
+#' treatment group only is given by
 #'
 #' \deqn{\eta  = 1 + \left( \dfrac{nN^C}{N}-1 \right)\rho } \cr
+#'
+#' where \eqn{N} is the total samples size, \eqn{N^C}{N-C} is the sample size of the group without clustering, \eqn{n}{n} is
+#' the average cluster size, and \eqn{\rho}{\rho} is the (often imputed) intraclass correlation.
+#'
+#' @section Multiplying design effect to posttest measures:
+#'
+#' To see illustrate this procedure, let the naive estimator of Hedges' \eqn{g}{g} be
+#'
+#' \deqn{g_{naive} = J\times \left(\dfrac{\bar{Y}^T_{\bullet\bullet} - \bar{Y}^C_{\bullet}}{S_T} \right)}
+#'
+#' where \eqn{J = 1 - 3/(4df-1)}, \eqn{\bar{Y}^T_{\bullet\bullet}} it the average treatment effect for the
+#' treatment group containing clustering, \eqn{\bar{Y}^C_{\bullet}} is the average treatment effect
+#' for the group without clustering, and \eqn{S_T} is the standard deviation ignoring clustering. To account for the
+#' fact that \eqn{S_T} systematically underestimates the true standard deviation, \eqn{\sigma_T}, making \eqn{g} larger than the true
+#' values of \eqn{g}, i.e., \eqn{\delta}, the cluster-adjusted effect size can be obtained from
+#'
+#' \deqn{g_T = g_{naive}\sqrt{1 - \dfrac{(N^C+n-2)\rho}{N-2}}}
+#'
+#' if a study did not properly adjust for clustering, the sampling variance of \eqn{g_T},
+#' (when based on posttest measures only) is given by
+#'
+#' \deqn{v_{g_T} = \left(\dfrac{1}{N^T} + \dfrac{1}{N^C}\right) \gamma + \dfrac{g^2_T}{2h} }
+#'
+#' where \eqn{N^T} is the sample size of the treatment group containing clustering and \eqn{h} is
+#' given by
+#'
+#' \deqn{ h = \dfrac{[(N-2)(1-\rho) + (N^T-n)\rho]^2}
+#' {(N-2)(1-\rho)^2 + (N^T-n)n\rho^2 + 2(N^T-n)(1-\rho)\rho}}
+#'
+#' where \eqn{N}{N} is the total sample size. \cr\cr
+#'
+#' The reason why we do not multiply \eqn{J^2} to \eqn{v_{g_T}}, as otherwise suggested by Borenstein et al. (2009, p. 27)
+#' and Hedges & Citkowitz (2015, p. 1299), is that Hedges et al. (2023, p. 12) showed in a simulation that multiplying \eqn{J^2} to
+#' \eqn{v_{g_T}} underestimates the true variance.
+#'
+#' @section Multiplying design effect to adjusted measures:
 #'
 #' ***Table 1***<br>
 #' *Sampling variance estimates for \eqn{g_T} across various models for handling cluster, estimation techniques, and reported quantities.*
@@ -165,7 +206,7 @@ gamma_1armcluster <- function(N_total, Nc, avg_grp_size, ICC, sqrt = TRUE){
 #' | DiD, gain scores<br>\eqn{r_{imputed}, N^T, N^C}        | \eqn{2(1-.5) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_T}{2h}.}        | \eqn{2(1-.5) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_T}{2h}.} |
 #'
 #' *Note*: \eqn{R^2} "is the multiple correlation between the covariates and the outcome" (WWC, 2021),
-#' \eqn{\gamma = 1 - (N^C+n-2)\rho/N-2}, see \code{\link{gamma_1armcluster}}, and \eqn{r} is the pre-posttest correlation.
+#' \eqn{\gamma = 1 - (N^C+n-2)\rho/(N-2)}, see \code{\link{gamma_1armcluster}}, and \eqn{r} is the pre-posttest correlation.
 #'
 #' Furthermore, \eqn{\eta} can be used to correct effect size difference-in-differences as given
 #' in Table 2
