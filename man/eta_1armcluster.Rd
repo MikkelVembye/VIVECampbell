@@ -27,11 +27,16 @@ The same notion is used here and gave name to the function.
 \details{
 Equation
 
-\deqn{\eta  = 1 + \left( \dfrac{nN^C}{N}-1 \right)\rho } \cr\tabular{lll}{
-   \strong{Calculation type/reported} \tab \strong{Cluster adjusted} \tab \strong{Not cluster adjusted} \cr
-   ANCOVA\if{html}{\out{<br>}}\eqn{R^2, N^T, N^C} \tab \eqn{(1-R^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_T}{2h}    } \tab \eqn{(1-R^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_T}{2h}} \cr
-   \if{html}{\out{<br>}}ANCOVA\if{html}{\out{<br>}}\eqn{F, t, N^T, N^C} \tab \eqn{\left(\frac{g^2_T}{F}\right) \gamma + \frac{g^2_T}{2h}} \tab \eqn{\left(\frac{g^2_T}{F}\right) \eta + \frac{g^2_T}{2h}} \cr
-   Note: \tab  \tab  \cr
+\deqn{\eta  = 1 + \left( \dfrac{nN^C}{N}-1 \right)\rho } \cr
+
+Table 1\tabular{lll}{
+   \strong{Calculation type\if{html}{\out{<br>}}reported} \tab \strong{Cluster adjusted\if{html}{\out{<br>}}sampling variance} \tab \strong{Not cluster adjusted\if{html}{\out{<br>}}sampling variance} \cr
+   ANCOVA, adjusted means\if{html}{\out{<br>}}\eqn{R^2, N^T, N^C} \tab \eqn{(1-R^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_T}{2h}.} \tab \eqn{(1-R^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_T}{2h}.} \cr
+   ANCOVA, adjusted means\if{html}{\out{<br>}}\eqn{R^2_{imputed}, N^T, N^C} \tab \eqn{(1-0^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_T}{2h}.} \tab \eqn{(1-0^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_T}{2h}.} \cr
+   ANCOVA, adjusted means\if{html}{\out{<br>}}\eqn{F, (t^2), N^T, N^C} \tab \eqn{\left(\frac{g^2_T}{F}\right) \gamma + \frac{g^2_T}{2h}.} \tab \eqn{\left(\frac{g^2_T}{F}\right) \eta + \frac{g^2_T}{2h}.} \cr
+   Non-standradized reg coef\if{html}{\out{<br>}}\eqn{SE, S_T} \tab \eqn{\left(\frac{SE}{S_T}\right)^2 \gamma + \frac{g^2_T}{2h}.} \tab \eqn{\left(\frac{SE}{S_T}\right)^2 \eta + \frac{g^2_T}{2h}.} \cr
+   Standardized reg coef\if{html}{\out{<br>}}\eqn{SE_{std}} \tab \eqn{SE^2_{std} \gamma + \frac{g^2_T}{2h}.} \tab \eqn{SE^2_{std} \eta + \frac{g^2_T}{2h}.} \cr
+   Note: Insert notation \tab  \tab  \cr
 }
 }
 \note{

@@ -152,12 +152,15 @@ gamma_1armcluster <- function(N_total, Nc, avg_grp_size, ICC, sqrt = TRUE){
 #'
 #' \deqn{\eta  = 1 + \left( \dfrac{nN^C}{N}-1 \right)\rho } \cr
 #'
-#'
-#' |   **Calculation type/reported**  | **Cluster adjusted**                                                              | **Not cluster adjusted**                                                  |
-#' | --------------------             | ------------------                                                                 | -------------------                                                             |
-#' | ANCOVA<br>\eqn{R^2, N^T, N^C}    | \eqn{(1-R^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_T}{2h}    } | \eqn{(1-R^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_T}{2h}}|
-#' | <br>ANCOVA<br>\eqn{F, t, N^T, N^C}   | \eqn{\left(\frac{g^2_T}{F}\right) \gamma + \frac{g^2_T}{2h}}                       | \eqn{\left(\frac{g^2_T}{F}\right) \eta + \frac{g^2_T}{2h}}                      |
-#' Note:
+#' Table 1
+#' | **Calculation type<br>reported**                 | **Cluster adjusted<br>sampling variance**                                                  | **Not cluster adjusted<br>sampling variance**                                     |
+#' | --------------------                          | ------------------                                                                         | -------------------                                                               |
+#' | ANCOVA, adjusted means<br>\eqn{R^2, N^T, N^C} | \eqn{(1-R^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_T}{2h}.}        | \eqn{(1-R^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_T}{2h}.} |
+#' | ANCOVA, adjusted means<br>\eqn{R^2_{imputed}, N^T, N^C}| \eqn{(1-0^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_T}{2h}.}| \eqn{(1-0^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_T}{2h}.}|
+#' | ANCOVA, adjusted means<br>\eqn{F, (t^2), N^T, N^C} | \eqn{\left(\frac{g^2_T}{F}\right) \gamma + \frac{g^2_T}{2h}.}                          | \eqn{\left(\frac{g^2_T}{F}\right) \eta + \frac{g^2_T}{2h}.}                      |
+#' | Non-standradized reg coef<br>\eqn{SE, S_T} | \eqn{\left(\frac{SE}{S_T}\right)^2 \gamma + \frac{g^2_T}{2h}.}                              | \eqn{\left(\frac{SE}{S_T}\right)^2 \eta + \frac{g^2_T}{2h}.}                           |
+#' | Standardized reg coef<br>\eqn{SE_{std}} | \eqn{SE^2_{std} \gamma + \frac{g^2_T}{2h}.}                              | \eqn{SE^2_{std} \eta + \frac{g^2_T}{2h}.}                            |
+#' Note: Insert notation
 #'
 #' @note Read Taylor et al. (2020) to understand why we use the \eqn{g_T}{g-T} notation.
 #' Find suggestions for how and which ICC values to impute when these are unknown (Hedges & Hedberg, 2007, 2013).
