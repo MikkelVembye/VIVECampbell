@@ -35,7 +35,7 @@ is adequately handled, WWC also recommend to use \eqn{\gamma}{\gamma} as a small
 to the variance component. The adjustment factor gamma when there is clustering in one
 treatment group only is given by
 
-\deqn{\gamma  = 1 - \dfrac{(N^C+n-2)\rho}{N_2}}
+\deqn{\gamma  = 1 - \dfrac{(N^C+n-2)\rho}{N-2}}
 
 where \eqn{N^C}{N-C} is the sample size of the group without clustering, \eqn{n}{n} is
 the average cluster size, and \eqn{\rho}{\rho} is the (often imputed) intraclass correlation.
