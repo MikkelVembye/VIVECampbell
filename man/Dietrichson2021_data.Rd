@@ -7,22 +7,21 @@
 \format{
 A tibble with 1334 rows/studies and 71 variables/columns
 
-\describe{
-\item{Authors}{\code{String} variable with short-hand information about authors.}
-\item{Study_ID}{Number identifying the study cluster.}
-\item{Title}{Title of report/journal article.}
-\item{Outlet}{\code{String} variable with information about outlet for the study, i.e., either a journal or a dissertation or a report etc.}
-\item{Country}{\code{String} variable with information about the country where the intervention was conducted.}
-\item{Language}{\code{String} variable with information about the language used in the study.}
-\item{Publishing_status}{Indicator equal to one if the study has been published in a journal.}
-\item{RCT_QES}{\code{String} variable denoting whether the effect size is from a RCT or a QES}
-\item{Level_treatment_assignment}{\code{String} variable indicating the level of treatment assignment.}
-\item{Test_subject}{String variable denoting the subject of test the effect size is based on (reading or math).}
-\item{Estimation_method}{String variable indicating the type of estimation method the effect
-estimate is taken from (e.g., raw means, adjusted means, regression adjusted).}
-\item{Effectsize_g}{Effect size, Hedges' g, not adjusted for clustering.}
-\item{SE_g}{The standard error of the effect size, not adjusted for clustering.}
-
+\tabular{lll}{
+\bold{Authors} \tab \code{character} \tab variable with short-hand information about authors. \cr
+\bold{Study_ID} \tab \code{integer} \tab Number identifying the study cluster. \cr
+\bold{Title}  \tab \code{character}   \tab Title of report/journal article. \cr
+\bold{Outlet} \tab \code{character}   \tab Variable with information about outlet for the study, i.e., either a journal or a dissertation or a report etc. \cr
+\bold{Country}    \tab \code{character}   \tab Variable with information about the country where the intervention was conducted. \cr
+\bold{Language}  \tab \code{character}   \tab Variable with information about the language used in the study. \cr
+\bold{Publishing_status}  \tab \code{character}   \tab Indicator equal to one if the study has been published in a journal. \cr
+\bold{RCT_QES}  \tab \code{character}   \tab Variable denoting whether the effect size is from a RCT or a QES \cr
+\bold{Level_treatment_assignment}  \tab \code{character}   \tab Variable indicating the level of treatment assignment. \cr
+\bold{Test_subject}  \tab \code{character}   \tab Variable denoting the subject of test the effect size is based on (reading or math). \cr
+\bold{Estimation_method}  \tab \code{character}   \tab Variable indicating the type of estimation method the effect
+estimate is taken from (e.g., raw means, adjusted means, regression adjusted). \cr
+\bold{Effectsize_g}  \tab \code{numeric}   \tab Effect size, Hedges' g, not adjusted for clustering. \cr
+\bold{SE_g}  \tab \code{numeric}   \tab The standard error of the effect size, not adjusted for clustering. \cr
 }
 }
 \usage{
