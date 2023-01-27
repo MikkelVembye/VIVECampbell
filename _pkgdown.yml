@@ -37,7 +37,7 @@ articles:
    - articles/Github
    - articles/meta-analysis-in-R
 
- - title: Effect size calc
+ - title: Effect size calculation
    navbar: Effect size calculation
    contents:
    - Entering-data
