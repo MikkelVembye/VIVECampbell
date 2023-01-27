@@ -17,7 +17,9 @@ vgt_smd_1armcluster(
   t_val = NULL,
   SE = NULL,
   S = NULL,
-  SE_std = NULL
+  SE_std = NULL,
+  R2 = NULL,
+  q = NULL
 )
 }
 \arguments{

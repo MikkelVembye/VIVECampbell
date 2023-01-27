@@ -47,9 +47,10 @@
 vgt_smd_1armcluster <-
   function(
     N_cl_grp, N_ind_grp, avg_grp_size, ICC, g,
-    model = c("Posttest", "reg_coef", "reg_std_coef", "ANCOVA", "DiD"),
+    model = c("Posttest", "ANCOVA", "DiD", "reg_coef", "reg_std_coef", ),
     not_cluster_adj = TRUE,
-    prepost_cor = NULL, F_val = NULL, t_val = NULL, SE = NULL, S = NULL, SE_std = NULL
+    prepost_cor = NULL, F_val = NULL, t_val = NULL, SE = NULL, S = NULL, SE_std = NULL,
+    R2 = NULL, q = NULL
 
   ){
 
@@ -64,35 +65,83 @@ vgt_smd_1armcluster <-
   if ("Posttest" %in% model){
 
 
-    if (is.numeric(N_cl_grp) && is.numeric(N_ind_grp) && is.numeric(t_val)){
+    if (is.numeric(t_val)){
 
+      df <- h
       var_term1 <- g^2/t_val^2
 
-    } else {
+    } else if (is.numeric(N_cl_grp) && is.numeric(N_ind_grp) && is.null(t_val)){
 
+      df <- h
       var_term1 <- (1/N1 + 1/N2)
 
     }
 
     if (not_cluster_adj){
 
-      eta <- eta_1armcluster(N_total = N, Nc = N_ind_grp, avg_grp_size = avg_grp_size, ICC = rho)
+      adj_factor <- eta_1armcluster(N_total = N, Nc = N_ind_grp, avg_grp_size = avg_grp_size, ICC = rho)
+      adj_name <- "eta"
 
-      vgt <- var_term1 * eta + g^2/(2*h)
-      Wgt <- var_term1 * eta
+      vgt <- var_term1 * adj_factor + g^2/(2*df)
+      Wgt <- var_term1 * adj_factor
 
     } else {
 
-      gamma <- gamma_1armcluster(N_total = N, Nc = N_ind_grp, avg_grp_size = avg_grp_size, ICC = rho, sqrt = FALSE)
+      adj_factor <- gamma_1armcluster(N_total = N, Nc = N_ind_grp, avg_grp_size = avg_grp_size, ICC = rho, sqrt = FALSE)
+      adj_name <- "gamma"
 
-      vgt <- var_term1 * gamma + g^2/(2*h)
-      Wgt <- var_term1 * gamma
+      vgt <- var_term1 * adj_factor + g^2/(2*df)
+      Wgt <- var_term1 * adj_factor
 
     }
 
   }
 
+#  if ("ANCOVA" %in% model){
+#
+#
+#    if (is.numeric(t_val)){
+#
+#      var_term1 <- g^2/t_val^2
+#
+#    } else if (is.numeric(F_val)){
+#
+#      var_term1 <- g^2/F_val
+#
+#    } else if (is.numeric(R2) && is.numeric(q)){
+#
+#
+#
+#    }
+#
+#
+#
+#    if (not_cluster_adj){
+#
+#      adj_factor <- eta_1armcluster(N_total = N, Nc = N_ind_grp, avg_grp_size = avg_grp_size, ICC = rho)
+#      adj_name <- "eta"
+#
+#      vgt <- var_term1 * adj_factor + g^2/(2*h)
+#      Wgt <- var_term1 * adj_factor
+#
+#    } else {
+#
+#      adj_factor <- gamma_1armcluster(N_total = N, Nc = N_ind_grp, avg_grp_size = avg_grp_size, ICC = rho, sqrt = FALSE)
+#
+#      adj_name <- "gamma"
+#
+#      vgt <- var_term1 * adj_factor + g^2/(2*h)
+#      Wgt <- var_term1 * adj_factor
+#
+#    }
+#
+#  }
+
+
   tibble::tibble(
+    df = h,
+    adj_fct = adj_name,
+    adj_value = adj_factor,
     V_gt = vgt,
     W_gt = Wgt
   )
