@@ -79,7 +79,9 @@
 <span>  t_val <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  SE <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  S <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  SE_std <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>  SE_std <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  R2 <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  q <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -173,10 +175,10 @@ Supplement document for Appendix E and the What Works Clearinghouse procedures h
 <span class="r-in"><span>N_cl_grp <span class="op">=</span> <span class="fl">60</span>, N_ind_grp <span class="op">=</span> <span class="fl">40</span>, avg_grp_size <span class="op">=</span> <span class="fl">10</span>, ICC <span class="op">=</span> <span class="fl">0.1</span>, g <span class="op">=</span> <span class="fl">0.2</span>,</span></span>
 <span class="r-in"><span>model <span class="op">=</span> <span class="st">"Posttest"</span>, not_cluster_adj <span class="op">=</span> <span class="cn">TRUE</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 2</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     V_gt   W_gt</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 0.054<span style="text-decoration: underline;">4</span> 0.054<span style="text-decoration: underline;">2</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 5</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      df adj_fct adj_value   V_gt   W_gt</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>  93.0 eta           1.3 0.054<span style="text-decoration: underline;">4</span> 0.054<span style="text-decoration: underline;">2</span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
