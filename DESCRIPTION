@@ -23,12 +23,13 @@ LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
 URL: https://mikkelvembye.github.io/VIVECampbell/
+Imports:
+    tibble
 Suggests: 
     knitr,
     rmarkdown,
     dplyr,
     purrr,
-    tibble,
     readxl,
     gt,
     tidyr,

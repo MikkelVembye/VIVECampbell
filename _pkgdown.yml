@@ -13,6 +13,7 @@ reference:
   - title: "Cluster-bias correction when there is clustering in one treatment group only"
     desc: "Functions for caclulating effect sizes and sampling variances from cluster-designed studies when there is clustering in one treatment group only"
     contents:
+      - vgt_smd_1armcluster
       - df_h_1armcluster
       - eta_1armcluster
       - gamma_1armcluster
