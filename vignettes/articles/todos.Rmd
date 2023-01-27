@@ -30,8 +30,8 @@ kan være gode for begyndere, evt. prisma og pico artikler m.m.
 ## **Todos** 
 * Cluster bias korrektion med binære outcomes
 * Cluster bias korrektion med clustering i både treatment og kontrol
-* Indlæg tabelfunctioner fra fadeout (med apa format) (overvej S3 metode)
-* Indlæg forrest plot funkter fra fadeout
+* Indlæg tabelfunktioner fra fadeout (med apa format) (overvej S3 metode)
+* Indlæg forrest plot funktioner fra fadeout
 * Indlæg empiriske 
 * Blog angående hvordan man henter sit GitHub projekt ind i RStudio
 * Lav introduktion til siden (Get Started )
