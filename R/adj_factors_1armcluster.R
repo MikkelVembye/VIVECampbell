@@ -10,7 +10,7 @@
 #' (Hedges, 2007, 2011; Hedges & Citkowitz, 2015; WWC, 2021) to add an adjustment factor, \eqn{\gamma}{\gamma}
 #' to \eqn{d}{d} whether or not cluster is adequately handled in the studies. Even if clustering
 #' is adequately handled, WWC also recommend to use \eqn{\gamma}{\gamma} as a small number of clusters correction
-#' to the variance component. The adjustment factor \eqn{gamma} when there is clustering in one
+#' to the variance component. The adjustment factor \eqn{\gamma} when there is clustering in one
 #' treatment group only is given by
 #'
 #' \deqn{\gamma  = 1 - \dfrac{(N^C+n-2)\rho}{N-2}}
@@ -43,7 +43,7 @@
 #' \deqn{ h = \dfrac{[(N-2)(1-\rho) + (N^T-n)\rho]^2}
 #' {(N-2)(1-\rho)^2 + (N^T-n)n\rho^2 + 2(N^T-n)(1-\rho)\rho}}
 #'
-#' where \eqn{N}{N} is the total sample size. \cr\cr
+#' where \eqn{N}{N} is the total sample size. See also \code{\link{df_h_1armcluster}}. \cr\cr
 #'
 #' The reason why we do not multiply \eqn{J^2} to \eqn{v_{g_T}}, as otherwise suggested by Borenstein et al. (2009, p. 27)
 #' and Hedges & Citkowitz (2015, p. 1299), is that Hedges et al. (2023, p. 12) showed in a simulation that multiplying \eqn{J^2} to
@@ -57,18 +57,27 @@
 #'
 #' ***Table 1***<br>
 #' *Sampling variance estimates for \eqn{g_T} across various models for handling cluster, estimation techniques, and reported quantities.*
-#' | **Calculation type/<br>reported quantities**       | **Cluster-adjusted (model)<br>sampling variance**                                     | **Not cluster-adjusted (model)<br>sampling variance**                                    |
-#' | --------------------                               | ------------------                                                                     | -------------------                                                              |
-#' | ANCOVA, adj. means<br>\eqn{R^2, N^T, N^C}          | \eqn{(1-R^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_T}{2h}.}        | \eqn{(1-R^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_T}{2h}.}|
-#' | ANCOVA, adj. means<br>\eqn{R^2_{imputed}, N^T, N^C}| \eqn{(1-0^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_T}{2h}.}        | \eqn{(1-0^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_T}{2h}.}|
-#' | ANCOVA, adj. means<br>\eqn{F, (t^2), N^T, N^C}     | \eqn{\left(\frac{g^2_T}{F}\right) \gamma + \frac{g^2_T}{2h}.}                              | \eqn{\left(\frac{g^2_T}{F}\right) \eta + \frac{g^2_T}{2h}.}                      |
-#' | Reg coef<br>\eqn{SE, S_T, N^T, N^C}   | \eqn{\left(\frac{SE}{S_T}\right)^2 \gamma + \frac{g^2_T}{2h}.}                             | \eqn{\left(\frac{SE}{S_T}\right)^2 \eta + \frac{g^2_T}{2h}.}                     |
-#' | Standardized reg coef<br>\eqn{SE_{std}, N^T, N^C}      | \eqn{SE^2_{std} \gamma + \frac{g^2_T}{2h}.}                                                | \eqn{SE^2_{std} \eta + \frac{g^2_T}{2h}.}                                        |
-#' | DiD, gain scores<br>\eqn{r, N^T, N^C}                  | \eqn{2(1-r) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_T}{2h}.}         | \eqn{2(1-r) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_T}{2h}.} |
-#' | DiD, gain scores<br>\eqn{r_{imputed}, N^T, N^C}        | \eqn{2(1-.5) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_T}{2h}.}        | \eqn{2(1-.5) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_T}{2h}.} |
+#' | **Calculation type/<br>reported quantities**           | **Cluster-adjusted (model)<br>sampling variance**                                          | **Not cluster-adjusted (model)<br>sampling variance**                                  |
+#' | --------------------                                   | ------------------                                                                         | -------------------                                                                    |
+#' | ANCOVA, adj. means<br>\eqn{R^2, N^T, N^C}              | \eqn{(1-R^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_T}{2(h-q)}.}    | \eqn{(1-R^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_T}{2(h-q)}.}  |
+#' | ANCOVA, adj. means<br>\eqn{R^2_{imputed}, N^T, N^C}    | \eqn{(1-0^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_T}{2(h-q)}.}    | \eqn{(1-0^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_T}{2(h-q)}.}  |
+#' | ANCOVA, adj. means<br>\eqn{F, (t^2), N^T, N^C}         | \eqn{\left(\frac{g^2_T}{F}\right) \gamma + \frac{g^2_T}{2h}.}                              | \eqn{\left(\frac{g^2_T}{F}\right) \eta + \frac{g^2_T}{2h}.}                            |
+#' | ANCOVA, pretest only<br>\eqn{r, N^T, N^C}              | \eqn{(1-r^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_T}{2h}.}        | \eqn{(1-r^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_T}{2h}.}      |
+#' | Reg coef<br>\eqn{SE, S_T, N^T, N^C}                    | \eqn{\left(\frac{SE}{S_T}\right)^2 \gamma + \frac{g^2_T}{2h}.}                             | \eqn{\left(\frac{SE}{S_T}\right)^2 \eta + \frac{g^2_T}{2h}.}                           |
+#' | Standardized reg coef<br>\eqn{SE_{std}, N^T, N^C}      | \eqn{SE^2_{std} \gamma + \frac{g^2_T}{2h}.}                                                | \eqn{SE^2_{std} \eta + \frac{g^2_T}{2h}.}                                              |
+#' | DiD, gain scores<br>\eqn{r, N^T, N^C}                  | \eqn{2(1-r) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_T}{2h}.}         | \eqn{2(1-r) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_T}{2h}.}       |
+#' | DiD, gain scores<br>\eqn{r_{imputed}, N^T, N^C}        | \eqn{2(1-.5) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_T}{2h}.}        | \eqn{2(1-.5) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_T}{2h}.}      |
 #'
 #' *Note*: \eqn{R^2} "is the multiple correlation between the covariates and the outcome" (WWC, 2021),
-#' \eqn{\eta = 1 + (nN^C/N-1)\rho}, see \code{\link{eta_1armcluster}}, and \eqn{r} is the pre-posttest correlation.
+#' \eqn{\gamma = 1 - (N^C+n-2)\rho/(N-2)}, see \code{\link{gamma_1armcluster}},
+#' \eqn{r} is the pre-posttest correlation, and \eqn{q} is the number of covariates.
+#'
+#' "It is often desired in practice to adjust for multiple baseline characteristics.
+#' The problem of \eqn{q} covariates is a straightforward extension of the single covariate case
+#' (...): The correlation coefficient estimate \eqn{r} is now obtained by
+#' taking the square root of the coefficient of multiple determination, \eqn{R^2} "
+#' (Hedges et al. 2023, p. 17) and \eqn{df = h-q}.
+#'
 #'
 #'**Multiplying \eqn{\gamma} to effect size difference-in-differences**<br>
 #' Furthermore, \eqn{\gamma} can be used to correct effect size difference-in-differences as given
@@ -220,7 +229,7 @@ gamma_1armcluster <- function(N_total, Nc, avg_grp_size, ICC, sqrt = TRUE){
 #' \deqn{ h = \dfrac{[(N-2)(1-\rho) + (N^T-n)\rho]^2}
 #' {(N-2)(1-\rho)^2 + (N^T-n)n\rho^2 + 2(N^T-n)(1-\rho)\rho}}
 #'
-#' where \eqn{N}{N} is the total sample size. \cr\cr
+#' where \eqn{N}{N} is the total sample size. See also \code{\link{df_h_1armcluster}}. \cr\cr
 #'
 #' The reason why we do not multiply \eqn{J^2} to \eqn{v_{g_T}}, as otherwise suggested by Borenstein et al. (2009, p. 27)
 #' and Hedges & Citkowitz (2015, p. 1299), is that Hedges et al. (2023, p. 12) showed in a simulation that multiplying \eqn{J^2} to
@@ -234,18 +243,26 @@ gamma_1armcluster <- function(N_total, Nc, avg_grp_size, ICC, sqrt = TRUE){
 #'
 #' ***Table 1***<br>
 #' *Sampling variance estimates for \eqn{g_T} across various models for handling cluster, estimation techniques, and reported quantities.*
-#' | **Calculation type/<br>reported quantities**       | **Cluster-adjusted (model)<br>sampling variance**                                     | **Not cluster-adjusted (model)<br>sampling variance**                                    |
-#' | --------------------                               | ------------------                                                                     | -------------------                                                              |
-#' | ANCOVA, adj. means<br>\eqn{R^2, N^T, N^C}          | \eqn{(1-R^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_T}{2h}.}        | \eqn{(1-R^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_T}{2h}.}|
-#' | ANCOVA, adj. means<br>\eqn{R^2_{imputed}, N^T, N^C}| \eqn{(1-0^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_T}{2h}.}        | \eqn{(1-0^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_T}{2h}.}|
-#' | ANCOVA, adj. means<br>\eqn{F, (t^2), N^T, N^C}     | \eqn{\left(\frac{g^2_T}{F}\right) \gamma + \frac{g^2_T}{2h}.}                              | \eqn{\left(\frac{g^2_T}{F}\right) \eta + \frac{g^2_T}{2h}.}                      |
-#' | Reg coef<br>\eqn{SE, S_T, N^T, N^C}   | \eqn{\left(\frac{SE}{S_T}\right)^2 \gamma + \frac{g^2_T}{2h}.}                             | \eqn{\left(\frac{SE}{S_T}\right)^2 \eta + \frac{g^2_T}{2h}.}                     |
-#' | Standardized reg coef<br>\eqn{SE_{std}, N^T, N^C}      | \eqn{SE^2_{std} \gamma + \frac{g^2_T}{2h}.}                                                | \eqn{SE^2_{std} \eta + \frac{g^2_T}{2h}.}                                        |
-#' | DiD, gain scores<br>\eqn{r, N^T, N^C}                  | \eqn{2(1-r) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_T}{2h}.}         | \eqn{2(1-r) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_T}{2h}.} |
-#' | DiD, gain scores<br>\eqn{r_{imputed}, N^T, N^C}        | \eqn{2(1-.5) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_T}{2h}.}        | \eqn{2(1-.5) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_T}{2h}.} |
+#' | **Calculation type/<br>reported quantities**           | **Cluster-adjusted (model)<br>sampling variance**                                          | **Not cluster-adjusted (model)<br>sampling variance**                                  |
+#' | --------------------                                   | ------------------                                                                         | -------------------                                                                    |
+#' | ANCOVA, adj. means<br>\eqn{R^2, N^T, N^C}              | \eqn{(1-R^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_T}{2(h-q)}.}    | \eqn{(1-R^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_T}{2(h-q)}.}  |
+#' | ANCOVA, adj. means<br>\eqn{R^2_{imputed}, N^T, N^C}    | \eqn{(1-0^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_T}{2(h-q)}.}    | \eqn{(1-0^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_T}{2(h-q)}.}  |
+#' | ANCOVA, adj. means<br>\eqn{F, (t^2), N^T, N^C}         | \eqn{\left(\frac{g^2_T}{F}\right) \gamma + \frac{g^2_T}{2h}.}                              | \eqn{\left(\frac{g^2_T}{F}\right) \eta + \frac{g^2_T}{2h}.}                            |
+#' | ANCOVA, pretest only<br>\eqn{r, N^T, N^C}              | \eqn{(1-r^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_T}{2h}.}        | \eqn{(1-r^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_T}{2h}.}      |
+#' | Reg coef<br>\eqn{SE, S_T, N^T, N^C}                    | \eqn{\left(\frac{SE}{S_T}\right)^2 \gamma + \frac{g^2_T}{2h}.}                             | \eqn{\left(\frac{SE}{S_T}\right)^2 \eta + \frac{g^2_T}{2h}.}                           |
+#' | Standardized reg coef<br>\eqn{SE_{std}, N^T, N^C}      | \eqn{SE^2_{std} \gamma + \frac{g^2_T}{2h}.}                                                | \eqn{SE^2_{std} \eta + \frac{g^2_T}{2h}.}                                              |
+#' | DiD, gain scores<br>\eqn{r, N^T, N^C}                  | \eqn{2(1-r) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_T}{2h}.}         | \eqn{2(1-r) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_T}{2h}.}       |
+#' | DiD, gain scores<br>\eqn{r_{imputed}, N^T, N^C}        | \eqn{2(1-.5) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_T}{2h}.}        | \eqn{2(1-.5) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_T}{2h}.}      |
 #'
 #' *Note*: \eqn{R^2} "is the multiple correlation between the covariates and the outcome" (WWC, 2021),
-#' \eqn{\gamma = 1 - (N^C+n-2)\rho/(N-2)}, see \code{\link{gamma_1armcluster}}, and \eqn{r} is the pre-posttest correlation.
+#' \eqn{\gamma = 1 - (N^C+n-2)\rho/(N-2)}, see \code{\link{gamma_1armcluster}},
+#' \eqn{r} is the pre-posttest correlation, and \eqn{q} is the number of covariates.
+#'
+#' "It is often desired in practice to adjust for multiple baseline characteristics.
+#' The problem of \eqn{q} covariates is a straightforward extension of the single covariate case
+#' (...): The correlation coefficient estimate \eqn{r} is now obtained by
+#' taking the square root of the coefficient of multiple determination, \eqn{R^2} "
+#' (Hedges et al. 2023, p. 17) and \eqn{df = h-q}.
 #'
 #' **Multiplying the design effect to effect size difference-in-differences**<br>
 #' Furthermore, \eqn{\eta} can be used to correct effect size difference-in-differences as given

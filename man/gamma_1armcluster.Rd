@@ -32,7 +32,7 @@ When calculating effect sizes from cluster-designed studies, it recommended
 (Hedges, 2007, 2011; Hedges & Citkowitz, 2015; WWC, 2021) to add an adjustment factor, \eqn{\gamma}{\gamma}
 to \eqn{d}{d} whether or not cluster is adequately handled in the studies. Even if clustering
 is adequately handled, WWC also recommend to use \eqn{\gamma}{\gamma} as a small number of clusters correction
-to the variance component. The adjustment factor \eqn{gamma} when there is clustering in one
+to the variance component. The adjustment factor \eqn{\gamma} when there is clustering in one
 treatment group only is given by
 
 \deqn{\gamma  = 1 - \dfrac{(N^C+n-2)\rho}{N-2}}
@@ -65,7 +65,7 @@ given by
 \deqn{ h = \dfrac{[(N-2)(1-\rho) + (N^T-n)\rho]^2}
 {(N-2)(1-\rho)^2 + (N^T-n)n\rho^2 + 2(N^T-n)(1-\rho)\rho}}
 
-where \eqn{N}{N} is the total sample size. \cr\cr
+where \eqn{N}{N} is the total sample size. See also \code{\link{df_h_1armcluster}}. \cr\cr
 
 The reason why we do not multiply \eqn{J^2} to \eqn{v_{g_T}}, as otherwise suggested by Borenstein et al. (2009, p. 27)
 and Hedges & Citkowitz (2015, p. 1299), is that Hedges et al. (2023, p. 12) showed in a simulation that multiplying \eqn{J^2} to
@@ -80,9 +80,10 @@ See Table 1 below.
 \emph{\strong{Table 1}}\if{html}{\out{<br>}}
 \emph{Sampling variance estimates for \eqn{g_T} across various models for handling cluster, estimation techniques, and reported quantities.}\tabular{lll}{
    \strong{Calculation type/\if{html}{\out{<br>}}reported quantities} \tab \strong{Cluster-adjusted (model)\if{html}{\out{<br>}}sampling variance} \tab \strong{Not cluster-adjusted (model)\if{html}{\out{<br>}}sampling variance} \cr
-   ANCOVA, adj. means\if{html}{\out{<br>}}\eqn{R^2, N^T, N^C} \tab \eqn{(1-R^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_T}{2h}.} \tab \eqn{(1-R^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_T}{2h}.} \cr
-   ANCOVA, adj. means\if{html}{\out{<br>}}\eqn{R^2_{imputed}, N^T, N^C} \tab \eqn{(1-0^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_T}{2h}.} \tab \eqn{(1-0^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_T}{2h}.} \cr
+   ANCOVA, adj. means\if{html}{\out{<br>}}\eqn{R^2, N^T, N^C} \tab \eqn{(1-R^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_T}{2(h-q)}.} \tab \eqn{(1-R^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_T}{2(h-q)}.} \cr
+   ANCOVA, adj. means\if{html}{\out{<br>}}\eqn{R^2_{imputed}, N^T, N^C} \tab \eqn{(1-0^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_T}{2(h-q)}.} \tab \eqn{(1-0^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_T}{2(h-q)}.} \cr
    ANCOVA, adj. means\if{html}{\out{<br>}}\eqn{F, (t^2), N^T, N^C} \tab \eqn{\left(\frac{g^2_T}{F}\right) \gamma + \frac{g^2_T}{2h}.} \tab \eqn{\left(\frac{g^2_T}{F}\right) \eta + \frac{g^2_T}{2h}.} \cr
+   ANCOVA, pretest only\if{html}{\out{<br>}}\eqn{r, N^T, N^C} \tab \eqn{(1-r^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_T}{2h}.} \tab \eqn{(1-r^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_T}{2h}.} \cr
    Reg coef\if{html}{\out{<br>}}\eqn{SE, S_T, N^T, N^C} \tab \eqn{\left(\frac{SE}{S_T}\right)^2 \gamma + \frac{g^2_T}{2h}.} \tab \eqn{\left(\frac{SE}{S_T}\right)^2 \eta + \frac{g^2_T}{2h}.} \cr
    Standardized reg coef\if{html}{\out{<br>}}\eqn{SE_{std}, N^T, N^C} \tab \eqn{SE^2_{std} \gamma + \frac{g^2_T}{2h}.} \tab \eqn{SE^2_{std} \eta + \frac{g^2_T}{2h}.} \cr
    DiD, gain scores\if{html}{\out{<br>}}\eqn{r, N^T, N^C} \tab \eqn{2(1-r) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_T}{2h}.} \tab \eqn{2(1-r) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_T}{2h}.} \cr
@@ -91,7 +92,14 @@ See Table 1 below.
 
 
 \emph{Note}: \eqn{R^2} "is the multiple correlation between the covariates and the outcome" (WWC, 2021),
-\eqn{\eta = 1 + (nN^C/N-1)\rho}, see \code{\link{eta_1armcluster}}, and \eqn{r} is the pre-posttest correlation.
+\eqn{\gamma = 1 - (N^C+n-2)\rho/(N-2)}, see \code{\link{gamma_1armcluster}},
+\eqn{r} is the pre-posttest correlation, and \eqn{q} is the number of covariates.
+
+"It is often desired in practice to adjust for multiple baseline characteristics.
+The problem of \eqn{q} covariates is a straightforward extension of the single covariate case
+(...): The correlation coefficient estimate \eqn{r} is now obtained by
+taking the square root of the coefficient of multiple determination, \eqn{R^2} "
+(Hedges et al. 2023, p. 17) and \eqn{df = h-q}.
 
 \strong{Multiplying \eqn{\gamma} to effect size difference-in-differences}\if{html}{\out{<br>}}
 Furthermore, \eqn{\gamma} can be used to correct effect size difference-in-differences as given
