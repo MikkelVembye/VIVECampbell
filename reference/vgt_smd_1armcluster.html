@@ -72,7 +72,7 @@
 <span>  <span class="va">avg_grp_size</span>,</span>
 <span>  <span class="va">ICC</span>,</span>
 <span>  <span class="va">g</span>,</span>
-<span>  model <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Posttest"</span>, <span class="st">"ANCOVA"</span>, <span class="st">"DiD"</span>, <span class="st">"reg_coef"</span>, <span class="st">"reg_std_coef"</span><span class="op">)</span>,</span>
+<span>  model <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Posttest"</span>, <span class="st">"ANCOVA"</span>, <span class="st">"DiD"</span>, <span class="st">"Reg_coef"</span>, <span class="st">"Std_reg_coef"</span><span class="op">)</span>,</span>
 <span>  not_cluster_adj <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  prepost_cor <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  F_val <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -183,10 +183,10 @@ Supplement document for Appendix E and the What Works Clearinghouse procedures h
 <span class="r-in"><span>N_cl_grp <span class="op">=</span> <span class="fl">60</span>, N_ind_grp <span class="op">=</span> <span class="fl">40</span>, avg_grp_size <span class="op">=</span> <span class="fl">10</span>, ICC <span class="op">=</span> <span class="fl">0.1</span>, g <span class="op">=</span> <span class="fl">0.2</span>,</span></span>
 <span class="r-in"><span>model <span class="op">=</span> <span class="st">"Posttest"</span>, not_cluster_adj <span class="op">=</span> <span class="cn">TRUE</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 7</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       h    df var_term1 adj_fct adj_value   V_gt   W_gt</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>  93.0  93.0    0.041<span style="text-decoration: underline;">7</span> eta           1.3 0.054<span style="text-decoration: underline;">4</span> 0.054<span style="text-decoration: underline;">2</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 8</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       h    df var_term1 adj_fct adj_value   V_gt   W_gt Wgt_test</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>  93.0  93.0    0.041<span style="text-decoration: underline;">7</span> eta           1.3 0.054<span style="text-decoration: underline;">4</span> 0.054<span style="text-decoration: underline;">2</span>   0.054<span style="text-decoration: underline;">2</span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
