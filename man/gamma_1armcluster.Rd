@@ -96,7 +96,7 @@ See Table 1 below.
 
 
 \emph{Note}: \eqn{R^2} "is the multiple correlation between the covariates and the outcome" (WWC, 2021),
-\eqn{\gamma = 1 - (N^C+n-2)\rho/(N-2)}, see \code{\link{eta_1armcluster}},
+\eqn{\eta = 1 - (N^C+n-2)\rho/(N-2)}, see \code{\link{eta_1armcluster}},
 \eqn{r} is the pre-posttest correlation, and \eqn{q} is the number of covariates. Std. = standardized.
 
 "It is often desired in practice to adjust for multiple baseline characteristics.

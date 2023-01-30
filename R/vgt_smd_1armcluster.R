@@ -3,7 +3,38 @@
 #'
 #' @description Insert
 #'
-#' @details Insert
+#' @details Table 1 illustrates all cluster adjustment
+#' of variance estimates from pre-test and/or covariate adjusted measures that can
+#' be calculated with the vgt_smd_1armcluster()
+#'
+#'  ***Table 1***<br>
+#' *Sampling variance estimates for \eqn{g_T} across various models for handling cluster, estimation techniques, and reported quantities.*
+#' | **Calculation type/<br>reported quantities**           | **Cluster-adjusted (model)<br>sampling variance**                                       | **Not cluster-adjusted (model)<br>sampling variance**                                  |
+#' | --------------------                                   | ------------------                                                                      | -------------------                                                                    |
+#' | ANCOVA, adj. means<br>\eqn{R^2, N^T, N^C}              | \eqn{(1-R^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_T}{2(h-q)}.} | \eqn{(1-R^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_T}{2(h-q)}.}  |
+#' | ANCOVA, adj. means<br>\eqn{R^2_{imputed}, N^T, N^C}    | \eqn{(1-0^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_T}{2(h-q)}.} | \eqn{(1-0^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_T}{2(h-q)}.}  |
+#' | ANCOVA, adj. means<br>\eqn{F, (t^2), N^T, N^C}         | \eqn{\left(\frac{g^2_T}{F}\right) \gamma + \frac{g^2_T}{2(h-q)}.}                       | \eqn{\left(\frac{g^2_T}{F}\right) \eta + \frac{g^2_T}{2(h-q)}.}                      |
+#' | ANCOVA, pretest only<br>\eqn{F, (t^2), N^T, N^C}       | \eqn{\left(\frac{g^2_T}{F}\right) \gamma + \frac{g^2_T}{2h}.}                           | \eqn{\left(\frac{g^2_T}{F}\right) \eta + \frac{g^2_T}{2h}.}                            |
+#' | ANCOVA, pretest only<br>\eqn{r, N^T, N^C}              | \eqn{(1-r^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_T}{2h}.}     | \eqn{(1-r^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_T}{2h}.}      |
+#' | Reg coef<br>\eqn{SE, S_T, N^T, N^C}                    | \eqn{\left(\frac{SE}{S_T}\right)^2 \gamma + \frac{g^2_T}{2(h-q)}.}                      | \eqn{\left(\frac{SE}{S_T}\right)^2 \eta + \frac{g^2_T}{2(h-q)}.}                     |
+#' | Reg coef, pretest only<br>\eqn{SE, S_T, N^T, N^C}                    | \eqn{\left(\frac{SE}{S_T}\right)^2 \gamma + \frac{g^2_T}{2h}.}            | \eqn{\left(\frac{SE}{S_T}\right)^2 \eta + \frac{g^2_T}{2h}.}                           |
+#' | Std. reg coef<br>\eqn{SE_{std}, N^T, N^C}      | \eqn{SE^2_{std} \gamma + \frac{g^2_T}{2(h-q)}.}                                                 | \eqn{SE^2_{std} \eta + \frac{g^2_T}{2(h-q)}.}                                        |
+#' | Std. reg coef, pretest only<br>\eqn{SE_{std}, N^T, N^C}      | \eqn{SE^2_{std} \gamma + \frac{g^2_T}{2h}.}                                       | \eqn{SE^2_{std} \eta + \frac{g^2_T}{2h}.}                                              |
+#' | DiD, gain scores<br>\eqn{r, N^T, N^C}                  | \eqn{2(1-r) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_T}{2h}.}      | \eqn{2(1-r) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_T}{2h}.}       |
+#' | DiD, gain scores<br>\eqn{r_{imputed}, N^T, N^C}        | \eqn{2(1-.5) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_T}{2h}.}     | \eqn{2(1-.5) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_T}{2h}.}      |
+#' | DiD, gain scores<br>\eqn{t, N^T, N^C}                  | \eqn{\left(\frac{g^2}{t^2}\right) \gamma + \frac{g^2_T}{2h}.}      | \eqn{\left(\frac{g^2}{t^2}\right) \eta + \frac{g^2_T}{2h}.}       |
+#'
+#'
+#' *Note*: \eqn{R^2} "is the multiple correlation between the covariates and the outcome" (WWC, 2021),
+#' \eqn{\eta = 1 - (N^C+n-2)\rho/(N-2)}, see \code{\link{eta_1armcluster}},
+#' \eqn{\gamma = 1 - (N^C+n-2)\rho/(N-2)}, see \code{\link{eta_1armcluster}},
+#' \eqn{r} is the pre-posttest correlation, and \eqn{q} is the number of covariates. Std. = standardized.
+#'
+#' "It is often desired in practice to adjust for multiple baseline characteristics.
+#' The problem of \eqn{q} covariates is a straightforward extension of the single covariate case
+#' (...): The correlation coefficient estimate \eqn{r} is now obtained by
+#' taking the square root of the coefficient of multiple determination, \eqn{R^2}"
+#' (Hedges et al. 2023, p. 17) and \eqn{df = h-q}.
 #'
 #' @references Hedges, L. V., & Citkowicz, M (2015).
 #' Estimating effect size when there is clustering in one treatment groups.
@@ -42,7 +73,7 @@
 #' @examples
 #' vgt_smd_1armcluster(
 #' N_cl_grp = 60, N_ind_grp = 40, avg_grp_size = 10, ICC = 0.1, g = 0.2,
-#' model = "Posttest", not_cluster_adj = TRUE
+#' model = "ANCOVA", not_cluster_adj = TRUE, R2 = 0.5, q = 3
 #' )
 #'
 
