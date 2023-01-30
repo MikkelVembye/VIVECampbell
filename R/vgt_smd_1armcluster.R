@@ -201,7 +201,6 @@ vgt_smd_1armcluster <-
   } else {
 
     adj_factor <- gamma_1armcluster(N_total = N, Nc = N_ind_grp, avg_grp_size = avg_grp_size, ICC = rho, sqrt = FALSE)
-
     adj_name <- "gamma"
 
     vgt <- var_term1 * adj_factor + g^2/(2*df)
