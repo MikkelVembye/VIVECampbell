@@ -1,7 +1,7 @@
 
 #' @title Variance calculation when there is clustering in one treatment group only
 #'
-#' @description Insert
+#' @description Remember Pustejovsky ref
 #'
 #' @details Table 1 illustrates all cluster adjustment
 #' of variance estimates from pre-test and/or covariate adjusted measures that can
