@@ -10,16 +10,16 @@ vgt_smd_1armcluster(
   avg_grp_size,
   ICC,
   g,
-  model = c("Posttest", "reg_coef", "reg_std_coef", "ANCOVA", "DiD"),
+  model = c("Posttest", "ANCOVA", "DiD", "reg_coef", "reg_std_coef"),
   not_cluster_adj = TRUE,
   prepost_cor = NULL,
   F_val = NULL,
   t_val = NULL,
   SE = NULL,
-  S = NULL,
+  SD = NULL,
   SE_std = NULL,
   R2 = NULL,
-  q = NULL
+  q = 1
 )
 }
 \arguments{
@@ -45,9 +45,13 @@ vgt_smd_1armcluster(
 
 \item{SE}{Insert}
 
-\item{S}{Insert}
+\item{SD}{Insert}
 
 \item{SE_std}{Insert}
+
+\item{R2}{Insert}
+
+\item{q}{Insert}
 }
 \value{
 A \code{tibble} with info ...(Insert)...

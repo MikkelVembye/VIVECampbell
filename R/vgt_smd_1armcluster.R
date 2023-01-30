@@ -25,8 +25,10 @@
 #' @param F_val Insert
 #' @param t_val Insert
 #' @param SE Insert
-#' @param S Insert
+#' @param SD Insert
 #' @param SE_std Insert
+#' @param R2 Insert
+#' @param q Insert
 #'
 #' @note Insert
 #'
@@ -47,10 +49,10 @@
 vgt_smd_1armcluster <-
   function(
     N_cl_grp, N_ind_grp, avg_grp_size, ICC, g,
-    model = c("Posttest", "ANCOVA", "DiD", "reg_coef", "reg_std_coef", ),
+    model = c("Posttest", "ANCOVA", "DiD", "reg_coef", "reg_std_coef"),
     not_cluster_adj = TRUE,
-    prepost_cor = NULL, F_val = NULL, t_val = NULL, SE = NULL, S = NULL, SE_std = NULL,
-    R2 = NULL, q = NULL
+    prepost_cor = NULL, F_val = NULL, t_val = NULL, SE = NULL, SD = NULL, SE_std = NULL,
+    R2 = NULL, q = 1
 
   ){
 
@@ -67,79 +69,96 @@ vgt_smd_1armcluster <-
 
     if (is.numeric(t_val)){
 
-      df <- h
       var_term1 <- g^2/t_val^2
 
-    } else if (is.numeric(N_cl_grp) && is.numeric(N_ind_grp) && is.null(t_val)){
+    } else if (is.numeric(N_cl_grp) && is.numeric(N_ind_grp) && all(is.null(c(t_val, SE, SD)))){
 
-      df <- h
       var_term1 <- (1/N1 + 1/N2)
 
-    }
+    } else if (is.numeric(SE) && is.numeric(SD)){
 
-    if (not_cluster_adj){
-
-      adj_factor <- eta_1armcluster(N_total = N, Nc = N_ind_grp, avg_grp_size = avg_grp_size, ICC = rho)
-      adj_name <- "eta"
-
-      vgt <- var_term1 * adj_factor + g^2/(2*df)
-      Wgt <- var_term1 * adj_factor
-
-    } else {
-
-      adj_factor <- gamma_1armcluster(N_total = N, Nc = N_ind_grp, avg_grp_size = avg_grp_size, ICC = rho, sqrt = FALSE)
-      adj_name <- "gamma"
-
-      vgt <- var_term1 * adj_factor + g^2/(2*df)
-      Wgt <- var_term1 * adj_factor
+      var_term1 <- (SE/SD)^2
 
     }
 
   }
 
-#  if ("ANCOVA" %in% model){
-#
-#
-#    if (is.numeric(t_val)){
-#
-#      var_term1 <- g^2/t_val^2
-#
-#    } else if (is.numeric(F_val)){
-#
-#      var_term1 <- g^2/F_val
-#
-#    } else if (is.numeric(R2) && is.numeric(q)){
-#
-#
-#
-#    }
-#
-#
-#
-#    if (not_cluster_adj){
-#
-#      adj_factor <- eta_1armcluster(N_total = N, Nc = N_ind_grp, avg_grp_size = avg_grp_size, ICC = rho)
-#      adj_name <- "eta"
-#
-#      vgt <- var_term1 * adj_factor + g^2/(2*h)
-#      Wgt <- var_term1 * adj_factor
-#
-#    } else {
-#
-#      adj_factor <- gamma_1armcluster(N_total = N, Nc = N_ind_grp, avg_grp_size = avg_grp_size, ICC = rho, sqrt = FALSE)
-#
-#      adj_name <- "gamma"
-#
-#      vgt <- var_term1 * adj_factor + g^2/(2*h)
-#      Wgt <- var_term1 * adj_factor
-#
-#    }
-#
-#  }
+  if ("ANCOVA" %in% model){
+
+    if (all(is.null(c(prepost_cor, F_val, t_val, SE, SD, SE_std, R2, q)))){
+
+      stop(paste0("When specifying ANCOVA you must specify either the preposttest correlation",
+           "an F or t value, the standard error, or R2 and q")
+      )
+
+    }
+
+    if (is.numeric(t_val)){
+
+      var_term1 <- g^2/t_val^2
+
+    } else if (is.numeric(F_val)){
+
+      var_term1 <- g^2/F_val
+
+    } else if (is.numeric(R2)){
+
+      var_term1 <- (1-R2) * (1/N1 + 1/N2)
+
+    } else if (is.numeric(prepost_cor)){
+
+      var_term1 <- (1-prepost_cor^2) * (1/N1 + 1/N2)
+
+    }
+
+  }
+
+  if ("DiD" %in% model){
+
+    if (is.numeric(prepost_cor)){
+
+    var_term1 <- 2*(1-prepost_cor) * (1/N1 + 1/N2)
+
+    } else {
+
+      stop(paste0("When calculating Diff-in-diffs effect sizes you must specifying the preposttest correlation.",
+           "If not known, impute r = 0.5. This amounts to calculate the sampling variance as for the posttest effect size"))
+
+    }
+
+  }
+
+
+  if (q > 1){
+    df <- h - q
+  } else {
+    df <- h
+  }
+
+  if (not_cluster_adj){
+
+    adj_factor <- eta_1armcluster(N_total = N, Nc = N_ind_grp, avg_grp_size = avg_grp_size, ICC = rho)
+    adj_name <- "eta"
+
+    vgt <- var_term1 * adj_factor + g^2/(2*df)
+    Wgt <- var_term1 * adj_factor
+
+  } else {
+
+    adj_factor <- gamma_1armcluster(N_total = N, Nc = N_ind_grp, avg_grp_size = avg_grp_size, ICC = rho, sqrt = FALSE)
+
+    adj_name <- "gamma"
+
+    vgt <- var_term1 * adj_factor + g^2/(2*df)
+    Wgt <- var_term1 * adj_factor
+
+  }
 
 
   tibble::tibble(
-    df = h,
+    h = h,
+    df = df,
+    var_term1 = var_term1,
     adj_fct = adj_name,
     adj_value = adj_factor,
     V_gt = vgt,
