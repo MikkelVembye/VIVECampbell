@@ -82,23 +82,27 @@ See Table 1 below.
    \strong{Calculation type/\if{html}{\out{<br>}}reported quantities} \tab \strong{Cluster-adjusted (model)\if{html}{\out{<br>}}sampling variance} \tab \strong{Not cluster-adjusted (model)\if{html}{\out{<br>}}sampling variance} \cr
    ANCOVA, adj. means\if{html}{\out{<br>}}\eqn{R^2, N^T, N^C} \tab \eqn{(1-R^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_T}{2(h-q)}.} \tab \eqn{(1-R^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_T}{2(h-q)}.} \cr
    ANCOVA, adj. means\if{html}{\out{<br>}}\eqn{R^2_{imputed}, N^T, N^C} \tab \eqn{(1-0^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_T}{2(h-q)}.} \tab \eqn{(1-0^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_T}{2(h-q)}.} \cr
-   ANCOVA, adj. means\if{html}{\out{<br>}}\eqn{F, (t^2), N^T, N^C} \tab \eqn{\left(\frac{g^2_T}{F}\right) \gamma + \frac{g^2_T}{2h}.} \tab \eqn{\left(\frac{g^2_T}{F}\right) \eta + \frac{g^2_T}{2h}.} \cr
+   ANCOVA, adj. means\if{html}{\out{<br>}}\eqn{F, (t^2), N^T, N^C} \tab \eqn{\left(\frac{g^2_T}{F}\right) \gamma + \frac{g^2_T}{2(h-q)}.} \tab \eqn{\left(\frac{g^2_T}{F}\right) \eta + \frac{g^2_T}{2(h-q)}.} \cr
+   ANCOVA, pretest only\if{html}{\out{<br>}}\eqn{F, (t^2), N^T, N^C} \tab \eqn{\left(\frac{g^2_T}{F}\right) \gamma + \frac{g^2_T}{2h}.} \tab \eqn{\left(\frac{g^2_T}{F}\right) \eta + \frac{g^2_T}{2h}.} \cr
    ANCOVA, pretest only\if{html}{\out{<br>}}\eqn{r, N^T, N^C} \tab \eqn{(1-r^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_T}{2h}.} \tab \eqn{(1-r^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_T}{2h}.} \cr
-   Reg coef\if{html}{\out{<br>}}\eqn{SE, S_T, N^T, N^C} \tab \eqn{\left(\frac{SE}{S_T}\right)^2 \gamma + \frac{g^2_T}{2h}.} \tab \eqn{\left(\frac{SE}{S_T}\right)^2 \eta + \frac{g^2_T}{2h}.} \cr
-   Standardized reg coef\if{html}{\out{<br>}}\eqn{SE_{std}, N^T, N^C} \tab \eqn{SE^2_{std} \gamma + \frac{g^2_T}{2h}.} \tab \eqn{SE^2_{std} \eta + \frac{g^2_T}{2h}.} \cr
+   Reg coef\if{html}{\out{<br>}}\eqn{SE, S_T, N^T, N^C} \tab \eqn{\left(\frac{SE}{S_T}\right)^2 \gamma + \frac{g^2_T}{2(h-q)}.} \tab \eqn{\left(\frac{SE}{S_T}\right)^2 \eta + \frac{g^2_T}{2(h-q)}.} \cr
+   Reg coef, pretest only\if{html}{\out{<br>}}\eqn{SE, S_T, N^T, N^C} \tab \eqn{\left(\frac{SE}{S_T}\right)^2 \gamma + \frac{g^2_T}{2h}.} \tab \eqn{\left(\frac{SE}{S_T}\right)^2 \eta + \frac{g^2_T}{2h}.} \cr
+   Std. reg coef\if{html}{\out{<br>}}\eqn{SE_{std}, N^T, N^C} \tab \eqn{SE^2_{std} \gamma + \frac{g^2_T}{2(h-q)}.} \tab \eqn{SE^2_{std} \eta + \frac{g^2_T}{2(h-q)}.} \cr
+   Std. reg coef, pretest only\if{html}{\out{<br>}}\eqn{SE_{std}, N^T, N^C} \tab \eqn{SE^2_{std} \gamma + \frac{g^2_T}{2h}.} \tab \eqn{SE^2_{std} \eta + \frac{g^2_T}{2h}.} \cr
    DiD, gain scores\if{html}{\out{<br>}}\eqn{r, N^T, N^C} \tab \eqn{2(1-r) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_T}{2h}.} \tab \eqn{2(1-r) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_T}{2h}.} \cr
    DiD, gain scores\if{html}{\out{<br>}}\eqn{r_{imputed}, N^T, N^C} \tab \eqn{2(1-.5) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma + \frac{g^2_T}{2h}.} \tab \eqn{2(1-.5) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta + \frac{g^2_T}{2h}.} \cr
+   DiD, gain scores\if{html}{\out{<br>}}\eqn{t, N^T, N^C} \tab \eqn{\left(\frac{g^2}{t^2}\right) \gamma + \frac{g^2_T}{2h}.} \tab \eqn{\left(\frac{g^2}{t^2}\right) \eta + \frac{g^2_T}{2h}.} \cr
 }
 
 
 \emph{Note}: \eqn{R^2} "is the multiple correlation between the covariates and the outcome" (WWC, 2021),
 \eqn{\gamma = 1 - (N^C+n-2)\rho/(N-2)}, see \code{\link{eta_1armcluster}},
-\eqn{r} is the pre-posttest correlation, and \eqn{q} is the number of covariates.
+\eqn{r} is the pre-posttest correlation, and \eqn{q} is the number of covariates. Std. = standardized.
 
 "It is often desired in practice to adjust for multiple baseline characteristics.
 The problem of \eqn{q} covariates is a straightforward extension of the single covariate case
 (...): The correlation coefficient estimate \eqn{r} is now obtained by
-taking the square root of the coefficient of multiple determination, \eqn{R^2} "
+taking the square root of the coefficient of multiple determination, \eqn{R^2}"
 (Hedges et al. 2023, p. 17) and \eqn{df = h-q}.
 
 \strong{Multiplying \eqn{\gamma} to effect size difference-in-differences}\if{html}{\out{<br>}}

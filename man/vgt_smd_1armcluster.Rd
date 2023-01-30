@@ -10,7 +10,7 @@ vgt_smd_1armcluster(
   avg_grp_size,
   ICC,
   g,
-  model = c("Posttest", "ANCOVA", "DiD", "reg_coef", "reg_std_coef"),
+  model = c("Posttest", "ANCOVA", "DiD", "Reg_coef", "Std_reg_coef"),
   not_cluster_adj = TRUE,
   prepost_cor = NULL,
   F_val = NULL,

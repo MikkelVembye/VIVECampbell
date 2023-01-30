@@ -49,7 +49,7 @@
 vgt_smd_1armcluster <-
   function(
     N_cl_grp, N_ind_grp, avg_grp_size, ICC, g,
-    model = c("Posttest", "ANCOVA", "DiD", "reg_coef", "reg_std_coef"),
+    model = c("Posttest", "ANCOVA", "DiD", "Reg_coef", "Std_reg_coef"),
     not_cluster_adj = TRUE,
     prepost_cor = NULL, F_val = NULL, t_val = NULL, SE = NULL, SD = NULL, SE_std = NULL,
     R2 = NULL, q = 1
@@ -85,14 +85,6 @@ vgt_smd_1armcluster <-
 
   if ("ANCOVA" %in% model){
 
-    if (all(is.null(c(prepost_cor, F_val, t_val, SE, SD, SE_std, R2, q)))){
-
-      stop(paste0("When specifying ANCOVA you must specify either the preposttest correlation",
-           "an F or t value, the standard error, or R2 and q")
-      )
-
-    }
-
     if (is.numeric(t_val)){
 
       var_term1 <- g^2/t_val^2
@@ -111,24 +103,56 @@ vgt_smd_1armcluster <-
 
     }
 
+    if (all(is.null(c(prepost_cor, F_val, t_val, SE, SD, SE_std, R2)))){
+
+      stop(paste0("When specifying ANCOVA you must specify either the preposttest correlation",
+                  "an F or t value, the standard error, or R2")
+      )
+
+    }
+
   }
 
   if ("DiD" %in% model){
 
     if (is.numeric(prepost_cor)){
 
-    var_term1 <- 2*(1-prepost_cor) * (1/N1 + 1/N2)
+      var_term1 <- 2*(1-prepost_cor) * (1/N1 + 1/N2)
 
-    } else {
+    } else if (is.numeric(t_val)){
 
-      stop(paste0("When calculating Diff-in-diffs effect sizes you must specifying the preposttest correlation.",
-           "If not known, impute r = 0.5. This amounts to calculate the sampling variance as for the posttest effect size"))
+      var_term1 <- g^2/t_val^2
+
+    } else{
+
+      stop(paste0("When calculating Diff-in-diffs effect sizes you must specify the preposttest correlation.",
+           " If not known, impute r = 0.5. This amounts to calculating the sampling variance as for the posttest effect size"))
 
     }
 
   }
 
+  if ("Reg_coef" %in% model){
 
+    if (is.null(SE) || is.null(SD)){
+      stop("When model = 'Reg_coef', you must specify both SE and SD.")
+    }
+
+    var_term1 <- (SE/SD)^2
+
+  }
+
+  if ("Std_reg_coef" %in% model) {
+
+    if (is.null(SE_std)){
+      stop("When model = 'Std_reg_coef', you must specify SE_std.")
+    }
+
+    var_term1 <- SE_std^2
+
+  }
+
+  # Degrees of freedom calculation
   if (q > 1){
     df <- h - q
   } else {
@@ -162,7 +186,8 @@ vgt_smd_1armcluster <-
     adj_fct = adj_name,
     adj_value = adj_factor,
     V_gt = vgt,
-    W_gt = Wgt
+    W_gt = Wgt,
+    Wgt_test = var_term1*adj_value
   )
 
 }
