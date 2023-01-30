@@ -45,21 +45,22 @@
 #' \emph{Institute of Education Science}.
 #' \url{https://ies.ed.gov/ncee/wwc/Docs/referenceresources/WWC-41-Supplement-508_09212020.pdf}
 #'
-#' @param N_cl_grp Insert
-#' @param N_ind_grp Insert
-#' @param avg_grp_size Insert
-#' @param ICC Insert
-#' @param g Insert
-#' @param model Insert
-#' @param not_cluster_adj Insert
-#' @param prepost_cor Insert
-#' @param F_val Insert
-#' @param t_val Insert
-#' @param SE Insert
-#' @param SD Insert
-#' @param SE_std Insert
-#' @param R2 Insert
-#' @param q Insert
+#' @param N_cl_grp Numerical value indicating the sample size of the arm/group containing clustering.
+#' @param N_ind_grp Numerical value indicating the sample size of the arm/group that does not contain clustering.
+#' @param avg_grp_size Numerical value indicating the average cluster size.
+#' @param ICC Numerical value indicating the (imputed) intra-class correlation.
+#' @param g Numerical values indicating the estimated effect size.
+#' @param model Character indicating from what model the effect size estimate is
+#' obtained. See details.
+#' @param not_cluster_adj Logical indicating if clustering was inadequately handled in model/study. Default is \code{TRUE}.
+#' @param prepost_cor Numerical value indicating the pre-posttest correlation.
+#' @param F_val Numerical value indicating the reported F statistics value. Note that \eqn{F = t^2}.
+#' @param t_val Numerical value indicating the reported t statistics value.
+#' @param SE Numerical value indicating the (reported) non-standardized standard error.
+#' @param SD Numerical value indicating the pooled standard deviation.
+#' @param SE_std Numerical value indicating the (reported) standardized standard error (SE).
+#' @param R2 Numerical value indicating the (reported) \eqn{R^2} value from analysis model.
+#' @param q Numerical value indicating the number of covariates.
 #'
 #' @note Insert
 #'
@@ -82,9 +83,8 @@ vgt_smd_1armcluster <-
     N_cl_grp, N_ind_grp, avg_grp_size, ICC, g,
     model = c("Posttest", "ANCOVA", "DiD", "Reg_coef", "Std_reg_coef"),
     not_cluster_adj = TRUE,
-    prepost_cor = NULL, F_val = NULL, t_val = NULL, SE = NULL, SD = NULL, SE_std = NULL,
-    R2 = NULL, q = 1
-
+    prepost_cor = NULL, F_val = NULL, t_val = NULL, SE = NULL, SD = NULL, SE_std = NULL, R2 = NULL,
+    q = 1
   ){
 
   N1 <- N_cl_grp

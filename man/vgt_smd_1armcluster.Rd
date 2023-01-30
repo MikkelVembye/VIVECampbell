@@ -23,35 +23,36 @@ vgt_smd_1armcluster(
 )
 }
 \arguments{
-\item{N_cl_grp}{Insert}
+\item{N_cl_grp}{Numerical value indicating the sample size of the arm/group containing clustering.}
 
-\item{N_ind_grp}{Insert}
+\item{N_ind_grp}{Numerical value indicating the sample size of the arm/group that does not contain clustering.}
 
-\item{avg_grp_size}{Insert}
+\item{avg_grp_size}{Numerical value indicating the average cluster size.}
 
-\item{ICC}{Insert}
+\item{ICC}{Numerical value indicating the (imputed) intra-class correlation.}
 
-\item{g}{Insert}
+\item{g}{Numerical values indicating the estimated effect size.}
 
-\item{model}{Insert}
+\item{model}{Character indicating from what model the effect size estimate is
+obtained. See details.}
 
-\item{not_cluster_adj}{Insert}
+\item{not_cluster_adj}{Logical indicating if clustering was inadequately handled in model/study. Default is \code{TRUE}.}
 
-\item{prepost_cor}{Insert}
+\item{prepost_cor}{Numerical value indicating the pre-posttest correlation.}
 
-\item{F_val}{Insert}
+\item{F_val}{Numerical value indicating the reported F statistics value. Note that \eqn{F = t^2}.}
 
-\item{t_val}{Insert}
+\item{t_val}{Numerical value indicating the reported t statistics value.}
 
-\item{SE}{Insert}
+\item{SE}{Numerical value indicating the (reported) non-standardized standard error.}
 
-\item{SD}{Insert}
+\item{SD}{Numerical value indicating the pooled standard deviation.}
 
-\item{SE_std}{Insert}
+\item{SE_std}{Numerical value indicating the (reported) standardized standard error (SE).}
 
-\item{R2}{Insert}
+\item{R2}{Numerical value indicating the (reported) \eqn{R^2} value from analysis model.}
 
-\item{q}{Insert}
+\item{q}{Numerical value indicating the number of covariates.}
 }
 \value{
 A \code{tibble} with info ...(Insert)...
