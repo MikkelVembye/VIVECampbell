@@ -3,8 +3,8 @@
 #'
 #' @description This function calculates sampling variance estimates for effect size
 #' obtained from cluster-designed studies. This include measures of the sampling variance,
-#' a modified variance estimate for publication bias testing, and avariance-stabilized
-#' transformed and variance.
+#' a modified variance estimate for publication bias testing, and a variance-stabilized
+#' transformed effect size and variance as presented in Pustejovsky & Rodgers (2019).
 #'
 #'
 #' @details Table 1 illustrates all cluster adjustment
@@ -118,7 +118,7 @@
 #' vgt_smd_1armcluster(
 #' N_cl_grp = 60, N_ind_grp = 40, avg_grp_size = 10, ICC = 0.1, g = 0.2,
 #' model = "ANCOVA", not_cluster_adj = TRUE, R2 = 0.5, q = 3
-#' )
+#' )[6:12]
 #'
 
 vgt_smd_1armcluster <-
