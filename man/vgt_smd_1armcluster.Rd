@@ -31,7 +31,7 @@ vgt_smd_1armcluster(
 
 \item{ICC}{Numerical value indicating the (imputed) intra-class correlation.}
 
-\item{g}{Numerical values indicating the estimated effect size.}
+\item{g}{Numerical values indicating the estimated effect size (Hedges' g).}
 
 \item{model}{Character indicating from what model the effect size estimate is
 obtained. See details.}
@@ -58,7 +58,10 @@ obtained. See details.}
 A \code{tibble} with info ...(Insert)...
 }
 \description{
-Insert
+This function calculates sampling variance estimates for effect size
+obtained from cluster-designed studies. This include measures of the sampling variance,
+a modified variance estimate for publication bias testing, and avariance-stabilized
+transformed and variance.
 }
 \details{
 Table 1 illustrates all cluster adjustment
@@ -93,6 +96,37 @@ The problem of \eqn{q} covariates is a straightforward extension of the single c
 (...): The correlation coefficient estimate \eqn{r} is now obtained by
 taking the square root of the coefficient of multiple determination, \eqn{R^2}"
 (Hedges et al. 2023, p. 17) and \eqn{df = h-q}.
+
+\strong{Calculating modified measures of variance  for publication bias testing}
+
+\emph{\strong{Table 2}}\if{html}{\out{<br>}}
+\emph{Sampling variance estimates for \eqn{g_T} across various models for handling cluster, estimation techniques, and reported quantities.}\tabular{lll}{
+   \strong{Calculation type/\if{html}{\out{<br>}}reported quantities} \tab \strong{Cluster-adjusted (model)\if{html}{\out{<br>}}sampling variance} \tab \strong{Not cluster-adjusted (model)\if{html}{\out{<br>}}sampling variance} \cr
+   ANCOVA, adj. means\if{html}{\out{<br>}}\eqn{R^2, N^T, N^C} \tab \eqn{(1-R^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma} \tab \eqn{(1-R^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta } \cr
+   ANCOVA, adj. means\if{html}{\out{<br>}}\eqn{R^2_{imputed}, N^T, N^C} \tab \eqn{(1-0^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma} \tab \eqn{(1-0^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta } \cr
+   ANCOVA, adj. means\if{html}{\out{<br>}}\eqn{F, (t^2), N^T, N^C} \tab \eqn{\left(\frac{g^2_T}{F}\right) \gamma} \tab \eqn{\left(\frac{g^2_T}{F}\right) \eta} \cr
+   ANCOVA, pretest only\if{html}{\out{<br>}}\eqn{F, (t^2), N^T, N^C} \tab \eqn{\left(\frac{g^2_T}{F}\right) \gamma} \tab \eqn{\left(\frac{g^2_T}{F}\right) \eta} \cr
+   ANCOVA, pretest only\if{html}{\out{<br>}}\eqn{r, N^T, N^C} \tab \eqn{(1-r^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma} \tab \eqn{(1-r^2) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta} \cr
+   Reg coef\if{html}{\out{<br>}}\eqn{SE, S_T, N^T, N^C} \tab \eqn{\left(\frac{SE}{S_T}\right)^2 \gamma } \tab \eqn{\left(\frac{SE}{S_T}\right)^2 \eta} \cr
+   Reg coef, pretest only\if{html}{\out{<br>}}\eqn{SE, S_T, N^T, N^C} \tab \eqn{\left(\frac{SE}{S_T}\right)^2 \gamma} \tab \eqn{\left(\frac{SE}{S_T}\right)^2 \eta} \cr
+   Std. reg coef\if{html}{\out{<br>}}\eqn{SE_{std}, N^T, N^C} \tab \eqn{SE^2_{std} \gamma } \tab \eqn{SE^2_{std} \eta} \cr
+   Std. reg coef, pretest only\if{html}{\out{<br>}}\eqn{SE_{std}, N^T, N^C} \tab \eqn{SE^2_{std} \gamma} \tab \eqn{SE^2_{std} \eta} \cr
+   DiD, gain scores\if{html}{\out{<br>}}\eqn{r, N^T, N^C} \tab \eqn{2(1-r) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma} \tab \eqn{2(1-r) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta} \cr
+   DiD, gain scores\if{html}{\out{<br>}}\eqn{r_{imputed}, N^T, N^C} \tab \eqn{2(1-.5) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \gamma} \tab \eqn{2(1-.5) \left(\frac{1}{N^T} + \frac{1}{N^C}\right) \eta} \cr
+   DiD, gain scores\if{html}{\out{<br>}}\eqn{t, N^T, N^C} \tab \eqn{\left(\frac{g^2}{t^2}\right) \gamma} \tab \eqn{\left(\frac{g^2}{t^2}\right) \eta} \cr
+}
+
+
+\emph{Note}: \eqn{R^2} "is the multiple correlation between the covariates and the outcome" (WWC, 2021),
+\eqn{\eta = 1 - (N^C+n-2)\rho/(N-2)}, see \code{\link{eta_1armcluster}},
+\eqn{\gamma = 1 - (N^C+n-2)\rho/(N-2)}, see \code{\link{eta_1armcluster}}, and
+\eqn{r} is the pre-posttest correlation. Std. = standardized.
+
+"It is often desired in practice to adjust for multiple baseline characteristics.
+The problem of \eqn{q} covariates is a straightforward extension of the single covariate case
+(...): The correlation coefficient estimate \eqn{r} is now obtained by
+taking the square root of the coefficient of multiple determination, \eqn{R^2}"
+(Hedges et al. 2023, p. 17) and \eqn{df = h-q}.
 }
 \note{
 Insert
@@ -108,6 +142,11 @@ model = "ANCOVA", not_cluster_adj = TRUE, R2 = 0.5, q = 3
 Hedges, L. V., & Citkowicz, M (2015).
 Estimating effect size when there is clustering in one treatment groups.
 \emph{Behavior Research Methods}, 47(4), 1295-1308. \doi{10.3758/s13428-014-0538-z}
+
+Pustejovsky, J. E., & Rodgers, M. A. (2019).
+Testing for funnel plot asymmetry of standardized mean differences.
+\emph{Research Synthesis Methods}, 10(1), 57–71.
+\doi{10.1002/jrsm.1332}
 
 What Works Clearinghouse (2021).
 Supplement document for Appendix E and the What Works Clearinghouse procedures handbook, version 4.1
