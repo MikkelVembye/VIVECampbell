@@ -175,11 +175,11 @@ We will later on pool these correlation estimates. In order to get one $\rho_{po
 
 Fisher1996 <- tibble::tibble(
   
-  Outcome = rep(c("Alcohol use", "Drug use"), each = 6),
+  Outcome = rep(c("Alcohol use", "Drug use", "Social"), each = 6),
   
-  Setting = rep(c("Inpatient", "Outpatient"), each = 3, 2),
+  Setting = rep(c("Inpatient", "Outpatient"), each = 3, 3),
   
-  treatment = rep(rep(c("Disease", "Cognitive", "TAU"), 2), 2),
+  treatment = rep(rep(c("Disease", "Cognitive", "TAU"), 2), 3),
   
     # N is imputed/guested for illustrative purposes only, because we only know the total sample 
     # of the treatment groups (N = 19). We here assume that the control group have similar size as
@@ -194,7 +194,11 @@ Fisher1996 <- tibble::tibble(
       .725, .598, .682, # Alcohol use - outpatient
       
       .107, .116, .117, # Drug use - inpatient 
-      .219, .200, .322  # Drug use - outpatient
+      .219, .200, .322, # Drug use - outpatient
+      
+      .342, .419, .450, # Social and family relations - inpatient
+      .683, .584, .571  # Social and family relations - outpatient
+      
     ),
     
     sd_pre = c(
@@ -202,7 +206,10 @@ Fisher1996 <- tibble::tibble(
       .11, .16, .17,
       
       .09, .10, .12,
-      .11, .12, .05
+      .11, .12, .05,
+      
+      .21, .12, .24,
+      .04, .05, .09
       
     ),
     
@@ -211,7 +218,10 @@ Fisher1996 <- tibble::tibble(
       .521, .152, .492,
       
       .001, .008, .087,
-      .167, .044, .216
+      .167, .044, .216,
+      
+      .083, .103, .489,
+      .641, .233, .514
       
     ),
     
@@ -220,8 +230,10 @@ Fisher1996 <- tibble::tibble(
       .11, .15, .27,
       
       .01, .02, .12,
-      .10, .05, .15
+      .10, .05, .15,
       
+      .10, .10, .18,
+      .06, .16, .12
       
       
     ),
@@ -231,7 +243,10 @@ Fisher1996 <- tibble::tibble(
       .204, .446, .190,
       
       .106, .108, .030,
-      .052, .196, .106
+      .052, .196, .106,
+      
+      .259, .316, -.039,
+      .042, .351, .057
       
     ),
     
@@ -240,7 +255,10 @@ Fisher1996 <- tibble::tibble(
       .01, .02, .11,
       
       .09, .09, .02, 
-      .02, .08, .11
+      .02, .08, .11,
+      
+      .13, .03, .07,
+      .03, .12, .04
       
     ),
   
@@ -264,7 +282,19 @@ Fisher1996 <- tibble::tibble(
 
 ```
 
-SHOW DIFFERENT ORDER WITH 
+Long and wide format
+
+```{r}
+
+pivot_wider(
+  Fisher1996,
+  values_from = m_pre:v,
+  names_from = treatment
+  )
+
+```
+
+
 
 # Calculating Cohens' *d* and Hedges' *g*
 
@@ -348,8 +378,9 @@ Fisher1996_est |>
     CI_L = es - se * qnorm(.975),
     CI_U = es + se * qnorm(.975)
   ) |> 
+  filter(treatment == "Cognitive") |> 
   ggplot(aes(x = es, y = Category, xmin = CI_L, xmax = CI_U,
-        color = treatment)) + 
+        color = Category)) + 
   geom_pointrange(position = position_dodge2(width = 0.5, padding = 0.5)) +
   geom_vline(xintercept = 0, linetype = "dashed", color = "black", alpha = 0.5) +
   facet_grid(Setting~Outcome, scales = "free") +
