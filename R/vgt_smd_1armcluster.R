@@ -255,6 +255,7 @@ vgt_smd_1armcluster <-
   tibble::tibble(
     h = h,
     df = df,
+    n_covariates = q,
     var_term1 = var_term1,
     adj_fct = adj_name,
     adj_value = adj_factor,
