@@ -55,6 +55,8 @@ library(tidyr)
 library(gt)
 library(ggplot2)
 
+
+# "Key" option I usally apply
 options(pillar.sigfig = 4) # Ensure tibble include 4 digits
 options(tibble.width = Inf) # Ensure that all columns are printed 
 options(dplyr.print_min = 310) # Specifying the number of row printed
