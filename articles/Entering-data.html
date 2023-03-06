@@ -84,7 +84,7 @@
                         <h4 data-toc-skip class="author">Mikkel H.
 Vembye</h4>
             
-            <h4 data-toc-skip class="date">Last modified 2023-01-31</h4>
+            <h4 data-toc-skip class="date">Last modified 2023-03-06</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/MikkelVembye/VIVECampbell/blob/HEAD/vignettes/Entering-data.Rmd" class="external-link"><code>vignettes/Entering-data.Rmd</code></a></small>
       <div class="d-none name"><code>Entering-data.Rmd</code></div>
@@ -118,6 +118,8 @@ to learn at this stage is by all means <a href="https://dplyr.tidyverse.org/" cl
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://gt.rstudio.com/" class="external-link">gt</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
 <span></span>
+<span></span>
+<span><span class="co"># "Key" option I usally apply</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>pillar.sigfig <span class="op">=</span> <span class="fl">4</span><span class="op">)</span> <span class="co"># Ensure tibble include 4 digits</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>tibble.width <span class="op">=</span> <span class="cn">Inf</span><span class="op">)</span> <span class="co"># Ensure that all columns are printed </span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>dplyr.print_min <span class="op">=</span> <span class="fl">310</span><span class="op">)</span> <span class="co"># Specifying the number of row printed</span></span>
@@ -136,12 +138,12 @@ vs. outpatient), which again is nested within setting (i.e., Alcohol
 use, Drug use, Social and family, Psychological functioning).</p>
 <p>Important for understanding the use of <code>group_by</code>
 function, when we calculate effect sizes.</p>
-<div id="rdyanndsdw" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="yjtrippgma" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#rdyanndsdw .gt_table {
+#yjtrippgma .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -166,7 +168,7 @@ function, when we calculate effect sizes.</p>
   border-left-color: #D3D3D3;
 }
 
-#rdyanndsdw .gt_heading {
+#yjtrippgma .gt_heading {
   background-color: #FFFFFF;
   text-align: left;
   border-bottom-color: #FFFFFF;
@@ -178,12 +180,12 @@ function, when we calculate effect sizes.</p>
   border-right-color: #D3D3D3;
 }
 
-#rdyanndsdw .gt_caption {
+#yjtrippgma .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#rdyanndsdw .gt_title {
+#yjtrippgma .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -195,7 +197,7 @@ function, when we calculate effect sizes.</p>
   border-bottom-width: 0;
 }
 
-#rdyanndsdw .gt_subtitle {
+#yjtrippgma .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -207,13 +209,13 @@ function, when we calculate effect sizes.</p>
   border-top-width: 0;
 }
 
-#rdyanndsdw .gt_bottom_border {
+#yjtrippgma .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#rdyanndsdw .gt_col_headings {
+#yjtrippgma .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -228,7 +230,7 @@ function, when we calculate effect sizes.</p>
   border-right-color: #D3D3D3;
 }
 
-#rdyanndsdw .gt_col_heading {
+#yjtrippgma .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -248,7 +250,7 @@ function, when we calculate effect sizes.</p>
   overflow-x: hidden;
 }
 
-#rdyanndsdw .gt_column_spanner_outer {
+#yjtrippgma .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -260,15 +262,15 @@ function, when we calculate effect sizes.</p>
   padding-right: 4px;
 }
 
-#rdyanndsdw .gt_column_spanner_outer:first-child {
+#yjtrippgma .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#rdyanndsdw .gt_column_spanner_outer:last-child {
+#yjtrippgma .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#rdyanndsdw .gt_column_spanner {
+#yjtrippgma .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -280,7 +282,7 @@ function, when we calculate effect sizes.</p>
   width: 100%;
 }
 
-#rdyanndsdw .gt_group_heading {
+#yjtrippgma .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -306,7 +308,7 @@ function, when we calculate effect sizes.</p>
   text-align: left;
 }
 
-#rdyanndsdw .gt_empty_group_heading {
+#yjtrippgma .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -321,15 +323,15 @@ function, when we calculate effect sizes.</p>
   vertical-align: middle;
 }
 
-#rdyanndsdw .gt_from_md > :first-child {
+#yjtrippgma .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#rdyanndsdw .gt_from_md > :last-child {
+#yjtrippgma .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#rdyanndsdw .gt_row {
+#yjtrippgma .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -348,7 +350,7 @@ function, when we calculate effect sizes.</p>
   overflow-x: hidden;
 }
 
-#rdyanndsdw .gt_stub {
+#yjtrippgma .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -361,7 +363,7 @@ function, when we calculate effect sizes.</p>
   padding-right: 5px;
 }
 
-#rdyanndsdw .gt_stub_row_group {
+#yjtrippgma .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -375,11 +377,11 @@ function, when we calculate effect sizes.</p>
   vertical-align: top;
 }
 
-#rdyanndsdw .gt_row_group_first td {
+#yjtrippgma .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#rdyanndsdw .gt_summary_row {
+#yjtrippgma .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -389,16 +391,16 @@ function, when we calculate effect sizes.</p>
   padding-right: 5px;
 }
 
-#rdyanndsdw .gt_first_summary_row {
+#yjtrippgma .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#rdyanndsdw .gt_first_summary_row.thick {
+#yjtrippgma .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#rdyanndsdw .gt_last_summary_row {
+#yjtrippgma .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -408,7 +410,7 @@ function, when we calculate effect sizes.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#rdyanndsdw .gt_grand_summary_row {
+#yjtrippgma .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -418,7 +420,7 @@ function, when we calculate effect sizes.</p>
   padding-right: 5px;
 }
 
-#rdyanndsdw .gt_first_grand_summary_row {
+#yjtrippgma .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -428,11 +430,11 @@ function, when we calculate effect sizes.</p>
   border-top-color: #D3D3D3;
 }
 
-#rdyanndsdw .gt_striped {
+#yjtrippgma .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#rdyanndsdw .gt_table_body {
+#yjtrippgma .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -441,7 +443,7 @@ function, when we calculate effect sizes.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#rdyanndsdw .gt_footnotes {
+#yjtrippgma .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -455,7 +457,7 @@ function, when we calculate effect sizes.</p>
   border-right-color: #D3D3D3;
 }
 
-#rdyanndsdw .gt_footnote {
+#yjtrippgma .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -464,7 +466,7 @@ function, when we calculate effect sizes.</p>
   padding-right: 5px;
 }
 
-#rdyanndsdw .gt_sourcenotes {
+#yjtrippgma .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -478,7 +480,7 @@ function, when we calculate effect sizes.</p>
   border-right-color: #D3D3D3;
 }
 
-#rdyanndsdw .gt_sourcenote {
+#yjtrippgma .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -486,64 +488,64 @@ function, when we calculate effect sizes.</p>
   padding-right: 5px;
 }
 
-#rdyanndsdw .gt_left {
+#yjtrippgma .gt_left {
   text-align: left;
 }
 
-#rdyanndsdw .gt_center {
+#yjtrippgma .gt_center {
   text-align: center;
 }
 
-#rdyanndsdw .gt_right {
+#yjtrippgma .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#rdyanndsdw .gt_font_normal {
+#yjtrippgma .gt_font_normal {
   font-weight: normal;
 }
 
-#rdyanndsdw .gt_font_bold {
+#yjtrippgma .gt_font_bold {
   font-weight: bold;
 }
 
-#rdyanndsdw .gt_font_italic {
+#yjtrippgma .gt_font_italic {
   font-style: italic;
 }
 
-#rdyanndsdw .gt_super {
+#yjtrippgma .gt_super {
   font-size: 65%;
 }
 
-#rdyanndsdw .gt_footnote_marks {
+#yjtrippgma .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-#rdyanndsdw .gt_asterisk {
+#yjtrippgma .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#rdyanndsdw .gt_indent_1 {
+#yjtrippgma .gt_indent_1 {
   text-indent: 5px;
 }
 
-#rdyanndsdw .gt_indent_2 {
+#yjtrippgma .gt_indent_2 {
   text-indent: 10px;
 }
 
-#rdyanndsdw .gt_indent_3 {
+#yjtrippgma .gt_indent_3 {
   text-indent: 15px;
 }
 
-#rdyanndsdw .gt_indent_4 {
+#yjtrippgma .gt_indent_4 {
   text-indent: 20px;
 }
 
-#rdyanndsdw .gt_indent_5 {
+#yjtrippgma .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
