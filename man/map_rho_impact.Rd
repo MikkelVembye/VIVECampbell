@@ -2,7 +2,8 @@
 % Please edit documentation in R/rho_impact.R
 \name{map_rho_impact}
 \alias{map_rho_impact}
-\title{Generate the impact of the assumed sample correlation on the overall average effect in the CHE-RVE model}
+\title{Conduct sensitivity analyses across various values of the assumed sample correlation
+on the overall average effect in the CHE-RVE model}
 \usage{
 map_rho_impact(
   data,
@@ -36,7 +37,8 @@ a \code{tibble} with information about the estimated beta value, confidence and 
 as well as variance components across specified values of the assumed sampling correlation.
 }
 \description{
-Generate the impact of the assumed sample correlation on the overall average effect in the CHE-RVE model
+Conduct sensitivity analyses across various values of the assumed sample correlation
+on the overall average effect in the CHE-RVE model
 }
 \examples{
 Diet_dat <- Dietrichson2021_data |>

@@ -1,5 +1,6 @@
 
-#' Generate the impact of the assumed sample correlation on the overall average effect in the CHE-RVE model
+#' Conduct sensitivity analyses across various values of the assumed sample correlation
+#' on the overall average effect in the CHE-RVE model
 #'
 #' @param data data frame including relevant data for the function
 #' @param yi vector of length k with the observed effect sizes/outcomes
