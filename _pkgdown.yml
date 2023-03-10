@@ -18,6 +18,10 @@ reference:
       - eta_1armcluster
       - gamma_1armcluster
 
+  - title: "Sensitivity analysis"
+    desc: "Functions to conduct sensitivity analyses in meta-analysis"
+    contents:
+      - map_rho_impact
 
   - title: "Datasets"
     desc: "Data from Systematic Reviews from the VIVE Campbell group"
