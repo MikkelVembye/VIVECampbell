@@ -141,7 +141,7 @@ map_rho_impact <-
 #' @import patchwork
 #' @export
 
-plot_rho_impact <- function(data, rho_used, prediction_interval, ylab_beta = NULL, var_breaks = NULL) UseMethod("plot_rho_impact")
+plot_rho_impact <- function(data, rho_used, prediction_interval = FALSE, ylab_beta = NULL, var_breaks = NULL) UseMethod("plot_rho_impact")
 
 #' @export
 
@@ -267,7 +267,6 @@ plot_rho_impact.map_rho <-
       ggplot2::ggplot(ggplot2::aes(x = rho, y = value, color = var2)) +
       ggplot2::geom_line(size = 1) +
       ggplot2::scale_x_continuous(breaks = seq(0,0.9,0.1)) +
-      #ggplot2::scale_y_continuous(breaks = var_breaks) +
       ggplot2::scale_color_brewer(type = "qual", palette = 2, guide = "none") +
       ggplot2::geom_hline(yintercept = 0) +
       ggplot2::geom_vline(xintercept = rho_used, linetype = "dashed") +

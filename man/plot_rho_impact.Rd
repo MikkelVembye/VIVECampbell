@@ -7,7 +7,7 @@
 plot_rho_impact(
   data,
   rho_used,
-  prediction_interval,
+  prediction_interval = FALSE,
   ylab_beta = NULL,
   var_breaks = NULL
 )
