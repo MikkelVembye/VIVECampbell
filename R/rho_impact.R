@@ -258,7 +258,8 @@ plot_rho_impact.map_rho <-
       ) |>
       dplyr::arrange(var, rho) |>
       dplyr::mutate(
-        var2 = base::rep(c("omega (within-study SD)", "tau (between-study SD)", "Total SD"), each= 10)
+        var2 = base::rep(c("omega (within-study SD)", "tau (between-study SD)", "Total SD"), each = dplyr::n_distinct(rho)),
+        var2 = factor(var2, levels = c("omega (within-study SD)", "tau (between-study SD)", "Total SD"))
       )
 
 
@@ -266,7 +267,7 @@ plot_rho_impact.map_rho <-
       var_dat |>
       ggplot2::ggplot(ggplot2::aes(x = rho, y = value, color = var2)) +
       ggplot2::geom_line(size = 1) +
-      ggplot2::scale_x_continuous(breaks = seq(0,0.9,0.1)) +
+      ggplot2::scale_x_continuous(breaks = unique(var_dat$rho)) +
       ggplot2::scale_color_brewer(type = "qual", palette = 2, guide = "none") +
       ggplot2::geom_hline(yintercept = 0) +
       ggplot2::geom_vline(xintercept = rho_used, linetype = "dashed") +
