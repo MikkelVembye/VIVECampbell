@@ -92,9 +92,10 @@ map_rho_impact(
   data = head(Diet_dat, 100),
   yi = Effectsize_g,
   vi = vg,
-  studyid = Study_ID
+  studyid = Study_ID,
+  r = seq(0, .6, .1)
 ) |>
-plot_rho_impact(rho_used = 0.7, var_breaks = seq(0, 0.35, 0.05))
+plot_rho_impact(rho_used = 0.4, var_breaks = seq(0, 0.35, 0.05))
 
 
 
