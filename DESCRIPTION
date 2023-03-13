@@ -30,5 +30,6 @@ Suggests:
     readxl,
     gt,
     tidyr,
-    ggplot2
+    ggplot2,
+    clubSandwich
 VignetteBuilder: knitr

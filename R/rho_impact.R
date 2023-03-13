@@ -97,13 +97,17 @@ map_rho_impact <-
   }
 
 
-  purrr::map_dfr(r, ~ rho_impact(data = data,
+  map_res <- purrr::map_dfr(r, ~ rho_impact(data = data,
                                  yi = {{ yi }},
                                  vi = {{ vi }},
                                  random = random,
                                  cluster = {{ studyid }},
                                  r = .x,
                                  smooth_vi = smooth_vi))
+
+
+  tibble::new_tibble(map_res, class = "map_rho")
+
 
 }
 
