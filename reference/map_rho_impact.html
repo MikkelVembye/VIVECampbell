@@ -76,9 +76,9 @@ on the overall average effect in the CHE-RVE model</p>
 <span>  <span class="va">data</span>,</span>
 <span>  <span class="va">yi</span>,</span>
 <span>  <span class="va">vi</span>,</span>
-<span>  random <span class="op">=</span> <span class="st">"~ 1 | studyid / esid"</span>,</span>
 <span>  <span class="va">studyid</span>,</span>
-<span>  <span class="va">r</span>,</span>
+<span>  r <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.9</span>, <span class="fl">0.1</span><span class="op">)</span>,</span>
+<span>  random <span class="op">=</span> <span class="st">"~ 1 | studyid / esid"</span>,</span>
 <span>  smooth_vi <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -86,32 +86,33 @@ on the overall average effect in the CHE-RVE model</p>
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>data</dt>
-<dd><p>data frame including relevant data for the function</p></dd>
+<dd><p>Data frame including relevant data for the function</p></dd>
 
 
 <dt>yi</dt>
-<dd><p>vector of length k with the observed effect sizes/outcomes</p></dd>
+<dd><p>Vector of length k with the observed effect sizes/outcomes</p></dd>
 
 
 <dt>vi</dt>
-<dd><p>sampling variance estimates of the observed effect sizes</p></dd>
-
-
-<dt>random</dt>
-<dd><p>formula to specify the random-effects structure of the model. Default is "~ 1 | studyid / esid",
-which amounts to fitting the correlated-hierarchical effects (CHE) model.</p></dd>
+<dd><p>Sampling variance estimates of the observed effect sizes</p></dd>
 
 
 <dt>studyid</dt>
-<dd><p>study ID specifying the cluster structure of the included studies</p></dd>
+<dd><p>Study ID specifying the cluster structure of the included studies</p></dd>
 
 
 <dt>r</dt>
-<dd><p>numerical value specifying the assumed sampling correlation between within-study effect size estimates.</p></dd>
+<dd><p>A numerical value or a vector specifying the assumed sampling correlation
+between within-study effect size estimates. Default is seq(0, .9, .1)</p></dd>
+
+
+<dt>random</dt>
+<dd><p>Formula to specify the random-effects structure of the model. Default is "~ 1 | studyid / esid",
+which amounts to fitting the correlated-hierarchical effects (CHE) model.</p></dd>
 
 
 <dt>smooth_vi</dt>
-<dd><p>logical specifying whether to take the average <code>vi</code> within in each study.
+<dd><p>Logical specifying whether to take the average <code>vi</code> within in each study.
 Default is <code>TRUE</code></p></dd>
 
 </dl></div>
@@ -119,29 +120,19 @@ Default is <code>TRUE</code></p></dd>
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>a <code>tibble</code> with information about the estimated beta value, confidence and prediction intervals,
+<p>a <code>tibble</code> of class <code>map_rho</code> with information about the estimated beta value, confidence and prediction intervals,
 as well as variance components across specified values of the assumed sampling correlation.</p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">Diet_dat</span> <span class="op">&lt;-</span> <span class="va">Dietrichson2021_data</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>   vg <span class="op">=</span> <span class="va">SE_g</span><span class="op">^</span><span class="fl">2</span>,</span></span>
-<span class="r-in"><span>   studyid <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">Study_ID</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>   esid <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">Dietrichson2021_data</span><span class="op">)</span></span></span>
-<span class="r-in"><span> <span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>   vg_avg <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">vg</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>   .by <span class="op">=</span> <span class="va">studyid</span></span></span>
-<span class="r-in"><span> <span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">Diet_dat</span> <span class="op">&lt;-</span> <span class="va">Dietrichson2021_data</span> <span class="op">|&gt;</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>vg <span class="op">=</span> <span class="va">SE_g</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">map_rho_impact</span><span class="op">(</span></span></span>
 <span class="r-in"><span> data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">Diet_dat</span>, <span class="fl">100</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span> yi <span class="op">=</span> <span class="va">Effectsize_g</span>,</span></span>
 <span class="r-in"><span> vi <span class="op">=</span> <span class="va">vg</span>,</span></span>
-<span class="r-in"><span> studyid <span class="op">=</span> <span class="va">Study_ID</span>,</span></span>
-<span class="r-in"><span> r <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">.9</span>, <span class="fl">.1</span><span class="op">)</span></span></span>
+<span class="r-in"><span> studyid <span class="op">=</span> <span class="va">Study_ID</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 10 × 11</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     beta   se_b   ci_l  ci_u   pi_l  pi_u      omega   tau total…¹   rho avg_var</span>
