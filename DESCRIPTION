@@ -22,14 +22,15 @@ Imports:
     tibble,
     dplyr,
     metafor,
-    stats
+    patchwork,
+    stats,
+    tidyr,
+    ggplot2,
+    purrr
 Suggests: 
     knitr,
     rmarkdown,
-    purrr,
     readxl,
     gt,
-    tidyr,
-    ggplot2,
     clubSandwich
 VignetteBuilder: knitr

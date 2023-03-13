@@ -9,31 +9,32 @@ map_rho_impact(
   data,
   yi,
   vi,
-  random = "~ 1 | studyid / esid",
   studyid,
-  r,
+  r = seq(0, 0.9, 0.1),
+  random = "~ 1 | studyid / esid",
   smooth_vi = TRUE
 )
 }
 \arguments{
-\item{data}{data frame including relevant data for the function}
+\item{data}{Data frame including relevant data for the function}
 
-\item{yi}{vector of length k with the observed effect sizes/outcomes}
+\item{yi}{Vector of length k with the observed effect sizes/outcomes}
 
-\item{vi}{sampling variance estimates of the observed effect sizes}
+\item{vi}{Sampling variance estimates of the observed effect sizes}
 
-\item{random}{formula to specify the random-effects structure of the model. Default is "~ 1 | studyid / esid",
+\item{studyid}{Study ID specifying the cluster structure of the included studies}
+
+\item{r}{A numerical value or a vector specifying the assumed sampling correlation
+between within-study effect size estimates. Default is seq(0, .9, .1)}
+
+\item{random}{Formula to specify the random-effects structure of the model. Default is "~ 1 | studyid / esid",
 which amounts to fitting the correlated-hierarchical effects (CHE) model.}
 
-\item{studyid}{study ID specifying the cluster structure of the included studies}
-
-\item{r}{numerical value specifying the assumed sampling correlation between within-study effect size estimates.}
-
-\item{smooth_vi}{logical specifying whether to take the average \code{vi} within in each study.
+\item{smooth_vi}{Logical specifying whether to take the average \code{vi} within in each study.
 Default is \code{TRUE}}
 }
 \value{
-a \code{tibble} with information about the estimated beta value, confidence and prediction intervals,
+a \code{tibble} of class \code{map_rho} with information about the estimated beta value, confidence and prediction intervals,
 as well as variance components across specified values of the assumed sampling correlation.
 }
 \description{
@@ -41,23 +42,13 @@ Conduct sensitivity analyses across various values of the assumed sample correla
 on the overall average effect in the CHE-RVE model
 }
 \examples{
-Diet_dat <- Dietrichson2021_data |>
- dplyr::mutate(
-   vg = SE_g^2,
-   studyid = as.numeric(Study_ID),
-   esid = 1:nrow(Dietrichson2021_data)
- ) |>
- dplyr::mutate(
-   vg_avg = mean(vg),
-   .by = studyid
- )
+Diet_dat <- Dietrichson2021_data |> dplyr::mutate(vg = SE_g^2)
 
 map_rho_impact(
  data = head(Diet_dat, 100),
  yi = Effectsize_g,
  vi = vg,
- studyid = Study_ID,
- r = seq(0, .9, .1)
+ studyid = Study_ID
 )
 
 }

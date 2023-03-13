@@ -22,6 +22,8 @@ reference:
     desc: "Functions to conduct sensitivity analyses in meta-analysis"
     contents:
       - map_rho_impact
+      - plot_rho_impact
+      - plot_rho_impact.map_rho
 
   - title: "Datasets"
     desc: "Data from Systematic Reviews from the VIVE Campbell group"

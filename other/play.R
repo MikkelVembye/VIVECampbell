@@ -82,11 +82,19 @@ Diet_dat <- Dietrichson2021_data |>
 #  smooth_vi = TRUE
 #)
 
+Diet_dat <-
+  Dietrichson2021_data |>
+  dplyr::mutate(
+   vg = SE_g^2,
+  )
+
 map_rho_impact(
   data = head(Diet_dat, 100),
   yi = Effectsize_g,
   vi = vg,
-  studyid = Study_ID,
-  r = seq(0, .9, .1)
-)
+  studyid = Study_ID
+) |>
+plot_rho_impact(rho_used = 0.7, var_breaks = seq(0, 0.35, 0.05))
+
+
 
