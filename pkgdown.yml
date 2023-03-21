@@ -7,9 +7,10 @@ articles:
   Github: Github.html
   Pooling-subgroups: Pooling-subgroups.html
   ancova-puzzler: ancova-puzzler.html
+  eppi-tips: eppi-tips.html
   meta-analysis-in-R: meta-analysis-in-R.html
   todos: todos.html
-last_built: 2023-03-13T14:55Z
+last_built: 2023-03-21T09:15Z
 urls:
   reference: https://mikkelvembye.github.io/VIVECampbell/reference
   article: https://mikkelvembye.github.io/VIVECampbell/articles

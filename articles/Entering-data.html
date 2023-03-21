@@ -44,6 +44,9 @@
 <li class="active nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <h6 class="dropdown-header" data-toc-skip>EPPI tips and manuals</h6>
+    <a class="dropdown-item" href="../articles/eppi-tips.html">Tips og tricks til EPPI</a>
+    <div class="dropdown-divider"></div>
     <h6 class="dropdown-header" data-toc-skip>VIVE specific content</h6>
     <a class="dropdown-item" href="../articles/Github.html">Forbind GitHub og RStudio plus adgang til Adobe Pro</a>
     <a class="dropdown-item" href="../articles/meta-analysis-in-R.html">Kom godt i gang med metaanalyse i R</a>
@@ -84,7 +87,7 @@
                         <h4 data-toc-skip class="author">Mikkel H.
 Vembye</h4>
             
-            <h4 data-toc-skip class="date">Last modified 2023-03-13</h4>
+            <h4 data-toc-skip class="date">Last modified 2023-03-21</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/MikkelVembye/VIVECampbell/blob/HEAD/vignettes/Entering-data.Rmd" class="external-link"><code>vignettes/Entering-data.Rmd</code></a></small>
       <div class="d-none name"><code>Entering-data.Rmd</code></div>
@@ -138,12 +141,12 @@ vs. outpatient), which again is nested within setting (i.e., Alcohol
 use, Drug use, Social and family, Psychological functioning).</p>
 <p>Important for understanding the use of <code>group_by</code>
 function, when we calculate effect sizes.</p>
-<div id="nrsuoedpch" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="piihqdanha" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#nrsuoedpch .gt_table {
+#piihqdanha .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -168,7 +171,7 @@ function, when we calculate effect sizes.</p>
   border-left-color: #D3D3D3;
 }
 
-#nrsuoedpch .gt_heading {
+#piihqdanha .gt_heading {
   background-color: #FFFFFF;
   text-align: left;
   border-bottom-color: #FFFFFF;
@@ -180,12 +183,12 @@ function, when we calculate effect sizes.</p>
   border-right-color: #D3D3D3;
 }
 
-#nrsuoedpch .gt_caption {
+#piihqdanha .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#nrsuoedpch .gt_title {
+#piihqdanha .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -197,7 +200,7 @@ function, when we calculate effect sizes.</p>
   border-bottom-width: 0;
 }
 
-#nrsuoedpch .gt_subtitle {
+#piihqdanha .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -209,13 +212,13 @@ function, when we calculate effect sizes.</p>
   border-top-width: 0;
 }
 
-#nrsuoedpch .gt_bottom_border {
+#piihqdanha .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#nrsuoedpch .gt_col_headings {
+#piihqdanha .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -230,7 +233,7 @@ function, when we calculate effect sizes.</p>
   border-right-color: #D3D3D3;
 }
 
-#nrsuoedpch .gt_col_heading {
+#piihqdanha .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -250,7 +253,7 @@ function, when we calculate effect sizes.</p>
   overflow-x: hidden;
 }
 
-#nrsuoedpch .gt_column_spanner_outer {
+#piihqdanha .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -262,15 +265,15 @@ function, when we calculate effect sizes.</p>
   padding-right: 4px;
 }
 
-#nrsuoedpch .gt_column_spanner_outer:first-child {
+#piihqdanha .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#nrsuoedpch .gt_column_spanner_outer:last-child {
+#piihqdanha .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#nrsuoedpch .gt_column_spanner {
+#piihqdanha .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -282,7 +285,7 @@ function, when we calculate effect sizes.</p>
   width: 100%;
 }
 
-#nrsuoedpch .gt_group_heading {
+#piihqdanha .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -308,7 +311,7 @@ function, when we calculate effect sizes.</p>
   text-align: left;
 }
 
-#nrsuoedpch .gt_empty_group_heading {
+#piihqdanha .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -323,15 +326,15 @@ function, when we calculate effect sizes.</p>
   vertical-align: middle;
 }
 
-#nrsuoedpch .gt_from_md > :first-child {
+#piihqdanha .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#nrsuoedpch .gt_from_md > :last-child {
+#piihqdanha .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#nrsuoedpch .gt_row {
+#piihqdanha .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -350,7 +353,7 @@ function, when we calculate effect sizes.</p>
   overflow-x: hidden;
 }
 
-#nrsuoedpch .gt_stub {
+#piihqdanha .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -363,7 +366,7 @@ function, when we calculate effect sizes.</p>
   padding-right: 5px;
 }
 
-#nrsuoedpch .gt_stub_row_group {
+#piihqdanha .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -377,11 +380,11 @@ function, when we calculate effect sizes.</p>
   vertical-align: top;
 }
 
-#nrsuoedpch .gt_row_group_first td {
+#piihqdanha .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#nrsuoedpch .gt_summary_row {
+#piihqdanha .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -391,16 +394,16 @@ function, when we calculate effect sizes.</p>
   padding-right: 5px;
 }
 
-#nrsuoedpch .gt_first_summary_row {
+#piihqdanha .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#nrsuoedpch .gt_first_summary_row.thick {
+#piihqdanha .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#nrsuoedpch .gt_last_summary_row {
+#piihqdanha .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -410,7 +413,7 @@ function, when we calculate effect sizes.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#nrsuoedpch .gt_grand_summary_row {
+#piihqdanha .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -420,7 +423,7 @@ function, when we calculate effect sizes.</p>
   padding-right: 5px;
 }
 
-#nrsuoedpch .gt_first_grand_summary_row {
+#piihqdanha .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -430,11 +433,11 @@ function, when we calculate effect sizes.</p>
   border-top-color: #D3D3D3;
 }
 
-#nrsuoedpch .gt_striped {
+#piihqdanha .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#nrsuoedpch .gt_table_body {
+#piihqdanha .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -443,7 +446,7 @@ function, when we calculate effect sizes.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#nrsuoedpch .gt_footnotes {
+#piihqdanha .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -457,7 +460,7 @@ function, when we calculate effect sizes.</p>
   border-right-color: #D3D3D3;
 }
 
-#nrsuoedpch .gt_footnote {
+#piihqdanha .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -466,7 +469,7 @@ function, when we calculate effect sizes.</p>
   padding-right: 5px;
 }
 
-#nrsuoedpch .gt_sourcenotes {
+#piihqdanha .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -480,7 +483,7 @@ function, when we calculate effect sizes.</p>
   border-right-color: #D3D3D3;
 }
 
-#nrsuoedpch .gt_sourcenote {
+#piihqdanha .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -488,64 +491,64 @@ function, when we calculate effect sizes.</p>
   padding-right: 5px;
 }
 
-#nrsuoedpch .gt_left {
+#piihqdanha .gt_left {
   text-align: left;
 }
 
-#nrsuoedpch .gt_center {
+#piihqdanha .gt_center {
   text-align: center;
 }
 
-#nrsuoedpch .gt_right {
+#piihqdanha .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#nrsuoedpch .gt_font_normal {
+#piihqdanha .gt_font_normal {
   font-weight: normal;
 }
 
-#nrsuoedpch .gt_font_bold {
+#piihqdanha .gt_font_bold {
   font-weight: bold;
 }
 
-#nrsuoedpch .gt_font_italic {
+#piihqdanha .gt_font_italic {
   font-style: italic;
 }
 
-#nrsuoedpch .gt_super {
+#piihqdanha .gt_super {
   font-size: 65%;
 }
 
-#nrsuoedpch .gt_footnote_marks {
+#piihqdanha .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-#nrsuoedpch .gt_asterisk {
+#piihqdanha .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#nrsuoedpch .gt_indent_1 {
+#piihqdanha .gt_indent_1 {
   text-indent: 5px;
 }
 
-#nrsuoedpch .gt_indent_2 {
+#piihqdanha .gt_indent_2 {
   text-indent: 10px;
 }
 
-#nrsuoedpch .gt_indent_3 {
+#piihqdanha .gt_indent_3 {
   text-indent: 15px;
 }
 
-#nrsuoedpch .gt_indent_4 {
+#piihqdanha .gt_indent_4 {
   text-indent: 20px;
 }
 
-#nrsuoedpch .gt_indent_5 {
+#piihqdanha .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
