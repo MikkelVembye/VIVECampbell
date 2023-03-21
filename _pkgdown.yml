@@ -37,16 +37,16 @@ articles:
    contents:
    - VIVECampbell
 
- - title: EPPI content
-   navbar: EPPI tips and manuals
-   contents:
-   - articles/eppi-tips
-
  - title: VIVE content
    navbar: VIVE specific content
    contents:
    - articles/Github
    - articles/meta-analysis-in-R
+
+ - title: EPPI content
+   navbar: EPPI tips and manuals
+   contents:
+   - articles/eppi-tips
 
  - title: Effect size calculation
    navbar: Effect size calculation
