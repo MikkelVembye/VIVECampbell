@@ -37,6 +37,11 @@ articles:
    contents:
    - VIVECampbell
 
+ - title: EPPI content
+   navbar: EPPI tips and manuals
+   contents:
+   - articles/eppi-tips
+
  - title: VIVE content
    navbar: VIVE specific content
    contents:
