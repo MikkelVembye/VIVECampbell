@@ -1,6 +1,5 @@
 ---
 title: "Tips og tricks til EPPI"
-author: "Malene Wallach Kildemoes"
 date: "Last modified `r Sys.Date()`"
 ---
 
