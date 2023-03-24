@@ -13,7 +13,7 @@
 )
 }
 \arguments{
-\item{data}{Data/object for which the plot should be made.}
+\item{data}{Data/object for which the plot should be made. Much be of class \code{map_rho}.}
 
 \item{rho_used}{Numerical value indicating the (assumed) sampling correlation used
 to fit the main CHE-RVE model.}
@@ -21,7 +21,7 @@ to fit the main CHE-RVE model.}
 \item{prediction_interval}{Logical indicting whether a plot showing the impact of
 the sampling correlation on the prediction interval estimation.}
 
-\item{ylab_beta}{Optional character with the y-axis label for the overall mean effect plot}
+\item{ylab_beta}{Optional character with the y-axis label for the overall mean effect plot.}
 
 \item{var_breaks}{Optional vector setting the y-axis breaks for the variance plot.}
 }

@@ -55,18 +55,18 @@ obtained. See details.}
 \item{q}{Numerical value indicating the number of covariates.}
 }
 \value{
-A \code{tibble} with the following variables:\if{html}{\out{<br>}}
+Returns a \code{tibble} with the following variables:\if{html}{\out{<br>}}
 \item{h}{the degrees of freedom given in Eq (7) in Hedges & Citkowicz (2015, p. 1298). See \code{\link{df_h_1armcluster}}.}
 \item{df}{the degrees of freedom. If none or one covariate \eqn{df = h}.
 otherwise with two or more covariates \eqn{df = h - q}.}
 \item{n_covariates}{the number of covariates in the model, defined as \eqn{q} in Hedges et al. (2023).}
 \item{var_term1}{unadjusted measure of the first term of the variance formula.}
-\item{adj_fct}{indicating whether \eqn{\eta} or \eqn{\gamma} were used to adjusted the variance. That is
+\item{adj_fct}{indicating whether \eqn{\eta} or \eqn{\gamma} were used to adjust the variance. That is
 whether the studies handle clustering inadequately or not.}
-\item{gt}{the cluster and small sample adjusted effect size estimate}
-\item{vgt}{the cluster adjusted variance estimate}
-\item{Wgt}{the cluster adjusted variance estimate, without the second term of the variance formula,
-given in Eq. (2) in Pustejovsky & Rodgers (2019)}
+\item{gt}{the cluster and small sample adjusted effect size estimate.}
+\item{vgt}{the cluster adjusted sampling variance estimate of \eqn{gt}.}
+\item{Wgt}{the cluster adjusted samplingvariance estimate of \eqn{gt}, without the second term of the variance formula, as
+given in Eq. (2) in Pustejovsky & Rodgers (2019).}
 \item{hg}{the variance-stabilizing transformed effect size. See Eq. (3) in Pustejovsky & Rodgers (2019)}
 \item{vhg}{the approximate sampling variance of hg}
 }

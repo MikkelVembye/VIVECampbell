@@ -16,22 +16,22 @@ map_rho_impact(
 )
 }
 \arguments{
-\item{data}{Data frame including relevant data for the function}
+\item{data}{Data frame including relevant data for the function.}
 
-\item{yi}{Vector of length k with the observed effect sizes/outcomes}
+\item{yi}{Vector of length k with the observed effect sizes/outcomes.}
 
-\item{vi}{Sampling variance estimates of the observed effect sizes}
+\item{vi}{Sampling variance estimates of the observed effect sizes.}
 
-\item{studyid}{Study ID specifying the cluster structure of the included studies}
+\item{studyid}{Study ID specifying the cluster structure of the included studies.}
 
 \item{r}{A numerical value or a vector specifying the assumed sampling correlation
-between within-study effect size estimates. Default is seq(0, .9, .1)}
+between within-study effect size estimates. Default is seq(0, .9, .1).}
 
 \item{random}{Formula to specify the random-effects structure of the model. Default is "~ 1 | studyid / esid",
 which amounts to fitting the correlated-hierarchical effects (CHE) model.}
 
 \item{smooth_vi}{Logical specifying whether to take the average \code{vi} within in each study.
-Default is \code{TRUE}}
+Default is \code{TRUE}.}
 }
 \value{
 a \code{tibble} of class \code{map_rho} with information about the estimated beta value, confidence and prediction intervals,
