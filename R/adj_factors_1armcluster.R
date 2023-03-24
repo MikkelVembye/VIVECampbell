@@ -333,8 +333,7 @@ gamma_1armcluster <- function(N_total, Nc, avg_grp_size, ICC, sqrt = TRUE){
 #'
 #' @inheritParams gamma_1armcluster
 #'
-#' @return Returns a numerical value for the design effect \eqn{\eta}
-#' when there is clustering in one treatment group only.
+#' @return Returns a numerical value for the design effect \eqn{\eta} when there is clustering in one treatment group only.
 #'
 #' @seealso \code{\link{gamma_1armcluster}}, \code{\link{df_h_1armcluster}}
 #'

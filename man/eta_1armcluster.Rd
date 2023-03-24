@@ -18,8 +18,7 @@ eta_1armcluster(N_total, Nc, avg_grp_size, ICC, sqrt = FALSE)
 \item{sqrt}{Logical indicating if the square root of gamma should be calculated. Default = \code{TRUE}}
 }
 \value{
-Returns a numerical value for the design effect \eqn{\eta}
-when there is clustering in one treatment group only.
+Returns a numerical value for the design effect \eqn{\eta} when there is clustering in one treatment group only.
 }
 \description{
 The function calculates the design effect used to cluster bias adjust
