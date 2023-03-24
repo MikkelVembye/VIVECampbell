@@ -1,13 +1,14 @@
 
 #' @title Variance calculation when there is clustering in one treatment group only
 #'
-#' @description This function calculates sampling variance estimates for effect size
+#' @description This function calculates the sampling variance estimates for effect sizes
 #' obtained from cluster-designed studies. This include measures of the sampling variance,
 #' a modified variance estimate for publication bias testing, and a variance-stabilized
 #' transformed effect size and variance as presented in Pustejovsky & Rodgers (2019).
 #'
 #'
-#' @details Table 1 illustrates all cluster adjustment
+#' @details
+#' Table 1 illustrates all cluster adjustment
 #' of variance estimates from pre-test and/or covariate adjusted measures that can
 #' be calculated with the vgt_smd_1armcluster()
 #'
@@ -72,8 +73,6 @@
 #' (Hedges et al. 2023, p. 17) and \eqn{df = h-q}.
 #'
 #'
-#'
-#'
 #' @references Hedges, L. V., & Citkowicz, M (2015).
 #' Estimating effect size when there is clustering in one treatment groups.
 #' \emph{Behavior Research Methods}, 47(4), 1295-1308. \doi{10.3758/s13428-014-0538-z}
@@ -107,7 +106,21 @@
 #'
 #' @note Insert
 #'
-#' @return A \code{tibble} with info ...(Insert)...
+#' @return Returns a \code{tibble} with the following variables:<br>
+#' \item{h}{the degrees of freedom given in Eq (7) in Hedges & Citkowicz (2015, p. 1298). See \code{\link{df_h_1armcluster}}.}
+#' \item{df}{the degrees of freedom. If none or one covariate \eqn{df = h}.
+#' otherwise with two or more covariates \eqn{df = h - q}.}
+#' \item{n_covariates}{the number of covariates in the model, defined as \eqn{q} in Hedges et al. (2023).}
+#' \item{var_term1}{unadjusted measure of the first term of the variance formula.}
+#' \item{adj_fct}{indicating whether \eqn{\eta} or \eqn{\gamma} were used to adjusted the variance. That is
+#' whether the studies handle clustering inadequately or not.}
+#' \item{gt}{the cluster and small sample adjusted effect size estimate}
+#' \item{vgt}{the cluster adjusted variance estimate}
+#' \item{Wgt}{the cluster adjusted variance estimate, without the second term of the variance formula,
+#' given in Eq. (2) in Pustejovsky & Rodgers (2019)}
+#' \item{hg}{the variance-stabilizing transformed effect size. See Eq. (3) in Pustejovsky & Rodgers (2019)}
+#' \item{vhg}{the approximate sampling variance of hg}
+#'
 #'
 #' @seealso \code{\link{df_h_1armcluster}}, \code{\link{eta_1armcluster}},
 #' \code{\link{gamma_1armcluster}}
@@ -118,7 +131,7 @@
 #' vgt_smd_1armcluster(
 #' N_cl_grp = 60, N_ind_grp = 40, avg_grp_size = 10, ICC = 0.1, g = 0.2,
 #' model = "ANCOVA", not_cluster_adj = TRUE, R2 = 0.5, q = 3
-#' )[6:12]
+#' )
 #'
 
 vgt_smd_1armcluster <-
@@ -260,13 +273,14 @@ vgt_smd_1armcluster <-
     adj_fct = adj_name,
     adj_value = adj_factor,
     gt = g,
-    V_gt = vgt,
-    W_gt = Wgt,
-    Wgt_test = var_term1*adj_value,
+    vgt = vgt,
+    Wgt = Wgt,
+
     # Calculated from Equation (3) in Pustejovsky & Rodgers (2019, p. 60)
-    a = sqrt(2*W_gt*df),
+    a = sqrt(2*Wgt*df),
     hg = sqrt(2) * sign(g) * (log(abs(g) + sqrt(g^2 + a^2)) - log(a)),
     vhg = 1/df
-  )
+  ) |>
+  dplyr::select(-a)
 
 }

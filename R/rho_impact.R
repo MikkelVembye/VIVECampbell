@@ -2,16 +2,16 @@
 #' Conduct sensitivity analyses across various values of the assumed sample correlation
 #' on the overall average effect in the CHE-RVE model
 #'
-#' @param data Data frame including relevant data for the function
-#' @param yi Vector of length k with the observed effect sizes/outcomes
-#' @param vi Sampling variance estimates of the observed effect sizes
+#' @param data Data frame including relevant data for the function.
+#' @param yi Vector of length k with the observed effect sizes/outcomes.
+#' @param vi Sampling variance estimates of the observed effect sizes.
 #' @param random Formula to specify the random-effects structure of the model. Default is "~ 1 | studyid / esid",
 #' which amounts to fitting the correlated-hierarchical effects (CHE) model.
-#' @param studyid Study ID specifying the cluster structure of the included studies
+#' @param studyid Study ID specifying the cluster structure of the included studies.
 #' @param r A numerical value or a vector specifying the assumed sampling correlation
-#' between within-study effect size estimates. Default is seq(0, .9, .1)
+#' between within-study effect size estimates. Default is seq(0, .9, .1).
 #' @param smooth_vi Logical specifying whether to take the average \code{vi} within in each study.
-#' Default is \code{TRUE}
+#' Default is \code{TRUE}.
 #'
 #' @return a \code{tibble} of class \code{map_rho} with information about the estimated beta value, confidence and prediction intervals,
 #' as well as variance components across specified values of the assumed sampling correlation.
@@ -165,12 +165,12 @@ plot_rho_impact.default <-
 #' \emph{Prevention Science}, 23(1), 425–438.
 #' \doi{10.1007/s11121-021-01246-3}
 #'
-#' @param data Data/object for which the plot should be made.
+#' @param data Data/object for which the plot should be made. Much be of class \code{map_rho}.
 #' @param rho_used Numerical value indicating the (assumed) sampling correlation used
 #' to fit the main CHE-RVE model.
 #' @param prediction_interval Logical indicting whether a plot showing the impact of
 #' the sampling correlation on the prediction interval estimation.
-#' @param ylab_beta Optional character with the y-axis label for the overall mean effect plot
+#' @param ylab_beta Optional character with the y-axis label for the overall mean effect plot.
 #' @param var_breaks Optional vector setting the y-axis breaks for the variance plot.
 #'
 #' @return A \code{ggplot} object
