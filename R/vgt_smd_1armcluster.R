@@ -6,7 +6,6 @@
 #' a modified variance estimate for publication bias testing, and a variance-stabilized
 #' transformed effect size and variance as presented in Pustejovsky & Rodgers (2019).
 #'
-#'
 #' @details
 #' Table 1 illustrates all cluster adjustment
 #' of variance estimates from pre-test and/or covariate adjusted measures that can
