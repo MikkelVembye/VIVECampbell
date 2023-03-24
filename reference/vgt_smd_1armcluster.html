@@ -164,7 +164,7 @@ obtained. See details.</p></dd>
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>A <code>tibble</code> with the following variables:<br></p>
+<p>Returns a <code>tibble</code> with the following variables:<br></p>
 <dl><dt>h</dt>
 <dd><p>the degrees of freedom given in Eq (7) in Hedges &amp; Citkowicz (2015, p. 1298). See <code><a href="df_h_1armcluster.html">df_h_1armcluster</a></code>.</p></dd>
 
@@ -179,18 +179,18 @@ otherwise with two or more covariates \(df = h - q\).</p></dd>
 <dd><p>unadjusted measure of the first term of the variance formula.</p></dd>
 
 <dt>adj_fct</dt>
-<dd><p>indicating whether \(\eta\) or \(\gamma\) were used to adjusted the variance. That is
+<dd><p>indicating whether \(\eta\) or \(\gamma\) were used to adjust the variance. That is
 whether the studies handle clustering inadequately or not.</p></dd>
 
 <dt>gt</dt>
-<dd><p>the cluster and small sample adjusted effect size estimate</p></dd>
+<dd><p>the cluster and small sample adjusted effect size estimate.</p></dd>
 
 <dt>vgt</dt>
-<dd><p>the cluster adjusted variance estimate</p></dd>
+<dd><p>the cluster adjusted sampling variance estimate of \(gt\).</p></dd>
 
 <dt>Wgt</dt>
-<dd><p>the cluster adjusted variance estimate, without the second term of the variance formula,
-given in Eq. (2) in Pustejovsky &amp; Rodgers (2019)</p></dd>
+<dd><p>the cluster adjusted samplingvariance estimate of \(gt\), without the second term of the variance formula, as
+given in Eq. (2) in Pustejovsky &amp; Rodgers (2019).</p></dd>
 
 <dt>hg</dt>
 <dd><p>the variance-stabilizing transformed effect size. See Eq. (3) in Pustejovsky &amp; Rodgers (2019)</p></dd>
