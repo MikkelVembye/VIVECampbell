@@ -59,6 +59,12 @@ obtained. See details.}
 }
 \value{
 When \code{add_name_to_vars = NULL}, the function returns a \code{tibble} with the following variables:\if{html}{\out{<br>}}
+\item{gt}{The cluster and small sample adjusted effect size estimate.}
+\item{vgt}{The cluster adjusted sampling variance estimate of \eqn{gt}.}
+\item{Wgt}{The cluster adjusted samplingvariance estimate of \eqn{gt}, without the second term of the variance formula, as
+given in Eq. (2) in Pustejovsky & Rodgers (2019).}
+\item{hg}{The variance-stabilizing transformed effect size. See Eq. (3) in Pustejovsky & Rodgers (2019)}
+\item{vhg}{The approximate sampling variance of hg}
 \item{h}{The degrees of freedom given in Eq (7) in Hedges & Citkowicz (2015, p. 1298). See \code{\link{df_h_1armcluster}}.}
 \item{df}{The degrees of freedom. If none or one covariate \eqn{df = h}.
 otherwise with two or more covariates \eqn{df = h - q}.}
@@ -66,12 +72,7 @@ otherwise with two or more covariates \eqn{df = h - q}.}
 \item{var_term1}{Unadjusted measure of the first term of the variance formula.}
 \item{adj_fct}{Indicating whether \eqn{\eta} or \eqn{\gamma} were used to adjust the variance. That is
 whether the studies handle clustering inadequately or not.}
-\item{gt}{The cluster and small sample adjusted effect size estimate.}
-\item{vgt}{The cluster adjusted sampling variance estimate of \eqn{gt}.}
-\item{Wgt}{The cluster adjusted samplingvariance estimate of \eqn{gt}, without the second term of the variance formula, as
-given in Eq. (2) in Pustejovsky & Rodgers (2019).}
-\item{hg}{The variance-stabilizing transformed effect size. See Eq. (3) in Pustejovsky & Rodgers (2019)}
-\item{vhg}{The approximate sampling variance of hg}
+\item{adj_value}{Estimated value of adjustment factor.}
 }
 \description{
 This function calculates the sampling variance estimates for effect sizes
