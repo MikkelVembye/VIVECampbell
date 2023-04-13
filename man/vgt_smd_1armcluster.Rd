@@ -10,7 +10,7 @@ vgt_smd_1armcluster(
   avg_grp_size,
   ICC,
   g,
-  model = c("Posttest", "ANCOVA", "DiD", "Reg_coef", "Std_reg_coef"),
+  model = c("Posttest", "ANCOVA", "emmeans", "DiD", "Reg_coef", "Std_reg_coef"),
   not_cluster_adj = TRUE,
   prepost_cor = NULL,
   F_val = NULL,
@@ -19,7 +19,8 @@ vgt_smd_1armcluster(
   SD = NULL,
   SE_std = NULL,
   R2 = NULL,
-  q = 1
+  q = 1,
+  add_name_to_vars = NULL
 )
 }
 \arguments{
@@ -53,22 +54,24 @@ obtained. See details.}
 \item{R2}{Numerical value indicating the (reported) \eqn{R^2} value from analysis model.}
 
 \item{q}{Numerical value indicating the number of covariates.}
+
+\item{add_name_to_vars}{Optional character string to be added to the variables names of the generated \code{tibble}.}
 }
 \value{
-Returns a \code{tibble} with the following variables:\if{html}{\out{<br>}}
-\item{h}{the degrees of freedom given in Eq (7) in Hedges & Citkowicz (2015, p. 1298). See \code{\link{df_h_1armcluster}}.}
-\item{df}{the degrees of freedom. If none or one covariate \eqn{df = h}.
+When \code{add_name_to_vars = NULL}, the function returns a \code{tibble} with the following variables:\if{html}{\out{<br>}}
+\item{h}{The degrees of freedom given in Eq (7) in Hedges & Citkowicz (2015, p. 1298). See \code{\link{df_h_1armcluster}}.}
+\item{df}{The degrees of freedom. If none or one covariate \eqn{df = h}.
 otherwise with two or more covariates \eqn{df = h - q}.}
-\item{n_covariates}{the number of covariates in the model, defined as \eqn{q} in Hedges et al. (2023).}
-\item{var_term1}{unadjusted measure of the first term of the variance formula.}
-\item{adj_fct}{indicating whether \eqn{\eta} or \eqn{\gamma} were used to adjust the variance. That is
+\item{n_covariates}{The number of covariates in the model, defined as \eqn{q} in Hedges et al. (2023).}
+\item{var_term1}{Unadjusted measure of the first term of the variance formula.}
+\item{adj_fct}{Indicating whether \eqn{\eta} or \eqn{\gamma} were used to adjust the variance. That is
 whether the studies handle clustering inadequately or not.}
-\item{gt}{the cluster and small sample adjusted effect size estimate.}
-\item{vgt}{the cluster adjusted sampling variance estimate of \eqn{gt}.}
-\item{Wgt}{the cluster adjusted samplingvariance estimate of \eqn{gt}, without the second term of the variance formula, as
+\item{gt}{The cluster and small sample adjusted effect size estimate.}
+\item{vgt}{The cluster adjusted sampling variance estimate of \eqn{gt}.}
+\item{Wgt}{The cluster adjusted samplingvariance estimate of \eqn{gt}, without the second term of the variance formula, as
 given in Eq. (2) in Pustejovsky & Rodgers (2019).}
-\item{hg}{the variance-stabilizing transformed effect size. See Eq. (3) in Pustejovsky & Rodgers (2019)}
-\item{vhg}{the approximate sampling variance of hg}
+\item{hg}{The variance-stabilizing transformed effect size. See Eq. (3) in Pustejovsky & Rodgers (2019)}
+\item{vhg}{The approximate sampling variance of hg}
 }
 \description{
 This function calculates the sampling variance estimates for effect sizes
@@ -149,6 +152,13 @@ vgt_smd_1armcluster(
 N_cl_grp = 60, N_ind_grp = 40, avg_grp_size = 10, ICC = 0.1, g = 0.2,
 model = "ANCOVA", not_cluster_adj = TRUE, R2 = 0.5, q = 3
 )
+
+# Example showing how to add a suffix to the variable names
+vgt_smd_1armcluster(
+N_cl_grp = 60, N_ind_grp = 40, avg_grp_size = 10, ICC = 0.3, g = 0.2,
+model = "ANCOVA", not_cluster_adj = TRUE, R2 = 0.5, q = 3, add_name_to_vars = "_icc_0_3"
+)
+
 
 }
 \references{
