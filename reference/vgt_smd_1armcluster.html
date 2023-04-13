@@ -170,7 +170,23 @@ obtained. See details.</p></dd>
     
 
 <p>When <code>add_name_to_vars = NULL</code>, the function returns a <code>tibble</code> with the following variables:<br></p>
-<dl><dt>h</dt>
+<dl><dt>gt</dt>
+<dd><p>The cluster and small sample adjusted effect size estimate.</p></dd>
+
+<dt>vgt</dt>
+<dd><p>The cluster adjusted sampling variance estimate of \(gt\).</p></dd>
+
+<dt>Wgt</dt>
+<dd><p>The cluster adjusted samplingvariance estimate of \(gt\), without the second term of the variance formula, as
+given in Eq. (2) in Pustejovsky &amp; Rodgers (2019).</p></dd>
+
+<dt>hg</dt>
+<dd><p>The variance-stabilizing transformed effect size. See Eq. (3) in Pustejovsky &amp; Rodgers (2019)</p></dd>
+
+<dt>vhg</dt>
+<dd><p>The approximate sampling variance of hg</p></dd>
+
+<dt>h</dt>
 <dd><p>The degrees of freedom given in Eq (7) in Hedges &amp; Citkowicz (2015, p. 1298). See <code><a href="df_h_1armcluster.html">df_h_1armcluster</a></code>.</p></dd>
 
 <dt>df</dt>
@@ -187,21 +203,8 @@ otherwise with two or more covariates \(df = h - q\).</p></dd>
 <dd><p>Indicating whether \(\eta\) or \(\gamma\) were used to adjust the variance. That is
 whether the studies handle clustering inadequately or not.</p></dd>
 
-<dt>gt</dt>
-<dd><p>The cluster and small sample adjusted effect size estimate.</p></dd>
-
-<dt>vgt</dt>
-<dd><p>The cluster adjusted sampling variance estimate of \(gt\).</p></dd>
-
-<dt>Wgt</dt>
-<dd><p>The cluster adjusted samplingvariance estimate of \(gt\), without the second term of the variance formula, as
-given in Eq. (2) in Pustejovsky &amp; Rodgers (2019).</p></dd>
-
-<dt>hg</dt>
-<dd><p>The variance-stabilizing transformed effect size. See Eq. (3) in Pustejovsky &amp; Rodgers (2019)</p></dd>
-
-<dt>vhg</dt>
-<dd><p>The approximate sampling variance of hg</p></dd>
+<dt>adj_value</dt>
+<dd><p>Estimated value of adjustment factor.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -260,10 +263,10 @@ Supplement document for Appendix E and the What Works Clearinghouse procedures h
 <span class="r-in"><span>model <span class="op">=</span> <span class="st">"ANCOVA"</span>, not_cluster_adj <span class="op">=</span> <span class="cn">TRUE</span>, R2 <span class="op">=</span> <span class="fl">0.5</span>, q <span class="op">=</span> <span class="fl">3</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 11</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       h    df n_covariates var_term1 adj_fct adj_value    gt    vgt    Wgt    hg</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>  93.0  90.0            3    0.020<span style="text-decoration: underline;">8</span> eta           1.3   0.2 0.027<span style="text-decoration: underline;">3</span> 0.027<span style="text-decoration: underline;">1</span> 0.128</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 1 more variable: vhg &lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      gt    vgt    Wgt    hg    vhg     h    df n_covariates var_term1 adj_fct</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>   0.2 0.027<span style="text-decoration: underline;">3</span> 0.027<span style="text-decoration: underline;">1</span> 0.128 0.011<span style="text-decoration: underline;">1</span>  93.0  90.0            3    0.020<span style="text-decoration: underline;">8</span> eta    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 1 more variable: adj_value &lt;dbl&gt;</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Example showing how to add a suffix to the variable names</span></span></span>
 <span class="r-in"><span><span class="fu">vgt_smd_1armcluster</span><span class="op">(</span></span></span>
@@ -271,11 +274,11 @@ Supplement document for Appendix E and the What Works Clearinghouse procedures h
 <span class="r-in"><span>model <span class="op">=</span> <span class="st">"ANCOVA"</span>, not_cluster_adj <span class="op">=</span> <span class="cn">TRUE</span>, R2 <span class="op">=</span> <span class="fl">0.5</span>, q <span class="op">=</span> <span class="fl">3</span>, add_name_to_vars <span class="op">=</span> <span class="st">"_icc_0_3"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 11</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   h_icc_0_3 df_icc_0_3 n_covariates_icc_0_3 var_term1_icc_0_3 adj_fct_icc_0_3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>      61.3       58.3                    3            0.020<span style="text-decoration: underline;">8</span> eta            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 6 more variables: adj_value_icc_0_3 &lt;dbl&gt;, gt_icc_0_3 &lt;dbl&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   vgt_icc_0_3 &lt;dbl&gt;, Wgt_icc_0_3 &lt;dbl&gt;, hg_icc_0_3 &lt;dbl&gt;, vhg_icc_0_3 &lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   gt_icc_0_3 vgt_icc_0_3 Wgt_icc_0_3 hg_icc_0_3 vhg_icc_0_3 h_icc_0_3 df_icc_0_3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>        0.2      0.039<span style="text-decoration: underline;">9</span>      0.039<span style="text-decoration: underline;">6</span>      0.131      0.017<span style="text-decoration: underline;">2</span>      61.3       58.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 4 more variables: n_covariates_icc_0_3 &lt;dbl&gt;, var_term1_icc_0_3 &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   adj_fct_icc_0_3 &lt;chr&gt;, adj_value_icc_0_3 &lt;dbl&gt;</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
