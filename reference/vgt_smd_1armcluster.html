@@ -84,7 +84,7 @@ transformed effect size and variance as presented in Pustejovsky &amp; Rodgers (
 <span>  <span class="va">avg_grp_size</span>,</span>
 <span>  <span class="va">ICC</span>,</span>
 <span>  <span class="va">g</span>,</span>
-<span>  model <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Posttest"</span>, <span class="st">"ANCOVA"</span>, <span class="st">"DiD"</span>, <span class="st">"Reg_coef"</span>, <span class="st">"Std_reg_coef"</span><span class="op">)</span>,</span>
+<span>  model <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Posttest"</span>, <span class="st">"ANCOVA"</span>, <span class="st">"emmeans"</span>, <span class="st">"DiD"</span>, <span class="st">"Reg_coef"</span>, <span class="st">"Std_reg_coef"</span><span class="op">)</span>,</span>
 <span>  not_cluster_adj <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  prepost_cor <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  F_val <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -93,7 +93,8 @@ transformed effect size and variance as presented in Pustejovsky &amp; Rodgers (
 <span>  SD <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  SE_std <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  R2 <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  q <span class="op">=</span> <span class="fl">1</span></span>
+<span>  q <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  add_name_to_vars <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -159,44 +160,48 @@ obtained. See details.</p></dd>
 <dt>q</dt>
 <dd><p>Numerical value indicating the number of covariates.</p></dd>
 
+
+<dt>add_name_to_vars</dt>
+<dd><p>Optional character string to be added to the variables names of the generated <code>tibble</code>.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>Returns a <code>tibble</code> with the following variables:<br></p>
+<p>When <code>add_name_to_vars = NULL</code>, the function returns a <code>tibble</code> with the following variables:<br></p>
 <dl><dt>h</dt>
-<dd><p>the degrees of freedom given in Eq (7) in Hedges &amp; Citkowicz (2015, p. 1298). See <code><a href="df_h_1armcluster.html">df_h_1armcluster</a></code>.</p></dd>
+<dd><p>The degrees of freedom given in Eq (7) in Hedges &amp; Citkowicz (2015, p. 1298). See <code><a href="df_h_1armcluster.html">df_h_1armcluster</a></code>.</p></dd>
 
 <dt>df</dt>
-<dd><p>the degrees of freedom. If none or one covariate \(df = h\).
+<dd><p>The degrees of freedom. If none or one covariate \(df = h\).
 otherwise with two or more covariates \(df = h - q\).</p></dd>
 
 <dt>n_covariates</dt>
-<dd><p>the number of covariates in the model, defined as \(q\) in Hedges et al. (2023).</p></dd>
+<dd><p>The number of covariates in the model, defined as \(q\) in Hedges et al. (2023).</p></dd>
 
 <dt>var_term1</dt>
-<dd><p>unadjusted measure of the first term of the variance formula.</p></dd>
+<dd><p>Unadjusted measure of the first term of the variance formula.</p></dd>
 
 <dt>adj_fct</dt>
-<dd><p>indicating whether \(\eta\) or \(\gamma\) were used to adjust the variance. That is
+<dd><p>Indicating whether \(\eta\) or \(\gamma\) were used to adjust the variance. That is
 whether the studies handle clustering inadequately or not.</p></dd>
 
 <dt>gt</dt>
-<dd><p>the cluster and small sample adjusted effect size estimate.</p></dd>
+<dd><p>The cluster and small sample adjusted effect size estimate.</p></dd>
 
 <dt>vgt</dt>
-<dd><p>the cluster adjusted sampling variance estimate of \(gt\).</p></dd>
+<dd><p>The cluster adjusted sampling variance estimate of \(gt\).</p></dd>
 
 <dt>Wgt</dt>
-<dd><p>the cluster adjusted samplingvariance estimate of \(gt\), without the second term of the variance formula, as
+<dd><p>The cluster adjusted samplingvariance estimate of \(gt\), without the second term of the variance formula, as
 given in Eq. (2) in Pustejovsky &amp; Rodgers (2019).</p></dd>
 
 <dt>hg</dt>
-<dd><p>the variance-stabilizing transformed effect size. See Eq. (3) in Pustejovsky &amp; Rodgers (2019)</p></dd>
+<dd><p>The variance-stabilizing transformed effect size. See Eq. (3) in Pustejovsky &amp; Rodgers (2019)</p></dd>
 
 <dt>vhg</dt>
-<dd><p>the approximate sampling variance of hg</p></dd>
+<dd><p>The approximate sampling variance of hg</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -259,6 +264,19 @@ Supplement document for Appendix E and the What Works Clearinghouse procedures h
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>  93.0  90.0            3    0.020<span style="text-decoration: underline;">8</span> eta           1.3   0.2 0.027<span style="text-decoration: underline;">3</span> 0.027<span style="text-decoration: underline;">1</span> 0.128</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 1 more variable: vhg &lt;dbl&gt;</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Example showing how to add a suffix to the variable names</span></span></span>
+<span class="r-in"><span><span class="fu">vgt_smd_1armcluster</span><span class="op">(</span></span></span>
+<span class="r-in"><span>N_cl_grp <span class="op">=</span> <span class="fl">60</span>, N_ind_grp <span class="op">=</span> <span class="fl">40</span>, avg_grp_size <span class="op">=</span> <span class="fl">10</span>, ICC <span class="op">=</span> <span class="fl">0.3</span>, g <span class="op">=</span> <span class="fl">0.2</span>,</span></span>
+<span class="r-in"><span>model <span class="op">=</span> <span class="st">"ANCOVA"</span>, not_cluster_adj <span class="op">=</span> <span class="cn">TRUE</span>, R2 <span class="op">=</span> <span class="fl">0.5</span>, q <span class="op">=</span> <span class="fl">3</span>, add_name_to_vars <span class="op">=</span> <span class="st">"_icc_0_3"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 11</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   h_icc_0_3 df_icc_0_3 n_covariates_icc_0_3 var_term1_icc_0_3 adj_fct_icc_0_3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>      61.3       58.3                    3            0.020<span style="text-decoration: underline;">8</span> eta            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 6 more variables: adj_value_icc_0_3 &lt;dbl&gt;, gt_icc_0_3 &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   vgt_icc_0_3 &lt;dbl&gt;, Wgt_icc_0_3 &lt;dbl&gt;, hg_icc_0_3 &lt;dbl&gt;, vhg_icc_0_3 &lt;dbl&gt;</span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

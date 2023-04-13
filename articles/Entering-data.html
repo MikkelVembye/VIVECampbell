@@ -87,7 +87,7 @@
                         <h4 data-toc-skip class="author">Mikkel H.
 Vembye</h4>
             
-            <h4 data-toc-skip class="date">Last modified 2023-03-24</h4>
+            <h4 data-toc-skip class="date">Last modified 2023-04-13</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/MikkelVembye/VIVECampbell/blob/HEAD/vignettes/Entering-data.Rmd" class="external-link"><code>vignettes/Entering-data.Rmd</code></a></small>
       <div class="d-none name"><code>Entering-data.Rmd</code></div>
@@ -141,14 +141,26 @@ vs. outpatient), which again is nested within setting (i.e., Alcohol
 use, Drug use, Social and family, Psychological functioning).</p>
 <p>Important for understanding the use of <code>group_by</code>
 function, when we calculate effect sizes.</p>
-<div id="ygmnnkwtob" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>html {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+<div id="dapfzolumt" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#dapfzolumt table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-#ygmnnkwtob .gt_table {
+#dapfzolumt thead, #dapfzolumt tbody, #dapfzolumt tfoot, #dapfzolumt tr, #dapfzolumt td, #dapfzolumt th {
+  border-style: none;
+}
+
+#dapfzolumt p {
+  margin: 0;
+  padding: 0;
+}
+
+#dapfzolumt .gt_table {
   display: table;
   border-collapse: collapse;
+  line-height: normal;
   margin-left: auto;
   margin-right: auto;
   color: #333333;
@@ -171,24 +183,12 @@ function, when we calculate effect sizes.</p>
   border-left-color: #D3D3D3;
 }
 
-#ygmnnkwtob .gt_heading {
-  background-color: #FFFFFF;
-  text-align: left;
-  border-bottom-color: #FFFFFF;
-  border-left-style: none;
-  border-left-width: 1px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 1px;
-  border-right-color: #D3D3D3;
-}
-
-#ygmnnkwtob .gt_caption {
+#dapfzolumt .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#ygmnnkwtob .gt_title {
+#dapfzolumt .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -200,25 +200,37 @@ function, when we calculate effect sizes.</p>
   border-bottom-width: 0;
 }
 
-#ygmnnkwtob .gt_subtitle {
+#dapfzolumt .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
-  padding-top: 0;
-  padding-bottom: 6px;
+  padding-top: 3px;
+  padding-bottom: 5px;
   padding-left: 5px;
   padding-right: 5px;
   border-top-color: #FFFFFF;
   border-top-width: 0;
 }
 
-#ygmnnkwtob .gt_bottom_border {
+#dapfzolumt .gt_heading {
+  background-color: #FFFFFF;
+  text-align: left;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#dapfzolumt .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#ygmnnkwtob .gt_col_headings {
+#dapfzolumt .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -233,7 +245,7 @@ function, when we calculate effect sizes.</p>
   border-right-color: #D3D3D3;
 }
 
-#ygmnnkwtob .gt_col_heading {
+#dapfzolumt .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -253,7 +265,7 @@ function, when we calculate effect sizes.</p>
   overflow-x: hidden;
 }
 
-#ygmnnkwtob .gt_column_spanner_outer {
+#dapfzolumt .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -265,15 +277,15 @@ function, when we calculate effect sizes.</p>
   padding-right: 4px;
 }
 
-#ygmnnkwtob .gt_column_spanner_outer:first-child {
+#dapfzolumt .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#ygmnnkwtob .gt_column_spanner_outer:last-child {
+#dapfzolumt .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#ygmnnkwtob .gt_column_spanner {
+#dapfzolumt .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -285,7 +297,11 @@ function, when we calculate effect sizes.</p>
   width: 100%;
 }
 
-#ygmnnkwtob .gt_group_heading {
+#dapfzolumt .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#dapfzolumt .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -311,7 +327,7 @@ function, when we calculate effect sizes.</p>
   text-align: left;
 }
 
-#ygmnnkwtob .gt_empty_group_heading {
+#dapfzolumt .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -326,15 +342,15 @@ function, when we calculate effect sizes.</p>
   vertical-align: middle;
 }
 
-#ygmnnkwtob .gt_from_md > :first-child {
+#dapfzolumt .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#ygmnnkwtob .gt_from_md > :last-child {
+#dapfzolumt .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#ygmnnkwtob .gt_row {
+#dapfzolumt .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -353,7 +369,7 @@ function, when we calculate effect sizes.</p>
   overflow-x: hidden;
 }
 
-#ygmnnkwtob .gt_stub {
+#dapfzolumt .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -366,7 +382,7 @@ function, when we calculate effect sizes.</p>
   padding-right: 5px;
 }
 
-#ygmnnkwtob .gt_stub_row_group {
+#dapfzolumt .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -380,11 +396,15 @@ function, when we calculate effect sizes.</p>
   vertical-align: top;
 }
 
-#ygmnnkwtob .gt_row_group_first td {
+#dapfzolumt .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#ygmnnkwtob .gt_summary_row {
+#dapfzolumt .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#dapfzolumt .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -394,16 +414,16 @@ function, when we calculate effect sizes.</p>
   padding-right: 5px;
 }
 
-#ygmnnkwtob .gt_first_summary_row {
+#dapfzolumt .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#ygmnnkwtob .gt_first_summary_row.thick {
+#dapfzolumt .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#ygmnnkwtob .gt_last_summary_row {
+#dapfzolumt .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -413,7 +433,7 @@ function, when we calculate effect sizes.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#ygmnnkwtob .gt_grand_summary_row {
+#dapfzolumt .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -423,7 +443,7 @@ function, when we calculate effect sizes.</p>
   padding-right: 5px;
 }
 
-#ygmnnkwtob .gt_first_grand_summary_row {
+#dapfzolumt .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -433,11 +453,21 @@ function, when we calculate effect sizes.</p>
   border-top-color: #D3D3D3;
 }
 
-#ygmnnkwtob .gt_striped {
+#dapfzolumt .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#dapfzolumt .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#ygmnnkwtob .gt_table_body {
+#dapfzolumt .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -446,7 +476,7 @@ function, when we calculate effect sizes.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#ygmnnkwtob .gt_footnotes {
+#dapfzolumt .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -460,30 +490,8 @@ function, when we calculate effect sizes.</p>
   border-right-color: #D3D3D3;
 }
 
-#ygmnnkwtob .gt_footnote {
+#dapfzolumt .gt_footnote {
   margin: 0px;
-  font-size: 90%;
-  padding-left: 4px;
-  padding-right: 4px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#ygmnnkwtob .gt_sourcenotes {
-  color: #333333;
-  background-color: #FFFFFF;
-  border-bottom-style: none;
-  border-bottom-width: 2px;
-  border-bottom-color: #D3D3D3;
-  border-left-style: none;
-  border-left-width: 2px;
-  border-left-color: #D3D3D3;
-  border-right-style: none;
-  border-right-width: 2px;
-  border-right-color: #D3D3D3;
-}
-
-#ygmnnkwtob .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -491,78 +499,97 @@ function, when we calculate effect sizes.</p>
   padding-right: 5px;
 }
 
-#ygmnnkwtob .gt_left {
+#dapfzolumt .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#dapfzolumt .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#dapfzolumt .gt_left {
   text-align: left;
 }
 
-#ygmnnkwtob .gt_center {
+#dapfzolumt .gt_center {
   text-align: center;
 }
 
-#ygmnnkwtob .gt_right {
+#dapfzolumt .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#ygmnnkwtob .gt_font_normal {
+#dapfzolumt .gt_font_normal {
   font-weight: normal;
 }
 
-#ygmnnkwtob .gt_font_bold {
+#dapfzolumt .gt_font_bold {
   font-weight: bold;
 }
 
-#ygmnnkwtob .gt_font_italic {
+#dapfzolumt .gt_font_italic {
   font-style: italic;
 }
 
-#ygmnnkwtob .gt_super {
+#dapfzolumt .gt_super {
   font-size: 65%;
 }
 
-#ygmnnkwtob .gt_footnote_marks {
-  font-style: italic;
-  font-weight: normal;
+#dapfzolumt .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
+  position: initial;
 }
 
-#ygmnnkwtob .gt_asterisk {
+#dapfzolumt .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#ygmnnkwtob .gt_indent_1 {
+#dapfzolumt .gt_indent_1 {
   text-indent: 5px;
 }
 
-#ygmnnkwtob .gt_indent_2 {
+#dapfzolumt .gt_indent_2 {
   text-indent: 10px;
 }
 
-#ygmnnkwtob .gt_indent_3 {
+#dapfzolumt .gt_indent_3 {
   text-indent: 15px;
 }
 
-#ygmnnkwtob .gt_indent_4 {
+#dapfzolumt .gt_indent_4 {
   text-indent: 20px;
 }
 
-#ygmnnkwtob .gt_indent_5 {
+#dapfzolumt .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
-<table class="table gt_table">
-<thead class="gt_header">
-<tr>
+<table class="table gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead>
+<tr class="gt_heading">
 <td colspan="13" class="gt_heading gt_title gt_font_normal" style><strong>Table 1</strong></td>
     </tr>
-<tr>
+<tr class="gt_heading">
 <td colspan="13" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border" style><em>Reproduced from Table 4 in Fisher (1996, p. 1248)</em></td>
     </tr>
-</thead>
-<thead class="gt_col_headings">
-<tr>
+<tr class="gt_col_headings gt_spanner_row">
 <th rowspan="1" colspan="1" scope="col"></th>
       <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="6" scope="colgroup" id="Inpatient setting">
         <span class="gt_column_spanner">Inpatient setting</span>
@@ -571,7 +598,7 @@ function, when we calculate effect sizes.</p>
         <span class="gt_column_spanner">Outpatient setting</span>
       </th>
     </tr>
-<tr>
+<tr class="gt_col_headings gt_spanner_row">
 <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1" scope="col" id="Subscale and&lt;br&gt;therapy group">Subscale and<br>therapy group</th>
       <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="Pretest&lt;br&gt;score">
         <span class="gt_column_spanner">Pretest<br>score</span>
@@ -592,7 +619,7 @@ function, when we calculate effect sizes.</p>
         <span class="gt_column_spanner"><br>Difference </span>
       </th>
     </tr>
-<tr>
+<tr class="gt_col_headings">
 <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Mean">Mean</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="SD">SD</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Mean">Mean</th>
