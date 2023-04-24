@@ -103,6 +103,8 @@
 #' @param R2 Numerical value indicating the (reported) \eqn{R^2} value from analysis model.
 #' @param q Numerical value indicating the number of covariates.
 #' @param add_name_to_vars Optional character string to be added to the variables names of the generated \code{tibble}.
+#' @param vars Variables to be report. Default is \code{NULL}. See Value section for further details.
+#'
 #'
 #' @note Insert
 #'
@@ -148,7 +150,8 @@ vgt_smd_1armcluster <-
     not_cluster_adj = TRUE,
     prepost_cor = NULL, F_val = NULL, t_val = NULL, SE = NULL, SD = NULL, SE_std = NULL, R2 = NULL,
     q = 1,
-    add_name_to_vars = NULL
+    add_name_to_vars = NULL,
+    vars = dplyr::everything()
   ){
 
   N1 <- N_cl_grp
@@ -292,6 +295,7 @@ vgt_smd_1armcluster <-
   dplyr::select(-a) |>
   dplyr::relocate(gt:vhg)
 
+
   if (!is.null(add_name_to_vars)){
 
     if (!is.character(add_name_to_vars)){
@@ -302,6 +306,7 @@ vgt_smd_1armcluster <-
 
   }
 
-  res
+
+  res |> dplyr::select({{vars}})
 
 }

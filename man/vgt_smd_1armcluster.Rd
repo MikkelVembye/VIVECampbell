@@ -20,7 +20,8 @@ vgt_smd_1armcluster(
   SE_std = NULL,
   R2 = NULL,
   q = 1,
-  add_name_to_vars = NULL
+  add_name_to_vars = NULL,
+  vars = dplyr::everything()
 )
 }
 \arguments{
@@ -56,6 +57,8 @@ obtained. See details.}
 \item{q}{Numerical value indicating the number of covariates.}
 
 \item{add_name_to_vars}{Optional character string to be added to the variables names of the generated \code{tibble}.}
+
+\item{vars}{Variables to be report. Default is \code{NULL}. See Value section for further details.}
 }
 \value{
 When \code{add_name_to_vars = NULL}, the function returns a \code{tibble} with the following variables:\if{html}{\out{<br>}}
