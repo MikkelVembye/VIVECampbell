@@ -94,7 +94,8 @@ transformed effect size and variance as presented in Pustejovsky &amp; Rodgers (
 <span>  SE_std <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  R2 <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  q <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>  add_name_to_vars <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>  add_name_to_vars <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  vars <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -163,6 +164,10 @@ obtained. See details.</p></dd>
 
 <dt>add_name_to_vars</dt>
 <dd><p>Optional character string to be added to the variables names of the generated <code>tibble</code>.</p></dd>
+
+
+<dt>vars</dt>
+<dd><p>Variables to be report. Default is <code>NULL</code>. See Value section for further details.</p></dd>
 
 </dl></div>
     <div class="section level2">
