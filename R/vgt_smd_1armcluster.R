@@ -8,7 +8,7 @@
 #'
 #' @details
 #' Table 1 illustrates all cluster adjustment
-#' of variance estimates from pre-test and/or covariate adjusted measures that can
+#' of variance estimates from pre-test and/or covariate-adjusted measures that can
 #' be calculated with the vgt_smd_1armcluster()
 #'
 #'  ***Table 1***<br>
@@ -103,7 +103,7 @@
 #' @param R2 Numerical value indicating the (reported) \eqn{R^2} value from analysis model.
 #' @param q Numerical value indicating the number of covariates.
 #' @param add_name_to_vars Optional character string to be added to the variables names of the generated \code{tibble}.
-#' @param vars Variables to be report. Default is \code{NULL}. See Value section for further details.
+#' @param vars Variables to be reported. Default is \code{NULL}. See Value section for further details.
 #'
 #'
 #' @note Insert

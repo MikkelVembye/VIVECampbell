@@ -58,7 +58,7 @@ obtained. See details.}
 
 \item{add_name_to_vars}{Optional character string to be added to the variables names of the generated \code{tibble}.}
 
-\item{vars}{Variables to be report. Default is \code{NULL}. See Value section for further details.}
+\item{vars}{Variables to be reported. Default is \code{NULL}. See Value section for further details.}
 }
 \value{
 When \code{add_name_to_vars = NULL}, the function returns a \code{tibble} with the following variables:\if{html}{\out{<br>}}
@@ -85,7 +85,7 @@ transformed effect size and variance as presented in Pustejovsky & Rodgers (2019
 }
 \details{
 Table 1 illustrates all cluster adjustment
-of variance estimates from pre-test and/or covariate adjusted measures that can
+of variance estimates from pre-test and/or covariate-adjusted measures that can
 be calculated with the vgt_smd_1armcluster()
 
 \emph{\strong{Table 1}}\if{html}{\out{<br>}}
