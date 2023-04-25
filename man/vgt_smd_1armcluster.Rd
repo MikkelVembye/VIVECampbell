@@ -11,7 +11,7 @@ vgt_smd_1armcluster(
   ICC,
   g,
   model = c("Posttest", "ANCOVA", "emmeans", "DiD", "Reg_coef", "Std_reg_coef"),
-  not_cluster_adj = TRUE,
+  cluster_adj = FALSE,
   prepost_cor = NULL,
   F_val = NULL,
   t_val = NULL,
@@ -38,7 +38,7 @@ vgt_smd_1armcluster(
 \item{model}{Character indicating from what model the effect size estimate is
 obtained. See details.}
 
-\item{not_cluster_adj}{Logical indicating if clustering was inadequately handled in model/study. Default is \code{TRUE}.}
+\item{cluster_adj}{Logical indicating if clustering was adequately handled in model/study. Default is \code{FALSE}.}
 
 \item{prepost_cor}{Numerical value indicating the pre-posttest correlation.}
 
@@ -154,15 +154,21 @@ Insert
 \examples{
 vgt_smd_1armcluster(
 N_cl_grp = 60, N_ind_grp = 40, avg_grp_size = 10, ICC = 0.1, g = 0.2,
-model = "ANCOVA", not_cluster_adj = TRUE, R2 = 0.5, q = 3
+model = "ANCOVA", cluster_adj = FALSE, R2 = 0.5, q = 3
 )
 
 # Example showing how to add a suffix to the variable names
 vgt_smd_1armcluster(
 N_cl_grp = 60, N_ind_grp = 40, avg_grp_size = 10, ICC = 0.3, g = 0.2,
-model = "ANCOVA", not_cluster_adj = TRUE, R2 = 0.5, q = 3, add_name_to_vars = "_icc_0_3"
+model = "ANCOVA", cluster_adj = FALSE, R2 = 0.5, q = 3, add_name_to_vars = "_icc03"
 )
 
+# Example showing how to select specific variables
+vgt_smd_1armcluster(
+N_cl_grp = 60, N_ind_grp = 40, avg_grp_size = 10, ICC = 0.3, g = 0.2,
+model = "ANCOVA", cluster_adj = FALSE, R2 = 0.5, q = 3, add_name_to_vars = "_icc03",
+vars = vgt_icc03
+)
 
 }
 \references{

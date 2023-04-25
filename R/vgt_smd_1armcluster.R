@@ -93,7 +93,7 @@
 #' @param g Numerical values indicating the estimated effect size (Hedges' g).
 #' @param model Character indicating from what model the effect size estimate is
 #' obtained. See details.
-#' @param not_cluster_adj Logical indicating if clustering was inadequately handled in model/study. Default is \code{TRUE}.
+#' @param cluster_adj Logical indicating if clustering was adequately handled in model/study. Default is \code{FALSE}.
 #' @param prepost_cor Numerical value indicating the pre-posttest correlation.
 #' @param F_val Numerical value indicating the reported F statistics value. Note that \eqn{F = t^2}.
 #' @param t_val Numerical value indicating the reported t statistics value.
@@ -132,22 +132,28 @@
 #' @examples
 #' vgt_smd_1armcluster(
 #' N_cl_grp = 60, N_ind_grp = 40, avg_grp_size = 10, ICC = 0.1, g = 0.2,
-#' model = "ANCOVA", not_cluster_adj = TRUE, R2 = 0.5, q = 3
+#' model = "ANCOVA", cluster_adj = FALSE, R2 = 0.5, q = 3
 #' )
 #'
 #' # Example showing how to add a suffix to the variable names
 #' vgt_smd_1armcluster(
 #' N_cl_grp = 60, N_ind_grp = 40, avg_grp_size = 10, ICC = 0.3, g = 0.2,
-#' model = "ANCOVA", not_cluster_adj = TRUE, R2 = 0.5, q = 3, add_name_to_vars = "_icc_0_3"
+#' model = "ANCOVA", cluster_adj = FALSE, R2 = 0.5, q = 3, add_name_to_vars = "_icc03"
 #' )
 #'
+#' # Example showing how to select specific variables
+#' vgt_smd_1armcluster(
+#' N_cl_grp = 60, N_ind_grp = 40, avg_grp_size = 10, ICC = 0.3, g = 0.2,
+#' model = "ANCOVA", cluster_adj = FALSE, R2 = 0.5, q = 3, add_name_to_vars = "_icc03",
+#' vars = vgt_icc03
+#' )
 #'
 
 vgt_smd_1armcluster <-
   function(
     N_cl_grp, N_ind_grp, avg_grp_size, ICC, g,
     model = c("Posttest", "ANCOVA", "emmeans", "DiD", "Reg_coef", "Std_reg_coef"),
-    not_cluster_adj = TRUE,
+    cluster_adj = FALSE,
     prepost_cor = NULL, F_val = NULL, t_val = NULL, SE = NULL, SD = NULL, SE_std = NULL, R2 = NULL,
     q = 1,
     add_name_to_vars = NULL,
@@ -257,7 +263,7 @@ vgt_smd_1armcluster <-
     df <- h
   }
 
-  if (not_cluster_adj){
+  if (!cluster_adj){
 
     adj_factor <- eta_1armcluster(N_total = N, Nc = N_ind_grp, avg_grp_size = avg_grp_size, ICC = rho)
     adj_name <- "eta"
