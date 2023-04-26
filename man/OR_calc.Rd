@@ -2,7 +2,7 @@
 % Please edit documentation in R/OR_calc.R
 \name{OR_calc}
 \alias{OR_calc}
-\title{Calculate odds ratios (OR)}
+\title{Calculate and cluster bias adjust odds ratios (OR)}
 \usage{
 OR_calc(
   A = NULL,
@@ -19,6 +19,9 @@ OR_calc(
   SE_OR = NULL,
   V_OR = NULL,
   Z = 1.96,
+  ICC = NULL,
+  avg_cl_size = NULL,
+  n_cluster_arms = 2,
   add_name_to_vars = NULL,
   vars = dplyr::everything()
 )
@@ -52,6 +55,10 @@ OR_calc(
 
 \item{Z}{Insert}
 
+\item{ICC}{Insert}
+
+\item{avg_cl_size}{Insert}
+
 \item{add_name_to_vars}{Optional character string to be added to the variables names of the generated \code{tibble}.}
 
 \item{vars}{Variables to be reported. Default is \code{NULL}. See Value section for further details.}
@@ -61,7 +68,7 @@ A \code{tibble} with information about OR, OR_LN, vln_OR.
 }
 \description{
 This function calculated odds ratios based on various type of input/information,
-as described in Table 11.10 from Borenstein and Hedges (2019).
+as described in Table 11.10 from Borenstein and Hedges (2019, p. 226).
 }
 \details{
 Add details\tabular{lllll}{
@@ -81,11 +88,17 @@ OR_calc(A = 20, B = 80, C = 10, D = 90)
 # Using proportions
 OR_calc(p1 = .53, p2 = .11, n1 = 20, n2 = 26)
 
-# Using raw OR and CI
+# Using raw OR and CIs
 OR_calc(OR = 2.25, LL_OR = 1.5, UL_OR = 3)
 
 # Adding suffix to variables and selecting specific variables
 OR_calc(A = 20, B = 80, C = 10, D = 90, add_name_to_vars = "_test", vars = OR_test)
+
+# Cluster bias adjustment when there is clustering in both groups
+OR_calc(p1 = .53, p2 = .11, n1 = 20, n2 = 26, ICC = 0.1, avg_cl_size = 8, n_cluster_arms = 2)
+
+# Cluster bias adjustment when there is clustering in one group only
+OR_calc(p1 = .53, p2 = .11, n1 = 20, n2 = 26, ICC = 0.1, avg_cl_size = 8, n_cluster_arms = 1)
 
 
 }
@@ -94,4 +107,13 @@ Borenstein and Hedges (2019).
 Effect sizes for meta-analysis. In H. Cooper, L. V. Hedges, & J. C. Valentine (Eds.),
 \emph{The handbook of research synthesis and meta-analysis} (3rd ed., pp. 207–242).
 Russell Sage Foundation West Sussex.
+
+Hedges, L. V., & Citkowicz, M (2015).
+Estimating effect size when there is clustering in one treatment groups.
+\emph{Behavior Research Methods}, 47(4), 1295-1308. \doi{10.3758/s13428-014-0538-z}
+
+Higgins, J. P. T., Eldridge, S., & Li, T. (2019).
+In J. P. T. Higgins, J. Thomas, J. Chandler, M. S. Cumpston, T. Li, M. Page, & V. Welch (Eds.),
+\emph{Cochrane handbook for systematic reviews of interventions} (2nd ed., pp. 569–593).
+Wiley Online Library. \doi{10.1002/9781119536604.ch23}
 }

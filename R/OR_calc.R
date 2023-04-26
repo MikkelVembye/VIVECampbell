@@ -1,8 +1,8 @@
 #'
-#' @title Calculate odds ratios (OR)
+#' @title Calculate and cluster bias adjust odds ratios (OR)
 #'
 #' @description This function calculated odds ratios based on various type of input/information,
-#' as described in Table 11.10 from Borenstein and Hedges (2019).
+#' as described in Table 11.10 from Borenstein and Hedges (2019, p. 226).
 #'
 #' @details
 #' Add details
@@ -18,6 +18,15 @@
 #' \emph{The handbook of research synthesis and meta-analysis} (3rd ed., pp. 207–242).
 #' Russell Sage Foundation West Sussex.
 #'
+#' Hedges, L. V., & Citkowicz, M (2015).
+#' Estimating effect size when there is clustering in one treatment groups.
+#' \emph{Behavior Research Methods}, 47(4), 1295-1308. \doi{10.3758/s13428-014-0538-z}
+#'
+#' Higgins, J. P. T., Eldridge, S., & Li, T. (2019).
+#' In J. P. T. Higgins, J. Thomas, J. Chandler, M. S. Cumpston, T. Li, M. Page, & V. Welch (Eds.),
+#' \emph{Cochrane handbook for systematic reviews of interventions} (2nd ed., pp. 569–593).
+#' Wiley Online Library. \doi{10.1002/9781119536604.ch23}
+#'
 #' @param A Insert
 #' @param B Insert
 #' @param C Insert
@@ -32,6 +41,8 @@
 #' @param SE_OR Insert
 #' @param V_OR Insert
 #' @param Z Insert
+#' @param ICC Insert
+#' @param avg_cl_size Insert
 #' @param add_name_to_vars Optional character string to be added to the variables names of the generated \code{tibble}.
 #' @param vars Variables to be reported. Default is \code{NULL}. See Value section for further details.
 #'
@@ -49,11 +60,17 @@
 #' # Using proportions
 #' OR_calc(p1 = .53, p2 = .11, n1 = 20, n2 = 26)
 #'
-#' # Using raw OR and CI
+#' # Using raw OR and CIs
 #' OR_calc(OR = 2.25, LL_OR = 1.5, UL_OR = 3)
 #'
 #' # Adding suffix to variables and selecting specific variables
 #' OR_calc(A = 20, B = 80, C = 10, D = 90, add_name_to_vars = "_test", vars = OR_test)
+#'
+#' # Cluster bias adjustment when there is clustering in both groups
+#' OR_calc(p1 = .53, p2 = .11, n1 = 20, n2 = 26, ICC = 0.1, avg_cl_size = 8, n_cluster_arms = 2)
+#'
+#' # Cluster bias adjustment when there is clustering in one group only
+#' OR_calc(p1 = .53, p2 = .11, n1 = 20, n2 = 26, ICC = 0.1, avg_cl_size = 8, n_cluster_arms = 1)
 #'
 #'
 
@@ -64,6 +81,8 @@ OR_calc <- function(
     p1 = NULL, p2 = NULL, n1 = NULL, n2 = NULL,
     OR = NULL, LL_OR = NULL, UL_OR = NULL,
     SE_OR = NULL, V_OR = NULL, Z = 1.96,
+    ICC = NULL, avg_cl_size = NULL,
+    n_cluster_arms = 2,
     add_name_to_vars = NULL,
     vars = dplyr::everything()
     ) {
@@ -78,6 +97,45 @@ OR_calc <- function(
 
     )
 
+    if (!is.null(ICC) & !is.null(avg_cl_size)){
+
+      if (n_cluster_arms == 2){
+
+        DE <- 1 + (avg_cl_size - 1) * ICC
+
+        A_c <- A/DE
+        B_c <- B/DE
+        C_c <- C/DE
+        D_c <- D/DE
+
+        res <- res |>
+          dplyr::mutate(
+            DE = DE,
+            vln_OR_C = 1/A_c + 1/B_c + 1/C_c + 1/D_c
+          )
+
+      } else if (n_cluster_arms == 1){
+
+        n <- avg_cl_size
+        Nc <- C + D
+        N <- A + B + C + D
+
+        # Design effect from Hedges and Citkowicz (2015)
+        DE <- 1 + ((n*Nc/N) - 1) * ICC
+
+        A_c <- A/DE
+        B_c <- B/DE
+
+        res <- res |>
+          dplyr::mutate(
+            DE = DE,
+            vln_OR_C = 1/A_c + 1/B_c + 1/C + 1/D
+          )
+
+      }
+
+    }
+
   } else if (!is.null(p1) & !is.null(p2) & !is.null(n1) & !is.null(n2)) {
 
     res <- tibble::tibble(
@@ -87,6 +145,45 @@ OR_calc <- function(
       vln_OR = 1/(n1*p1) + 1/(n1*(1-p1)) + 1/(n2*p2) + 1/(n2*(1-p2))
 
     )
+
+    if (!is.null(ICC) & !is.null(avg_cl_size)){
+
+      if (n_cluster_arms == 2){
+
+        DE <- 1 + (avg_cl_size - 1) * ICC
+
+        p1_c <- p1/DE
+        n1_c <- n1/DE
+        p2_c <- p2/DE
+        n2_c <- n2/DE
+
+        res <- res |>
+          dplyr::mutate(
+            DE = DE,
+            vln_OR_C = 1/(n1_c*p1_c) + 1/(n1_c*(1-p1_c)) + 1/(n2_c*p2_c) + 1/(n2_c*(1-p2_c))
+          )
+
+
+      } else if (n_cluster_arms == 1){
+
+        n <- avg_cl_size
+        Nc <- n2
+        N <- n1 + n2
+
+        DE <- 1 + ((n*Nc/N) - 1) * ICC
+
+        p1_c <- p1/DE
+        n1_c <- n1/DE
+
+        res <- res |>
+          dplyr::mutate(
+            DE = DE,
+            vln_OR_C = 1/(n1_c*p1_c) + 1/(n1_c*(1-p1_c)) + 1/(n2*p2) + 1/(n2*(1-p2))
+          )
+
+      }
+
+    }
 
   } else if (!is.null(LL_OR) & !is.null(UL_OR)) {
 
@@ -98,6 +195,43 @@ OR_calc <- function(
 
     )
 
+    if (!is.null(ICC) & !is.null(avg_cl_size)){
+
+      if (n_cluster_arms == 2){
+
+        DE <- 1 + (avg_cl_size - 1) * ICC
+
+        res <- res |>
+          dplyr::mutate(
+            DE = DE,
+            vln_OR_C = vln_OR * DE
+          )
+
+
+      } else if (n_cluster_arms == 1){
+
+        if (is.null(n1) || is.null(n2)){
+
+          stop("Sample sizes (i.e., n1 and n2) must be specified to calculate the design effect")
+
+        }
+
+        n <- avg_cl_size
+        Nc <- n2
+        N <- n1 + n2
+
+        DE <- 1 + ((n*Nc/N) - 1) * ICC
+
+        res <- res |>
+          dplyr::mutate(
+            DE = DE,
+            vln_OR_C = vln_OR * DE
+          )
+
+      }
+
+    }
+
   } else if (!is.null(LL_OR) & is.null(UL_OR)) {
 
     res <- tibble::tibble(
@@ -107,6 +241,45 @@ OR_calc <- function(
       vln_OR = ((ln_OR - log(LL_OR))/Z)^2
 
     )
+
+    if (!is.null(ICC) & !is.null(avg_cl_size)){
+
+      if (n_cluster_arms == 2){
+
+        DE <- 1 + (avg_cl_size - 1) * ICC
+
+        res <- res |>
+          dplyr::mutate(
+            DE = DE,
+            vln_OR_C = vln_OR * DE
+          )
+
+
+      } else if (n_cluster_arms == 1){
+
+        if (is.null(n1) || is.null(n2)){
+
+          stop("Sample sizes (i.e., n1 and n2) must be specified to calculate the design effect")
+
+        }
+
+        n <- avg_cl_size
+        Nc <- n2
+        N <- n1 + n2
+
+        DE <- 1 + ((n*Nc/N) - 1) * ICC
+
+        res <- res |>
+          dplyr::mutate(
+            DE = DE,
+            vln_OR_C = vln_OR * DE
+          )
+
+      }
+
+    }
+
+
   } else if (is.null(LL_OR) & !is.null(UL_OR)) {
 
     res <- tibble::tibble(
@@ -116,6 +289,44 @@ OR_calc <- function(
       vln_OR = ((log(UL_OR) - ln_OR)/Z)^2
 
     )
+
+    if (!is.null(ICC) & !is.null(avg_cl_size)){
+
+      if (n_cluster_arms == 2){
+
+        DE <- 1 + (avg_cl_size - 1) * ICC
+
+        res <- res |>
+          dplyr::mutate(
+            DE = DE,
+            vln_OR_C = vln_OR * DE
+          )
+
+
+      } else if (n_cluster_arms == 1){
+
+        if (is.null(n1) || is.null(n2)){
+
+          stop("Sample sizes (i.e., n1 and n2) must be specified to calculate the design effect")
+
+        }
+
+        n <- avg_cl_size
+        Nc <- n2
+        N <- n1 + n2
+
+        DE <- 1 + ((n*Nc/N) - 1) * ICC
+
+        res <- res |>
+          dplyr::mutate(
+            DE = DE,
+            vln_OR_C = vln_OR * DE
+          )
+
+      }
+
+    }
+
   } else if (!is.null(SE_OR)) {
 
     res <- tibble::tibble(
@@ -125,6 +336,44 @@ OR_calc <- function(
       vln_OR = log(SE_OR)^2
 
     )
+
+    if (!is.null(ICC) & !is.null(avg_cl_size)){
+
+      if (n_cluster_arms == 2){
+
+        DE <- 1 + (avg_cl_size - 1) * ICC
+
+        res <- res |>
+          dplyr::mutate(
+            DE = DE,
+            vln_OR_C = vln_OR * DE
+          )
+
+
+      } else if (n_cluster_arms == 1){
+
+        if (is.null(n1) || is.null(n2)){
+
+          stop("Sample sizes (i.e., n1 and n2) must be specified to calculate the design effect")
+
+        }
+
+        n <- avg_cl_size
+        Nc <- n2
+        N <- n1 + n2
+
+        DE <- 1 + ((n*Nc/N) - 1) * ICC
+
+        res <- res |>
+          dplyr::mutate(
+            DE = DE,
+            vln_OR_C = vln_OR * DE
+          )
+
+      }
+
+    }
+
   } else if (!is.null(V_OR)) {
 
     res <- tibble::tibble(
@@ -134,6 +383,44 @@ OR_calc <- function(
       vln_OR = log(sqrt(V_OR))^2
 
     )
+
+    if (!is.null(ICC) & !is.null(avg_cl_size)){
+
+      if (n_cluster_arms == 2){
+
+        DE <- 1 + (avg_cl_size - 1) * ICC
+
+        res <- res |>
+          dplyr::mutate(
+            DE = DE,
+            vln_OR_C = vln_OR * DE
+          )
+
+
+      } else if (n_cluster_arms == 1){
+
+        if (is.null(n1) || is.null(n2)){
+
+          stop("Sample sizes (i.e., n1 and n2) must be specified to calculate the design effect")
+
+        }
+
+        n <- avg_cl_size
+        Nc <- n2
+        N <- n1 + n2
+
+        DE <- 1 + ((n*Nc/N) - 1) * ICC
+
+        res <- res |>
+          dplyr::mutate(
+            DE = DE,
+            vln_OR_C = vln_OR * DE
+          )
+
+      }
+
+    }
+
   }
 
   if (!is.null(add_name_to_vars)){

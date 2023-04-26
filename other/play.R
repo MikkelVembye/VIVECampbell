@@ -97,5 +97,5 @@ map_rho_impact(
 ) |>
 plot_rho_impact(rho_used = 0.4, var_breaks = seq(0, 0.35, 0.05))
 
-
+OR_calc(p1 = .53, p2 = .11, n1 = 20, n2 = 26, ICC = 0.1, avg_cl_size = 8, n_cluster_arms = 1)
 
