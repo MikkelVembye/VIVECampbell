@@ -86,7 +86,7 @@ Read Borenstein and Hedges (2019) for further details.
 OR_calc(A = 20, B = 80, C = 10, D = 90)
 
 # Using proportions
-OR_calc(p1 = .53, p2 = .11, n1 = 20, n2 = 26)
+OR_calc(p1 = .2, p2 = .1, n1 = 100, n2 = 100)
 
 # Using raw OR and CIs
 OR_calc(OR = 2.25, LL_OR = 1.5, UL_OR = 3)
