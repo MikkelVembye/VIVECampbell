@@ -1,6 +1,6 @@
 #use_r("h_df_1armcluster")
 
-use_r("rho_impact")
+use_r("OR_calc")
 
 install()
 library(VIVECampbell)

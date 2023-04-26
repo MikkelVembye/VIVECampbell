@@ -2,6 +2,7 @@
 
 S3method(plot_rho_impact,default)
 S3method(plot_rho_impact,map_rho)
+export(OR_calc)
 export(df_h)
 export(df_h_1armcluster)
 export(eta_1armcluster)

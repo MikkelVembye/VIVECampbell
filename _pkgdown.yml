@@ -5,6 +5,11 @@ development:
   mode: auto
 
 reference:
+  - title: "Effect size calculation for binary outcomes"
+    desc: "Functions for caclulating effect sizes and sampling variances from binary outcomes"
+    contents:
+      - OR_calc
+
   - title: "Cluster-bias correction"
     desc: "Functions for caclulating effect sizes and sampling variances from cluster-designed studies"
     contents:
