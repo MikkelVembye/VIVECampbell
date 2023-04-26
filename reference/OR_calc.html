@@ -161,6 +161,10 @@ as described in Table 11.10 from Borenstein and Hedges (2019, p. 226).</p>
 <dd><p>Insert</p></dd>
 
 
+<dt>n_cluster_arms</dt>
+<dd><p>Insert</p></dd>
+
+
 <dt>add_name_to_vars</dt>
 <dd><p>Optional character string to be added to the variables names of the generated <code>tibble</code>.</p></dd>
 
@@ -233,14 +237,14 @@ Wiley Online Library. <a href="https://doi.org/10.1002/9781119536604.ch23" class
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 5</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      OR ln_OR vln_OR    DE vln_OR_C</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>  9.12  2.21  0.594   1.7     1.48</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>  9.12  2.21  0.594   1.7     1.01</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Cluster bias adjustment when there is clustering in one group only</span></span></span>
 <span class="r-in"><span><span class="fu">OR_calc</span><span class="op">(</span>p1 <span class="op">=</span> <span class="fl">.53</span>, p2 <span class="op">=</span> <span class="fl">.11</span>, n1 <span class="op">=</span> <span class="fl">20</span>, n2 <span class="op">=</span> <span class="fl">26</span>, ICC <span class="op">=</span> <span class="fl">0.1</span>, avg_cl_size <span class="op">=</span> <span class="fl">8</span>, n_cluster_arms <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 5</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      OR ln_OR vln_OR    DE vln_OR_C</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>  9.12  2.21  0.594  1.35    0.677</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>  9.12  2.21  0.594  1.35    0.803</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
