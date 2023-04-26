@@ -59,6 +59,8 @@ OR_calc(
 
 \item{avg_cl_size}{Insert}
 
+\item{n_cluster_arms}{Insert}
+
 \item{add_name_to_vars}{Optional character string to be added to the variables names of the generated \code{tibble}.}
 
 \item{vars}{Variables to be reported. Default is \code{NULL}. See Value section for further details.}

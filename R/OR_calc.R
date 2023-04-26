@@ -43,6 +43,7 @@
 #' @param Z Insert
 #' @param ICC Insert
 #' @param avg_cl_size Insert
+#' @param n_cluster_arms Insert
 #' @param add_name_to_vars Optional character string to be added to the variables names of the generated \code{tibble}.
 #' @param vars Variables to be reported. Default is \code{NULL}. See Value section for further details.
 #'
@@ -103,15 +104,10 @@ OR_calc <- function(
 
         DE <- 1 + (avg_cl_size - 1) * ICC
 
-        A_c <- A/DE
-        B_c <- B/DE
-        C_c <- C/DE
-        D_c <- D/DE
-
         res <- res |>
           dplyr::mutate(
             DE = DE,
-            vln_OR_C = 1/A_c + 1/B_c + 1/C_c + 1/D_c
+            vln_OR_C = vln_OR * DE
           )
 
       } else if (n_cluster_arms == 1){
@@ -123,13 +119,10 @@ OR_calc <- function(
         # Design effect from Hedges and Citkowicz (2015)
         DE <- 1 + ((n*Nc/N) - 1) * ICC
 
-        A_c <- A/DE
-        B_c <- B/DE
-
         res <- res |>
           dplyr::mutate(
             DE = DE,
-            vln_OR_C = 1/A_c + 1/B_c + 1/C + 1/D
+            vln_OR_C = vln_OR * DE
           )
 
       }
@@ -152,15 +145,10 @@ OR_calc <- function(
 
         DE <- 1 + (avg_cl_size - 1) * ICC
 
-        p1_c <- p1/DE
-        n1_c <- n1/DE
-        p2_c <- p2/DE
-        n2_c <- n2/DE
-
         res <- res |>
           dplyr::mutate(
             DE = DE,
-            vln_OR_C = 1/(n1_c*p1_c) + 1/(n1_c*(1-p1_c)) + 1/(n2_c*p2_c) + 1/(n2_c*(1-p2_c))
+            vln_OR_C = vln_OR * DE
           )
 
 
@@ -172,13 +160,10 @@ OR_calc <- function(
 
         DE <- 1 + ((n*Nc/N) - 1) * ICC
 
-        p1_c <- p1/DE
-        n1_c <- n1/DE
-
         res <- res |>
           dplyr::mutate(
             DE = DE,
-            vln_OR_C = 1/(n1_c*p1_c) + 1/(n1_c*(1-p1_c)) + 1/(n2*p2) + 1/(n2*(1-p2))
+            vln_OR_C = vln_OR * DE
           )
 
       }
