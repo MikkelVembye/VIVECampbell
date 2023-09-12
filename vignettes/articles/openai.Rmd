@@ -1,0 +1,20 @@
+---
+title: "openai"
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, include=FALSE}
+library(VIVECampbell)
+```
+
+![](pictures/platform_openai_1.png){width=100%}
+
+![](pictures/platform_openai_2.png){width=100%}
+
+![](pictures/platform_openai_3.png){width=100%}

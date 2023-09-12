@@ -47,6 +47,7 @@ articles:
    contents:
    - articles/Github
    - articles/meta-analysis-in-R
+   - articles/openai
 
  - title: EPPI content
    navbar: EPPI tips and manuals
