@@ -152,7 +152,7 @@
 vgt_smd_1armcluster <-
   function(
     N_cl_grp, N_ind_grp, avg_grp_size, ICC, g,
-    model = c("Posttest", "ANCOVA", "emmeans", "DiD", "Reg_coef", "Std_reg_coef"),
+    model = c("posttest", "ANCOVA", "emmeans", "DiD", "reg_coef", "std_reg_coef"),
     cluster_adj = FALSE,
     prepost_cor = NULL, F_val = NULL, t_val = NULL, SE = NULL, SD = NULL, SE_std = NULL, R2 = NULL,
     q = 1,
@@ -168,7 +168,7 @@ vgt_smd_1armcluster <-
   h <- df_h_1armcluster(N_total = N, ICC = rho, N_grp = N_cl_grp, avg_grp_size = avg_grp_size)
 
 
-  if ("Posttest" %in% model){
+  if ("posttest" %in% model){
 
 
     if (is.numeric(t_val)){
@@ -227,6 +227,10 @@ vgt_smd_1armcluster <-
 
       var_term1 <- g^2/t_val^2
 
+    } else if (is.numeric(F_val)){
+
+      var_term1 <- g^2/F_val
+
     } else{
 
       stop(paste0("When calculating Diff-in-diffs effect sizes you must specify the preposttest correlation.",
@@ -236,20 +240,20 @@ vgt_smd_1armcluster <-
 
   }
 
-  if ("Reg_coef" %in% model){
+  if ("reg_coef" %in% model){
 
     if (is.null(SE) || is.null(SD)){
-      stop("When model = 'Reg_coef', you must specify both SE and SD.")
+      stop("When model = 'reg_coef', you must specify both SE and SD.")
     }
 
     var_term1 <- (SE/SD)^2
 
   }
 
-  if ("Std_reg_coef" %in% model) {
+  if ("std_reg_coef" %in% model) {
 
     if (is.null(SE_std)){
-      stop("When model = 'Std_reg_coef', you must specify SE_std.")
+      stop("When model = 'std_reg_coef', you must specify SE_std.")
     }
 
     var_term1 <- SE_std^2
