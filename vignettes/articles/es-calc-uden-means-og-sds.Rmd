@@ -79,7 +79,8 @@ reliability coefficient of the outcome measure in the primary study. The test-re
 For Michalak et al. ([2015](https://psycnet.apa.org/fulltext/2015-36864-001.html)) kunne vi derfor beregnes formel (2) ved at imputere det mest konservative test-retest reliablity for Hamilton Rating Scale for Depression fundet i Trajković et al. ([2011](https://doi.org/10.1016/j.psychres.2010.12.007)), dvs. $0.65$.
 
 ```{r}
-library(tidyverse)
+library(dplyr)
+library(tibble)
 
 # Dataudtræk
 Michalak2015_dat <- 
@@ -143,7 +144,7 @@ Formlen på højre side af lighedstegnet i formel 4, svarer til sampling varians
 
 ## Effektstørrelsesudregning med beta-coefficient, standardfejl, og afrapportet effekstørrelse
 
-Nu vender vi os imod eksemplet, hvor vi ønsker at udtrække effektstørrelser og beregne variansen for effektstørrelser, der ikke er afrapporteret via means og SDs. I Michalak et al. ([2015](https://psycnet.apa.org/fulltext/2015-36864-001.html)) afrapporteres beta-coefficienter, deres standardfejl, og effektstørrelser fra en fixed-effect multi-level model, se Tabel 5. I dette tilfælde må vi stole på forfatternes effektstørrelsesudregning og trække deres effektstørrelser ud direkte. Der er ikke så meget mere vi kan gøre her, når ikke forfatterne giver raw means og SDs. Man kunne evt. skrive til forfatterne og spørge efter disse, hvis man vil, men som udgangspunkt stoler vi på de afrapporterede effektstørrelser. Spørgsmålet er nu, hvordan beregner vi sampling variansen for disse effektstørrelser? Problemet er, at hvis vi benytter formlen på højre side af lighedstegnet i formel (4), som primært baserer variansen på sample størrelser, så vil variansen med stor sandsyndlighed ikke blive beregnet korrekt. Men fordi forfatterne afrapporterer beta-coefficienter, som basically er en adjusteret means difference mellem treatment og kontrolgruppen, og standardfejl, så kan vi beregne $t = \frac{\beta}{se_{beta}}$ og benytte formel (3) til at udregne den korrekte sampling varians af de afrapporterede effektstørrelser. Det kan gøres således 
+Nu vender vi os imod eksemplet, hvor vi ønsker at udtrække effektstørrelser og beregne variansen for effektstørrelser, der ikke er afrapporteret via means og SDs. I Michalak et al. ([2015](https://psycnet.apa.org/fulltext/2015-36864-001.html)) afrapporteres beta-coefficienter, deres standardfejl, og effektstørrelser fra en fixed-effect multi-level model, se Tabel 5. I dette tilfælde må vi stole på forfatternes effektstørrelsesudregning og trække deres effektstørrelser ud direkte. Der er ikke så meget mere vi kan gøre her, når ikke forfatterne giver raw means og SDs. Man kunne evt. skrive til forfatterne og spørge efter disse, hvis man vil, men som udgangspunkt stoler vi på de afrapporterede effektstørrelser. Spørgsmålet er nu, hvordan beregner vi sampling variansen for disse effektstørrelser? Problemet er, at hvis vi benytter formlen på højre side af lighedstegnet i formel (4), som primært baserer variansen på sample størrelser, så vil variansen med stor sandsyndlighed ikke blive beregnet korrekt. Men fordi forfatterne afrapporterer beta-coefficienter, som basically er en adjusteret means difference mellem treatment og kontrolgruppen, og standardfejl, så kan vi beregne $t = \frac{\beta}{se_{\beta}}$ og benytte formel (3) til at udregne den korrekte sampling varians af de afrapporterede effektstørrelser. Det kan gøres således 
 
 <br />
 
