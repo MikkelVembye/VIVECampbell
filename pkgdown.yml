@@ -1,17 +1,18 @@
-pandoc: 2.19.2
-pkgdown: 2.0.7
+pandoc: 3.1.11
+pkgdown: 2.0.9
 pkgdown_sha: ~
 articles:
-  Entering-data: Entering-data.html
-  VIVECampbell: VIVECampbell.html
-  Github: Github.html
-  Pooling-subgroups: Pooling-subgroups.html
   ancova-puzzler: ancova-puzzler.html
+  Entering-data: Entering-data.html
   eppi-tips: eppi-tips.html
+  es-calc-uden-means-og-sds: es-calc-uden-means-og-sds.html
+  Github: Github.html
   meta-analysis-in-R: meta-analysis-in-R.html
   openai: openai.html
+  Pooling-subgroups: Pooling-subgroups.html
   todos: todos.html
-last_built: 2023-12-12T08:55Z
+  VIVECampbell: VIVECampbell.html
+last_built: 2024-05-02T11:53Z
 urls:
   reference: https://mikkelvembye.github.io/VIVECampbell/reference
   article: https://mikkelvembye.github.io/VIVECampbell/articles
