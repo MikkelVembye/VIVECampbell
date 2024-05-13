@@ -30,9 +30,9 @@ Der findes forskellige pakker, som er målrettet metanalyse i R. Nogle af de vig
 * [`meta`](https://cran.r-project.org/web/packages/meta/meta.pdf): En god all-round pakke der rummer forskellige statistiske metoder til metaanalyser. 
 *	[`metafor`](https://www.metafor-project.org/doku.php/metafor): Hjælper en med udregning af effektstørrelser, fixed eller random models, meta-regression m.m). **Den absolut vigtigste pakke at kende!**
 *	[`robumeta`](https://cran.r-project.org/web/packages/robumeta/robumeta.pdf): Hjælper en med at lave en RVE meta-regression, og har også funktioner for sensitivitetanalyse og
-  forestplot baseret på ens RVE-modeller. **OUTDATED - brug istedet metafor sammen med clubSandwich og wildmeta.** 
+  forestplot baseret på ens RVE-modeller. **OUTDATED - brug istedet metafor sammen med clubSandwich og wildmeta. Man behøver ikke længere hente clubSandwich separat. Den er nu indbygget i metafor og kaldes automatisk ved at sætte `clubSandwich=TRUE` i [`robust()`](https://wviechtb.github.io/metafor/reference/robust.html). Der kan dog være grunde til at loade `clubSandwich` separat, hvis man ønsker andre small-sample korrektioner, eksempelvis brug af jackknife variansestimation (type = CR3)** 
 * [`clubSandwich`](http://jepusto.github.io/clubSandwich/): Robust variance estimation (RVE) i meta-analyses. 
-Ekstremt vigtigt, når man har mindre end 50 studier eller meget skævvrædet data, dvs. enkelte store studier, som bidrager med hovedparten af de inkluderede effektstørrelser.
+Ekstremt vigtigt, når man har mindre end 50 studier eller meget skævvrædet data, dvs. enkelte store studier, som bidrager med hovedparten af de inkluderede effektstørrelser. 
 * [`wildmeta`](https://meghapsimatrix.github.io/wildmeta/index.html): Til at udregne cluster-wild-bootstrapping (CWB) p-værdier. 
 * [`POMADE`](https://mikkelvembye.github.io/POMADE/). Kan bruges til at udregne den statistske styrke af ens meta-analyse model.
   

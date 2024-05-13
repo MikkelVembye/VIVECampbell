@@ -46,7 +46,7 @@ Lad os starte udregne effektstørrelser baseret på HAM-D og BDI målene fra Mic
    g_{DID} = J \left(\frac{[M^T_{post} - M^T_{baseline}] - [M^C_{post} - M^C_{baseline}]}{SD_{pool}}\right)
 \end{equation}
 <br />
-hvor $M^T_{post}$ og $M^C_{post}$ samt $M^T_{baseline}$ og $M^C_{baseline}$ er post- og baselinemål for hhv. treatment og kontrolgruppen, og $SD_{pool}  = \sqrt{\frac{(n^T_{post} -1)\times(SD^T_{post})^2 + (n^C_{post} -1)\times(SD^C_{post})^2}{n^T + n^C - 2}}$, mens $n^T_{post}$ og $n^C_{post}$ samt $SD^T_{post}$ og $SD^C_{post}$ er samplestørrelsen og standardafvigelsen for hhv. treatment og kontrolgruppen. $J$ i formel (1) er Hedges' sample sample korrektor lige med $1 - \frac{3}{4df-1}$ (nogen trækker 9 fra $df$ i stedet for 1, men det har ingen substantiel betydning). 
+hvor $M^T_{post}$ og $M^C_{post}$ samt $M^T_{baseline}$ og $M^C_{baseline}$ er post- og baselinemål for hhv. treatment og kontrolgruppen, og $SD_{pool}  = \sqrt{\frac{(n^T_{post} -1)\times(SD^T_{post})^2 + (n^C_{post} -1)\times(SD^C_{post})^2}{n^T + n^C - 2}}$, mens $n^T$ og $n^C$ samt $SD^T_{post}$ og $SD^C_{post}$ er samplestørrelsen og standardafvigelsen for hhv. treatment og kontrolgruppen. $J$ i formel (1) er Hedges' sample sample korrektor lige med $1 - \frac{3}{4df-1}$ (nogen trækker 9 fra $df$ i stedet for 1, men det har ingen substantiel betydning). 
 <br /> 
 <br /> 
 Hvis vi antager, at der ikke er klusterproblmer, så er $df = n^T + n^C$. Når der er klusteringproblemer kan $df$ beregnes via Equation  E.21 ([WWC, 2023](https://ies.ed.gov/ncee/WWC/Docs/referenceresources/Final_WWC-HandbookVer5_0-0-508.pdf), s. 171) eller hvis der kun er klustering i en gruppe Equation 7 i Hedges og Citkowicz ([2015](https://doi.org/10.3758/s13428-014-0538-z)). Sampling variansen for $g_{DID}$ er givet ved 
@@ -54,11 +54,11 @@ Hvis vi antager, at der ikke er klusterproblmer, så er $df = n^T + n^C$. Når d
 <br />
 \begin{equation}
   \tag{2}
-   Var_{g_{DID}} = \left(\frac{1}{n^T} + \frac{1}{n^C}\right) 2(1-\rho_{prepost})  + \frac{g^2}{2df}
+   Var_{g_{DID}} = \left(\frac{1}{n^T} + \frac{1}{n^C}\right) 2(1-\rho_{prepost})  + \frac{g_{DID}^2}{2df}
 \end{equation}
 <br />
 
-Problemet er dog, at man skal kende pre-posttest korrelationen, $\rho_{prepost}$, for at kunne beregne variansen korrekt. I mange tilfælde vil vi være i stand til at kunne beregne denne. Se eksemplvis formlerne fra [Cochranes handbook](https://training.cochrane.org/handbook/current/chapter-06#section-6-5-2-8) eller formel 31 i Wilson ([2016](https://mason.gmu.edu/~dwilsonb/downloads/esformulas.pdf)). Se også denne blog på [VIVECampbell siden](https://mikkelvembye.github.io/VIVECampbell/articles/ancova-puzzler.html). Alternativt kan $Var_{g_{DID}}$ beregnes korrekt, hvis forfatterne har afrapporteret $t$- eller $F$-værdier fra ANCOVA eller en regressions model, som har inkluderet baseline outcome som kontrol variabel. Hvis dette er tilfældet, så 
+Problemet er dog, at man skal kende pre-posttest korrelationen, $\rho_{prepost}$, for at kunne beregne variansen korrekt. I mange tilfælde vil vi være i stand til at kunne beregne denne. Se eksemplvis formlerne fra [Cochranes handbook](https://training.cochrane.org/handbook/current/chapter-06#section-6-5-2-8) eller formel 31 i Wilson ([2016](https://mason.gmu.edu/~dwilsonb/downloads/esformulas.pdf)). Se også denne blog på [VIVECampbell siden](https://mikkelvembye.github.io/VIVECampbell/articles/ancova-puzzler.html). Alternativt kan $Var_{g_{DID}}$ beregnes korrekt, hvis forfatterne har afrapporteret $t$- eller $F$-værdier fra repeated ANOVA, ANCOVA eller en regressions model, som har inkluderet baseline outcome som kontrol variabel. Hvis dette er tilfældet, så 
 
 <br />
 \begin{equation}

@@ -1,5 +1,5 @@
 ---
-title: "Entering data, calculating effect sizes, and cluster bias correction when there is clustering in one group only"
+title: "Indtastning af data, effektstørrelsesudregning og cluster bias justering, når der kun er clustering i en gruppe"
 author: "Mikkel H. Vembye"
 date: "Last modified `r Sys.Date()`"
 output: 
@@ -10,7 +10,7 @@ bibliography: bibliography.bib
 biblio-style: apa
 link-citations: yes
 vignette: >
-  %\VignetteIndexEntry{Entering data, calculating effect sizes, and cluster bias correction when there is clustering in one group only}
+  %\VignetteIndexEntry{Indtastning af data, effektstørrelsesudregning og cluster bias justering, når der kun er clustering i en gruppe}
   %\VignetteEncoding{UTF-8}
   %\VignetteDepends{dplyr}
   %\VignetteDepends{tibble}
@@ -36,67 +36,78 @@ options(scipen = 10)
 options(dplyr.summarise.inform = FALSE)
 ```
 
-# Introduction
+# Introduktion
 
-This vignette/article provides examples of how to enter data from rather complex result tables and how to calculate effect size and conduct cluster bias correction for such data, using functions from the `VIVECampbell` R package. 
+<div class="warning" style='margin-left:2em; margin-right:2em; margin-bottom:2em; margin-top:2em; padding:0.1em; background-color: #d7dbdd; border: solid #bdc3c7 3px'>
+<span>
+<p style='margin-top:1em; text-align:center'>
+<b>Vigtig note</b></p>
+<p style='margin:1em'>
+Hvis du endnu ikke har arbejdet med R, så har [Jens](https://www.vive.dk/da/medarbejdere/jens-dietrichson-06zk186j/) og jeg skrevet den lille blog ["Kom godt i gang med metaanalyse i R"](https://mikkelvembye.github.io/VIVECampbell/articles/meta-analysis-in-R.html), som jeg vil anbefale at gennemse sammen med denne blog. Alternativ kan de også være en god ide at læse det første kapitel i [R4DS](https://r4ds.had.co.nz/). Nedenfor loader jeg en række af de pakker som vi ofteste benytter i forbindelse med dataindtastning og effektstørrelsesudregning. Dog vil jeg fremhæve, at den langt vigtigste af disse pakker er [`dplyr`](https://dplyr.tidyverse.org/). Det kan være en ret stor fordel at blive god til grundfunktionerne i denne pakke, dvs. `filter()`, `mutate()`, `group_by()`, `summarise()`, `arrange()` og `select()`.
+</p></span>
+</div>
 
-## Loading necessary packages and helpfull options
+<br />
 
-NOTE: If you haven't previously worked with R, I recommend that you start reading ["Kom godt i gang med metaanalyse i R"](https://mikkelvembye.github.io/VIVECampbell/articles/meta-analysis-in-R.html) and embark on the first chapters of [R4DS](https://r4ds.had.co.nz/). The most important package to learn at this stage is by all means [`dplyr`](https://dplyr.tidyverse.org/).
+Denne vignette/blog er tiltænkt at skulle være en basic introduktion til en række vigtige emner, som er relevante, når man skal indtaste complex resultatdata og beregne effektstørrelser fra studier, som skal med i vores systematiske reviews. En vigtig del af vignetten handler om at vise, hvordan man benytter funktionerne `vgt_smd_1armcluster()`, `df_h_1armcluster()`, `eta_1armcluster()` og `gamma_1armcluster()` fra `VIVECampbell` R pakken. Vignetten er opbygget som følger: Gennemgå temaer for bloggen.    
+
+
+## Nødvidige pakker og hjælpsomme options
+
+Når du er klar til at gå ombord i denne blog, kan du nedenfor se, de pakker som bloggen trækker på. Ud fra hver pakke har jeg beskrevet, hvad pakkens eller optionens primære rolle er. For at hente `VIVECampbell` skal i fjerne # foran hhv. `install.packages("devtools")` og `devtools::install_github("MikkelVembye/VIVECampbell")` og så køre disse koder.
+
 
 ```{r setup, message=FALSE, warning=FALSE}
 #install.packages("devtools")
 #devtools::install_github("MikkelVembye/VIVECampbell")
 
-library(VIVECampbell)
-library(purrr)
-library(dplyr)
-library(tidyr)
-library(gt)
-library(ggplot2)
+library(VIVECampbell) # Indholder funktioner til at udføre cluster bias justeringer
+library(purrr) # Indeholde vigtige loop (map) funktioner, der gør det let at gentage mange ens udregninger og dataændringer
+library(dplyr) # Nøglepakke til at manipulere data
+library(tidyr) # Indeholder vigtige pivot_ funktioner, som hjælper med at ændre dataset fra wide til long format vice versa
+library(gt)    # Tabelkonstruktionens svar på ggplot2
+library(ggplot2) # Til at visualisere plot
+library(tibble) # En type af data.frames som er mere effektive. I vil se, at jeg altid arbejder med tibbler og ikke rå data.frames
 
 
-# "Key" option I usally apply
-options(pillar.sigfig = 4) # Ensure tibble include 4 digits
-options(tibble.width = Inf) # Ensure that all columns are printed 
-options(dplyr.print_min = 310) # Specifying the number of row printed
-options(scipen = 10) # Specified how many digits are printed be R shall preint scientific numbers
-options(dplyr.summarise.inform = FALSE) # Avoids summarize info from tidyverse
+# Options som jeg for det mest benytter
+options(pillar.sigfig = 4) # Resultater printes med 4 decimaler
+options(tibble.width = Inf) # Sikre at alle variabler printes
+options(dplyr.print_min = 310) # Antal rækker som printes fra et datasæt
+options(scipen = 10) # Indikerer hvormange decimaler der skal være før R printer videnskabelige numre
+options(dplyr.summarise.inform = FALSE) # Undgår info fra summarize() fra dplyr
 
 ```
 
-## Fisher & Bentley [-@Fisher1996] data and structure
+# Kompleks resultdata og hvordan den kan indtastes (long-format)
 
-Talk about the data structure with measures (i.e., pretest, posttest, and differences measures) nested within treatment groups (i.e., Disease-and-recovery group, Cognitive-behavioral group, and the Usual group treatment) which are nested within setting (i.e, inpatient vs. outpatient), which again is nested within setting (i.e., Alcohol use, Drug use, Social and family, Psychological functioning). 
+Når vi laver systematiske reviews, støder vi meget tit på studier, som afrapporterer rigtig mange resultater, som er relevante for vores review. Et typisk eksempel kan se ud som Tabel 1 nedenfor fra Fisher & Bentley [-@Fisher1996].^[Det vigtigt here at sige her, at Tabel 1 kunne bruges som et fiktivt eksempel, så man kan ikke drage nogen substantielle fortolkninger af denne blog. Tabel 1 er udelukkende konstrueret for eksempels skyld.]
 
-Important for understanding the use of `group_by` function, when we calculate effect sizes. 
 
 ```{r, echo=FALSE}
-
- 
-tibble(
+tibble::tibble(
   
-  outcome = rep(c("Alcohol use", "Drug use"), each = 3),
+  outcome = rep(c("Alcohol use", "Drug use", "Social and family relations", "Psychological functioning"), each = 3),
   groups = rep(c("Disease-and-recovery group", "Cognitive-behavioral group", 
-                 "Usual group treatment"), 2),
-  Pretest_m = c(".469", ".441", ".349", ".107", ".116", ".117"),
-  Pretest_sd = c(".12", ".13", ".22", ".09", ".10", ".12"),
-  Posttest_m = ".1",
-  Posttest_sd = ".5",
-  Diff_m = ".4",
-  Diff_sd = ".2",
-  Pretest_m2 = c(".469", ".441", ".349", ".107", ".116", ".117"),
-  Pretest_sd2 = c(".12", ".13", ".22", ".09", ".10", ".12"),
-  Posttest_m2 = "1",
-  Posttest_sd2 = ".5",
-  Diff_m2 = ".4",
-  Diff_sd2 = ".2"
+                 "Usual individual treatment"), 4),
+  Pretest_m = c(".469", ".441", ".349", ".107", ".116", ".117", ".342", ".419", ".450", ".393", ".498", ".605"),
+  Pretest_sd = c(".12", ".13", ".22", ".09", ".10", ".12", ".21", ".12", ".24", ".17", ".13", ".15"),
+  Posttest_m = c(".070", ".018", ".141", ".001", ".008", ".087", ".083", ".103", ".489", ".319", ".442", ".601"),
+  Posttest_sd = c(".11", ".05", ".21", ".01", ".02", ".12", ".10", ".10", ".18", ".14", ".16", ".18"),
+  Diff_m = c(".399", ".423", ".208", ".106", ".108", ".030", ".259", ".316", "-.039", ".074", ".056", ".004"),
+  Diff_sd = c(".02", ".09", ".04", ".09", ".09", ".02", ".13", ".03", ".07", ".04", ".04", ".04"),
+  Pretest_m2 = c(".725", ".598", ".682", ".219", ".200", ".322", ".683", ".584", ".571", ".464", ".476", ".487"),
+  Pretest_sd2 = c(".11", ".16", ".17", ".11", ".12", ".05", ".04", ".05", ".09", ".14", ".12", ".16"),
+  Posttest_m2 = c(".521", ".152", ".492", ".167", ".044", ".216", ".641", ".233", ".514", ".432", ".232", ".472"),
+  Posttest_sd2 = c(".11", ".15", ".27", ".10", ".05", ".15", ".06", ".16", ".12", ".18", ".07", ".18"),
+  Diff_m2 = c(".204", ".446", ".190", ".052", ".196", ".106", ".042", ".351", ".057", ".032", ".244", ".015"),
+  Diff_sd2 = c(".01", ".02", ".11", ".02", ".08", ".11", ".03", ".12", ".04", ".05", ".06", ".03"),
   
 ) |> 
 gt(rowname_col = "groups", groupname_col = "outcome") |> 
   tab_header(
-    title = md("**Table 1**"),
-    subtitle = md("*Reproduced from Table 4 in Fisher (1996, p. 1248)*")
+    title = md("**Tabel 1**"),
+    subtitle = md("*Reproduceret med inspiration fra Tabel 4 i Fisher (1996, p. 1248)*")
   ) |> 
   opt_align_table_header(align = "left") |> 
   tab_spanner(
@@ -147,144 +158,295 @@ gt(rowname_col = "groups", groupname_col = "outcome") |>
   ) |> 
   tab_stubhead(label = md("Subscale and<br>therapy group")) 
 
-  
-
-
 ```
 
-Show the `rep` function and its importance
-
+Som det kan ses her, er den resultatsdata som skal udtrækkes relativ kompleks med pretest, posttest og difference mål nested inden for treatment grupper (dvs. Disease-and-recovery, Coginitive behavioral og TAU grupperne), som er nestet inden for kontekster/settings (dvs. Inpatient og Outpatient settings), som igen er nestet inden for outcomes (dvs. Alcohol use, Drug use, Social and family relations samt Psychological functioning). Jeg vil senere vise, hvordan man kan arbejde med effektstørrelsesdata, hvor man har mere end en treatment- eller kontrolgruppe. Men først lidt introduktion til en vigtig basic funktion. Når man vil konstruere et datasæt i R er en vigtig `base::`-funktion at kende til den som hedder `rep()`. Den tillader at replikere de samme værdier på forskellig vis inden for en given variabel. Nedenfor at vise en række eksempler på, hvordan denne kan bruges. 
 ```{r rep-function}
+# Her replikeres den samme værdirækkefølge x (dvs. i dette tilfæde 4) gange
+rep(LETTERS[1:3], 4)
 
-rep("hej", 6)
+# Her replikeres hver værdi x (dvs. i dette tilfæde 3) gange
+rep(LETTERS[1:3], each = 3)
 
+# Ovenstående operationer kan også kombineres
+rep(LETTERS[1:3], each = 2, 2)
+
+# Man kan også skabe en variable med en fast antal gentagelser således
+rep(LETTERS[1:3], length.out = 11)
+
+# Igen alle disse operationer kan kombineres i samme funktion
+rep(LETTERS[1:3], each = 2, 2, length.out = 11)
 ```
 
-
-
-# Enter data from Fisher & Bentley (1996)
-
-The practice, we often use when we enter data for studies is to name the data object using the first author's surname and the year of the publication, i.e., an object with the following structure: `AuthorYear`. For the present study used in this vignette this guideline means that we will coin the data object `Fisher1996`. One important part of calculating effect size is to make clear documentation of how and from where we obtained data we use for effect size calculation. At a minimum you much write some like "Find data in Table 4 (p. 1248)" before the codes/chunk in which construct the result data. In some cases when studies provide enough information to calculation the pre-post test correlation, $\rho$, the first calculation can be done when entering the data. When studies, such as Fisher (insert reference), report raw pre and post test means and standard deviations (SDs) plus the mean difference and its standard error, we can use the correlation formulas given in [Chapter 6 of the Cochrane Handbook](https://training.cochrane.org/handbook/current/chapter-06). For the treatment group, we can calculated the pre-post test correlation, $\rho$ via       
-$$ \rho_T = \frac{SD^2_{T,pre} + SD^2_{T,post} - SD^2_{T,diff}}{2 \times SD_{T,pre} \times SD_{T,post}} $$
-
-and for the control group
-
-$$ \rho_C = \frac{SD^2_{C,pre} + SD^2_{C,post} - SD^2_{C,diff}}{2 \times SD_{C,pre} \times SD_{C,post}} $$   
-
-We will later on pool these correlation estimates. In order to get one $\rho_{pool}$ for each comparison and each outcome: To do so - INTRODUCE log transformation refer to @Borenstein2009 (to VIVE students: Find e-version of this book in our literature folder)
+Nedenfor viser jeg, hvordan man kunne indtaste data fra Tabel 1 vha. `tibble()` samt `rep()`. Måden, hvorpå jeg indtaster data kaldes af nogen for long format data. Jeg vil senere i bloggen tale og vise forskellen på long og wide-format data, og hvordan man benytter `pivot_longer()` og `pivot_wider()` fra `tidyr`-pakken til at skifte mellem disse to formater. 
 
 ```{r}
 
 Fisher1996 <- tibble::tibble(
   
-  Outcome = rep(c("Alcohol use", "Drug use", "Social"), each = 6),
+  Outcome = rep(c("Alcohol use", "Drug use", "Social", "Psych func"), each = 6), 
   
-  Setting = rep(c("Inpatient", "Outpatient"), each = 3, 3),
+  Setting = rep(c("Inpatient", "Outpatient"), each = 3, 4),
   
-  treatment = rep(rep(c("Disease", "Cognitive", "TAU"), 2), 3),
+  treatment = rep(c("Disease", "Cognitive", "TAU"), 8),
   
-    # N is imputed/guested for illustrative purposes only, because we only know the total sample 
-    # of the treatment groups (N = 19). We here assume that the control group have similar size as
-    # the treatment group. 
-    N = 9, 
-    
-    m_pre = c(
-      
-      # All values entered below follow the same structure as presented here
-      
-      .469, .441, .349, # Alcohol use - inpatient
-      .725, .598, .682, # Alcohol use - outpatient
-      
-      .107, .116, .117, # Drug use - inpatient 
-      .219, .200, .322, # Drug use - outpatient
-      
-      .342, .419, .450, # Social and family relations - inpatient
-      .683, .584, .571  # Social and family relations - outpatient
-      
-    ),
-    
-    sd_pre = c(
-      .12, .13, .22,
-      .11, .16, .17,
-      
-      .09, .10, .12,
-      .11, .12, .05,
-      
-      .21, .12, .24,
-      .04, .05, .09
-      
-    ),
-    
-    m_post = c(
-      .070, .018, .141,
-      .521, .152, .492,
-      
-      .001, .008, .087,
-      .167, .044, .216,
-      
-      .083, .103, .489,
-      .641, .233, .514
-      
-    ),
-    
-    sd_post = c(
-      .11, .05, .21,
-      .11, .15, .27,
-      
-      .01, .02, .12,
-      .10, .05, .15,
-      
-      .10, .10, .18,
-      .06, .16, .12
-      
-      
-    ),
-    
-    m_diff = c(
-      .399, .423, .208,
-      .204, .446, .190,
-      
-      .106, .108, .030,
-      .052, .196, .106,
-      
-      .259, .316, -.039,
-      .042, .351, .057
-      
-    ),
-    
-    sd_diff = c(
-      .02, .09, .04,
-      .01, .02, .11,
-      
-      .09, .09, .02, 
-      .02, .08, .11,
-      
-      .13, .03, .07,
-      .03, .12, .04
-      
-    ),
+  N = 19, 
   
-    # Here we test if the mean differences reported in the study are in line
-    # with the differences between the reported pre and post means. It seems to
-    # be the case that they make a reporting error for the cognitive outpatient 
-    # group mean difference on drug use. Wrtie about the error can be on many levels
-    mean_diff_test = m_pre - m_post,
+  m_pre = c(
     
-    # From the Cochrane handbook (Higgins & Thomas, 2019, p. 166)
-    r = (sd_pre^2 + sd_post^2-sd_diff^2)/(2 * sd_pre * sd_post ),
+    # Alle værider som er indtaster i de andre variable har samme rækkefølge som denne variabel
+    # Det er altid en god ide at skrive en vha. # som viser hvilket outcome der indtastes
     
-    # Obtained from Wilson (2016). Converting sd_diff to raw sd
-    sdg = sd_diff/sqrt(2*(1-r)),
+    .469, .441, .349, # Alcohol use - inpatient
+    .725, .598, .682, # Alcohol use - outpatient
     
-    z = 0.5 * log( (1+r)/(1-r) ),
-    v = 1/(N-3)
+    .107, .116, .117, # Drug use - inpatient 
+    .219, .200, .322, # Drug use - outpatient
+    
+    .342, .419, .450, # Social and family relations - inpatient
+    .683, .584, .571, # Social and family relations - outpatient
+    
+    .393, .498, .605, # Psychological functioning - inpatient  
+    .464, .476, .487  # Psychological functioning - outpatient
     
     
+  ),
+  
+  sd_pre = c(
+    .12, .13, .22,
+    .11, .16, .17,
+    
+    .09, .10, .12,
+    .11, .12, .05,
+    
+    .21, .12, .24,
+    .04, .05, .09,
+    
+    .17, .13, .15,
+    .14, .12, .16
+    
+  ),
+  
+  m_post = c(
+    .070, .018, .141,
+    .521, .152, .492,
+    
+    .001, .008, .087,
+    .167, .044, .216,
+    
+    .083, .103, .489,
+    .641, .233, .514,
+    
+    .319, .442, .601,
+    .432, .232, .472
+    
+  ),
+  
+  sd_post = c(
+    .11, .05, .21,
+    .11, .15, .27,
+    
+    .01, .02, .12,
+    .10, .05, .15,
+    
+    .10, .10, .18,
+    .06, .16, .12,
+    
+    .14, .16, .18, 
+    .18, .07, .18
+    
+    
+  ),
+  
+  m_diff = c(
+    .399, .423, .208,
+    .204, .446, .190,
+    
+    .106, .108, .030,
+    .052, .196, .106,
+    
+    .259, .316, -.039,
+    .042, .351, .057,
+    
+    .074, .056, .004, 
+    .032, .244, .015
+    
+  ),
+  
+  sd_diff = c(
+    .02, .09, .04,
+    .01, .02, .11,
+    
+    .09, .09, .02, 
+    .02, .08, .11,
+    
+    .13, .03, .07,
+    .03, .12, .04,
+    
+    .04, .04, .04,
+    .05, .06, .03
+    
+  )
+  
 ); Fisher1996
 
 ```
 
-Long and wide format
+
+## Typiske fejl, når man indtaster data
+Når man benytte `rep()` til at skabe en variabel i et datasæt, er en af de mest typiske fejl man laver, at man genererer variabler som ikke har lige mange værdier. Hvis dette er tilfældet, for man en fejlmelding a la den nedenfor.
+
+```{r, eval=FALSE}
+
+tibble(
+  rep(1:2, 2),
+  rep(c("A", "B"), 3)
+)
+
+#Error in `tibble()`:
+#! Tibble columns must have compatible sizes.
+#• Size 4: Existing data.
+#• Size 6: Column at position 2.
+#ℹ Only values of size one are recycled.
+#Run `rlang::last_trace()` to see where the error occurred.
+```
+
+
+# Effektstørrelsesudregning med kompleks data
+Når man får fingrene i så komplekst afrapporteret data som den fra Tabel 1, opstår der en række spørgsmål ift. hvilken typer af effektstørrelser, som vil være de bedste at beregne, idet man kan vælge en række forskellige effektstørrelsesindekser i dette tilfælde. Jeg vil her gennemgå de tre mest kendte typer af effektstørrelser som man vil kunne beregne ud fra denne data, og vise, hvordan man kan beregne pre-posttest korrelationer $\rho_{prepost}$, når data er afrapporteret som i Tabel 1. 
+
+## Cohens' $d$
+Den vel nok mest kendte effektstørrelse, som man vil møde i litteraturen er den som kaldes Cohens' $d$. Denne effektstørrelse beregnes således
+
+<br />
+
+\begin{equation}
+  \tag{1}
+   d = \left(\frac{M^T_{post} - M^C_{post}}{SD_{pool}}\right)
+\end{equation}
+<br />
+
+hvor $M^T_{post}$ og $M^C_{post}$ er posttestmål for hhv. treatment og kontrolgruppen, mes $SD_{pool}$ beregnes via
+
+<br />
+
+\begin{equation}
+   SD_{pool}  = \sqrt{\frac{(n^T_{post} -1)\times(SD^T_{post})^2 + (n^C_{post} -1)\times(SD^C_{post})^2}{n^T + n^C - 2}}
+\end{equation}
+
+<br />
+
+$n^T$ og $n^C$ samt $SD^T_{post}$ og $SD^C_{post}$ er samplestørrelsen og standardafvigelsen på posttest niveau for hhv. treatment og kontrolgruppen. Sampling variansen for Cohens' $d$ er givet ved
+
+\begin{equation}
+  \tag{2}
+   Var_{d} = \left(\frac{1}{n^T} + \frac{1}{n^C}\right) + \frac{d^2}{2df}
+\end{equation}
+<br />
+
+hvor $df = n^T + n^C$ når der ikke er clusteringproblemer. En meget vigtig viden, som forhåbentlig kan gøre det lettere at forstå, hvorfor vi senere laver cluster-justeringer og hvordan vi gennemfører publikationsbiastests, er, at forstå, at det første led i formel (2), dvs. $\left(\frac{1}{n^T} + \frac{1}{n^C}\right)$, indfanger sampling variationen for tælleren i formel (1), dvs. $M^T_{post} - M^C_{post}$, mens andet led i formel (2), dvs. $\frac{d^2}{2df}$ indfanger sampling variansen for nævner i formel (1), dvs. $SD_{pool}$.  
+<br />
+
+## Hedges' $g$
+En anden meget kendte effektstørrelser er den såkaldte Hedges' $g$. Forskellen med Cohens' $d$ og Hedges' $g$ er, at Hedges $g$ korrigerer en overestimeringfejl i Cohens' $d$. Det vil konkret sige at Cohens' $d$ bliver for stor ift. den sande bagvedliggende effekt som forsøges estimeres, når sample størrelsen er lille, dvs. når $n^i<20$. Derfor ganges en korrektion faktor $J = 1 - \frac{3}{(4-df-1)}$ på formlel (1). Det ser ud således
+
+<br />
+
+\begin{equation}
+  \tag{3}
+   g = J\left(\frac{M^T_{post} - M^C_{post}}{SD_{pool}}\right)
+\end{equation}
+<br />
+
+Larry Hedges, som har udviklet denne effektstørrelse, har senere fundet, at det ikke er nødvendigt at korrigere variansen for denne effektstørrelse. Det vil sige, at vi kan beregne sampling variansen med formel (2). I vil kunne støde på nogle referencer, som ganger $J^2$ på formel (2), men dette ser som sagt ikke længere ud til at være nødvendigt. 
+
+## Glass' $\Delta$
+
+Den sidste også relativt kendte effektstørrelse er Glass' $\Delta$. Denne effektstørrelse adskiller sig ved, at man kun benytter post-test standardafvigelsen fra kontrolgruppen, $SD^C_{post}$, til at standardisere/skalere effektforskellen i formel (1). Det bygger på antagelsen om, at kontrolgruppen ligner den fulde population mest, da disse ikke har været udsat for en intervention. Den ser således ud
+
+\begin{equation}
+  \tag{4}
+   \Delta = \left(\frac{M^T_{post} - M^C_{post}}{SD^C_{post}}\right)
+\end{equation}
+<br />
+
+Formel (2) kan også benyttes til at beregne sampling for $\Delta$
+
+## Pretest/baseline adjustede effektstørrelser
+Ovenfor har jeg vist en række af de mest kendte og simple effektstørrelsesformler. Fælles for disse er, at de alle sammen 'kun' benytter posttest-effekter til at beregne gennemsnitforskellen mellem treatment og kontrolgruppen, som beror på den antagelse at de raw means er unbiased. Det kan dog være en hård antagelse i mange tilfælde, når vi tillader ikke-randomiserede studier i vores reviews, da means ofte vil være en smule biased grundet brug af ike randomiserede samples. Dog kan antagelsen også være hård for means, der kommer fra RCTs, især små RCT, da samplingfejl selvfølgelig også kan forekomme i den type af studier. En løsning til at formildne dette intern validitetsprogram, er at beregne, de såkaldte difference-in-differences (DID) effektstørrelser (og kaldte pretest-adjusted effect sizes), hvor man kontrollerer baseline forskellene på outcme variablen ud mellem treatment og kontrolgruppen. Vi vil ofte beregne både Hedges' $g$ og DID effektstørrelser, men jeg er ret stor fan af den sidste og vil altid lægge mest vægt på fotolkningen af disse, dels fordi denne effektsttørreslser kan reducere bias og dels fordi den kan estimateres mere præcist (se Hedges et al. [2023](https://doi.org/10.1111/bmsp.12296)).  Formlen for DID effektstørrelsen er givet ved
+
+<br />
+
+\begin{equation}
+  \tag{5}
+   g_{DID} = J \left(\frac{[M^T_{post} - M^T_{pre}] - [M^C_{post} - M^C_{pre}]}{SD_{pool}}\right)
+\end{equation}
+<br />
+hvor $M^T_{post}$ og $M^C_{post}$ samt $M^T_{pre}$ og $M^C_{pre}$ er post- og baselinemål for hhv. treatment- og kontrolgruppen, og $SD_{pool}  = \sqrt{\frac{(n^T_{post} -1)\times(SD^T_{post})^2 + (n^C_{post} -1)\times(SD^C_{post})^2}{n^T + n^C - 2}}$, mens $n^T$ og $n^C$ samt $SD^T_{post}$ og $SD^C_{post}$ er samplestørrelsen og standardafvigelsen for hhv. treatment og kontrolgruppen. $J$ i formel (1) er Hedges' sample sample korrektor lige med $1 - \frac{3}{4df-1}$ (nogen trækker 9 fra $df$ i stedet for 1, men det har ingen substantiel betydning). 
+<br /> 
+<br /> 
+Hvis vi antager, at der ikke er klusterproblmer, så er $df = n^T + n^C$. Når der er klusteringproblemer kan $df$ beregnes via Equation  E.21 ([WWC, 2023](https://ies.ed.gov/ncee/WWC/Docs/referenceresources/Final_WWC-HandbookVer5_0-0-508.pdf), s. 171) eller hvis der kun er klustering i en gruppe Equation 7 i Hedges og Citkowicz ([2015](https://doi.org/10.3758/s13428-014-0538-z)). Sampling variansen for $g_{DID}$ er givet ved 
+
+<br />
+\begin{equation}
+  \tag{6}
+   Var_{g_{DID}} = \left(\frac{1}{n^T} + \frac{1}{n^C}\right) 2(1-\rho_{prepost})  + \frac{g_{DID}^2}{2df}
+\end{equation}
+<br />
+
+Problemet er dog, at man skal kende pre-posttest korrelationen, $\rho_{prepost}$ , for at kunne beregne variansen korrekt. I mange tilfælde vil vi være i stand til at kunne beregne denne (se eksempel nedenfor). Se eksemplvis formlerne fra [Cochranes handbook](https://training.cochrane.org/handbook/current/chapter-06#section-6-5-2-8) eller formel 31 i Wilson ([2016](https://mason.gmu.edu/~dwilsonb/downloads/esformulas.pdf)). Se også denne blog på [VIVECampbell siden](https://mikkelvembye.github.io/VIVECampbell/articles/ancova-puzzler.html). Alternativt kan $Var_{g_{DID}}$ beregnes korrekt, hvis forfatterne har afrapporteret $t$- eller $F$-værdier fra repeated ANOVA, ANCOVA eller en regressions model, som har inkluderet pretest-outcome som kontrol variabel. Hvis dette er tilfældet, så 
+
+<br />
+\begin{equation}
+  \tag{7}
+   Var_{g_{DID}} = \frac{g_{DID}^2}{t^2} + \frac{g_{DID}^2}{2df}
+\end{equation}
+<br />
+
+Bemærk her at $F = t^2$. Se [James Pustejovskys blog](https://www.jepusto.com/alternative-formulas-for-the-smd/) for en yderligere uddybning.
+<br /> 
+
+
+### Beregning af pre-posttest korrelation $\rho_{prepost}$
+### Hvad gør vi når vi ikke kender eller kan beregne $\rho_{prepost}$
+
+Important for understanding the use of `group_by` function, when we calculate effect sizes.
+
+The practice, we often use when we enter data for studies is to name the data object using the first author's surname and the year of the publication, i.e., an object with the following structure: `AuthorYear`. For the present study used in this vignette this guideline means that we will coin the data object `Fisher1996`. One important part of calculating effect size is to make clear documentation of how and from where we obtained data we use for effect size calculation. At a minimum you much write some like "Find data in Table 4 (p. 1248)" before the codes/chunk in which construct the result data. In some cases when studies provide enough information to calculation the pre-post test correlation, $\rho$, the first calculation can be done when entering the data. When studies, such as Fisher (insert reference), report raw pre and post test means and standard deviations (SDs) plus the mean difference and its standard error, we can use the correlation formulas given in [Chapter 6 of the Cochrane Handbook](https://training.cochrane.org/handbook/current/chapter-06). For the treatment group, we can calculated the pre-post test correlation, $\rho$ via       
+$$ \rho^T_{prepost} = \frac{(SD^T_{pre})^2 + (SD^T_{post})^2 - (SD^C_{diff})^2}{2 \times SD^C_{pre} \times SD^T_{post}} $$
+
+and for the control group
+
+$$ \rho^C_{prepost} = \frac{(SD^C_{pre})^2 + (SD^C_{post})^2 - (SD^C_{diff})^2}{2 \times SD^C_{pre} \times SD^C_{post}} $$   
+
+We will later on pool these correlation estimates. In order to get one $\rho_{pool}$ for each comparison and each outcome: To do so - INTRODUCE log transformation refer to @Borenstein2009 (to VIVE students: Find e-version of this book in our literature folder)
+
+```{r}
+Fisher1996 <- 
+  Fisher1996 |> 
+  mutate(
+    # Here we test if the mean differences reported in the study are in line
+  # with the differences between the reported pre and post means. It seems to
+  # be the case that they make a reporting error for the cognitive outpatient 
+  # group mean difference on drug use. Write about the error can be on many levels
+  mean_diff_test = m_pre - m_post,
+  
+  # Fra Cochrane handbook (Higgins & Thomas, 2019, p. 166)
+  r = (sd_pre^2 + sd_post^2-sd_diff^2)/(2 * sd_pre * sd_post ),
+  
+  # Obtained from Wilson (2016). Converting sd_diff to raw sd
+  sdg = sd_diff/sqrt(2*(1-r)),
+  
+  z = 0.5 * log( (1+r)/(1-r) ),
+  v = 1/(N-3)
+  )
+```
+
+
+
+# Long and wide format data
+
+Begge formater har hver deres ulemper. Man skal skrive mindre kode, når man beregner effektstørrelser med long format data, men man har dermed også et datasæt som i antal af rækker ikke passer sammen med den endelige effektstørrelsesdata. Omvendt, kræver det længere koder at kode wide format data, men her får man tilgengæld også et datasæt som passer i antal med dette endelige effektstørrelses datasæt. På mange af vores andre review indtastes den raw data (som den fra Tabel 1) direkte i excel i stedet for i R. Det kan igen måde have fordele og ulemper. Ved at indtaste det studie for studie i R, bliver det noget tydeligere for læsere, hvor man præcist har udtrykket data, men det kræver også at man skriver langt, langt flere koder, som på mange måder kan være meget tidskrævende. Igen det er meget en smagssag. 
 
 ```{r}
 
@@ -394,4 +556,4 @@ Fisher1996_est |>
 ```
 
 
-# Reference 
+# References 
