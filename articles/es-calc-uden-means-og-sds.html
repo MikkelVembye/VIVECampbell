@@ -53,7 +53,7 @@
     <a class="dropdown-item" href="../articles/eppi-tips.html">Tips og tricks til EPPI</a>
     <div class="dropdown-divider"></div>
     <h6 class="dropdown-header" data-toc-skip>Effect size calculation</h6>
-    <a class="dropdown-item" href="../articles/Entering-data.html">Entering data, calculating effect sizes, and cluster bias correction when there is clustering in one group only</a>
+    <a class="dropdown-item" href="../articles/Entering-data.html">Indtastning af data, effektstørrelsesudregning og cluster bias justering, når der kun er clustering i en gruppe</a>
     <a class="dropdown-item" href="../articles/Pooling-subgroups.html">Pooling across (multiple) subgroups</a>
     <a class="dropdown-item" href="../articles/ancova-puzzler.html">An ANCOVA puzzler</a>
     <a class="dropdown-item" href="../articles/es-calc-uden-means-og-sds.html">Effektstørrelsesudregning uden means og SDs (med eksempler)</a>
@@ -154,8 +154,8 @@ M^C_{baseline}]}{SD_{pool}}\right)
 \end{equation}\]</span> <br> hvor <span class="math inline">\(M^T_{post}\)</span> og <span class="math inline">\(M^C_{post}\)</span> samt <span class="math inline">\(M^T_{baseline}\)</span> og <span class="math inline">\(M^C_{baseline}\)</span> er post- og baselinemål
 for hhv. treatment og kontrolgruppen, og <span class="math inline">\(SD_{pool}  = \sqrt{\frac{(n^T_{post}
 -1)\times(SD^T_{post})^2 + (n^C_{post} -1)\times(SD^C_{post})^2}{n^T +
-n^C - 2}}\)</span>, mens <span class="math inline">\(n^T_{post}\)</span>
-og <span class="math inline">\(n^C_{post}\)</span> samt <span class="math inline">\(SD^T_{post}\)</span> og <span class="math inline">\(SD^C_{post}\)</span> er samplestørrelsen og
+n^C - 2}}\)</span>, mens <span class="math inline">\(n^T\)</span> og
+<span class="math inline">\(n^C\)</span> samt <span class="math inline">\(SD^T_{post}\)</span> og <span class="math inline">\(SD^C_{post}\)</span> er samplestørrelsen og
 standardafvigelsen for hhv. treatment og kontrolgruppen. <span class="math inline">\(J\)</span> i formel (1) er Hedges’ sample sample
 korrektor lige med <span class="math inline">\(1 -
 \frac{3}{4df-1}\)</span> (nogen trækker 9 fra <span class="math inline">\(df\)</span> i stedet for 1, men det har ingen
@@ -169,7 +169,7 @@ ved</p>
 <p><br><span class="math display">\[\begin{equation}
   \tag{2}
    Var_{g_{DID}} = \left(\frac{1}{n^T} + \frac{1}{n^C}\right)
-2(1-\rho_{prepost})  + \frac{g^2}{2df}
+2(1-\rho_{prepost})  + \frac{g_{DID}^2}{2df}
 \end{equation}\]</span> <br></p>
 <p>Problemet er dog, at man skal kende pre-posttest korrelationen, <span class="math inline">\(\rho_{prepost}\)</span>, for at kunne beregne
 variansen korrekt. I mange tilfælde vil vi være i stand til at kunne
@@ -178,9 +178,9 @@ handbook</a> eller formel 31 i Wilson (<a href="https://mason.gmu.edu/~dwilsonb/
 Se også denne blog på <a href="https://mikkelvembye.github.io/VIVECampbell/articles/ancova-puzzler.html">VIVECampbell
 siden</a>. Alternativt kan <span class="math inline">\(Var_{g_{DID}}\)</span> beregnes korrekt, hvis
 forfatterne har afrapporteret <span class="math inline">\(t\)</span>-
-eller <span class="math inline">\(F\)</span>-værdier fra ANCOVA eller en
-regressions model, som har inkluderet baseline outcome som kontrol
-variabel. Hvis dette er tilfældet, så</p>
+eller <span class="math inline">\(F\)</span>-værdier fra repeated ANOVA,
+ANCOVA eller en regressions model, som har inkluderet baseline outcome
+som kontrol variabel. Hvis dette er tilfældet, så</p>
 <p><br><span class="math display">\[\begin{equation}
   \tag{3}
    Var_{g_{DID}} = \frac{g_{DID}^2}{t^2} + \frac{g_{DID}^2}{2df}
