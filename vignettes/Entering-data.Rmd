@@ -179,14 +179,18 @@ rep(LETTERS[1:3], each = 2, 2, length.out = 11)
 ```
 
 Nedenfor viser jeg, hvordan man kunne indtaste data fra Tabel 1 vha. `tibble()` samt `rep()`. Måden, hvorpå jeg indtaster data kaldes af nogen for long format data. Jeg vil senere i bloggen tale og vise forskellen på long og wide-format data, og hvordan man benytter `pivot_longer()` og `pivot_wider()` fra `tidyr`-pakken til at skifte mellem disse to formater. 
+<br />
 
+<br />
+
+Når man indtaster data, kan det være en klar fordel at konstruere treatment/group variabel sådan at treatment gruppen/grupperne kommer indtastet før kontrol gruppen. Hvis dette gøres er det i hvert fald lettere at genbruge mine koder fra tidligere projekter, da det altid er måden jeg gør det på. Derudover benytter jeg aldrig store start bogstaver, når jeg laver variabelnavne. Det er kun værdierne inden for en variabel, jeg kan finde på at give store bogstaver.
 ```{r}
 
 Fisher1996 <- tibble::tibble(
   
-  Outcome = rep(c("Alcohol use", "Drug use", "Social", "Psych func"), each = 6), 
+  outcome = rep(c("Alcohol use", "Drug use", "Social", "Psych func"), each = 6), 
   
-  Setting = rep(c("Inpatient", "Outpatient"), each = 3, 4),
+  setting = rep(c("Inpatient", "Outpatient"), each = 3, 4),
   
   treatment = rep(c("Disease", "Cognitive", "TAU"), 8),
   
@@ -286,7 +290,13 @@ Fisher1996 <- tibble::tibble(
     .04, .04, .04,
     .05, .06, .03
     
-  )
+  ),
+  
+  # Here we test if the mean differences reported in the study are in line
+  # with the differences between the reported pre and post means. It seems to
+  # be the case that they make a reporting error for the cognitive outpatient 
+  # group mean difference on drug use. Write about the error can be on many levels
+  mean_diff_test = m_pre - m_post,
   
 ); Fisher1996
 
@@ -299,8 +309,8 @@ Når man benytte `rep()` til at skabe en variabel i et datasæt, er en af de mes
 ```{r, eval=FALSE}
 
 tibble(
-  rep(1:2, 2),
-  rep(c("A", "B"), 3)
+  var1 = rep(1:2, 2),
+  var2 = rep(c("A", "B"), 3)
 )
 
 #Error in `tibble()`:
@@ -331,6 +341,7 @@ hvor $M^T_{post}$ og $M^C_{post}$ er posttestmål for hhv. treatment og kontrolg
 <br />
 
 \begin{equation}
+  \tag{2}
    SD_{pool}  = \sqrt{\frac{(n^T_{post} -1)\times(SD^T_{post})^2 + (n^C_{post} -1)\times(SD^C_{post})^2}{n^T + n^C - 2}}
 \end{equation}
 
@@ -339,21 +350,27 @@ hvor $M^T_{post}$ og $M^C_{post}$ er posttestmål for hhv. treatment og kontrolg
 $n^T$ og $n^C$ samt $SD^T_{post}$ og $SD^C_{post}$ er samplestørrelsen og standardafvigelsen på posttest niveau for hhv. treatment og kontrolgruppen. Sampling variansen for Cohens' $d$ er givet ved
 
 \begin{equation}
-  \tag{2}
-   Var_{d} = \left(\frac{1}{n^T} + \frac{1}{n^C}\right) + \frac{d^2}{2df}
+  \tag{3}
+   Var_d = \left(\frac{1}{n^T} + \frac{1}{n^C}\right) + \frac{d^2}{2df}
 \end{equation}
 <br />
 
-hvor $df = n^T + n^C$ når der ikke er clusteringproblemer. En meget vigtig viden, som forhåbentlig kan gøre det lettere at forstå, hvorfor vi senere laver cluster-justeringer og hvordan vi gennemfører publikationsbiastests, er, at forstå, at det første led i formel (2), dvs. $\left(\frac{1}{n^T} + \frac{1}{n^C}\right)$, indfanger sampling variationen for tælleren i formel (1), dvs. $M^T_{post} - M^C_{post}$, mens andet led i formel (2), dvs. $\frac{d^2}{2df}$ indfanger sampling variansen for nævner i formel (1), dvs. $SD_{pool}$.  
+hvor $df = n^T + n^C$ når der ikke er clusteringproblemer. En meget vigtig viden, som forhåbentlig kan gøre det lettere at forstå, hvorfor vi senere laver cluster-justeringer og hvordan vi gennemfører publikationsbiastests, er, at forstå, at det første led i formel (2), dvs. $\left(\frac{1}{n^T} + \frac{1}{n^C}\right)$, indfanger sampling variationen for tælleren i formel (1), dvs. $M^T_{post} - M^C_{post}$, mens andet led i formel (2), dvs. $\frac{d^2}{2df}$ indfanger sampling variansen for nævner i formel (1), dvs. $SD_{pool}$. Det er første led, som skaber det store bias, hvis et studie ikke har håndtere klustering korrekt. Så når vi senere kluster bias korrigerer effekterne fra dette studie, vil i se, at led et få gange en kluster faktor på sig, som ofte vil gøre dette led substantielt større. En anden vigtig del ift. formel (3) er at forstå, at andet leddet i formel (3) (dvs. leddet til højre for $+$-tegnet), og senere formel (8), skaber en falsk korrelation mellem $d$ og $Var_d$ (se Pustejovsky & Rodgers, [(2019)](https://doi.org/10.1002/jrsm.1332), fordi $d$ benyttes til at beregne dette led. Når vi estimerer publikationsbias test fjerner vi derfor dette led, så kan vi ikke risikerer fejlagtigt at konkludere at små studier oftere afrapporterer større effekter, som blot skyldes et beregningsartifakt. Variansleddet vi benytter i publikationsbiastest ser derfor således ud;  
+<br />
+
+\begin{equation}
+  \tag{4}
+   W_d = \left(\frac{1}{n^T} + \frac{1}{n^C}\right)
+\end{equation}
 <br />
 
 ## Hedges' $g$
-En anden meget kendte effektstørrelser er den såkaldte Hedges' $g$. Forskellen med Cohens' $d$ og Hedges' $g$ er, at Hedges $g$ korrigerer en overestimeringfejl i Cohens' $d$. Det vil konkret sige at Cohens' $d$ bliver for stor ift. den sande bagvedliggende effekt som forsøges estimeres, når sample størrelsen er lille, dvs. når $n^i<20$. Derfor ganges en korrektion faktor $J = 1 - \frac{3}{(4-df-1)}$ på formlel (1). Det ser ud således
+En anden meget kendte effektstørrelser er den såkaldte Hedges' $g$. Forskellen med Cohens' $d$ og Hedges' $g$ er, at Hedges $g$ korrigerer en overestimeringfejl i Cohens' $d$. Det vil konkret sige at Cohens' $d$ bliver for stor ift. den sande bagvedliggende effekt som forsøges estimeres, når sample størrelsen er lille, dvs. når $n^i<20$  for grupperne $g = T,C$. Derfor ganges en korrektion faktor $J = 1 - \frac{3}{(4-df-1)}$ på formlel (1). Det ser ud således
 
 <br />
 
 \begin{equation}
-  \tag{3}
+  \tag{5}
    g = J\left(\frac{M^T_{post} - M^C_{post}}{SD_{pool}}\right)
 \end{equation}
 <br />
@@ -365,7 +382,7 @@ Larry Hedges, som har udviklet denne effektstørrelse, har senere fundet, at det
 Den sidste også relativt kendte effektstørrelse er Glass' $\Delta$. Denne effektstørrelse adskiller sig ved, at man kun benytter post-test standardafvigelsen fra kontrolgruppen, $SD^C_{post}$, til at standardisere/skalere effektforskellen i formel (1). Det bygger på antagelsen om, at kontrolgruppen ligner den fulde population mest, da disse ikke har været udsat for en intervention. Den ser således ud
 
 \begin{equation}
-  \tag{4}
+  \tag{6}
    \Delta = \left(\frac{M^T_{post} - M^C_{post}}{SD^C_{post}}\right)
 \end{equation}
 <br />
@@ -373,12 +390,12 @@ Den sidste også relativt kendte effektstørrelse er Glass' $\Delta$. Denne effe
 Formel (2) kan også benyttes til at beregne sampling for $\Delta$
 
 ## Pretest/baseline adjustede effektstørrelser
-Ovenfor har jeg vist en række af de mest kendte og simple effektstørrelsesformler. Fælles for disse er, at de alle sammen 'kun' benytter posttest-effekter til at beregne gennemsnitforskellen mellem treatment og kontrolgruppen, som beror på den antagelse at de raw means er unbiased. Det kan dog være en hård antagelse i mange tilfælde, når vi tillader ikke-randomiserede studier i vores reviews, da means ofte vil være en smule biased grundet brug af ike randomiserede samples. Dog kan antagelsen også være hård for means, der kommer fra RCTs, især små RCT, da samplingfejl selvfølgelig også kan forekomme i den type af studier. En løsning til at formildne dette intern validitetsprogram, er at beregne, de såkaldte difference-in-differences (DID) effektstørrelser (og kaldte pretest-adjusted effect sizes), hvor man kontrollerer baseline forskellene på outcme variablen ud mellem treatment og kontrolgruppen. Vi vil ofte beregne både Hedges' $g$ og DID effektstørrelser, men jeg er ret stor fan af den sidste og vil altid lægge mest vægt på fotolkningen af disse, dels fordi denne effektsttørreslser kan reducere bias og dels fordi den kan estimateres mere præcist (se Hedges et al. [2023](https://doi.org/10.1111/bmsp.12296)).  Formlen for DID effektstørrelsen er givet ved
+Ovenfor har jeg vist en række af de mest kendte og simple effektstørrelsesformler. Fælles for disse er, at de alle sammen 'kun' benytter posttest-effekter til at beregne gennemsnitforskellen mellem treatment og kontrolgruppen, som beror på den antagelse at de raw means er unbiased. Det kan dog være en hård antagelse i mange tilfælde, når vi tillader ikke-randomiserede studier i vores reviews, da means ofte vil være en biased i forskellig grad grundet brug af samples som ikke er trukket via randomisering. Dog kan antagelsen også være hård for means, der kommer fra RCTs, især små RCTer, da samplingfejl selvfølgelig også kan forekomme i den type af studier. En løsning til at formildne dette intern validitetsprogram, er at beregne, de såkaldte difference-in-differences (DID) effektstørrelser (og kaldte pretest-adjusted effect sizes), hvor man kontrollerer baseline forskellene på outcme variablen ud mellem treatment og kontrolgruppen. Vi vil ofte beregne både Hedges' $g$ og DID effektstørrelser, men jeg er ret stor fan af den sidste og vil altid lægge mest vægt på fotolkningen af disse, dels fordi denne effektsttørreslser kan reducere bias og dels fordi den kan estimateres mere præcist (se Hedges et al. [2023](https://doi.org/10.1111/bmsp.12296)).  Formlen for DID effektstørrelsen er givet ved
 
 <br />
 
 \begin{equation}
-  \tag{5}
+  \tag{7}
    g_{DID} = J \left(\frac{[M^T_{post} - M^T_{pre}] - [M^C_{post} - M^C_{pre}]}{SD_{pool}}\right)
 \end{equation}
 <br />
@@ -389,83 +406,187 @@ Hvis vi antager, at der ikke er klusterproblmer, så er $df = n^T + n^C$. Når d
 
 <br />
 \begin{equation}
-  \tag{6}
+  \tag{8}
    Var_{g_{DID}} = \left(\frac{1}{n^T} + \frac{1}{n^C}\right) 2(1-\rho_{prepost})  + \frac{g_{DID}^2}{2df}
 \end{equation}
 <br />
 
-Problemet er dog, at man skal kende pre-posttest korrelationen, $\rho_{prepost}$ , for at kunne beregne variansen korrekt. I mange tilfælde vil vi være i stand til at kunne beregne denne (se eksempel nedenfor). Se eksemplvis formlerne fra [Cochranes handbook](https://training.cochrane.org/handbook/current/chapter-06#section-6-5-2-8) eller formel 31 i Wilson ([2016](https://mason.gmu.edu/~dwilsonb/downloads/esformulas.pdf)). Se også denne blog på [VIVECampbell siden](https://mikkelvembye.github.io/VIVECampbell/articles/ancova-puzzler.html). Alternativt kan $Var_{g_{DID}}$ beregnes korrekt, hvis forfatterne har afrapporteret $t$- eller $F$-værdier fra repeated ANOVA, ANCOVA eller en regressions model, som har inkluderet pretest-outcome som kontrol variabel. Hvis dette er tilfældet, så 
+Problemet er dog, at man skal kende pre-posttest korrelationen, $\rho_{prepost}$, for at kunne beregne variansen korrekt. I mange tilfælde vil vi være i stand til at kunne beregne denne (se eksempel nedenfor). Se eksemplvis formlerne fra [Cochranes handbook](https://training.cochrane.org/handbook/current/chapter-06#section-6-5-2-8) eller formel 31 i Wilson ([2016](https://mason.gmu.edu/~dwilsonb/downloads/esformulas.pdf)). Se også denne blog på [VIVECampbell siden](https://mikkelvembye.github.io/VIVECampbell/articles/ancova-puzzler.html). Alternativt kan $Var_{g_{DID}}$ beregnes korrekt, hvis forfatterne har afrapporteret $t$- eller $F$-værdier fra repeated ANOVA, ANCOVA eller en regressions model, som har inkluderet pretest-outcome som kontrol variabel. Hvis dette er tilfældet, så 
 
 <br />
 \begin{equation}
-  \tag{7}
+  \tag{9}
    Var_{g_{DID}} = \frac{g_{DID}^2}{t^2} + \frac{g_{DID}^2}{2df}
 \end{equation}
 <br />
 
-Bemærk her at $F = t^2$. Se [James Pustejovskys blog](https://www.jepusto.com/alternative-formulas-for-the-smd/) for en yderligere uddybning.
+Bemærk her at $F = t^2$. Se [James Pustejovskys blog](https://www.jepusto.com/alternative-formulas-for-the-smd/) for en yderligere uddybning. Det er igen vigtigt her at notere, at når vi benytter disse typer af effektstørrelser i publikationsbiastests, fjernes igen andet leddet (dvs. leddet på højre side af $+$-tegnet) i formlerne (8) og (9).
 <br /> 
 
 
 ### Beregning af pre-posttest korrelation $\rho_{prepost}$
-### Hvad gør vi når vi ikke kender eller kan beregne $\rho_{prepost}$
+For at kunne beregne sampling variansen for $g_{DID}$ skal vi kende, estimere eller imputere en værdi for korrelationen mellem pretest og postscorene, $\rho_{prepost}$. jeg vil på et senere tidspunkt skrive en blog, hvor jeg vil vise eksempler på alle de måder jeg kender til, hvorpå man kan bakke ud $\rho_{prepost}$. Når resultaterne er afrapportet som i Tabel 1, kan vi faktisk udregne den $\rho_{prepost}$ for hhv. treatment- og kontrolgruppen. Her kan vi benytte formler fra [Cochranes handbook](https://training.cochrane.org/handbook/current/chapter-06#section-6-5-2-8), som for treatmentet gruppen kan beregnes vha
 
-Important for understanding the use of `group_by` function, when we calculate effect sizes.
+<br />
+\begin{equation}
+  \tag{10}
+   \rho^T_{prepost} = \frac{(SD^T_{pre})^2 + (SD^T_{post})^2 - (SD^T_{diff})^2}{2 \times SD^T_{pre} \times SD^T_{post}}
+\end{equation}
+<br />
 
-The practice, we often use when we enter data for studies is to name the data object using the first author's surname and the year of the publication, i.e., an object with the following structure: `AuthorYear`. For the present study used in this vignette this guideline means that we will coin the data object `Fisher1996`. One important part of calculating effect size is to make clear documentation of how and from where we obtained data we use for effect size calculation. At a minimum you much write some like "Find data in Table 4 (p. 1248)" before the codes/chunk in which construct the result data. In some cases when studies provide enough information to calculation the pre-post test correlation, $\rho$, the first calculation can be done when entering the data. When studies, such as Fisher (insert reference), report raw pre and post test means and standard deviations (SDs) plus the mean difference and its standard error, we can use the correlation formulas given in [Chapter 6 of the Cochrane Handbook](https://training.cochrane.org/handbook/current/chapter-06). For the treatment group, we can calculated the pre-post test correlation, $\rho$ via       
-$$ \rho^T_{prepost} = \frac{(SD^T_{pre})^2 + (SD^T_{post})^2 - (SD^C_{diff})^2}{2 \times SD^C_{pre} \times SD^T_{post}} $$
+og for kontrolgruppen
 
-and for the control group
+<br />
+\begin{equation}
+  \tag{11}
+   \rho^C_{prepost} = \frac{(SD^C_{pre})^2 + (SD^C_{post})^2 - (SD^C_{diff})^2}{2 \times SD^C_{pre} \times SD^C_{post}}
+\end{equation}
+<br />
 
-$$ \rho^C_{prepost} = \frac{(SD^C_{pre})^2 + (SD^C_{post})^2 - (SD^C_{diff})^2}{2 \times SD^C_{pre} \times SD^C_{post}} $$   
-
-We will later on pool these correlation estimates. In order to get one $\rho_{pool}$ for each comparison and each outcome: To do so - INTRODUCE log transformation refer to @Borenstein2009 (to VIVE students: Find e-version of this book in our literature folder)
+Disse beregninger kan vi faktisk lave/tilføje direkte i vores datasæt indtastet ovenfor
+<br />
 
 ```{r}
 Fisher1996 <- 
   Fisher1996 |> 
   mutate(
-    # Here we test if the mean differences reported in the study are in line
-  # with the differences between the reported pre and post means. It seems to
-  # be the case that they make a reporting error for the cognitive outpatient 
-  # group mean difference on drug use. Write about the error can be on many levels
-  mean_diff_test = m_pre - m_post,
   
-  # Fra Cochrane handbook (Higgins & Thomas, 2019, p. 166)
+  # Regnes som i formler (10) og (11). I kan finde disse i Cochrane handbook (Higgins & Thomas, 2019, p. 166).
   r = (sd_pre^2 + sd_post^2-sd_diff^2)/(2 * sd_pre * sd_post ),
   
-  # Obtained from Wilson (2016). Converting sd_diff to raw sd
-  sdg = sd_diff/sqrt(2*(1-r)),
-  
+  ) 
+
+```
+
+Nu kender vi pre-posttest korrelationen for hhv. treatment- og kontrolgrupperne, men for at kunne beregne $\rho_{prepost}$ skal vi beregne den gennemsnitlige korrelation baseret på korrelationen fra den treatment- og kontrolgruppe, som benyttes til at udregne den givne effektstørrelse. For præcist at kunne beregne denne omregner man korrelationer til Fishers' z-scores via $z_i = 0.5 \times ln\left(\frac{1+\rho^i_{prepost}}{1-\rho^i_{prepost}}\right)$ med varians $v_i = \frac{1}{n-3}$, hvor $n$ er gruppenstørrelsen. Varians bruges som vægt via $w_i = \frac{1}{v_i}$, når Fishers z-score konverteres tilbage til en korrelation-coefficient, således $\rho^i_{prepost}$  med flest observationer/individer får størst vægt. Disse kan beregnes direkte i de råt indtastede data således
+
+```{r}
+
+Fisher1996 <- 
+  Fisher1996 |> 
+  mutate(
   z = 0.5 * log( (1+r)/(1-r) ),
-  v = 1/(N-3)
-  )
-```
-
-
-
-# Long and wide format data
-
-Begge formater har hver deres ulemper. Man skal skrive mindre kode, når man beregner effektstørrelser med long format data, men man har dermed også et datasæt som i antal af rækker ikke passer sammen med den endelige effektstørrelsesdata. Omvendt, kræver det længere koder at kode wide format data, men her får man tilgengæld også et datasæt som passer i antal med dette endelige effektstørrelses datasæt. På mange af vores andre review indtastes den raw data (som den fra Tabel 1) direkte i excel i stedet for i R. Det kan igen måde have fordele og ulemper. Ved at indtaste det studie for studie i R, bliver det noget tydeligere for læsere, hvor man præcist har udtrykket data, men det kræver også at man skriver langt, langt flere koder, som på mange måder kan være meget tidskrævende. Igen det er meget en smagssag. 
-
-```{r}
-
-pivot_wider(
-  Fisher1996,
-  values_from = m_pre:v,
-  names_from = treatment
+  v = 1/(N-3),
+  w = 1/v
   )
 
 ```
 
+Den gennemsnitlige Fishers' z-score på tværs af grupperne kan derefter beregnes således
+
+<br />
+\begin{equation}
+  \tag{12}
+   \bar{z_r} = \frac{\sum^g_{i = 1}w_iz_i}{\sum^g_{i = 1}w_i}
+\end{equation}
+<br />
+
+Herefter kan den gennemsnitlige pre-posttest korrelation på tværs af grupper beregnes via
+<br />
+\begin{equation}
+  \tag{13}
+   \rho_{prepost} = \frac{e^{(2\bar{z_r}})-1}{e^{(2\bar{z_r})}+1}
+\end{equation}
+<br />
+
+Jeg viser, hvordan dette kan beregnes, som det første i nedenstående effektstørrelsesudregninger i næste sektion. 
+
+## Omsætning af formlerne til beregninger i R
+
+Nedenfor vil jeg vise, hvordan I kan omsætte ovenstående formler, dvs. beregne Cohens' $d$, Hedges' $g$ samt difference-in-differences effektstørrelser i R, og senere også hvordan i korrigere disse for klusterfejl. I eksemplet nedenfor fjerner jeg den ene treatment gruppe for at forsimple beregningerne. Jeg vil længere nede vise, hvordan I let kan skabe de samme beregninger på tværs af forskellige treatment-grupper. Når jeg arbejder med effektstørrelsesdata i R, har jeg en række regler jeg arbejder ud fra. Den første er, at jeg altid opkakder den raw effekt-data med efternavnet på førteforfatteren og udgivelsesåret for studiet, således at objektnavnet bliver `AuthorYear`. Objektet som indeholder effektstørrelsesudregningerne kalder jeg altid `AuthorYear_est`. `est` står for 'Effect Sizes standardized with the Total variation'. Lad os springe ud i det. 
 
 
-# Calculating Cohens' *d* and Hedges' *g*
+```{r, eval = FALSE}
+Fisher1996_es_disease <- 
+  Fisher1996 |> 
+  # Her fjerner jeg den treatment gruppen "Cognitive" for at kunne beregne effektstørrelser
+  # mellem Diasease og kontrol treatment
+  dplyr::filter(treatment != "Cognitive") |> 
+  dplyr::summarise(
+      study = "Fisher1996",
+      treatment = treatment[1],
+      main_es_method = "diff-in-diffs",
+      
+      #Her regner vi den gennemsnitlige Fishers z-score som angivet i formel (12)
+      mean_z = sum(w*z)/sum(w),
+      #Her beregner vi den gennemsnitlige pre-posttest korrelation som angivet i formel (13) 
+      ppcor = (exp(2*mean_z)-1)/(exp(2*mean_z)+1),
+      # Her dokumneterer jeg, hvor vi har fundet pre-posttest korrelationen 
+      ppcor_calc_method = "Calculated from study results",
+      
+      # Her laver vi variabler, som viser sample størrelser opdelt på treatment- og kontrolgrupperne
+      N_t = N[1],
+      N_c = N[2],
+      # Her laver vi en variabler med den totale samplestørrelse
+      N_tot = sum(N),
+      
+      # Her laver vi variablen med antal frihedsgrader, som benyttes hhv. til 
+      # beregne andet led i variansformlerne (3) og (8) samt til at skabe J faktoren
+      # der bruges til beregne Hedges' g
+      df_ind = N_tot,
+      
+      # Her beregnes en pooled standardafvigelse som vist i formel (2)
+      sd_pool = sqrt(sum((N - 1) * sd_post^2) / df_ind),
+      
+      # Beregning af tælleren i formler (1), (5) og (6) 
+      # Jeg vender her skalen om, da et fald i scoren på de givne skalaer indikerer en positiv fremgang
+      m_diff_post = (m_post[1]-m_post[2])*-1,
+      
+      # Beregning af Cohens' d fra formel (1)
+      d_post = m_diff_post/sd_pool,
+      # variansudregning fra formel (3)
+      vd_post = sum(1/N) + d_post^2/(2*df_ind),
+      # Her beregnes det variansled, som er angivet i formel (4) og benyttes til 
+      # publikationsbias testning
+      Wd_post = sum(1/N),
+      
+      # Beregnig af Hedges' g fra formel (5)
+      J = 1 - 3/(4*df_ind-1),
+      g_post = J * d_post,
+      vg_post = vd_post,
+      Wg_post = sum(1/N),
+      
+      # Beregnig af Glass' delta fra formel (6). Vi bruger aldrig denne, så den 
+      # er kun med her for eksemplets skyld
+      sd_control = sd_post[2],
+      delta_post = m_diff_post/sd_control,
+      
+      # Difference-in-differences (DID) effektstørrelsen
+      # Her beregner jeg den raw pre-posteffekt forskelle for hhv. treatment og
+      # gruppen.
+      diff_t = (m_post[1] - m_pre[1])*-1,
+      diff_c = (m_post[2] - m_pre[2])*-1,
+      
+      # Her skaber jeg så tælleren fra formel (7)
+      DD = (diff_t - diff_c),
+      
+      # Her bergener jeg hele formel (7)
+      d_DID = (diff_t - diff_c) / sd_pool,
+      # Her beregner jeg formel (8)
+      vd_DID = sum(1/N) * (2*(1-ppcor)) + d_DID^2/(2*df_ind),
+      # Hvis man vil beregne standardfejlen istedet tager man blot kvadratroden af variansen
+      sed_DID = sqrt(vd_DID),
+      # Her skabes den variabel som benyttes når vi skal gennemføre publikationsbias tests
+      Wd_DID = sum(1/N) * (2*(1-ppcor)),
+      
+      # Her gøres det samme bare hvor vi indregner sample sample bias korrektoreren J
+      g_DID = J * d_DID,
+      vg_DID = sum(1/N) * (2*(1-ppcor)) + g_DID^2/(2*df_ind),
+      Wg_DID = Wd_DID,
+     
+     # Effektstørrelserne skal beregne indenfor hver setting og outcome, 
+     # Derfor grupperer jeg beregninger således
+     .by = c(setting, outcome)
+      
+     
+    ) |> 
+    relocate(study)
 
-Add text
+Fisher1996_es_disease
+```
+
 
 ```{r}
-
 treat_label_fisher <- unique(Fisher1996$treatment)[1:2]
 
 
@@ -473,13 +594,13 @@ fisher_function <- function(label){
   
   Fisher1996 |> 
     dplyr::filter(treatment != label) |> 
-    group_by(Setting, Outcome) |> 
+    group_by(setting, outcome) |> 
     summarise(
       study = "Fisher1996",
       treatment = treatment[1],
       es_method = "diff-in-diffs",
       
-      M = sum(v*z)/sum(v),
+      M = sum(w*z)/sum(w),
       ppcor = (exp(2*M)-1)/(exp(2*M)+1),
       
       Nt = N[1],
@@ -518,15 +639,227 @@ Fisher1996_est <-
 Fisher1996_est
 ```
 
-# Cluster bias correction when there is clustering in the treatment group only
+
+### Funktion til effektstørrelsesberegning med mere end to treatment- eller kontrolgrupper
+Ovenfor har jeg vist, hvordan man kan beregne effektstørrelser, når der er en treatment gruppe. Nu vil jeg vise, hvordan man brugen funktionskabning til at lave de samme beregninger for flere treatmentgrupper, der skal sammenlignes med den samme kontrolgruppe, som i dette tilfælde vi beskæftiger os med. 
+```{r}
+treat_label_fisher <- unique(Fisher1996$treatment)[1:2]
+
+fisher_func <- function(label){
+  
+  Fisher1996 |> 
+  # Her fjerner jeg den treatment gruppen "Cognitive" for at kunne beregne effektstørrelser
+  # mellem Diasease og kontrol treatment
+  dplyr::filter(treatment != label) |> 
+  dplyr::summarise(
+      study = "Fisher1996",
+      treatment = treatment[1],
+      main_es_method = "diff-in-diffs",
+      
+      #Her regner vi den gennemsnitlige Fishers z-score som angivet i formel (12)
+      mean_z = sum(w*z)/sum(w),
+      #Her beregner vi den gennemsnitlige pre-posttest korrelation som angivet i formel (13) 
+      ppcor = (exp(2*mean_z)-1)/(exp(2*mean_z)+1),
+      # Her dokumneterer jeg, hvor vi har fundet pre-posttest korrelationen 
+      ppcor_calc_method = "Calculated from study results",
+      
+      # Her laver vi variabler, som viser sample størrelser opdelt på treatment- og kontrolgrupperne
+      N_t = N[1],
+      N_c = N[2],
+      # Her laver vi en variabler med den totale samplestørrelse
+      N_tot = sum(N),
+      
+      # Her laver vi variablen med antal frihedsgrader, som benyttes hhv. til 
+      # beregne andet led i variansformlerne (3) og (8) samt til at skabe J faktoren
+      # der bruges til beregne Hedges' g
+      df_ind = N_tot,
+      
+      # Her beregnes en pooled standardafvigelse som vist i formel (2)
+      sd_pool = sqrt(sum((N - 1) * sd_post^2) / df_ind),
+      
+      # Beregning af tælleren i formler (1), (5) og (6) 
+      # Jeg vender her skalen om, da et fald i scoren på de givne skalaer indikerer en positiv fremgang
+      m_diff_post = (m_post[1]-m_post[2])*-1,
+      
+      # Beregning af Cohens' d fra formel (1)
+      d_post = m_diff_post/sd_pool,
+      # variansudregning fra formel (3)
+      vd_post = sum(1/N) + d_post^2/(2*df_ind),
+      # Her beregnes det variansled, som er angivet i formel (4) og benyttes til 
+      # publikationsbias testning
+      Wd_post = sum(1/N),
+      
+      # Beregnig af Hedges' g fra formel (5)
+      J = 1 - 3/(4*df_ind-1),
+      g_post = J * d_post,
+      vg_post = vd_post,
+      Wg_post = sum(1/N),
+      
+      # Beregnig af Glass' delta fra formel (6). Vi bruger aldrig denne, så den 
+      # er kun med her for eksemplets skyld
+      sd_control = sd_post[2],
+      delta_post = m_diff_post/sd_control,
+      
+      # Difference-in-differences (DID) effektstørrelsen
+      # Her beregner jeg den raw pre-posteffekt forskelle for hhv. treatment og
+      # gruppen.
+      diff_t = (m_post[1] - m_pre[1])*-1,
+      diff_c = (m_post[2] - m_pre[2])*-1,
+      
+      # Her skaber jeg så tælleren fra formel (7)
+      DD = (diff_t - diff_c),
+      
+      # Her bergener jeg hele formel (7)
+      d_DID = (diff_t - diff_c) / sd_pool,
+      # Her beregner jeg formel (8)
+      vd_DID = sum(1/N) * (2*(1-ppcor)) + d_DID^2/(2*df_ind),
+      # Hvis man vil beregne standardfejlen istedet tager man blot kvadratroden af variansen
+      sed_DID = sqrt(vd_DID),
+      # Her skabes den variabel som benyttes når vi skal gennemføre publikationsbias tests
+      Wd_DID = sum(1/N) * (2*(1-ppcor)),
+      
+      # Her gøres det samme bare hvor vi indregner sample sample bias korrektoreren J
+      g_DID = J * d_DID,
+      vg_DID = sum(1/N) * (2*(1-ppcor)) + g_DID^2/(2*df_ind),
+      Wg_DID = Wd_DID,
+     
+     # Effektstørrelserne skal beregne indenfor hver setting og outcome, 
+     # Derfor grupperer jeg beregninger således
+     .by = c(setting, outcome)
+      
+     
+    ) |> 
+    relocate(study)
+
+}
+
+Fisher1996_es <- 
+  purrr::map(treat_label_fisher, ~ fisher_func(.x)) |> 
+  list_rbind()
+
+Fisher1996_es
+```
+
+
+### Cluster bias korrektion når der kun er klustering i en gruppe 
 
 Add text
 
-```{r}
+```{r, eval = FALSE}
 
-# [INSERT EXAMPLE WHEN FUNCTIONS ARE ADDED TO THE PACKAGE]
+# Imputerede ICC-værdier
+icc_005 <- 0.05 # Bruges til sensitivitetsanalyse
+icc_01 <- 0.1
+icc_02 <- 0.2 # Bruges til sensitivitetsanalyse
+
+Fisher1996_est <- 
+  Fisher1996_es |> 
+  rowwise() |> 
+  # klusterkorrigering
+  mutate(
+    
+    # Gruppestørrelsen kan ikke findes i Fisher 1996, så her imputerer vi blot den 
+    # gennemsnitlige gruppestørrelse for eksemplet skyld
+    n_group = 5,
+    # Laver variabel med den imputere ICC værdi
+    icc = icc_01,
+    # Laver variabel som dokumenterer hvor vi fandt ICC-værdieen
+    icc_type = "Imputed",
+    
+    gamma_sqrt = VIVECampbell::gamma_1armcluster(
+      N_total = N_tot, Nc = N_c, avg_grp_size = n_group, ICC = icc, sqrt = TRUE
+    ), 
+    gamma_sqrt_test = sqrt(1 - (N_c + n_group-2)*icc/(N_tot-2)), 
+      
+    gt_post = g_post * gamma_sqrt,
+    VIVECampbell::vgt_smd_1armcluster(
+      N_cl_grp = N_t, 
+      N_ind_grp = N_c, 
+      avg_grp_size = n_group,
+      ICC = icc, 
+      g = gt_post, 
+      model = "posttest",
+      add_name_to_vars = "_post",
+      vars = c(vgt_post, Wgt_post)
+    ),
+    
+    
+    gt_DID = g_DID * gamma_sqrt,
+    VIVECampbell::vgt_smd_1armcluster(
+      N_cl_grp = N_t, 
+      N_ind_grp = N_c, 
+      avg_grp_size = n_group,
+      ICC = icc, 
+      g = gt_DID, 
+      model = "DiD",
+      prepost_cor = ppcor,
+      add_name_to_vars = "_DID",
+      vars = -c(df_DID, var_term1_DID)
+    ),
+    
+    # Disse variabler skabes til at lave sensitivitetsanalyser
+    
+    # Her antager vi at ICC = 0.05
+    gamma_sqrt_005 = VIVECampbell::gamma_1armcluster(
+      N_total = N_tot, Nc = N_c, avg_grp_size = n_group, ICC = icc_005, sqrt = TRUE
+    ), 
+    
+    gt_DID_005 = g_DID * gamma_sqrt_005,
+    VIVECampbell::vgt_smd_1armcluster(
+      N_cl_grp = N_t, 
+      N_ind_grp = N_c, 
+      avg_grp_size = n_group,
+      ICC = icc_005, # Husk at ændre denne
+      g = gt_DID_005, #Husk at ændre denne
+      model = "DiD",
+      prepost_cor = ppcor,
+      add_name_to_vars = "_DID_005",
+      vars = c(vgt_DID_005, Wgt_DID_005)
+    ),
+    
+    # Her antager vi at ICC = 0.2
+    gamma_sqrt_02 = VIVECampbell::gamma_1armcluster(
+      N_total = N_tot, Nc = N_c, avg_grp_size = n_group, ICC = icc_02, sqrt = TRUE
+    ), 
+    
+    gt_DID_02 = g_DID * gamma_sqrt_02,
+    VIVECampbell::vgt_smd_1armcluster(
+      N_cl_grp = N_t, 
+      N_ind_grp = N_c, 
+      avg_grp_size = n_group,
+      ICC = icc_02, 
+      g = gt_DID_02, 
+      model = "DiD",
+      prepost_cor = ppcor,
+      add_name_to_vars = "_DID_02",
+      vars = c(vgt_DID_02, Wgt_DID_02)
+    ),
+    
+    vary_id = paste(setting, outcome, treatment, sep = "/")
+  ) |> 
+  ungroup()
+
+Fisher1996_est
 
 ```
+
+
+## Long and wide format data
+
+Begge formater har hver deres ulemper. Man skal skrive mindre kode, når man beregner effektstørrelser med long format data, men man har dermed også et datasæt som i antal af rækker ikke passer sammen med den endelige effektstørrelsesdata. Omvendt, kræver det længere koder at kode wide format data, men her får man tilgengæld også et datasæt som passer i antal med dette endelige effektstørrelses datasæt. På mange af vores andre review indtastes den raw data (som den fra Tabel 1) direkte i excel i stedet for i R. Det kan igen måde have fordele og ulemper. Ved at indtaste det studie for studie i R, bliver det noget tydeligere for læsere, hvor man præcist har udtrykket data, men det kræver også at man skriver langt, langt flere koder, som på mange måder kan være meget tidskrævende. Igen det er meget en smagssag. 
+
+```{r}
+
+pivot_wider(
+  Fisher1996,
+  values_from = m_pre:v,
+  names_from = treatment
+  )
+
+```
+
+
+
 
 # Visualize effect size data 
 
@@ -547,7 +880,7 @@ Fisher1996_est |>
         color = Category)) + 
   geom_pointrange(position = position_dodge2(width = 0.5, padding = 0.5)) +
   geom_vline(xintercept = 0, linetype = "dashed", color = "black", alpha = 0.5) +
-  facet_grid(Setting~Outcome, scales = "free") +
+  facet_grid(setting~outcome, scales = "free") +
   theme_bw() +
   theme(legend.position = "bottom") +
   ylab("Effect size type")
