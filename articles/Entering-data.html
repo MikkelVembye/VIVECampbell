@@ -89,7 +89,7 @@
                         <h4 data-toc-skip class="author">Mikkel H.
 Vembye</h4>
             
-            <h4 data-toc-skip class="date">Last modified 2024-05-23</h4>
+            <h4 data-toc-skip class="date">Last modified 2024-05-24</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/MikkelVembye/VIVECampbell/blob/HEAD/vignettes/Entering-data.Rmd" class="external-link"><code>vignettes/Entering-data.Rmd</code></a></small>
       <div class="d-none name"><code>Entering-data.Rmd</code></div>
@@ -1194,7 +1194,7 @@ studier<a class="anchor" aria-label="anchor" href="#beregning-af-standardafvigel
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">treatment</span> <span class="op">!=</span> <span class="st">"TAU"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
 <span>    n_dot <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">N</span><span class="op">)</span>,</span>
-<span>    sd_pool_grp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="va">n_dot</span><span class="op">)</span><span class="op">*</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="op">(</span><span class="va">N</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span><span class="op">*</span><span class="va">sd_post</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/prod.html" class="external-link">prod</a></span><span class="op">(</span><span class="va">N</span><span class="op">)</span><span class="op">/</span><span class="va">n_dot</span><span class="op">)</span><span class="op">*</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/diff.html" class="external-link">diff</a></span><span class="op">(</span><span class="va">m_post</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op">)</span>,</span>
+<span>    sd_pool_grp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="va">n_dot</span><span class="op">)</span><span class="op">*</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="op">(</span><span class="va">N</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span><span class="op">*</span><span class="va">sd_post</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/prod.html" class="external-link">prod</a></span><span class="op">(</span><span class="va">N</span><span class="op">)</span><span class="op">/</span><span class="va">n_dot</span><span class="op">)</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/diff.html" class="external-link">diff</a></span><span class="op">(</span><span class="va">m_post</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">)</span>,</span>
 <span>    .by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">outcome</span>, <span class="va">setting</span><span class="op">)</span></span>
 <span>  <span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_rows.html" class="external-link">bind_rows</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Fisher1996</span>, <span class="va">treatment</span> <span class="op">==</span> <span class="st">"TAU"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
@@ -1428,7 +1428,7 @@ derefter beregnes således</p>
 grupper beregnes via</p>
 <p><span class="math display">\[\begin{equation}
   \tag{13}
-   \rho_{prepost} = \frac{e^{(2\bar{z_r}})-1}{e^{(2\bar{z_r})}+1}
+   \bar\rho_{prepost} = \frac{e^{(2\bar{z_r}})-1}{e^{(2\bar{z_r})}+1}
 \end{equation}\]</span></p>
 <p>Jeg viser, hvordan dette kan beregnes, som det første i nedenstående
 effektstørrelsesudregninger i næste sektion.</p>
@@ -1447,12 +1447,13 @@ for at forsimple beregningerne. Jeg vil længere nede vise, hvordan I let
 kan skabe de samme beregninger på tværs af forskellige
 treatment-grupper. Når jeg arbejder med effektstørrelsesdata i R, har
 jeg en række regler jeg arbejder ud fra. Den første er, at jeg altid
-opkakder den raw effekt-data med efternavnet på førteforfatteren og
+opkalder det rå effekt-data med efternavnet på førteforfatteren og
 udgivelsesåret for studiet, således at objektnavnet bliver
 <code>AuthorYear</code>. Objektet som indeholder
 effektstørrelsesudregningerne kalder jeg altid
-<code>AuthorYear_est</code>. <code>est</code> står for ‘Effect Sizes
-standardized with the Total variation’. Lad os springe ud i det.</p>
+<code>AuthorYear_est</code>. <code>est</code> står for
+‘<strong>E</strong>ffect <strong>S</strong>izes standardized with the
+<strong>T</strong>otal variation’. Lad os springe ud i det.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">Fisher1996_es_disease</span> <span class="op">&lt;-</span> </span>
 <span>  <span class="va">Fisher1996</span> <span class="op">|&gt;</span> </span>
