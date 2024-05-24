@@ -364,7 +364,7 @@ Fisher1996 <-
   filter(treatment != "TAU") |> 
   mutate(
     n_dot = sum(N),
-    sd_pool_grp = sqrt((1/n_dot)*(sum((N-1)*sd_post^2) + (prod(N)/n_dot)*(diff(m_post)^2)) ),
+    sd_pool_grp = sqrt((1/n_dot)*(sum((N-1)*sd_post^2) + (prod(N)/n_dot)*diff(m_post)^2) ),
     .by = c(outcome, setting)
   ) |> 
   bind_rows(filter(Fisher1996, treatment == "TAU")) |> 
@@ -486,14 +486,14 @@ Herefter kan den gennemsnitlige pre-posttest korrelation på tværs af grupper b
 
 \begin{equation}
   \tag{13}
-   \rho_{prepost} = \frac{e^{(2\bar{z_r}})-1}{e^{(2\bar{z_r})}+1}
+   \bar\rho_{prepost} = \frac{e^{(2\bar{z_r}})-1}{e^{(2\bar{z_r})}+1}
 \end{equation}
 
 Jeg viser, hvordan dette kan beregnes, som det første i nedenstående effektstørrelsesudregninger i næste sektion. 
 
 # Omsætning af formlerne til beregninger i R
 
-Nedenfor vil jeg vise, hvordan I kan omsætte ovenstående formler, dvs. beregne Cohens' $d$, Hedges' $g$ samt difference-in-differences effektstørrelser i R, og senere også hvordan i korrigere disse for klusterfejl. I eksemplet nedenfor fjerner jeg den ene treatment gruppe for at forsimple beregningerne. Jeg vil længere nede vise, hvordan I let kan skabe de samme beregninger på tværs af forskellige treatment-grupper. Når jeg arbejder med effektstørrelsesdata i R, har jeg en række regler jeg arbejder ud fra. Den første er, at jeg altid opkakder den raw effekt-data med efternavnet på førteforfatteren og udgivelsesåret for studiet, således at objektnavnet bliver `AuthorYear`. Objektet som indeholder effektstørrelsesudregningerne kalder jeg altid `AuthorYear_est`. `est` står for 'Effect Sizes standardized with the Total variation'. Lad os springe ud i det. 
+Nedenfor vil jeg vise, hvordan I kan omsætte ovenstående formler, dvs. beregne Cohens' $d$, Hedges' $g$ samt difference-in-differences effektstørrelser i R, og senere også hvordan i korrigere disse for klusterfejl. I eksemplet nedenfor fjerner jeg den ene treatment gruppe for at forsimple beregningerne. Jeg vil længere nede vise, hvordan I let kan skabe de samme beregninger på tværs af forskellige treatment-grupper. Når jeg arbejder med effektstørrelsesdata i R, har jeg en række regler jeg arbejder ud fra. Den første er, at jeg altid opkalder det rå effekt-data med efternavnet på førteforfatteren og udgivelsesåret for studiet, således at objektnavnet bliver `AuthorYear`. Objektet som indeholder effektstørrelsesudregningerne kalder jeg altid `AuthorYear_est`. `est` står for '**E**ffect **S**izes standardized with the **T**otal variation'. Lad os springe ud i det. 
 
 
 ```{r}
