@@ -194,7 +194,7 @@ Fisher1996 <- tibble::tibble(
   
   treatment = rep(c("Disease", "Cognitive", "TAU"), 8),
   
-  N = 19, 
+  N = rep(c(6,6,7), 8), 
   
   m_pre = c(
     
@@ -357,32 +357,42 @@ hvor $df = n^T + n^C$ når der ikke er clusteringproblemer. En meget vigtig vide
 
 ### Beregning af standardafvigelse baseret på alle grupper i fleregruppe studier
 
-```{r}
-
-Fisher1996 <- 
-  Fisher1996 |> 
-  filter(treatment != "TAU") |> 
-  mutate(
-    n_dot = sum(N),
-    sd_pool_grp = sqrt((1/n_dot)*(sum((N-1)*sd_post^2) + (prod(N)/n_dot)*diff(m_post)^2) ),
-    .by = c(outcome, setting)
-  ) |> 
-  bind_rows(filter(Fisher1996, treatment == "TAU")) |> 
-  mutate(
-    n_dot = if_else(treatment == "TAU", N, n_dot),
-    sd_pool_grp = if_else(treatment == "TAU", sd_post, sd_pool_grp)
-  ) |> 
-  arrange(outcome, setting)
-
-Fisher1996
-```
-
-
-## Hedges' $g$
-En anden meget kendte effektstørrelser er den såkaldte Hedges' $g$. Forskellen med Cohens' $d$ og Hedges' $g$ er, at Hedges $g$ korrigerer en overestimeringfejl i Cohens' $d$. Det vil konkret sige at Cohens' $d$ bliver for stor ift. den sande bagvedliggende effekt som forsøges estimeres, når sample størrelsen er lille, dvs. når $n^i<20$  for grupperne $g = T,C$. Derfor ganges en korrektion faktor $J = 1 - \frac{3}{(4-df-1)}$ på formlel (1). Det ser ud således
+Når man har med fleregruppe studier (dvs. multi-arm trials), som Fisher studiet her, kan man argumentere for, at en bedre beregning af
+den poolede standardafvigelse (SD) ville bero på en SD, som er baseret på alle målte SDs på tværs af alle grupperne i forsøget. Dermed vil den poolede SD holdes konstant på af de forskellige effekter. Det er normalt ikke noget vi benytter i vores reviews, men jeg viser her formlen og koderne til at beregne denne, hvis man skulle få brug for den. Hvis man vil bruge denne tilgang, så beregnes den samlede $SD_{pool, all}$ således
 
 \begin{equation}
   \tag{5}
+   SD_{pool, all} = \sqrt{\frac{1}{N-T-1}\sum^{T}_{t=0}(n^t-1)(SD^t_{post})^2}
+\end{equation}
+
+hvor $N = \sum^{T}_{t=0}n^t$ for treatmentgrupperne $t=0,...,T$ med $t=0$ svarende til kontrolgruppen ($C$).
+
+```{r}
+
+SD_all_arms <- 
+  Fisher1996 |> 
+  dplyr::summarise(
+    # Her beregner jeg formel (5)
+    SD_all_arm = sqrt( (1/(sum(N)-3-1)) * sum((N-1)*sd_post^2) ),
+    .by = c(outcome, setting)
+  ) |> 
+  slice(rep(1:8, 2)) |> 
+  arrange(outcome, setting) |> 
+  mutate(
+    treatment = rep(c("Disease", "Cognitive"), 8)
+  ) |> 
+  relocate(treatment, .after = setting)
+  
+
+```
+
+Det objekt kan senere bindes sammen med vores effektstørrelsesdata. 
+
+## Hedges' $g$
+En anden meget kendte effektstørrelser er den såkaldte Hedges' $g$. Forskellen med Cohens' $d$ og Hedges' $g$ er, at Hedges $g$ korrigerer en overestimeringfejl i Cohens' $d$. Det vil konkret sige at Cohens' $d$ bliver for stor ift. den sande bagvedliggende effekt som forsøges estimeres, når sample størrelsen er lille, dvs. når $n^t<20$. Derfor ganges en korrektion faktor $J = 1 - \frac{3}{(4-df-1)}$ på formlel (1). Det ser ud således
+
+\begin{equation}
+  \tag{6}
    g = J\left(\frac{M^T_{post} - M^C_{post}}{SD_{pool}}\right)
 \end{equation}
 
@@ -393,7 +403,7 @@ Larry Hedges, som har udviklet denne effektstørrelse, har senere fundet, at det
 Den sidste også relativt kendte effektstørrelse er Glass' $\Delta$. Denne effektstørrelse adskiller sig ved, at man kun benytter post-test standardafvigelsen fra kontrolgruppen, $SD^C_{post}$, til at standardisere/skalere effektforskellen i formel (1). Det bygger på antagelsen om, at kontrolgruppen ligner den fulde population mest, da disse ikke har været udsat for en intervention. Den ser således ud
 
 \begin{equation}
-  \tag{6}
+  \tag{7}
    \Delta = \left(\frac{M^T_{post} - M^C_{post}}{SD^C_{post}}\right)
 \end{equation}
 
@@ -403,7 +413,7 @@ Formel (2) kan også benyttes til at beregne sampling for $\Delta$
 Ovenfor har jeg vist en række af de mest kendte og simple effektstørrelsesformler. Fælles for disse er, at de alle sammen 'kun' benytter posttest-effekter til at beregne gennemsnitforskellen mellem treatment og kontrolgruppen, som beror på den antagelse at de raw means er unbiased. Det kan dog være en hård antagelse i mange tilfælde, når vi tillader ikke-randomiserede studier i vores reviews, da means ofte vil være en biased i forskellig grad grundet brug af samples som ikke er trukket via randomisering. Dog kan antagelsen også være hård for means, der kommer fra RCTs, især små RCTer, da samplingfejl selvfølgelig også kan forekomme i den type af studier. En løsning til at formildne dette intern validitetsprogram, er at beregne, de såkaldte difference-in-differences (DID) effektstørrelser (og kaldte pretest-adjusted effect sizes), hvor man kontrollerer baseline forskellene på outcme variablen ud mellem treatment og kontrolgruppen. Vi vil ofte beregne både Hedges' $g$ og DID effektstørrelser, men jeg er ret stor fan af den sidste og vil altid lægge mest vægt på fotolkningen af disse, dels fordi denne effektsttørreslser kan reducere bias og dels fordi den kan estimateres mere præcist (se Hedges et al. [2023](https://doi.org/10.1111/bmsp.12296)).  Formlen for DID effektstørrelsen er givet ved
 
 \begin{equation}
-  \tag{7}
+  \tag{8}
    g_{DID} = J \left(\frac{[M^T_{post} - M^T_{pre}] - [M^C_{post} - M^C_{pre}]}{SD_{pool}}\right)
 \end{equation}
 
@@ -414,7 +424,7 @@ hvor $M^T_{post}$ og $M^C_{post}$ samt $M^T_{pre}$ og $M^C_{pre}$ er post- og ba
 Hvis vi antager, at der ikke er klusterproblmer, så er $df = n^T + n^C$. Når der er klusteringproblemer kan $df$ beregnes via Equation  E.21 ([WWC, 2023](https://ies.ed.gov/ncee/WWC/Docs/referenceresources/Final_WWC-HandbookVer5_0-0-508.pdf), s. 171) eller hvis der kun er klustering i en gruppe Equation 7 i Hedges og Citkowicz ([2015](https://doi.org/10.3758/s13428-014-0538-z)). Sampling variansen for $g_{DID}$ er givet ved 
 
 \begin{equation}
-  \tag{8}
+  \tag{9}
    Var_{g_{DID}} = \left(\frac{1}{n^T} + \frac{1}{n^C}\right) 2(1-\rho_{prepost})  + \frac{g_{DID}^2}{2df}
 \end{equation}
 
@@ -422,7 +432,7 @@ Hvis vi antager, at der ikke er klusterproblmer, så er $df = n^T + n^C$. Når d
 Problemet er dog, at man skal kende pre-posttest korrelationen, $\rho_{prepost}$, for at kunne beregne variansen korrekt. I mange tilfælde vil vi være i stand til at kunne beregne denne (se eksempel nedenfor). Se eksemplvis formlerne fra [Cochranes handbook](https://training.cochrane.org/handbook/current/chapter-06#section-6-5-2-8) eller formel 31 i Wilson ([2016](https://mason.gmu.edu/~dwilsonb/downloads/esformulas.pdf)). Se også denne blog på [VIVECampbell siden](https://mikkelvembye.github.io/VIVECampbell/articles/ancova-puzzler.html). Alternativt kan $Var_{g_{DID}}$ beregnes korrekt, hvis forfatterne har afrapporteret $t$- eller $F$-værdier fra repeated ANOVA, ANCOVA eller en regressions model, som har inkluderet pretest-outcome som kontrol variabel. Hvis dette er tilfældet, så 
 
 \begin{equation}
-  \tag{9}
+  \tag{10}
    Var_{g_{DID}} = \frac{g_{DID}^2}{t^2} + \frac{g_{DID}^2}{2df}
 \end{equation}
 
@@ -435,14 +445,14 @@ Bemærk her at $F = t^2$. Se [James Pustejovskys blog](https://www.jepusto.com/a
 For at kunne beregne sampling variansen for $g_{DID}$ skal vi kende, estimere eller imputere en værdi for korrelationen mellem pretest og postscorene, $\rho_{prepost}$. jeg vil på et senere tidspunkt skrive en blog, hvor jeg vil vise eksempler på alle de måder jeg kender til, hvorpå man kan bakke ud $\rho_{prepost}$. Når resultaterne er afrapportet som i Tabel 1, kan vi faktisk udregne den $\rho_{prepost}$ for hhv. treatment- og kontrolgruppen. Her kan vi benytte formler fra [Cochranes handbook](https://training.cochrane.org/handbook/current/chapter-06#section-6-5-2-8), som for treatmentet gruppen kan beregnes vha
 
 \begin{equation}
-  \tag{10}
+  \tag{11}
    \rho^T_{prepost} = \frac{(SD^T_{pre})^2 + (SD^T_{post})^2 - (SD^T_{diff})^2}{2 \times SD^T_{pre} \times SD^T_{post}}
 \end{equation}
 
 og for kontrolgruppen
 
 \begin{equation}
-  \tag{11}
+  \tag{12}
    \rho^C_{prepost} = \frac{(SD^C_{pre})^2 + (SD^C_{post})^2 - (SD^C_{diff})^2}{2 \times SD^C_{pre} \times SD^C_{post}}
 \end{equation}
 
@@ -454,7 +464,7 @@ Fisher1996 <-
   Fisher1996 |> 
   mutate(
   
-  # Regnes som i formler (10) og (11). I kan finde disse i Cochrane handbook (Higgins & Thomas, 2019, p. 166).
+  # Regnes som i formler (11) og (12). I kan finde disse i Cochrane handbook (Higgins & Thomas, 2019, p. 166).
   r = (sd_pre^2 + sd_post^2-sd_diff^2)/(2 * sd_pre * sd_post ),
   
   ) 
@@ -478,14 +488,14 @@ Fisher1996 <-
 Den gennemsnitlige Fishers' z-score på tværs af grupperne kan derefter beregnes således
 
 \begin{equation}
-  \tag{12}
+  \tag{13}
    \bar{z_r} = \frac{\sum^g_{i = 1}w_iz_i}{\sum^g_{i = 1}w_i}
 \end{equation}
 
 Herefter kan den gennemsnitlige pre-posttest korrelation på tværs af grupper beregnes via
 
 \begin{equation}
-  \tag{13}
+  \tag{14}
    \bar\rho_{prepost} = \frac{e^{(2\bar{z_r}})-1}{e^{(2\bar{z_r})}+1}
 \end{equation}
 
@@ -507,9 +517,9 @@ Fisher1996_es_disease <-
       treatment = treatment[1],
       main_es_method = "diff-in-diffs",
       
-      #Her regner vi den gennemsnitlige Fishers z-score som angivet i formel (12)
+      #Her regner vi den gennemsnitlige Fishers z-score som angivet i formel (13)
       mean_z = sum(w*z)/sum(w),
-      #Her beregner vi den gennemsnitlige pre-posttest korrelation som angivet i formel (13) 
+      #Her beregner vi den gennemsnitlige pre-posttest korrelation som angivet i formel (14) 
       ppcor = (exp(2*mean_z)-1)/(exp(2*mean_z)+1),
       # Her dokumneterer jeg, hvor vi har fundet pre-posttest korrelationen 
       ppcor_calc_method = "Calculated from study results",
@@ -521,14 +531,14 @@ Fisher1996_es_disease <-
       N_tot = sum(N),
       
       # Her laver vi variablen med antal frihedsgrader, som benyttes hhv. til 
-      # beregne andet led i variansformlerne (3) og (8) samt til at skabe J faktoren
+      # beregne andet led i variansformlerne (3) og (9) samt til at skabe J faktoren
       # der bruges til beregne Hedges' g
       df_ind = N_tot,
       
       # Her beregnes en pooled standardafvigelse som vist i formel (2)
       sd_pool = sqrt(sum((N - 1) * sd_post^2) / df_ind),
       
-      # Beregning af tælleren i formler (1), (5) og (6) 
+      # Beregning af tælleren i formler (1), (6) og (7) 
       # Jeg vender her skalen om, da et fald i scoren på de givne skalaer indikerer en positiv fremgang
       m_diff_post = (m_post[1]-m_post[2])*-1,
       
@@ -540,13 +550,13 @@ Fisher1996_es_disease <-
       # publikationsbias testning
       Wd_post = sum(1/N),
       
-      # Beregnig af Hedges' g fra formel (5)
+      # Beregnig af Hedges' g fra formel (6)
       J = 1 - 3/(4*df_ind-1),
       g_post = J * d_post,
       vg_post = vd_post,
       Wg_post = sum(1/N),
       
-      # Beregnig af Glass' delta fra formel (6). Vi bruger aldrig denne, så den 
+      # Beregnig af Glass' delta fra formel (7). Vi bruger aldrig denne, så den 
       # er kun med her for eksemplets skyld
       sd_control = sd_post[2],
       delta_post = m_diff_post/sd_control,
@@ -557,12 +567,12 @@ Fisher1996_es_disease <-
       diff_t = (m_post[1] - m_pre[1])*-1,
       diff_c = (m_post[2] - m_pre[2])*-1,
       
-      # Her skaber jeg så tælleren fra formel (7)
+      # Her skaber jeg så tælleren fra formel (8)
       DD = (diff_t - diff_c),
       
-      # Her bergener jeg hele formel (7)
+      # Her bergener jeg hele formel (8)
       d_DID = (diff_t - diff_c) / sd_pool,
-      # Her beregner jeg formel (8)
+      # Her beregner jeg formel (9)
       vd_DID = sum(1/N) * (2*(1-ppcor)) + d_DID^2/(2*df_ind),
       # Hvis man vil beregne standardfejlen istedet tager man blot kvadratroden af variansen
       sed_DID = sqrt(vd_DID),
@@ -617,14 +627,14 @@ fisher_func <- function(label){
       N_tot = sum(N),
       
       # Her laver vi variablen med antal frihedsgrader, som benyttes hhv. til 
-      # beregne andet led i variansformlerne (3) og (8) samt til at skabe J faktoren
+      # beregne andet led i variansformlerne (3) og (9) samt til at skabe J faktoren
       # der bruges til beregne Hedges' g
       df_ind = N_tot,
       
       # Her beregnes en pooled standardafvigelse som vist i formel (2)
       sd_pool = sqrt(sum((N - 1) * sd_post^2) / df_ind),
       
-      # Beregning af tælleren i formler (1), (5) og (6) 
+      # Beregning af tælleren i formler (1), (6) og (7) 
       # Jeg vender her skalen om, da et fald i scoren på de givne skalaer indikerer en positiv fremgang
       m_diff_post = (m_post[1]-m_post[2])*-1,
       
@@ -636,13 +646,13 @@ fisher_func <- function(label){
       # publikationsbias testning
       Wd_post = sum(1/N),
       
-      # Beregnig af Hedges' g fra formel (5)
+      # Beregnig af Hedges' g fra formel (6)
       J = 1 - 3/(4*df_ind-1),
       g_post = J * d_post,
       vg_post = vd_post,
       Wg_post = sum(1/N),
       
-      # Beregnig af Glass' delta fra formel (6). Vi bruger aldrig denne, så den 
+      # Beregnig af Glass' delta fra formel (7). Vi bruger aldrig denne, så den 
       # er kun med her for eksemplets skyld
       sd_control = sd_post[2],
       delta_post = m_diff_post/sd_control,
@@ -653,12 +663,12 @@ fisher_func <- function(label){
       diff_t = (m_post[1] - m_pre[1])*-1,
       diff_c = (m_post[2] - m_pre[2])*-1,
       
-      # Her skaber jeg så tælleren fra formel (7)
+      # Her skaber jeg så tælleren fra formel (8)
       DD = (diff_t - diff_c),
       
-      # Her bergener jeg hele formel (7)
+      # Her bergener jeg hele formel (8)
       d_DID = (diff_t - diff_c) / sd_pool,
-      # Her beregner jeg formel (8)
+      # Her beregner jeg formel (9)
       vd_DID = sum(1/N) * (2*(1-ppcor)) + d_DID^2/(2*df_ind),
       # Hvis man vil beregne standardfejlen istedet tager man blot kvadratroden af variansen
       sed_DID = sqrt(vd_DID),
@@ -722,7 +732,7 @@ Fisher1996_es
 
 <br />
 \begin{equation}
-  \tag{14}
+  \tag{15}
    gt_{DID} = \omega\left(\frac{M^T_{post} - M^C_{post}}{SD_{pool}}\right)\gamma
 \end{equation}
 <br />
@@ -731,7 +741,7 @@ hvor $\omega = 1 - 3/(4-df_h-1)$, hvor $df_h$ er de klusterjusterede frihedsgrad
 
 <br />
 \begin{equation}
-  \tag{15}
+  \tag{16}
    h = \dfrac{[(N-2)-2(n-1)\rho]^2}{(N-2)(1-\rho)^2 + n(N-2n)\rho^2 + 2(N-2n)\rho(1-\rho)}
 \end{equation}
 <br />
