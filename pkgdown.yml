@@ -10,9 +10,10 @@ articles:
   meta-analysis-in-R: meta-analysis-in-R.html
   openai: openai.html
   Pooling-subgroups: Pooling-subgroups.html
+  samle-flere-ris-filer: samle-flere-ris-filer.html
   todos: todos.html
   VIVECampbell: VIVECampbell.html
-last_built: 2024-05-24T12:46Z
+last_built: 2024-05-29T11:29Z
 urls:
   reference: https://mikkelvembye.github.io/VIVECampbell/reference
   article: https://mikkelvembye.github.io/VIVECampbell/articles
