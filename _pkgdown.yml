@@ -48,6 +48,7 @@ articles:
    - articles/Github
    - articles/meta-analysis-in-R
    - articles/openai
+   - articles/samle-flere-ris-filer
 
  - title: EPPI content
    navbar: EPPI tips and manuals
@@ -61,6 +62,7 @@ articles:
    - articles/Pooling-subgroups
    - articles/ancova-puzzler
    - articles/es-calc-uden-means-og-sds
+
 
  - title: Other
    contents:
