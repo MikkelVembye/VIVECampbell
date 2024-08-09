@@ -15,7 +15,7 @@ gamma_1armcluster(N_total, Nc, avg_grp_size, ICC, sqrt = TRUE)
 
 \item{ICC}{Numerical value indicating the intra-class correlation (ICC) value.}
 
-\item{sqrt}{Logical indicating if the square root of gamma should be calculated. Default = \code{TRUE}}
+\item{sqrt}{Logical indicating if the square root of \eqn{\gamma} should be calculated. Default is \code{TRUE}.}
 }
 \value{
 Returns a numerical value for the cluster-design adjustment factor, \eqn{\gamma}.

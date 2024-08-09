@@ -146,7 +146,7 @@
 #' @param Nc Numerical value indicating the sample size of the arm/group that does not contain clustering.
 #' @param avg_grp_size Numerical value indicating the average cluster size.
 #' @param ICC Numerical value indicating the intra-class correlation (ICC) value.
-#' @param sqrt Logical indicating if the square root of gamma should be calculated. Default = \code{TRUE}
+#' @param sqrt Logical indicating if the square root of \eqn{\gamma} should be calculated. Default is \code{TRUE}.
 #'
 #' @return Returns a numerical value for the cluster-design adjustment factor, \eqn{\gamma}.
 #'
@@ -331,7 +331,11 @@ gamma_1armcluster <- function(N_total, Nc, avg_grp_size, ICC, sqrt = TRUE){
 #' \emph{Institute of Education Science}.
 #' \url{https://ies.ed.gov/ncee/wwc/Docs/referenceresources/WWC-41-Supplement-508_09212020.pdf}
 #'
-#' @inheritParams gamma_1armcluster
+#' @param N_total Numerical value indicating the total sample size of the study.
+#' @param Nc Numerical value indicating the sample size of the arm/group that does not contain clustering.
+#' @param avg_grp_size Numerical value indicating the average cluster size.
+#' @param ICC Numerical value indicating the intra-class correlation (ICC) value.
+#' @param sqrt Logical indicating if the square root of \eqn{\eta} should be calculated. Default is \code{FALSE}.
 #'
 #' @return Returns a numerical value for the design effect \eqn{\eta} when there is clustering in one treatment group only.
 #'
