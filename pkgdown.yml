@@ -1,20 +1,19 @@
 pandoc: 3.1.11
-pkgdown: 2.0.9
+pkgdown: 2.1.0
 pkgdown_sha: ~
 articles:
-  ancova-puzzler: ancova-puzzler.html
+  articles/ancova-puzzler: ancova-puzzler.html
   Entering-data: Entering-data.html
-  eppi-tips: eppi-tips.html
-  es-calc-uden-means-og-sds: es-calc-uden-means-og-sds.html
-  Github: Github.html
-  meta-analysis-in-R: meta-analysis-in-R.html
-  openai: openai.html
-  Pooling-subgroups: Pooling-subgroups.html
-  samle-flere-ris-filer: samle-flere-ris-filer.html
-  todos: todos.html
+  articles/eppi-tips: eppi-tips.html
+  articles/es-calc-uden-means-og-sds: es-calc-uden-means-og-sds.html
+  articles/Github: Github.html
+  articles/meta-analysis-in-R: meta-analysis-in-R.html
+  articles/openai: openai.html
+  articles/Pooling-subgroups: Pooling-subgroups.html
+  articles/samle-flere-ris-filer: samle-flere-ris-filer.html
+  articles/todos: todos.html
   VIVECampbell: VIVECampbell.html
-last_built: 2024-05-29T13:16Z
+last_built: 2024-08-09T05:55Z
 urls:
   reference: https://mikkelvembye.github.io/VIVECampbell/reference
   article: https://mikkelvembye.github.io/VIVECampbell/articles
-
