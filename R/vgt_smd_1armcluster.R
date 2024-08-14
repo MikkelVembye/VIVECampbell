@@ -242,11 +242,24 @@ vgt_smd_1armcluster <-
 
   if ("reg_coef" %in% model){
 
-    if (is.null(SE) || is.null(SD)){
-      stop("When model = 'reg_coef', you must specify both SE and SD.")
+    if (all(is.null(c(SE, SD, t_val)))){
+      stop("When model = 'reg_coef', you must specify both SE and SD, or t- or F-values.")
     }
 
-    var_term1 <- (SE/SD)^2
+
+    if (is.numeric(SE) && is.numeric(SD)){
+
+      var_term1 <- (SE/SD)^2
+
+    } else if (is.numeric(t_val)){
+
+      var_term1 <- g^2/t_val^2
+
+    } else if (is.numeric(F_val)){
+
+      var_term1 <- g^2/F_val
+
+    }
 
   }
 
