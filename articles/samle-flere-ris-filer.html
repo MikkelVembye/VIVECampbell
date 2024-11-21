@@ -8,8 +8,8 @@
 <title>Samle mange ris-filer til en (eller flere) fil(er) i R • VIVECampbell</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
-<link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Samle mange ris-filer til en (eller flere) fil(er) i R">
 </head>
 <body>
@@ -113,7 +113,8 @@ mængder af ris-filer til en eller flere filer via R-pakken
 <p><br> Jeg indlæser først de nødvendige pakker, der skal bruges til
 at samle risfilerne.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://revtools.net" class="external-link">revtools</a></span><span class="op">)</span> <span class="co"># Benyttes til at indlæse risfiler</span></span>
+<code class="sourceCode R"><span><span class="co">#library(revtools) # Benyttes til at indlæse risfiler</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">synthesisr</span><span class="op">)</span> <span class="co"># Forbedre pakke til at indlæse risfiler</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://purrr.tidyverse.org/" class="external-link">purrr</a></span><span class="op">)</span> <span class="co"># Benyttes til at kunne indlæse flere filer ad gangen</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://stringr.tidyverse.org" class="external-link">stringr</a></span><span class="op">)</span> <span class="co"># Benyttes til at sortere ens ris-filer korrekt</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span> </span></code></pre></div>
@@ -152,55 +153,57 @@ følger, hvor path-argumentet ignoreres.</p>
 <p>Når man har skabt en string-variabel med alle navne på de ris-filer,
 man ønsker samlet, kan man skabe et stort datasæt med alle referencer
 fra de givne ris-filer via <code><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">purrr::map()</a></code> funktionen og
-<code><a href="https://rdrr.io/pkg/revtools/man/read_bibliograpy.html" class="external-link">read_bibliography()</a></code> funktionen fra <code>revtools</code>.
+<code>read_bibliography()</code> funktionen fra <code>revtools</code>.
 Den sidste funktion konverterer referencerne fra ris-filerne til et
 datasæt i R. Om lidt vil vi omvendt benytte
-<code><a href="https://rdrr.io/pkg/revtools/man/write_bibliography.html" class="external-link">write_bibliography()</a></code> til at konvertere dette datasæt
+<code>write_bibliography()</code> til at konvertere dette datasæt
 tilbage til en eller flere ris-filer, alt efter behov.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ris_file_dat</span> <span class="op">&lt;-</span> </span>
 <span>  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">embase_file_names</span>, <span class="op">~</span> <span class="op">{</span></span>
-<span>    <span class="fu">revtools</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/revtools/man/read_bibliograpy.html" class="external-link">read_bibliography</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"undermappe_til_arbejdssti_1/"</span>, <span class="va">.x</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>      <span class="fu">base</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>    <span class="fu">synthesisr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/synthesisr/man/read_refs.html" class="external-link">read_refs</a></span><span class="op">(</span>filename <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"undermappe_til_arbejdssti_1/"</span>, <span class="va">.x</span><span class="op">)</span><span class="op">)</span> </span>
 <span>  <span class="op">}</span></span>
 <span>  <span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/list_c.html" class="external-link">list_rbind</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># Benyttes til at samle listen med datasæts som skabes via map()</span></span>
 <span></span>
 <span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">ris_file_dat</span><span class="op">)</span> <span class="co"># Få overblik og det samlede data</span></span></code></pre></div>
 <pre><code><span><span class="co">## Rows: 1,000</span></span>
-<span><span class="co">## Columns: 32</span></span>
-<span><span class="co">## $ label             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Kumar.J._2024_medR", "Park.J._2023_bioR", "Ludsk.J.…</span></span>
-<span><span class="co">## $ type              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "JOUR", "JOUR", "JOUR", "JOUR", "JOUR", "JOUR", "JOU…</span></span>
-<span><span class="co">## $ accession         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "2031394640", "2029577544", "2028779392", "202819456…</span></span>
-<span><span class="co">## $ title             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Mixed Methods Family Centered Study of Pain Experie…</span></span>
-<span><span class="co">## $ author            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Kumar J. and Atkinson D. and Chima A. and McLaughli…</span></span>
-<span><span class="co">## $ year              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "2024", "2023", "2023", "2023", "2023", "2023", "202…</span></span>
-<span><span class="co">## $ abstract          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Background and Objectives: Although racial disparit…</span></span>
-<span><span class="co">## $ keywords          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "adult and aged and avoidance behavior and caregiver…</span></span>
-<span><span class="co">## $ journal           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "medRxiv", "bioRxiv", "medRxiv", "medRxiv", "medRxiv…</span></span>
+<span><span class="co">## Columns: 35</span></span>
+<span><span class="co">## $ database          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Embase Preprint", "Embase Preprint", "Embase Prepri…</span></span>
+<span><span class="co">## $ source_type       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "JOUR", "JOUR", "JOUR", "JOUR", "JOUR", "JOUR", "JOU…</span></span>
+<span><span class="co">## $ publication_type  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Preprint", "Preprint", "Preprint", "Preprint", "Pre…</span></span>
 <span><span class="co">## $ language          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "English", "English", "English", "English", "English…</span></span>
-<span><span class="co">## $ institution       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "United States", "United States", "United States", "…</span></span>
-<span><span class="co">## $ publisher         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "medRxiv", "bioRxiv", "medRxiv", "medRxiv", "medRxiv…</span></span>
-<span><span class="co">## $ address           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "V. Chidambaran, Department of Anesthesia, Cincinnat…</span></span>
-<span><span class="co">## $ url               <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "https://www.medrxiv.org/", "https://www.biorxiv.org…</span></span>
+<span><span class="co">## $ address           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "United States and V. Chidambaran, Department of Ane…</span></span>
+<span><span class="co">## $ title             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Mixed Methods Family Centered Study of Pain Experie…</span></span>
+<span><span class="co">## $ journal           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "medRxiv", "bioRxiv", "medRxiv", "medRxiv", "medRxiv…</span></span>
+<span><span class="co">## $ keywords          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "adult and aged and avoidance behavior and caregiver…</span></span>
 <span><span class="co">## $ doi               <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "https://dx.doi.org/10.1101/2024.03.20.24304546", "h…</span></span>
+<span><span class="co">## $ accession_zr      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "2031394640", "2029577544", "2028779392", "202819456…</span></span>
+<span><span class="co">## $ url               <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "https://www.medrxiv.org/", "https://www.biorxiv.org…</span></span>
+<span><span class="co">## $ publisher         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "medRxiv", "bioRxiv", "medRxiv", "medRxiv", "medRxiv…</span></span>
+<span><span class="co">## $ A1                <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Kumar J. and Atkinson D. and Chima A. and McLaughli…</span></span>
+<span><span class="co">## $ AO                <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Chidambaran, Vidya; ORCID: https://orcid.org/0000-0…</span></span>
+<span><span class="co">## $ L2                <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "http://ovidsp.ovid.com/ovidweb.cgi?T=JS&amp;PAGE=refere…</span></span>
+<span><span class="co">## $ M1                <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "(Kumar, Atkinson, Chima, McLaughlin, Parikh, Chidam…</span></span>
+<span><span class="co">## $ N2                <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Background and Objectives: Although racial disparit…</span></span>
+<span><span class="co">## $ Y1                <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "2024//", "2023//", "2023//", "2023//", "2023//", "2…</span></span>
 <span><span class="co">## $ issn              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, "2692-8205 (electronic) and 2692-8205", NA, NA, …</span></span>
 <span><span class="co">## $ volume            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, NA, NA, "30", NA, NA, NA, NA, NA, NA…</span></span>
 <span><span class="co">## $ issue             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, NA, NA, "7", NA, NA, NA, NA, NA, NA,…</span></span>
-<span><span class="co">## $ pages             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, NA, NA, "6946-6947", NA, NA, NA, NA,…</span></span>
-<span><span class="co">## $ journal_secondary <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, NA, NA, "Current Oncology; 38th Annu…</span></span>
-<span><span class="co">## $ AO                <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Chidambaran, Vidya; ORCID: https://orcid.org/0000-0…</span></span>
-<span><span class="co">## $ DB                <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Embase Preprint", "Embase Preprint", "Embase Prepri…</span></span>
-<span><span class="co">## $ l2                <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "http://ovidsp.ovid.com/ovidweb.cgi?T=JS&amp;PAGE=refere…</span></span>
-<span><span class="co">## $ m1                <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "(Kumar, Atkinson, Chima, McLaughlin, Parikh, Chidam…</span></span>
-<span><span class="co">## $ PT                <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Preprint", "Preprint", "Preprint", "Preprint", "Pre…</span></span>
+<span><span class="co">## $ start_page        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, NA, NA, "6946", NA, NA, NA, NA, NA, …</span></span>
+<span><span class="co">## $ end_page          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, NA, NA, "6947", NA, NA, NA, NA, NA, …</span></span>
 <span><span class="co">## $ ID                <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …</span></span>
 <span><span class="co">## $ XT                <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …</span></span>
-<span><span class="co">## $ c1                <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …</span></span>
-<span><span class="co">## $ c2                <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …</span></span>
-<span><span class="co">## $ m2                <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …</span></span>
-<span><span class="co">## $ c3                <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …</span></span>
-<span><span class="co">## $ c4                <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …</span></span></code></pre>
+<span><span class="co">## $ pubmed_id         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …</span></span>
+<span><span class="co">## $ C1                <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …</span></span>
+<span><span class="co">## $ M2                <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …</span></span>
+<span><span class="co">## $ proceedings_title <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …</span></span>
+<span><span class="co">## $ C4                <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …</span></span>
+<span><span class="co">## $ author            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …</span></span>
+<span><span class="co">## $ year              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …</span></span>
+<span><span class="co">## $ abstract          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …</span></span>
+<span><span class="co">## $ article_id        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …</span></span>
+<span><span class="co">## $ place_published   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …</span></span></code></pre>
 <p>Nu har vi samlet alle referencer fra ris-filerne i et datasæt, og det
 er dette datasæt, vi nu kan konvertere tilbage til en eller flere
 ris-filer. Nedenfor giver jeg først et eksempel på, hvordan hele
@@ -220,8 +223,8 @@ de lette tilfælde gøre dette håndholdt, som følger.</p>
 <code class="sourceCode R"><span><span class="va">ris_file_1_500</span> <span class="op">&lt;-</span> <span class="va">ris_file_dat</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">500</span>,<span class="op">]</span></span>
 <span><span class="va">ris_file_501_1000</span> <span class="op">&lt;-</span> <span class="va">ris_file_dat</span><span class="op">[</span><span class="fl">501</span><span class="op">:</span><span class="fl">1000</span>,<span class="op">]</span></span>
 <span></span>
-<span><span class="fu">revtools</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/revtools/man/write_bibliography.html" class="external-link">write_bibliography</a></span><span class="op">(</span><span class="va">ris_file_1_500</span>, filename <span class="op">=</span> <span class="st">"EMBASE_ris_file_1_500.ris"</span>, format <span class="op">=</span> <span class="st">"ris"</span><span class="op">)</span></span>
-<span><span class="fu">revtools</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/revtools/man/write_bibliography.html" class="external-link">write_bibliography</a></span><span class="op">(</span><span class="va">ris_file_501_1000</span>, filename <span class="op">=</span> <span class="st">"EMBASE_ris_file_501_1000.ris"</span>, format <span class="op">=</span> <span class="st">"ris"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">synthesisr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/synthesisr/man/write_refs.html" class="external-link">write_refs</a></span><span class="op">(</span><span class="va">ris_file_1_500</span>, filename <span class="op">=</span> <span class="st">"EMBASE_ris_file_1_500.ris"</span>, format <span class="op">=</span> <span class="st">"ris"</span><span class="op">)</span></span>
+<span><span class="fu">synthesisr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/synthesisr/man/write_refs.html" class="external-link">write_refs</a></span><span class="op">(</span><span class="va">ris_file_501_1000</span>, filename <span class="op">=</span> <span class="st">"EMBASE_ris_file_501_1000.ris"</span>, format <span class="op">=</span> <span class="st">"ris"</span><span class="op">)</span></span></code></pre></div>
 <p>Det kan dog bare hurtigt ende med at blive trivielt, hvis man
 eksempelvis skal dele et datasæt på 100.000 referencer op i blokke af
 4000. Det bliver trivielt nok i sig selv at skulle loade disse 25 filer
@@ -236,7 +239,7 @@ effektiv.</p>
 <span>  <span class="va">name_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">file_name</span>, <span class="st">"_"</span>, <span class="va">start_seq</span> , <span class="st">"_"</span>, <span class="va">end_seq</span>, <span class="st">".ris"</span><span class="op">)</span></span>
 <span>  </span>
 <span>  <span class="va">ris_dat</span> <span class="op">&lt;-</span> <span class="va">data</span><span class="op">[</span><span class="va">start_seq</span><span class="op">:</span><span class="va">end_seq</span>,<span class="op">]</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/invisible.html" class="external-link">invisible</a></span><span class="op">(</span><span class="fu">revtools</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/revtools/man/write_bibliography.html" class="external-link">write_bibliography</a></span><span class="op">(</span><span class="va">ris_dat</span>, filename <span class="op">=</span> <span class="va">name_file</span>, format <span class="op">=</span> <span class="st">"ris"</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/invisible.html" class="external-link">invisible</a></span><span class="op">(</span><span class="fu">synthesisr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/synthesisr/man/write_refs.html" class="external-link">write_refs</a></span><span class="op">(</span><span class="va">ris_dat</span>, filename <span class="op">=</span> <span class="va">name_file</span>, format <span class="op">=</span> <span class="st">"ris"</span><span class="op">)</span><span class="op">)</span></span>
 <span>  </span>
 <span><span class="op">}</span></span>
 <span></span>
@@ -275,7 +278,7 @@ via file_name argumentet i den konstruerede
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
     </footer>
