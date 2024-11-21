@@ -34,5 +34,6 @@ Suggests:
     gt,
     clubSandwich,
     revtools,
+    synthesisr,
     fs
 VignetteBuilder: knitr

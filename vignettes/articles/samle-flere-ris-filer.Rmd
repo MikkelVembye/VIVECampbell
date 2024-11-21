@@ -30,7 +30,8 @@ Det hænder ofte af forskellige årsager, at vi oplever at vores bibliometriske 
 Jeg indlæser først de nødvendige pakker, der skal bruges til at samle risfilerne. 
 
 ```{r, message=FALSE, warning=FALSE}
-library(revtools) # Benyttes til at indlæse risfiler
+#library(revtools) # Benyttes til at indlæse risfiler
+library(synthesisr) # Forbedre pakke til at indlæse risfiler
 library(purrr) # Benyttes til at kunne indlæse flere filer ad gangen
 library(stringr) # Benyttes til at sortere ens ris-filer korrekt
 library(dplyr) 
@@ -68,8 +69,7 @@ Når man har skabt en string-variabel med alle navne på de ris-filer, man ønsk
 ```{r, eval = FALSE}
 ris_file_dat <- 
   purrr::map(embase_file_names, ~ {
-    revtools::read_bibliography(filename = paste0("undermappe_til_arbejdssti_1/", .x)) |> 
-      base::suppressWarnings()
+    synthesisr::read_refs(filename = paste0("undermappe_til_arbejdssti_1/", .x)) 
   }
   ) |> 
   purrr::list_rbind() # Benyttes til at samle listen med datasæts som skabes via map()
@@ -79,7 +79,7 @@ dplyr::glimpse(ris_file_dat) # Få overblik og det samlede data
 ```{r, echo=FALSE}
 ris_file_dat <- 
   purrr::map(embase_file_names, ~ {
-    revtools::read_bibliography(filename = fs::path_package("extdata", .x, package = "VIVECampbell")) |> 
+    synthesisr::read_refs(filename = fs::path_package("extdata", .x, package = "VIVECampbell")) |> 
       base::suppressWarnings()
   }
   ) |> 
@@ -99,8 +99,8 @@ Når man ønsker at splitte data op og gemme flere ris-filer, kan man i de lette
 ris_file_1_500 <- ris_file_dat[1:500,]
 ris_file_501_1000 <- ris_file_dat[501:1000,]
 
-revtools::write_bibliography(ris_file_1_500, filename = "EMBASE_ris_file_1_500.ris", format = "ris")
-revtools::write_bibliography(ris_file_501_1000, filename = "EMBASE_ris_file_501_1000.ris", format = "ris")
+synthesisr::write_refs(ris_file_1_500, filename = "EMBASE_ris_file_1_500.ris", format = "ris")
+synthesisr::write_refs(ris_file_501_1000, filename = "EMBASE_ris_file_501_1000.ris", format = "ris")
 
 ```
 
@@ -114,7 +114,7 @@ gem_ris <- function(seq, file_name, data){
   name_file <- paste0(file_name, "_", start_seq , "_", end_seq, ".ris")
   
   ris_dat <- data[start_seq:end_seq,]
-  invisible(revtools::write_bibliography(ris_dat, filename = name_file, format = "ris"))
+  invisible(synthesisr::write_refs(ris_dat, filename = name_file, format = "ris"))
   
 }
 
