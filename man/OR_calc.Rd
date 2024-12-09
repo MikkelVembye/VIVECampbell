@@ -27,39 +27,39 @@ OR_calc(
 )
 }
 \arguments{
-\item{A}{Insert}
+\item{A}{Upper left cell of an 2 X 2 frequency table.}
 
-\item{B}{Insert}
+\item{B}{Upper right cell of an 2 X 2 frequency table.}
 
-\item{C}{Insert}
+\item{C}{Lower left cell of an 2 X 2 frequency table.}
 
-\item{D}{Insert}
+\item{D}{Lower right cell of an 2 X 2 frequency table.}
 
-\item{p1}{Insert}
+\item{p1}{Risk/probability of an event in group 1 (usually the treatment group).}
 
-\item{p2}{Insert}
+\item{p2}{Risk/probability of an event in group 2 (usually the control group).}
 
-\item{n1}{Insert}
+\item{n1}{Sample size of group 1 (usually the treatment group).}
 
-\item{n2}{Insert}
+\item{n2}{Sample size of group 2 (usually the control group).}
 
-\item{OR}{Insert}
+\item{OR}{Odds ratio estimate.}
 
-\item{LL_OR}{Insert}
+\item{LL_OR}{Lower  bound of the 95\% confidence interval of the odds ratio.}
 
-\item{UL_OR}{Insert}
+\item{UL_OR}{Upper  bound of the 95\% confidence interval of the odds ratio.}
 
-\item{SE_OR}{Insert}
+\item{SE_OR}{Standard error of the odds ratio.}
 
-\item{V_OR}{Insert}
+\item{V_OR}{Sampling variance of the odds ratio.}
 
-\item{Z}{Insert}
+\item{Z}{Z-values from an normal distribution.}
 
-\item{ICC}{Insert}
+\item{ICC}{Intra-class correlation.}
 
-\item{avg_cl_size}{Insert}
+\item{avg_cl_size}{Average cluster size.}
 
-\item{n_cluster_arms}{Insert}
+\item{n_cluster_arms}{(Optional) Number of arm with clustering.}
 
 \item{add_name_to_vars}{Optional character string to be added to the variables names of the generated \code{tibble}.}
 
@@ -73,7 +73,7 @@ This function calculated odds ratios based on various type of input/information,
 as described in Table 11.10 from Borenstein and Hedges (2019, p. 226).
 }
 \details{
-Add details\tabular{lllll}{
+2x2 table\tabular{lllll}{
     \tab  \tab Event \tab Non-event \tab Total \cr
    Treated \tab  \tab A \tab B \tab n1 \cr
    Control \tab  \tab C \tab D \tab n2 \cr

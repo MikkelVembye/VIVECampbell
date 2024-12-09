@@ -5,7 +5,7 @@
 #' as described in Table 11.10 from Borenstein and Hedges (2019, p. 226).
 #'
 #' @details
-#' Add details
+#' 2x2 table
 #'
 #' |       |   | Event | Non-event | Total |
 #' |-------|---|-------|-----------|-------|
@@ -27,23 +27,23 @@
 #' \emph{Cochrane handbook for systematic reviews of interventions} (2nd ed., pp. 569–593).
 #' Wiley Online Library. \doi{10.1002/9781119536604.ch23}
 #'
-#' @param A Insert
-#' @param B Insert
-#' @param C Insert
-#' @param D Insert
-#' @param p1 Insert
-#' @param p2 Insert
-#' @param n1 Insert
-#' @param n2 Insert
-#' @param OR Insert
-#' @param LL_OR Insert
-#' @param UL_OR Insert
-#' @param SE_OR Insert
-#' @param V_OR Insert
-#' @param Z Insert
-#' @param ICC Insert
-#' @param avg_cl_size Insert
-#' @param n_cluster_arms Insert
+#' @param A Upper left cell of an 2 X 2 frequency table.
+#' @param B Upper right cell of an 2 X 2 frequency table.
+#' @param C Lower left cell of an 2 X 2 frequency table.
+#' @param D Lower right cell of an 2 X 2 frequency table.
+#' @param p1 Risk/probability of an event in group 1 (usually the treatment group).
+#' @param p2 Risk/probability of an event in group 2 (usually the control group).
+#' @param n1 Sample size of group 1 (usually the treatment group).
+#' @param n2 Sample size of group 2 (usually the control group).
+#' @param OR Odds ratio estimate.
+#' @param LL_OR Lower  bound of the 95% confidence interval of the odds ratio.
+#' @param UL_OR Upper  bound of the 95% confidence interval of the odds ratio.
+#' @param SE_OR Standard error of the odds ratio.
+#' @param V_OR Sampling variance of the odds ratio.
+#' @param Z Z-values from an normal distribution.
+#' @param ICC Intra-class correlation.
+#' @param avg_cl_size Average cluster size.
+#' @param n_cluster_arms (Optional) Number of arm with clustering.
 #' @param add_name_to_vars Optional character string to be added to the variables names of the generated \code{tibble}.
 #' @param vars Variables to be reported. Default is \code{NULL}. See Value section for further details.
 #'
