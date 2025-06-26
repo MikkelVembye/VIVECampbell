@@ -114,7 +114,7 @@ gem_ris <- function(seq, file_name, data){
   name_file <- paste0(file_name, "_", start_seq , "_", end_seq, ".ris")
   
   ris_dat <- data[start_seq:end_seq,]
-  invisible(synthesisr::write_refs(ris_dat, filename = name_file, format = "ris"))
+  invisible(synthesisr::write_refs(ris_dat, file = name_file, format = "ris"))
   
 }
 
