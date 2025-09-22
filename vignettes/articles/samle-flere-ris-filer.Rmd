@@ -24,14 +24,12 @@ Hvis du ikke har en R-version lig med eller over 4.1.0, skal du være opmærksom
 </p></span>
 </div>
 
-Det hænder ofte af forskellige årsager, at vi oplever at vores bibliometriske søgninger ender ud med en lang række ris-filer. Disse kan være utroligt trættende at arbejde med, da det kræver meget "peg og klik" for at kunen indlæse disse i [EPPI-Reviewer](https://eppi.ioe.ac.uk/EPPIReviewer-Web/home). I denne vignette viser jeg derfor, hvordan man hurtigt kan samle store mængder af ris-filer til en eller flere filer via R-pakken `revtools`. 
+Det hænder ofte af forskellige årsager, at vi oplever at vores bibliometriske søgninger ender ud med en lang række ris-filer. Disse kan være utroligt trættende at arbejde med, da det kræver meget "peg og klik" for at kunen indlæse disse i [EPPI-Reviewer](https://eppi.ioe.ac.uk/EPPIReviewer-Web/home). I denne vignette viser jeg derfor, hvordan man hurtigt kan samle store mængder af ris-filer til en eller flere filer ved hjælp af VIVECampbell::read_ris_to_dataframe (indlæsning) og VIVECampbell::save_dataframe_to_ris (skrivning).
 
 <br />
 Jeg indlæser først de nødvendige pakker, der skal bruges til at samle risfilerne. 
 
 ```{r, message=FALSE, warning=FALSE}
-#library(revtools) # Benyttes til at indlæse risfiler
-library(synthesisr) # Forbedre pakke til at indlæse risfiler
 library(purrr) # Benyttes til at kunne indlæse flere filer ad gangen
 library(stringr) # Benyttes til at sortere ens ris-filer korrekt
 library(dplyr) 
@@ -54,7 +52,8 @@ embase_file_names <-
 
 embase_file_names
 ```
-```{r, echo= FALSE}
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+devtools::load_all()
 embase_file_names <- system.file("extdata", package = "VIVECampbell") |> list.files()
 embase_file_names
 ```
@@ -65,11 +64,11 @@ embase_file_names <-
   stringr::str_sort(numeric = TRUE) 
 ```
 
-Når man har skabt en string-variabel med alle navne på de ris-filer, man ønsker samlet, kan man skabe et stort datasæt med alle referencer fra de givne ris-filer via `purrr::map()` funktionen og `read_bibliography()` funktionen fra `revtools`. Den sidste funktion konverterer referencerne fra ris-filerne til et datasæt i R. Om lidt vil vi omvendt benytte `write_bibliography()` til at konvertere dette datasæt tilbage til en eller flere ris-filer, alt efter behov.
+Når man har skabt en string-variabel med alle navne på de ris-filer, man ønsker samlet, kan man skabe et stort datasæt med alle referencer fra de givne ris-filer via `purrr::map()` og `VIVECampbell::read_ris_to_dataframe`, som konverterer hver RIS-fil til et datasæt i R. Efterfølgende kan datasættet skrives tilbage som en eller flere RIS-filer med `VIVECampbell::save_dataframe_to_ris`.
 ```{r, eval = FALSE}
 ris_file_dat <- 
   purrr::map(embase_file_names, ~ {
-    synthesisr::read_refs(filename = paste0("undermappe_til_arbejdssti_1/", .x)) 
+    VIVECampbell::read_ris_to_dataframe(file_path = paste0("undermappe_til_arbejdssti_1/", .x)) 
   }
   ) |> 
   purrr::list_rbind() # Benyttes til at samle listen med datasæts som skabes via map()
@@ -79,43 +78,42 @@ dplyr::glimpse(ris_file_dat) # Få overblik og det samlede data
 ```{r, echo=FALSE}
 ris_file_dat <- 
   purrr::map(embase_file_names, ~ {
-    synthesisr::read_refs(filename = fs::path_package("extdata", .x, package = "VIVECampbell")) |> 
-      base::suppressWarnings()
-  }
-  ) |> 
+    VIVECampbell::read_ris_to_dataframe(
+      file_path = system.file("extdata", .x, package = "VIVECampbell")
+    )
+  }) |> 
   purrr::list_rbind()
 
 dplyr::glimpse(ris_file_dat)
 ```
-Nu har vi samlet alle referencer fra ris-filerne i et datasæt, og det er dette datasæt, vi nu kan konvertere tilbage til en eller flere ris-filer. Nedenfor giver jeg først et eksempel på, hvordan hele datasættet kan gemmes, og derefter hvordan data kan splittes op og gemmes i flere ris-filer. Grunden til at vi nogen gange/ofte ønsker at dele filerne op er, at disse er lettere at arbejde med, eksempelvis i `AIscreenR`, hvor vi for ikke at bruge unødigt mange penge, gerne deler screeningsprocessen op i chunks af 500, eller fordi EPPI-Reviewer ofte kun kan indlæse omkring 4000 almindelige referencer (det afhænger dog af fil-størrelsen). 
+Nu har vi samlet alle referencer fra ris-filerne i et datasæt, og dette datasæt kan nu skrives til en eller flere RIS-filer med `VIVECampbell::save_dataframe_to_ris`. Nedenfor giver jeg først et eksempel på, hvordan hele datasættet kan gemmes, og derefter hvordan data kan splittes op og gemmes i flere ris-filer. Grunden til at vi nogen gange/ofte ønsker at dele filerne op er, at disse er lettere at arbejde med, eksempelvis i `AIscreenR`, hvor vi for ikke at bruge unødigt mange penge, gerne deler screeningsprocessen op i chunks af 500, eller fordi EPPI-Reviewer ofte kun kan indlæse omkring 4000 almindelige referencer (det afhænger dog af fil-størrelsen).
 ```{r, eval=FALSE}
 # Gem alle referencer i datasæt i en ris-fil 
-revtools::write_bibliography(ris_file_dat, filename = "EMBASE_ris_file_1_1000.ris", format = "ris")
+VIVECampbell::save_dataframe_to_ris(
+  df = ris_file_dat, 
+  file_path = "EMBASE_ris_file_1_1000.ris"
+)
 ```
 
 Når man ønsker at splitte data op og gemme flere ris-filer, kan man i de lette tilfælde gøre dette håndholdt, som følger.
 ```{r, eval=FALSE}
-
 ris_file_1_500 <- ris_file_dat[1:500,]
 ris_file_501_1000 <- ris_file_dat[501:1000,]
 
-synthesisr::write_refs(ris_file_1_500, filename = "EMBASE_ris_file_1_500.ris", format = "ris")
-synthesisr::write_refs(ris_file_501_1000, filename = "EMBASE_ris_file_501_1000.ris", format = "ris")
-
+VIVECampbell::save_dataframe_to_ris(ris_file_1_500, file_path = "EMBASE_ris_file_1_500.ris")
+VIVECampbell::save_dataframe_to_ris(ris_file_501_1000, file_path = "EMBASE_ris_file_501_1000.ris")
 ```
 
 Det kan dog bare hurtigt ende med at blive trivielt, hvis man eksempelvis skal dele et datasæt på 100.000 referencer op i blokke af 4000. Det bliver trivielt nok i sig selv at skulle loade disse 25 filer (100000/4000) til EPPI-reviewer, så for at spare tid, kan man bruge nedenstående funktion til at gøre gemme-processen hurtigere og mere effektiv. 
 
 ```{r, eval = FALSE}
 gem_ris <- function(seq, file_name, data){
-  
   start_seq <- min(seq)
   end_seq <- max(seq)
   name_file <- paste0(file_name, "_", start_seq , "_", end_seq, ".ris")
   
   ris_dat <- data[start_seq:end_seq,]
-  invisible(synthesisr::write_refs(ris_dat, file = name_file, format = "ris"))
-  
+  invisible(VIVECampbell::save_dataframe_to_ris(df = ris_dat, file_path = name_file))
 }
 
 # Test at funktionen virker for en delmængde af referencer
