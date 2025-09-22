@@ -6,7 +6,11 @@ Authors@R: c(
            family = "Vembye", 
            email = "mikkel.vembye@gmail.com", 
            role = c("aut", "cre"),
-           comment = c(ORCID = "0000-0001-9071-0724"))
+           comment = c(ORCID = "0000-0001-9071-0724")),
+    person(given = "Thomas", 
+           family = "Olsen", 
+           email = "thomasolsen123@hotmail.com", 
+           role = c("aut"))
            )
 BugReports: https://github.com/MikkelVembye/VIVECampbell/issues
 Description: Provides functions used in Campbell review conducted by VIVE - The Danish Center for Social Science Research.
