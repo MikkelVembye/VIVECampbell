@@ -154,6 +154,22 @@ read_ris_to_dataframe <- function(file_path) {
   # Convert to dataframe with fields in the order they appeared in the file
   df <- data.frame(df_list, stringsAsFactors = FALSE)
   
+  # If AB is empty/missing and N2 has content, move N2 -> AB
+  if ("N2" %in% names(df)) {
+    # Ensure AB exists
+    if (!"AB" %in% names(df)) {
+      df$AB <- rep("", nrow(df))
+    }
+    ab_empty <- is.na(df$AB) | trimws(df$AB) == ""
+    n2_filled <- !is.na(df$N2) & trimws(df$N2) != ""
+    to_move <- ab_empty & n2_filled
+    if (any(to_move)) {
+      df$AB[to_move] <- df$N2[to_move]
+    }
+    # Drop N2 column after merging
+    df$N2 <- NULL
+  }
+
   return(df)
 }
 
