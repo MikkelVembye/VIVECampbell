@@ -170,6 +170,22 @@ read_ris_to_dataframe <- function(file_path) {
     df$N2 <- NULL
   }
 
+  # If TI is empty/missing and T1 has content, move T1 -> TI
+  if ("T1" %in% names(df)) {
+    # Ensure TI exists
+    if (!"TI" %in% names(df)) {
+      df$TI <- rep("", nrow(df))
+    }
+    ti_empty <- is.na(df$TI) | trimws(df$TI) == ""
+    t1_filled <- !is.na(df$T1) & trimws(df$T1) != ""
+    to_move <- ti_empty & t1_filled
+    if (any(to_move)) {
+      df$TI[to_move] <- df$T1[to_move]
+    }
+    # Drop T1 column after merging
+    df$T1 <- NULL
+  }
+
   return(df)
 }
 
