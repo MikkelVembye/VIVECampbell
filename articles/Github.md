@@ -1,0 +1,66 @@
+# Forbind GitHub og RStudio plus adgang til Adobe Pro
+
+## Kobling til Git og GitHub
+
+Først og fremmest skal du downloade R og Rstudio fra softwarecenteret.
+Det er vigtigt, at du som minimum har Rstudio 2022.02.3-492 og R 4.1.0.
+Har du ikke det, skal du opdatere, ellers vil du ikke kunne køre vores
+scripts og dokumenter. Desuden er der en alvorlig fejl på RStudio
+2021.09.2, så kører du på denne version, så SKAL du også opdatere.
+
+For at kunne forbinde RStudio med Github, skal du dernæst hente Git via
+<https://git-scm.com/>. Jeg har hørt, at nogen af vores kollegaer er i
+stand til at hente Git uden tilladelse fra STATENS IT, så det kan man
+starte med at prøve. Ellers skal du have fat i [Niels
+Koldsø](https://www.vive.dk/da/medarbejdere/niels-koldsoe-1738/?limit=20&offset=0)
+og oprette sag på serviceportalen
+<https://statensitprod.service-now.com/serviceportal/>. I tilfælde af at
+Niels spørger, hvad I skal bruge Git til, skal I bare svare, at det er
+et versionskontrolprogram og at intet følsom data vil lægge der.
+
+Nu kommer vi til det mere komplicerede og her skal jeg nok hjælpe, hvis
+du støder på problemer, så ingen stress, men for sikkert at forbinde
+RStudio og GitHub skal Git have en sikkerskode (token). For at sætte
+dette op skal man følge guiden i dette link
+<https://usethis.r-lib.org/articles/git-credentials.html>. Hjælp gerne
+hinanden, og spørg de andre, hvordan de har fået koblet RStudio, Git og
+GitHub sammen. Guiden ser kompleks ud, men er i essencen ret simpel og
+`usethis::` kommandoer gør det hårde arbejde for jer.
+
+Sidst men ikke mindst skal du oprette en bruger på
+[GitHub](https://github.com/).
+
+Det kan forekomme som værende meget information, men tag det i bidder.
+
+- Hent eller opdatér R og Rstudio i Software Centeret
+- Få adgang til at hente/installere Git <https://git-scm.com/>.
+- Opret profil på [GitHub](https://github.com/) (kan gøres med det
+  samme). Opsæt gerne tofaktorgodkendelse, så vi undgår at blive hacket.
+  Se og følg opsætning her
+  <https://docs.github.com/en/authentication/securing-your-account-with-two-factor-authentication-2fa/configuring-two-factor-authentication>
+- Genere token og send til git med `usethis::` kommado i RStudio ved at
+  følge guiden her
+  <https://usethis.r-lib.org/articles/git-credentials.html> (jeg skal
+  nok hjælpe, hvis I ikke lykkes)
+
+God fornøjelse.
+
+## Adgang til Adobe Reader Pro
+
+Når vi skal trække information og data ud af ældre artikler, er det en
+klar fordel at have programmet Adobe Reader Pro, således ældre pdf’er
+skal konverteres om til Word-format. For at få adgang til dette program
+skal du først bede
+[Niels](https://www.vive.dk/da/medarbejdere/niels-koldsoe-1738/?limit=20&offset=0)
+om at få oprettet en profil på Adobe. Derefter downloader du Adobe
+Creative Cloud i Software Centeret. Se herunder
+
+![](pictures/softcenter.png)
+
+Åben derefter Adobe Creative Cloud, hvori du har adgang til at opdatere
+din Adobe Reader til pro-versionen. Se nedenfor.
+
+![](pictures/creative_cloud.png)
+
+Du skulle nu gerne kunne se, når du åbner din Adobe Reader igen, at
+denne er opdateret til Pro.

@@ -1,0 +1,30 @@
+# Fremtidige ideer og todos
+
+## **Fremtidige ideer**
+
+- Del erfaringer angående EGM, evt. lav kort introduktion til håndtering
+  af data?
+- “Velkommen til VIVE - godt at vide som ny i Campbell-gruppen”?
+- Kurs-referencelist (Jens og Mikkel)
+- Vi kan dele alle dataset, som vi har brugt til meta-analyse?
+
+Til kollegaer
+
+- Intern blog angående hvordan Campbell-review opstartes (del evt.
+  eksempel på PICO)
+- Kom i gang med systematiske reviews. Her kunne vi komme med 3-4 vigtig
+  artikler, som kan være gode for begyndere, evt. prisma og pico
+  artikler m.m.
+
+## **Todos**
+
+- Cluster bias korrektion med binære outcomes
+- Cluster bias korrektion med clustering i både treatment og kontrol
+- Indlæg tabelfunktioner fra fadeout (med apa format) (overvej S3
+  metode)
+- Indlæg forrest plot funktioner fra fadeout
+- Indlæg empiriske
+- Blog angående hvordan man henter sit GitHub projekt ind i RStudio
+- Lav introduktion til siden (Get Started )
+- Meta-analyse med afhængige effektstørrelser - præsentation CHE, SCE og
+  CMVE modellerne

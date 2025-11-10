@@ -1,0 +1,133 @@
+# Tips og tricks til EPPI
+
+## 1. Screening
+
+  
+
+### **1.1. At oprette en pilotscreening (på Title and abstract)**
+
+- Opret en child code under *Allocations* –\> *Screening on Title and
+  Abstract* og giv den titlen “Pilotscreening T/A” (brug højreklik og
+  *Add child code*)
+
+- Tildel derefter denne kode 150 hits. Det kan gøres smart ved, på
+  startsiden, hvor alle inkluderede dokumenter ligger, at vælge:
+
+  - *Select the fields you want to display below*
+  - *Sæt Maximum number of rows til 150*
+  - Vælg alle hits på første side (150 stk)
+  - Overfør dem til din Pilotscreenings-child code (højreklik og *Assign
+    selected items to this code*).
+
+Alternativt kan man få EPPI til at udtrække en tilfældig gruppe (fx 5 %)
+med *Assign documents to specified codes randomly* og så allokere de
+første 150 hits fra den.  
+  
+  
+Næste skridt er at tildele pilotscreeningen til dine reviewdeltagere.
+Det er punkt 1.2.
+
+### **1.2. At tildele screeningsgrupper til reviewdeltagere**
+
+- Vælg: *Collaborate*
+  - *Create new* (coding assignment)
+  - Tilpas (skal du fx assigne ”Pilotscreening T/A” eller en anden
+    screeningsgruppe), vælg deltagere og *Assign work*
+  - Deltagere vil nu kunne se deres respektive assignments i *My info*
+    og følge egen progression, ligesom alle opgaver og deres status
+    vises samlet i *Collaborate*
+
+### **1.3. At oprette grupper i EPPI til screening på ”Title and abstract”**
+
+Det er lettest at oprette alle screeningsgrupper til ”Title and
+abstract” ***fra starten af***. På den måde undgår man, at der kommer
+til at være studier, som overlapper mellem grupper. Når man vælger at
+oprette alle grupper fra starten af, skal man blot huske at frasortere
+pilotsøgningen, så den ikke overlapper med ens ”Title and
+abstract”-screeningsgrupper. Det gøres sådan her:
+
+- Vælg: *Assign documents to specified codes randomly* (hånd-ikon)
+  - Vælg: *Select from* –\> *All without this code*
+    - Vælg “Pilotscreening T/A”
+  - *Create codes below this code/set* –\> Vælg “Screening on Title and
+    abstract”
+  - Vælg 100 % samt antal grupper, du ønsker at oprette. Her kan det
+    være en god ide på forhånd at have dannet sig et overblik over
+    antallet af referencer, så man ved, hvor mange grupper, man gerne
+    vil have. Det kan man nemlig ikke tjekke samtidig i denne funktion.
+  - Nu opretter EPPI alle screeningsgrupperne, med pilotsøgningen
+    frasorteret.  
+  - Tildel herefter screeningsgrupper til dine reviewdeltagere, se 1.2.
+
+Det kan ske, at man ikke får oprettet alle sine screeningsgrupper fra
+starten af, men begynder med at oprette et par grupper, for dernæst at
+ville tilføje flere. I de tilfælde kan man ende med at få en del
+studier, som overlapper mellem de først oprettede (og allerede
+screenede) grupper og de nye (u-screenede) grupper - medmindre man gør
+følgende:
+
+- Lav en dummy-kode (*Add child code*)
+  - Tildel allerede screenede grupper til dummy-koden (*Assign selected
+    items to this code*)  
+- Opret nu nye screeningsgrupper, med det allerede screenede
+  frasorteret, ved at vælge:
+  - *Assign documents to specified codes randomly* (hånd-ikon)
+    - *Select from* –\> *All without this code* –\> Vælg din dummy-kode
+    - *Create codes below this code/set* –\> Vælg “Screening on Title
+      and abstract”
+    - Vælg 100 % samt antal grupper, du ønsker at oprette. Igen kræver
+      det, at man på forhånd har overblik over antal resterende
+      referencer og antal grupper, man ønsker at inddele i.
+    - Nu opretter EPPI dine nye screeningsgrupper, med de allerede
+      screenede fra din dummy-kode frasorteret.  
+    - Tildel herefter screeningsgrupper til dine reviewdeltagere, se
+      1.2.
+
+  
+Hvis du ikke har fået gjort ovenstående, men har grupper med overlap,
+kan du fjerne de overlappende studier på følgende måde:
+
+- Vælg: *Search* –\> *New search*
+  - Vælg gruppekoder
+  - Kombinér med ”*AND*”
+  - *Combine* –\> overlap vises  
+  - Marker alle items
+  - *Remove selected items* fra gruppe
+
+### **1.4. Når forskellige deltageres screening skal sammenlignes og afstemmes**
+
+- Vælg: *Collaborate* –\> *Create comparison*
+- Vælg deltagere og kør
+- Nu kan enighed/uoverensstemmelser ses og der kan træffes endelige
+  beslutninger om inklusion/eksklusion (på det pågældende
+  screeningsniveau).
+
+  
+OBS: EPPI kan kun køre sammenligninger mellem max 3 reviewere. Hvis du
+vil lave sammenligninger mellem flere deltagere, fx fire, så kan du gøre
+følgende:
+
+- Lav to sammenligninger og løs de uenigheder, der er. Når én uenighed
+  er løst, bliver den automatisk completed, og dermed ’løst’ fra
+  systemet, så alle kan se den.
+- Når du har gennemgået alle uenighederne mellem alle kombinationer af
+  screenere (og er sikker på, at alle uenigheder er løst), kan du
+  complete enighederne, bare for én af screener-kombinationerne. Det
+  spiller ikke den store rolle, hvilken man vælger.
+- OBS: I den her øvelse er det ALTID nødvendigt at tjekke frequencies
+  efterfølgende, for at se om man har fået completed sin pilotscreening
+  rigtigt. Altså, er alle referencer completed, er det de rigtige der er
+  inkluderet og ekskluderet m.v.
+
+### **1.5. Når man vil ændre ellers completede koder ved at un-complete og så complete på ny**
+
+- Du går ind i studiet og kigger på fanen til venstre, hvor du kan se
+  kodningen af studiet (screen on title abstract, screen on full text,
+  allocation osv. osv.). Her kan du så højreklikke på ”Screen on title
+  and abstract”. Det åbner en boks, hvor du skal vælge ”Properties”. I
+  ”Properties” kan du så afklikke ”Coding completed”, således at
+  kodningen åbnes igen. Derefter omkoder du studiet (altså vælger
+  Exclude i stedet for Include). Dernæst højreklikker du igen, vælger
+  ”Properties” og klikker ”Coding completed”. Så burde studiet være
+  omdirigeret til ”Exclude” – og du kan tjekke, at det nu findes i
+  listen over ekskluderede studier på Titel og abstract.

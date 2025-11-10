@@ -1,0 +1,51 @@
+# Fadeout data
+
+Data from four systematic reviews of school interventions implemented in
+kindergarten to Grade 12 (Dietrichson et al., 2017, 2021; Dietrichson,
+Filges, et al., 2020; Filges, Sonne-Schmidt, & Nielsen, 2018). The
+sample included in the data consist of a subset of 29 studies from these
+reviews that included a post test and at least one follow-up test. Tests
+were standardized tests of reading or mathematics. Most interventions
+were targeted (selected or indicated) at students at risk of academic
+difficulties.
+
+## Usage
+
+``` r
+fadeout
+```
+
+## Format
+
+A tibble with 548 rows/studies and 136 variables/columns
+
+## References
+
+Dietrichson, J., Bøg, M., Filges, T., & Klint Jørgensen, A.-M. (2017).
+Academic interventions for elementary and middle school students with
+low socioeconomic status: A systematic review and meta-analysis. *Review
+of Educational Research*, 87 (2), 243–282.
+[doi:10.3102/0034654316687036](https://doi.org/10.3102/0034654316687036)
+
+Dietrichson, J., Filges, T., Klokker, R. H., Viinholt, B. C., Bøg, M., &
+Jensen, U. H. (2020). Targeted school-based interventions for improving
+reading and mathematics for students with, or at risk of, academic
+difficulties in grades 7–12: A systematic review. *Campbell Systematic
+Reviews*, 16(2).
+[doi:10.1002/cl2.1081](https://doi.org/10.1002/cl2.1081)
+
+Dietrichson, J., Filges, T., Seerup, J. K., Klokker, R. H., Viinholt, B.
+C. A., Bøg, M., & Eiberg, M. (2021). Targeted school-based interventions
+for improving reading and mathematics for students with or at risk of
+academic difficulties in grades K-6: A systematic review. *Campbell
+Systematic Reviews*, 17(2), e1152.
+[doi:10.1002/cl2.1152](https://doi.org/10.1002/cl2.1152)
+
+Filges, T., Sonne-Schmidt, C. S., & Nielsen, B. C. V. (2018). Small
+class sizes for improving student achievement in primary and secondary
+schools: A systematic review. *Campbell Systematic Reviews*, 14(1),
+1-107. [doi:10.4073/csr.2018.10](https://doi.org/10.4073/csr.2018.10)
+
+## See also
+
+[`Dietrichson2021_data`](https://mikkelvembye.github.io/VIVECampbell/reference/Dietrichson2021_data.md)

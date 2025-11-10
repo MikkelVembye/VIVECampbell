@@ -1,0 +1,68 @@
+# Kom godt i gang med metaanalyse i R
+
+UPDATÈR, NÅR DER ER TID
+
+Her kommer nogle tips, tricks og gode råd til din helt spæde start som
+R-bruger:
+
+- R er tilgængeligt i VIVE’s softwarecenter. Hvilket betyder, at du ikke
+  skal logge på fjernskrivebordet for at kunne tilgå det (fx som med
+  STATA og NVIVO), da R bliver installeret lokalt på din computer.
+- Der findes tonsvis af hjælp, gode råd og introer online – så fortvivl
+  ej! En googlesøgning kan ofte give svar på det meste.
+- For at komme bedst muligt i gang med R, kan man med fordel downloade
+  pakken [`SWIRL`](https://swirlstats.com/students.html), som giver en
+  overskuelig introduktion til R’s basale syntaks.
+- Hjemmesiden [”datacamp”](https://www.datacamp.com/) udbyder også en
+  del gratis online kurser, som man kan have gavn af.
+- [R4DS](https://r4ds.had.co.nz/) (R for Data Science) er formentlig den
+  beste bog som introduktion til `tidyversere`, herunder `dplyr` og
+  `ggplot2`, som vi benytter meget på vores reviews.
+
+*Okay. Nu har jeg lært den basale syntaks – men hvordan kommer jeg så
+bedst i gang med en meta-analyse?*
+
+Der findes forskellige pakker, som er målrettet metanalyse i R. Nogle af
+de vigtigste er nok:
+
+- [`meta`](https://cran.r-project.org/web/packages/meta/meta.pdf): En
+  god all-round pakke der rummer forskellige statistiske metoder til
+  metaanalyser.
+- [`metafor`](https://www.metafor-project.org/doku.php/metafor): Hjælper
+  en med udregning af effektstørrelser, fixed eller random models,
+  meta-regression m.m). **Den absolut vigtigste pakke at kende!**
+- [`robumeta`](https://cran.r-project.org/web/packages/robumeta/robumeta.pdf):
+  Hjælper en med at lave en RVE meta-regression, og har også funktioner
+  for sensitivitetanalyse og forestplot baseret på ens RVE-modeller.
+  **OUTDATED - brug istedet metafor sammen med clubSandwich og wildmeta.
+  Man behøver ikke længere hente clubSandwich separat. Den er nu
+  indbygget i metafor og kaldes automatisk ved at sætte
+  `clubSandwich=TRUE` i
+  [`robust()`](https://wviechtb.github.io/metafor/reference/robust.html).
+  Der kan dog være grunde til at loade `clubSandwich` separat, hvis man
+  ønsker andre small-sample korrektioner, eksempelvis brug af jackknife
+  variansestimation (type = CR3)**
+- [`clubSandwich`](http://jepusto.github.io/clubSandwich/): Robust
+  variance estimation (RVE) i meta-analyses. Ekstremt vigtigt, når man
+  har mindre end 50 studier eller meget skævvrædet data, dvs. enkelte
+  store studier, som bidrager med hovedparten af de inkluderede
+  effektstørrelser.
+- [`wildmeta`](https://meghapsimatrix.github.io/wildmeta/index.html):
+  Til at udregne cluster-wild-bootstrapping (CWB) p-værdier.
+- [`POMADE`](https://mikkelvembye.github.io/POMADE/). Kan bruges til at
+  udregne den statistske styrke af ens meta-analyse model.
+
+Udover selve pakkerne ligger der også denne her seje [hands-on guide til
+metaanalyse i
+R](https://bookdown.org/MathiasHarrer/Doing_Meta_Analysis_in_R/forest.html).
+Den kan altså også være god at kigge lidt på, hvis man føler sig en
+smule fortabt.
+
+Hvis man vil nørde den helt ud kan tilmelde sig [R meta-analysis
+mailing-listen](https://stat.ethz.ch/mailman/listinfo/r-sig-meta-analysis).
+Alle tidligere diskusioner på listen kan findes
+[her](https://stat.ethz.ch/pipermail/r-sig-meta-analysis/).
+
+**OBS! Dette er langt fra et færdigt dokument. Tilføj gerne, hvis der er
+tips og tricks, R-pakker til metanalyse eller andet, som er godt for os
+alle at vide noget om!**
