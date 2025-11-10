@@ -36,6 +36,11 @@ reference:
       - Dietrichson2021_data
       - fadeout
 
+  - title: "RIS file functions"
+    desc: "Functions to load RIS files to data frames and save data frames as RIS files"
+    contents:
+      - ris_utils
+
 articles:
  - title: Get started
    navbar: ~
