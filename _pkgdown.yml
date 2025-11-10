@@ -39,7 +39,8 @@ reference:
   - title: "RIS file functions"
     desc: "Functions to load RIS files to data frames and save data frames as RIS files"
     contents:
-      - ris_utils
+      - read_ris_to_dataframe
+      - save_dataframe_to_ris
 
 articles:
  - title: Get started
