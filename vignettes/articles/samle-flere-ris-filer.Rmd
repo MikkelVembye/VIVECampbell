@@ -15,19 +15,27 @@ options(scipen = 10)
 options(dplyr.summarise.inform = FALSE)
 ```
 
-<div class="warning" style='margin-left:2em; margin-right:2em; margin-bottom:2em; margin-top:2em; padding:0.1em; background-color: #d7dbdd; border: solid #bdc3c7 3px'>
+::: {.warning style="margin-left:2em; margin-right:2em; margin-bottom:2em; margin-top:2em; padding:0.1em; background-color: #d7dbdd; border: solid #bdc3c7 3px"}
 <span>
-<p style='margin-top:1em; text-align:center'>
-<b>Vigtig note</b></p>
-<p style='margin:1em'>
-Hvis du ikke har en R-version lig med eller over 4.1.0, skal du være opmærksom på, at de koder jeg viser i denne vignette ikke umiddelbart virker, da jeg benytter R base pipen `|>`. Hvis du ikke ønsker at opdatere R, kan du bytte `|>` ud med `magrittr` pipen `%>%`. Ydermere skal man for at kunne køre `revtools`-pakken have installeret en R-version lig med eller over 3.5.0. I min gennemgang skriver jeg pakkennavnet (`pakkenavn::`) foran alle funktioner. Hvis man har indlæst de givne pakker er dette ikke nødvendigt, men jeg gør dette, for at gøre det tydeligt, hvorfra jeg præcist henter den givne funktion. 
-</p></span>
-</div>
+
+<p style="margin-top:1em; text-align:center">
+
+<b>Vigtig note</b>
+
+</p>
+
+<p style="margin:1em">
+
+Hvis du ikke har en R-version lig med eller over 4.1.0, skal du være opmærksom på, at de koder jeg viser i denne vignette ikke umiddelbart virker, da jeg benytter R base pipen `|>`. Hvis du ikke ønsker at opdatere R, kan du bytte `|>` ud med `magrittr` pipen `%>%`. Ydermere skal man for at kunne køre `revtools`-pakken have installeret en R-version lig med eller over 3.5.0. I min gennemgang skriver jeg pakkennavnet (`pakkenavn::`) foran alle funktioner. Hvis man har indlæst de givne pakker er dette ikke nødvendigt, men jeg gør dette, for at gøre det tydeligt, hvorfra jeg præcist henter den givne funktion.
+
+</p>
+
+</span>
+:::
 
 Det hænder ofte af forskellige årsager, at vi oplever at vores bibliometriske søgninger ender ud med en lang række ris-filer. Disse kan være utroligt trættende at arbejde med, da det kræver meget "peg og klik" for at kunen indlæse disse i [EPPI-Reviewer](https://eppi.ioe.ac.uk/EPPIReviewer-Web/home). I denne vignette viser jeg derfor, hvordan man hurtigt kan samle store mængder af ris-filer til en eller flere filer ved hjælp af VIVECampbell::read_ris_to_dataframe (indlæsning) og VIVECampbell::save_dataframe_to_ris (skrivning).
 
-<br />
-Jeg indlæser først de nødvendige pakker, der skal bruges til at samle risfilerne. 
+<br /> Jeg indlæser først de nødvendige pakker, der skal bruges til at samle risfilerne.
 
 ```{r, message=FALSE, warning=FALSE}
 library(purrr) # Benyttes til at kunne indlæse flere filer ad gangen
@@ -35,7 +43,7 @@ library(stringr) # Benyttes til at sortere ens ris-filer korrekt
 library(dplyr) 
 ```
 
-Første skridt, ift. at indlæse mange (ris-)filer på engang, er at skabe en string-variabel med alle navnene på alle de ris-filer, som man ønsker at samle. Dette kan gøres som vist her nedenfor. I dette toy-eksempel, ønsker vi at samle 5 ris-filer fra EMBASE. 
+Første skridt, ift. at indlæse mange (ris-)filer på engang, er at skabe en string-variabel med alle navnene på alle de ris-filer, som man ønsker at samle. Dette kan gøres som vist her nedenfor. I dette toy-eksempel, ønsker vi at samle 5 ris-filer fra EMBASE.
 
 ```{r, eval = FALSE}
 
@@ -52,12 +60,16 @@ embase_file_names <-
 
 embase_file_names
 ```
+
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
-devtools::load_all()
 embase_file_names <- system.file("extdata", package = "VIVECampbell") |> list.files()
 embase_file_names
 ```
-Vi ser nu alle filer i den givne mappe, hvor "EMBASE" indgår i filnavnet. Det er vigtigt at tjekke, at `list.files()` kommandoen gør sit arbejde og henter navnene på ens ris-filer.^[Man kan finde dokumentationen bag R-funktioner ved at indsætte et ? foran den givne funktion, eksempelvis således `?list.files()`] Hvis dette step ikke virker, vil resten af de nedenstående koder heller ikke virke. Hvis ens arbejdssti-mappe er den samme mappe, som den hvor man har alle sine ris-filer ligende kan man blot omskrive ovenstående koder som følger, hvor path-argumentet ignoreres.
+
+Vi ser nu alle filer i den givne mappe, hvor "EMBASE" indgår i filnavnet. Det er vigtigt at tjekke, at `list.files()` kommandoen gør sit arbejde og henter navnene på ens ris-filer.[^1] Hvis dette step ikke virker, vil resten af de nedenstående koder heller ikke virke. Hvis ens arbejdssti-mappe er den samme mappe, som den hvor man har alle sine ris-filer ligende kan man blot omskrive ovenstående koder som følger, hvor path-argumentet ignoreres.
+
+[^1]: Man kan finde dokumentationen bag R-funktioner ved at indsætte et ? foran den givne funktion, eksempelvis således `?list.files()`
+
 ```{r, eval=FALSE}
 embase_file_names <- 
   base::list.files(pattern = "EMBASE") |> 
@@ -65,6 +77,7 @@ embase_file_names <-
 ```
 
 Når man har skabt en string-variabel med alle navne på de ris-filer, man ønsker samlet, kan man skabe et stort datasæt med alle referencer fra de givne ris-filer via `purrr::map()` og `VIVECampbell::read_ris_to_dataframe`, som konverterer hver RIS-fil til et datasæt i R. Efterfølgende kan datasættet skrives tilbage som en eller flere RIS-filer med `VIVECampbell::save_dataframe_to_ris`.
+
 ```{r, eval = FALSE}
 ris_file_dat <- 
   purrr::map(embase_file_names, ~ {
@@ -75,6 +88,7 @@ ris_file_dat <-
 
 dplyr::glimpse(ris_file_dat) # Få overblik og det samlede data
 ```
+
 ```{r, echo=FALSE}
 ris_file_dat <- 
   purrr::map(embase_file_names, ~ {
@@ -86,7 +100,9 @@ ris_file_dat <-
 
 dplyr::glimpse(ris_file_dat)
 ```
+
 Nu har vi samlet alle referencer fra ris-filerne i et datasæt, og dette datasæt kan nu skrives til en eller flere RIS-filer med `VIVECampbell::save_dataframe_to_ris`. Nedenfor giver jeg først et eksempel på, hvordan hele datasættet kan gemmes, og derefter hvordan data kan splittes op og gemmes i flere ris-filer. Grunden til at vi nogen gange/ofte ønsker at dele filerne op er, at disse er lettere at arbejde med, eksempelvis i `AIscreenR`, hvor vi for ikke at bruge unødigt mange penge, gerne deler screeningsprocessen op i chunks af 500, eller fordi EPPI-Reviewer ofte kun kan indlæse omkring 4000 almindelige referencer (det afhænger dog af fil-størrelsen).
+
 ```{r, eval=FALSE}
 # Gem alle referencer i datasæt i en ris-fil 
 VIVECampbell::save_dataframe_to_ris(
@@ -96,6 +112,7 @@ VIVECampbell::save_dataframe_to_ris(
 ```
 
 Når man ønsker at splitte data op og gemme flere ris-filer, kan man i de lette tilfælde gøre dette håndholdt, som følger.
+
 ```{r, eval=FALSE}
 ris_file_1_500 <- ris_file_dat[1:500,]
 ris_file_501_1000 <- ris_file_dat[501:1000,]
@@ -104,7 +121,7 @@ VIVECampbell::save_dataframe_to_ris(ris_file_1_500, file_path = "EMBASE_ris_file
 VIVECampbell::save_dataframe_to_ris(ris_file_501_1000, file_path = "EMBASE_ris_file_501_1000.ris")
 ```
 
-Det kan dog bare hurtigt ende med at blive trivielt, hvis man eksempelvis skal dele et datasæt på 100.000 referencer op i blokke af 4000. Det bliver trivielt nok i sig selv at skulle loade disse 25 filer (100000/4000) til EPPI-reviewer, så for at spare tid, kan man bruge nedenstående funktion til at gøre gemme-processen hurtigere og mere effektiv. 
+Det kan dog bare hurtigt ende med at blive trivielt, hvis man eksempelvis skal dele et datasæt på 100.000 referencer op i blokke af 4000. Det bliver trivielt nok i sig selv at skulle loade disse 25 filer (100000/4000) til EPPI-reviewer, så for at spare tid, kan man bruge nedenstående funktion til at gøre gemme-processen hurtigere og mere effektiv.
 
 ```{r, eval = FALSE}
 gem_ris <- function(seq, file_name, data){
@@ -133,7 +150,8 @@ list_obj <- list(1:500, 501:1000)
 purrr::map(list_obj, ~ gem_ris(.x,  file_name = "EMBASE_ris_file", data = ris_file_dat))
 ```
 
-Vær opmærksom på, at med ovenstående eksempel gemmes ris-filerne i arbejdssti-mappen. Ønsker man filerne gemt i en undermappe, gøres dette via file_name argumentet i den konstruerede `gem_ris()`-funktion, eksempelvis således 
+Vær opmærksom på, at med ovenstående eksempel gemmes ris-filerne i arbejdssti-mappen. Ønsker man filerne gemt i en undermappe, gøres dette via file_name argumentet i den konstruerede `gem_ris()`-funktion, eksempelvis således
+
 ```{r, eval=FALSE}
 purrr::map(
   list_obj, ~ gem_ris(
@@ -143,5 +161,3 @@ purrr::map(
   )
 )
 ```
-
-
