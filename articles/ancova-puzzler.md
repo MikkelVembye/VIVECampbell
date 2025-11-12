@@ -13,19 +13,19 @@ back when. Here’s one of those curious little puzzles, which I recently
 encountered in helping a colleague with a meta-analysis project.
 
 A researcher conducts a randomized experiment, assigning participants to
-each of $G$ groups. Each participant is assessed on a variable $Y$ at
-pre-test and at post-test (we can assume there’s no attrition). In their
-study write-up, the researcher reports sample sizes for each group,
-means and standard deviations for each group at pre-test and at
+each of \\G\\ groups. Each participant is assessed on a variable \\Y\\
+at pre-test and at post-test (we can assume there’s no attrition). In
+their study write-up, the researcher reports sample sizes for each
+group, means and standard deviations for each group at pre-test and at
 post-test, and *adjusted* means at post-test, where the adjustment is
 done using a basic analysis of covariance, controlling for pre-test
 scores only. The data layout looks like this:
 
-| Group    | $N$      | Pre-test $M$    | Pre-test $SD$ | Post-test $M$   | Post-test $SD$ | Adjusted post-test $M$ |
-|----------|----------|-----------------|---------------|-----------------|----------------|------------------------|
-| Group A  | $n_{A}$  | ${\bar{x}}_{A}$ | $s_{A0}$      | ${\bar{y}}_{A}$ | $s_{A1}$       | ${\widetilde{y}}_{A}$  |
-| Group B  | $n_{B}$  | ${\bar{x}}_{B}$ | $s_{B0}$      | ${\bar{y}}_{B}$ | $s_{B1}$       | ${\widetilde{y}}_{B}$  |
-| $\vdots$ | $\vdots$ | $\vdots$        | $\vdots$      | $\vdots$        | $\vdots$       | $\vdots$               |
+| Group      | \\N\\      | Pre-test \\M\\   | Pre-test \\SD\\ | Post-test \\M\\  | Post-test \\SD\\ | Adjusted post-test \\M\\ |
+|------------|------------|------------------|-----------------|------------------|------------------|--------------------------|
+| Group A    | \\n_A\\    | \\\bar{x}\_{A}\\ | \\s\_{A0}\\     | \\\bar{y}\_{A}\\ | \\s\_{A1}\\      | \\\tilde{y}\_A\\         |
+| Group B    | \\n_B\\    | \\\bar{x}\_{B}\\ | \\s\_{B0}\\     | \\\bar{y}\_{B}\\ | \\s\_{B1}\\      | \\\tilde{y}\_B\\         |
+| \\\vdots\\ | \\\vdots\\ | \\\vdots\\       | \\\vdots\\      | \\\vdots\\       | \\\vdots\\       | \\\vdots\\               |
 
 Note that the write-up does *not* provide an estimate of the correlation
 between the pre-test and the post-test, nor does it report a standard
@@ -34,20 +34,20 @@ and post-test within each group. All we have are the summary statistics,
 plus the adjusted post-test scores. We can assume that the adjustment
 was done according to the basic ANCOVA model, assuming a common slope
 across groups as well as homoskedasticity and so on. The model is then
-$$y_{ig} = \alpha_{g} + \beta x_{ig} + e_{ig},$$ for $i = 1,...,n_{g}$
-and $g = 1,...,G$, where $e_{ig}$ is an independent error term that is
-assumed to have constant variance across groups.
+\\ y\_{ig} = \alpha_g + \beta x\_{ig} + e\_{ig}, \\ for \\i =
+1,...,n_g\\ and \\g = 1,...,G\\, where \\e\_{ig}\\ is an independent
+error term that is assumed to have constant variance across groups.
 
 ### For realz?
 
 Here’s an example with real data, drawn from Table 2 of [Murawski
 (2006)](https://doi.org/10.1080/10573560500455703):
 
-| Group   | $N$ | Pre-test $M$ | Pre-test $SD$ | Post-test $M$ | Post-test $SD$ | Adjusted post-test $M$ |
-|---------|-----|--------------|---------------|---------------|----------------|------------------------|
-| Group A | 25  | 37.48        | 4.64          | 37.96         | 4.35           | 37.84                  |
-| Group B | 26  | 36.85        | 5.18          | 36.46         | 3.86           | 36.66                  |
-| Group C | 16  | 37.88        | 3.88          | 37.38         | 4.76           | 36.98                  |
+| Group   | \\N\\ | Pre-test \\M\\ | Pre-test \\SD\\ | Post-test \\M\\ | Post-test \\SD\\ | Adjusted post-test \\M\\ |
+|---------|-------|----------------|-----------------|-----------------|------------------|--------------------------|
+| Group A | 25    | 37.48          | 4.64            | 37.96           | 4.35             | 37.84                    |
+| Group B | 26    | 36.85          | 5.18            | 36.46           | 3.86             | 36.66                    |
+| Group C | 16    | 37.88          | 3.88            | 37.38           | 4.76             | 36.98                    |
 
 That study reported this information for each of several outcomes, with
 separate analyses for each of two sub-groups (LD and NLD). The text also
@@ -58,40 +58,40 @@ linear model aspect and assume that it’s a straight, one-level ANCOVA.
 ## The puzzler
 
 Calculate an estimate of the standardized mean difference between group
-$B$ and group $A$, along with the sampling variance of the SMD estimate,
-that adjusts for pre-test differences between groups. Candidates for
-numerator of the SMD include the adjusted mean difference,
-${\widetilde{y}}_{B} - {\widetilde{y}}_{A}$ or the
-difference-in-differences,
-$\left( {\bar{y}}_{B} - {\bar{x}}_{B} \right) - \left( {\bar{y}}_{A} - {\bar{x}}_{A} \right)$.
-In either case, the tricky bit is finding the sampling variance of this
-quantity, which involves the pre-post correlation. For the denominator
-of the SMD, you use the post-test SD, either pooled across just groups
-$A$ and $B$ or pooled across all $G$ groups, assuming a common
-population variance.
+\\B\\ and group \\A\\, along with the sampling variance of the SMD
+estimate, that adjusts for pre-test differences between groups.
+Candidates for numerator of the SMD include the adjusted mean
+difference, \\\tilde{y}\_B - \tilde{y}\_A\\ or the
+difference-in-differences, \\\left(\bar{y}\_B - \bar{x}\_B\right) -
+\left(\bar{y}\_A - \bar{x}\_A\right)\\. In either case, the tricky bit
+is finding the sampling variance of this quantity, which involves the
+pre-post correlation. For the denominator of the SMD, you use the
+post-test SD, either pooled across just groups \\A\\ and \\B\\ or pooled
+across all \\G\\ groups, assuming a common population variance.
 
 ## The solution
 
-The key here is to recognize that you can calculate $\widehat{\beta}$,
-the estimated slope of the within-group pre-post relationship, based on
-the difference between the adjusted group means and the raw post-test
-means. Then the pre-post correlation can be derived from the
-$\widehat{\beta}$. In the ANCOVA model,
-$${\widetilde{y}}_{g} = {\bar{y}}_{g} - \widehat{\beta}\left( {\bar{x}}_{g} - \bar{\bar{x}} \right),$$
-where $\bar{\bar{x}}$ is the overall mean across groups, or
-$$\bar{\bar{x}} = \frac{1}{n_{\bullet}}\sum\limits_{g = 1}^{G}n_{g}{\bar{x}}_{g},$$
-with $n_{\bullet} = \sum_{g = 1}^{G}n_{g}$. Thus, we can back out
-$\widehat{\beta}$ from the reported summary statistics for group $g$ as
-$${\widehat{\beta}}_{g} = \frac{{\bar{y}}_{g} - {\widetilde{y}}_{g}}{{\bar{x}}_{g} - \bar{\bar{x}}}.$$
-Actually, we get $G$ estimates of ${\widehat{\beta}}_{g}$—one from each
-group. Taking a weighted average seems sensible here, so we end up with
-$$\widehat{\beta} = \frac{1}{n_{\bullet}}\sum\limits_{g = 1}^{G}n_{g}\left( \frac{{\bar{y}}_{g} - {\widetilde{y}}_{g}}{{\bar{x}}_{g} - \bar{\bar{x}}} \right).$$
-Now, let $r$ denote the sample correlation between pre-test and
-post-test, after partialing out differences in means for each group.
-This correlation is related to $\widehat{\beta}$ as
-$$r = \widehat{\beta} \times \frac{s_{px}}{s_{py}},$$ where $s_{px}$ and
-$s_{py}$ are the standard deviations of the pre-test and post-test,
-respectively, pooled across all $g$ groups.
+The key here is to recognize that you can calculate \\\hat\beta\\, the
+estimated slope of the within-group pre-post relationship, based on the
+difference between the adjusted group means and the raw post-test means.
+Then the pre-post correlation can be derived from the \\\hat\beta\\. In
+the ANCOVA model, \\ \tilde{y}\_g = \bar{y}\_g - \hat\beta
+\left(\bar{x}\_g - \bar{\bar{x}}\right), \\ where \\\bar{\bar{x}}\\ is
+the overall mean across groups, or \\ \bar{\bar{x}} =
+\frac{1}{n\_{\bullet}} \sum\_{g=1}^G n_g \bar{x}\_g, \\ with
+\\n\_{\bullet} = \sum\_{g=1}^{G} n_g\\. Thus, we can back out
+\\\hat\beta\\ from the reported summary statistics for group \\g\\ as \\
+\hat\beta_g = \frac{\bar{y}\_g - \tilde{y}\_g}{\bar{x}\_g -
+\bar{\bar{x}}}. \\ Actually, we get \\G\\ estimates of
+\\\hat\beta_g\\—one from each group. Taking a weighted average seems
+sensible here, so we end up with \\ \hat\beta = \frac{1}{n\_{\bullet}}
+\sum\_{g=1}^G n_g \left(\frac{\bar{y}\_g - \tilde{y}\_g}{\bar{x}\_g -
+\bar{\bar{x}}}\right). \\ Now, let \\r\\ denote the sample correlation
+between pre-test and post-test, after partialing out differences in
+means for each group. This correlation is related to \\\hat\beta\\ as \\
+r = \hat\beta \times \frac{s\_{px}}{s\_{py}}, \\ where \\s\_{px}\\ and
+\\s\_{py}\\ are the standard deviations of the pre-test and post-test,
+respectively, pooled across all \\g\\ groups.
 
 Here’s the result of carrying out these calculations with the example
 data from Murawski (2006):
@@ -141,44 +141,44 @@ ways.
 ### Diff-in-diff
 
 One option would be to take the between-group difference in pre-post
-differences (a.k.a., the diff-in-diff):
-$$DD = \left( {\bar{y}}_{B} - {\bar{x}}_{B} \right) - \left( {\bar{y}}_{A} - {\bar{x}}_{A} \right).$$
-Assuming that the within-group variance of the pre-test and the
-within-group variance of the post-test are equal (and constant across
-groups), then
-$$\text{Var}(DD) = 2\sigma^{2}(1 - \rho)\left( \frac{1}{n_{A}} + \frac{1}{n_{B}} \right),$$
-where $\sigma^{2}$ is the within-group population variance of the
-post-test and $\rho$ is the population correlation between pre- and
-post. Dividing $DD$ by $s_{py}$ gives an estimate of the standardized
-mean difference between group B and group A,
-$$d_{DD} = \frac{DD}{s_{py}},$$ with approximate sampling variance
-$$\text{Var}\left( d_{DD} \right) \approx 2(1 - \rho)\left( \frac{1}{n_{A}} + \frac{1}{n_{B}} \right) + \frac{\delta^{2}}{2\left( n_{\bullet} - G \right)},$$
-where $\delta$ is the SMD parameter. The variance can be estimated by
-substituting estimates of $\rho$ and $\delta$:
-$$V_{DD} = 2(1 - r)\left( \frac{1}{n_{A}} + \frac{1}{n_{B}} \right) + \frac{d^{2}}{2\left( n_{\bullet} - G \right)}.$$
-If you would prefer to pool the post-test standard deviation across
-groups $A$ and $B$ only, then replace $\left( n_{\bullet} - G \right)$
-with $\left( n_{A} + n_{B} - 2 \right)$ in the second term of $V_{DD}$.
+differences (a.k.a., the diff-in-diff): \\ DD = (\bar{y}\_B -
+\bar{x}\_B) - (\bar{y}\_A - \bar{x}\_A). \\ Assuming that the
+within-group variance of the pre-test and the within-group variance of
+the post-test are equal (and constant across groups), then \\
+\text{Var}(DD) = 2\sigma^2(1 - \rho)\left(\frac{1}{n_A} +
+\frac{1}{n_B}\right), \\ where \\\sigma^2\\ is the within-group
+population variance of the post-test and \\\rho\\ is the population
+correlation between pre- and post. Dividing \\DD\\ by \\s\_{py}\\ gives
+an estimate of the standardized mean difference between group B and
+group A, \\ d\_{DD} = \frac{DD}{s\_{py}}, \\ with approximate sampling
+variance \\ \text{Var}(d\_{DD}) \approx 2(1 - \rho)\left(\frac{1}{n_A} +
+\frac{1}{n_B}\right) + \frac{\delta^2}{2(n\_\bullet - G)}, \\ where
+\\\delta\\ is the SMD parameter. The variance can be estimated by
+substituting estimates of \\\rho\\ and \\\delta\\: \\ V\_{DD} = 2(1 -
+r)\left(\frac{1}{n_A} + \frac{1}{n_B}\right) + \frac{d^2}{2(n\_\bullet -
+G)}. \\ If you would prefer to pool the post-test standard deviation
+across groups \\A\\ and \\B\\ only, then replace \\(n\_\bullet - G)\\
+with \\(n_A + n_B - 2)\\ in the second term of \\V\_{DD}\\.
 
 ### Regression adjustment
 
 An alternative to the diff-in-diff approach is to use the
-regression-adjusted mean difference between group $B$ and group $A$ as
-the numerator of the SMD. Here, we would calculate the standardized mean
-difference as
-$$d_{reg} = \frac{{\widetilde{y}}_{B} - {\widetilde{y}}_{A}}{s_{py}}.$$
-Now, the variance of the regression-adjusted mean difference is
-approximately
-$$\text{Var}\left( {\widetilde{y}}_{B} - {\widetilde{y}}_{A} \right) \approx \sigma^{2}\left( 1 - \rho^{2} \right)\left( \frac{1}{n_{A}} + \frac{1}{n_{B}} \right),$$
-from which it follows that the variance of the regression-adjusted SMD
-is approximately
-$$\text{Var}\left( d_{reg} \right) \approx \left( 1 - \rho^{2} \right)\left( \frac{1}{n_{A}} + \frac{1}{n_{B}} \right) + \frac{\delta^{2}}{2\left( n_{\bullet} - G \right)}.$$
-Again, the variance can be estimated by substituting estimates of $\rho$
-and $\delta$:
-$$V_{reg} = \left( 1 - r^{2} \right)\left( \frac{1}{n_{A}} + \frac{1}{n_{B}} \right) + \frac{d^{2}}{2\left( n_{\bullet} - G \right)}.$$
-If you would prefer to pool the post-test standard deviation across
-groups $A$ and $B$ only, then replace $\left( n_{\bullet} - G \right)$
-with $\left( n_{A} + n_{B} - 2 \right)$ in the second term of $V_{DD}$.
+regression-adjusted mean difference between group \\B\\ and group \\A\\
+as the numerator of the SMD. Here, we would calculate the standardized
+mean difference as \\ d\_{reg} = \frac{\tilde{y}\_B -
+\tilde{y}\_A}{s\_{py}}. \\ Now, the variance of the regression-adjusted
+mean difference is approximately \\ \text{Var}(\tilde{y}\_B -
+\tilde{y}\_A) \approx \sigma^2 (1 - \rho^2) \left(\frac{1}{n_A} +
+\frac{1}{n_B}\right), \\ from which it follows that the variance of the
+regression-adjusted SMD is approximately \\ \text{Var}(d\_{reg}) \approx
+(1 - \rho^2)\left(\frac{1}{n_A} + \frac{1}{n_B}\right) +
+\frac{\delta^2}{2(n\_\bullet - G)}. \\ Again, the variance can be
+estimated by substituting estimates of \\\rho\\ and \\\delta\\: \\
+V\_{reg} = (1 - r^2)\left(\frac{1}{n_A} + \frac{1}{n_B}\right) +
+\frac{d^2}{2(n\_\bullet - G)}. \\ If you would prefer to pool the
+post-test standard deviation across groups \\A\\ and \\B\\ only, then
+replace \\(n\_\bullet - G)\\ with \\(n_A + n_B - 2)\\ in the second term
+of \\V\_{DD}\\.
 
 The regression-adjusted effect size estimator will always have smaller
 sampling variance than the diff-in-diff estimator (under the assumptions

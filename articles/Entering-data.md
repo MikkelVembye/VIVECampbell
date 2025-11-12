@@ -350,50 +350,56 @@ som vil være de bedste at beregne, idet man kan vælge en række
 forskellige effektstørrelsesindekser i dette tilfælde. Jeg vil her
 gennemgå de tre mest kendte typer af effektstørrelser som man vil kunne
 beregne ud fra denne data, og vise, hvordan man kan beregne pre-posttest
-korrelationer $\rho_{prepost}$, når data er afrapporteret som i Tabel 1.
+korrelationer \\\rho\_{prepost}\\, når data er afrapporteret som i Tabel
+1.
 
-### Cohens’ $d$
+### Cohens’ \\d\\
 
 Den vel nok mest kendte effektstørrelse, som man vil møde i litteraturen
-er den som kaldes Cohens’ $d$. Denne effektstørrelse beregnes således
+er den som kaldes Cohens’ \\d\\. Denne effektstørrelse beregnes således
 
-$$d = \left( \frac{M_{post}^{T} - M_{post}^{C}}{SD_{pool}} \right)$$
+\\\begin{equation} \tag{1} d = \left(\frac{M^T\_{post} -
+M^C\_{post}}{SD\_{pool}}\right) \end{equation}\\
 
-hvor $M_{post}^{T}$ og $M_{post}^{C}$ er posttestmål for hhv. treatment
-og kontrolgruppen, mes $SD_{pool}$ beregnes via
+hvor \\M^T\_{post}\\ og \\M^C\_{post}\\ er posttestmål for hhv.
+treatment og kontrolgruppen, mes \\SD\_{pool}\\ beregnes via
 
-$$SD_{pool} = \sqrt{\frac{\left( n_{post}^{T} - 1 \right) \times \left( SD_{post}^{T} \right)^{2} + \left( n_{post}^{C} - 1 \right) \times \left( SD_{post}^{C} \right)^{2}}{n^{T} + n^{C} - 2}}$$
+\\\begin{equation} \tag{2} SD\_{pool} = \sqrt{\frac{(n^T\_{post}
+-1)\times(SD^T\_{post})^2 + (n^C\_{post}
+-1)\times(SD^C\_{post})^2}{n^T + n^C - 2}} \end{equation}\\
 
-$n^{T}$ og $n^{C}$ samt $SD_{post}^{T}$ og $SD_{post}^{C}$ er
+\\n^T\\ og \\n^C\\ samt \\SD^T\_{post}\\ og \\SD^C\_{post}\\ er
 samplestørrelsen og standardafvigelsen på posttest niveau for hhv.
-treatment og kontrolgruppen. Sampling variansen for Cohens’ $d$ er givet
-ved
+treatment og kontrolgruppen. Sampling variansen for Cohens’ \\d\\ er
+givet ved
 
-$$Var_{d} = \left( \frac{1}{n^{T}} + \frac{1}{n^{C}} \right) + \frac{d^{2}}{2df}$$
+\\\begin{equation} \tag{3} Var_d = \left(\frac{1}{n^T} +
+\frac{1}{n^C}\right) + \frac{d^2}{2df} \end{equation}\\
 
-hvor $df = n^{T} + n^{C}$ når der ikke er clusteringproblemer. En meget
+hvor \\df = n^T + n^C\\ når der ikke er clusteringproblemer. En meget
 vigtig viden, som forhåbentlig kan gøre det lettere at forstå, hvorfor
 vi senere laver cluster-justeringer og hvordan vi gennemfører
 publikationsbiastests, er, at forstå, at det første led i formel (2),
-dvs. $\left( \frac{1}{n^{T}} + \frac{1}{n^{C}} \right)$, indfanger
-sampling variationen for tælleren i formel (1), dvs.
-$M_{post}^{T} - M_{post}^{C}$, mens andet led i formel (2), dvs.
-$\frac{d^{2}}{2df}$ indfanger sampling variansen for nævner i formel
-(1), dvs. $SD_{pool}$. Det er første led, som skaber det store bias,
-hvis et studie ikke har håndtere klustering korrekt. Så når vi senere
-kluster bias korrigerer effekterne fra dette studie, vil i se, at led et
-få gange en kluster faktor på sig, som ofte vil gøre dette led
-substantielt større. En anden vigtig del ift. formel (3) er at forstå,
-at andet leddet i formel (3) (dvs. leddet til højre for $+$-tegnet), og
-senere formel (8), skaber en falsk korrelation mellem $d$ og $Var_{d}$
-(se Pustejovsky & Rodgers, [(2019)](https://doi.org/10.1002/jrsm.1332),
-fordi $d$ benyttes til at beregne dette led. Når vi estimerer
+dvs. \\\left(\frac{1}{n^T} + \frac{1}{n^C}\right)\\, indfanger sampling
+variationen for tælleren i formel (1), dvs. \\M^T\_{post} -
+M^C\_{post}\\, mens andet led i formel (2), dvs. \\\frac{d^2}{2df}\\
+indfanger sampling variansen for nævner i formel (1), dvs.
+\\SD\_{pool}\\. Det er første led, som skaber det store bias, hvis et
+studie ikke har håndtere klustering korrekt. Så når vi senere kluster
+bias korrigerer effekterne fra dette studie, vil i se, at led et få
+gange en kluster faktor på sig, som ofte vil gøre dette led substantielt
+større. En anden vigtig del ift. formel (3) er at forstå, at andet
+leddet i formel (3) (dvs. leddet til højre for \\+\\-tegnet), og senere
+formel (8), skaber en falsk korrelation mellem \\d\\ og \\Var_d\\ (se
+Pustejovsky & Rodgers, [(2019)](https://doi.org/10.1002/jrsm.1332),
+fordi \\d\\ benyttes til at beregne dette led. Når vi estimerer
 publikationsbias test fjerner vi derfor dette led, så kan vi ikke
 risikerer fejlagtigt at konkludere at små studier oftere afrapporterer
 større effekter, som blot skyldes et beregningsartifakt. Variansleddet
 vi benytter i publikationsbiastest ser derfor således ud;
 
-$$W_{d} = \left( \frac{1}{n^{T}} + \frac{1}{n^{C}} \right)$$
+\\\begin{equation} \tag{4} W_d = \left(\frac{1}{n^T} +
+\frac{1}{n^C}\right) \end{equation}\\
 
 #### Beregning af standardafvigelse baseret på alle grupper i fleregruppe studier
 
@@ -404,12 +410,15 @@ alle målte SDs på tværs af alle grupperne i forsøget. Dermed vil den
 poolede SD holdes konstant på af de forskellige effekter. Det er normalt
 ikke noget vi benytter i vores reviews, men jeg viser her formlen og
 koderne til at beregne denne, hvis man skulle få brug for den. Hvis man
-vil bruge denne tilgang, så beregnes den samlede $SD_{pool,all}$ således
+vil bruge denne tilgang, så beregnes den samlede \\SD\_{pool, all}\\
+således
 
-$$SD_{pool,all} = \sqrt{\frac{1}{N - T - 1}\sum\limits_{t = 0}^{T}\left( n^{t} - 1 \right)\left( SD_{post}^{t} \right)^{2}}$$
+\\\begin{equation} \tag{5} SD\_{pool, all} =
+\sqrt{\frac{1}{N-T-1}\sum^{T}\_{t=0}(n^t-1)(SD^t\_{post})^2}
+\end{equation}\\
 
-hvor $N = \sum_{t = 0}^{T}n^{t}$ for treatmentgrupperne $t = 0,...,T$
-med $t = 0$ svarende til kontrolgruppen ($C$).
+hvor \\N = \sum^{T}\_{t=0}n^t\\ for treatmentgrupperne \\t=0,...,T\\ med
+\\t=0\\ svarende til kontrolgruppen (\\C\\).
 
 ``` r
 
@@ -431,37 +440,39 @@ SD_all_arms <-
 
 Det objekt kan senere bindes sammen med vores effektstørrelsesdata.
 
-### Hedges’ $g$
+### Hedges’ \\g\\
 
-En anden meget kendte effektstørrelser er den såkaldte Hedges’ $g$.
-Forskellen med Cohens’ $d$ og Hedges’ $g$ er, at Hedges $g$ korrigerer
-en overestimeringfejl i Cohens’ $d$. Det vil konkret sige at Cohens’ $d$
-bliver for stor ift. den sande bagvedliggende effekt som forsøges
-estimeres, når sample størrelsen er lille, dvs. når $n^{t} < 20$. Derfor
-ganges en korrektion faktor $J = 1 - \frac{3}{(4 - df - 1)}$ på formlel
-(1). Det ser ud således
+En anden meget kendte effektstørrelser er den såkaldte Hedges’ \\g\\.
+Forskellen med Cohens’ \\d\\ og Hedges’ \\g\\ er, at Hedges \\g\\
+korrigerer en overestimeringfejl i Cohens’ \\d\\. Det vil konkret sige
+at Cohens’ \\d\\ bliver for stor ift. den sande bagvedliggende effekt
+som forsøges estimeres, når sample størrelsen er lille, dvs. når
+\\n^t\<20\\. Derfor ganges en korrektion faktor \\J = 1 -
+\frac{3}{(4-df-1)}\\ på formlel (1). Det ser ud således
 
-$$g = J\left( \frac{M_{post}^{T} - M_{post}^{C}}{SD_{pool}} \right)$$
+\\\begin{equation} \tag{6} g = J\left(\frac{M^T\_{post} -
+M^C\_{post}}{SD\_{pool}}\right) \end{equation}\\
 
 Larry Hedges, som har udviklet denne effektstørrelse, har senere fundet,
 at det ikke er nødvendigt at korrigere variansen for denne
 effektstørrelse. Det vil sige, at vi kan beregne sampling variansen med
-formel (2). I vil kunne støde på nogle referencer, som ganger $J^{2}$ på
+formel (2). I vil kunne støde på nogle referencer, som ganger \\J^2\\ på
 formel (2), men dette ser som sagt ikke længere ud til at være
 nødvendigt.
 
-### Glass’ $\Delta$
+### Glass’ \\\Delta\\
 
-Den sidste også relativt kendte effektstørrelse er Glass’ $\Delta$.
+Den sidste også relativt kendte effektstørrelse er Glass’ \\\Delta\\.
 Denne effektstørrelse adskiller sig ved, at man kun benytter post-test
-standardafvigelsen fra kontrolgruppen, $SD_{post}^{C}$, til at
+standardafvigelsen fra kontrolgruppen, \\SD^C\_{post}\\, til at
 standardisere/skalere effektforskellen i formel (1). Det bygger på
 antagelsen om, at kontrolgruppen ligner den fulde population mest, da
 disse ikke har været udsat for en intervention. Den ser således ud
 
-$$\Delta = \left( \frac{M_{post}^{T} - M_{post}^{C}}{SD_{post}^{C}} \right)$$
+\\\begin{equation} \tag{7} \Delta = \left(\frac{M^T\_{post} -
+M^C\_{post}}{SD^C\_{post}}\right) \end{equation}\\
 
-Formel (2) kan også benyttes til at beregne sampling for $\Delta$
+Formel (2) kan også benyttes til at beregne sampling for \\\Delta\\
 
 ### Pretest/baseline adjustede effektstørrelser
 
@@ -479,37 +490,42 @@ intern validitetsprogram, er at beregne, de såkaldte
 difference-in-differences (DID) effektstørrelser (og kaldte
 pretest-adjusted effect sizes), hvor man kontrollerer baseline
 forskellene på outcme variablen ud mellem treatment og kontrolgruppen.
-Vi vil ofte beregne både Hedges’ $g$ og DID effektstørrelser, men jeg er
-ret stor fan af den sidste og vil altid lægge mest vægt på fotolkningen
-af disse, dels fordi denne effektsttørreslser kan reducere bias og dels
-fordi den kan estimateres mere præcist (se Hedges et
+Vi vil ofte beregne både Hedges’ \\g\\ og DID effektstørrelser, men jeg
+er ret stor fan af den sidste og vil altid lægge mest vægt på
+fotolkningen af disse, dels fordi denne effektsttørreslser kan reducere
+bias og dels fordi den kan estimateres mere præcist (se Hedges et
 al. [2023](https://doi.org/10.1111/bmsp.12296)). Formlen for DID
 effektstørrelsen er givet ved
 
-$$g_{DID} = J\left( \frac{\left\lbrack M_{post}^{T} - M_{pre}^{T} \right\rbrack - \left\lbrack M_{post}^{C} - M_{pre}^{C} \right\rbrack}{SD_{pool}} \right)$$
+\\\begin{equation} \tag{8} g\_{DID} = J \left(\frac{\[M^T\_{post} -
+M^T\_{pre}\] - \[M^C\_{post} - M^C\_{pre}\]}{SD\_{pool}}\right)
+\end{equation}\\
 
-hvor $M_{post}^{T}$ og $M_{post}^{C}$ samt $M_{pre}^{T}$ og
-$M_{pre}^{C}$ er post- og baselinemål for hhv. treatment- og
-kontrolgruppen, og
-$SD_{pool} = \sqrt{\frac{\left( n_{post}^{T} - 1 \right) \times \left( SD_{post}^{T} \right)^{2} + \left( n_{post}^{C} - 1 \right) \times \left( SD_{post}^{C} \right)^{2}}{n^{T} + n^{C} - 2}}$,
-mens $n^{T}$ og $n^{C}$ samt $SD_{post}^{T}$ og $SD_{post}^{C}$ er
-samplestørrelsen og standardafvigelsen for hhv. treatment og
-kontrolgruppen. $J$ i formel (1) er Hedges’ sample sample korrektor lige
-med $1 - \frac{3}{4df - 1}$ (nogen trækker 9 fra $df$ i stedet for 1,
-men det har ingen substantiel betydning).  
+hvor \\M^T\_{post}\\ og \\M^C\_{post}\\ samt \\M^T\_{pre}\\ og
+\\M^C\_{pre}\\ er post- og baselinemål for hhv. treatment- og
+kontrolgruppen, og \\SD\_{pool} = \sqrt{\frac{(n^T\_{post}
+-1)\times(SD^T\_{post})^2 + (n^C\_{post}
+-1)\times(SD^C\_{post})^2}{n^T + n^C - 2}}\\, mens \\n^T\\ og \\n^C\\
+samt \\SD^T\_{post}\\ og \\SD^C\_{post}\\ er samplestørrelsen og
+standardafvigelsen for hhv. treatment og kontrolgruppen. \\J\\ i formel
+(1) er Hedges’ sample sample korrektor lige med \\1 - \frac{3}{4df-1}\\
+(nogen trækker 9 fra \\df\\ i stedet for 1, men det har ingen
+substantiel betydning).  
   
-Hvis vi antager, at der ikke er klusterproblmer, så er
-$df = n^{T} + n^{C}$. Når der er klusteringproblemer kan $df$ beregnes
-via Equation E.21 ([WWC,
+Hvis vi antager, at der ikke er klusterproblmer, så er \\df = n^T +
+n^C\\. Når der er klusteringproblemer kan \\df\\ beregnes via Equation
+E.21 ([WWC,
 2023](https://ies.ed.gov/ncee/WWC/Docs/referenceresources/Final_WWC-HandbookVer5_0-0-508.pdf),
 s. 171) eller hvis der kun er klustering i en gruppe Equation 7 i Hedges
 og Citkowicz ([2015](https://doi.org/10.3758/s13428-014-0538-z)).
-Sampling variansen for $g_{DID}$ er givet ved
+Sampling variansen for \\g\_{DID}\\ er givet ved
 
-$$Var_{g_{DID}} = \left( \frac{1}{n^{T}} + \frac{1}{n^{C}} \right)2\left( 1 - \rho_{prepost} \right) + \frac{g_{DID}^{2}}{2df}$$
+\\\begin{equation} \tag{9} Var\_{g\_{DID}} = \left(\frac{1}{n^T} +
+\frac{1}{n^C}\right) 2(1-\rho\_{prepost}) + \frac{g\_{DID}^2}{2df}
+\end{equation}\\
 
 Problemet er dog, at man skal kende pre-posttest korrelationen,
-$\rho_{prepost}$, for at kunne beregne variansen korrekt. I mange
+\\\rho\_{prepost}\\, for at kunne beregne variansen korrekt. I mange
 tilfælde vil vi være i stand til at kunne beregne denne (se eksempel
 nedenfor). Se eksemplvis formlerne fra [Cochranes
 handbook](https://training.cochrane.org/handbook/current/chapter-06#section-6-5-2-8)
@@ -517,38 +533,43 @@ eller formel 31 i Wilson
 ([2016](https://mason.gmu.edu/~dwilsonb/downloads/esformulas.pdf)). Se
 også denne blog på [VIVECampbell
 siden](https://mikkelvembye.github.io/VIVECampbell/articles/ancova-puzzler.html).
-Alternativt kan $Var_{g_{DID}}$ beregnes korrekt, hvis forfatterne har
-afrapporteret $t$- eller $F$-værdier fra repeated ANOVA, ANCOVA eller en
-regressions model, som har inkluderet pretest-outcome som kontrol
-variabel. Hvis dette er tilfældet, så
+Alternativt kan \\Var\_{g\_{DID}}\\ beregnes korrekt, hvis forfatterne
+har afrapporteret \\t\\- eller \\F\\-værdier fra repeated ANOVA, ANCOVA
+eller en regressions model, som har inkluderet pretest-outcome som
+kontrol variabel. Hvis dette er tilfældet, så
 
-$$Var_{g_{DID}} = \frac{g_{DID}^{2}}{t^{2}} + \frac{g_{DID}^{2}}{2df}$$
+\\\begin{equation} \tag{10} Var\_{g\_{DID}} = \frac{g\_{DID}^2}{t^2} +
+\frac{g\_{DID}^2}{2df} \end{equation}\\
 
-Bemærk her at $F = t^{2}$. Se [James Pustejovskys
+Bemærk her at \\F = t^2\\. Se [James Pustejovskys
 blog](https://www.jepusto.com/alternative-formulas-for-the-smd/) for en
 yderligere uddybning. Det er igen vigtigt her at notere, at når vi
 benytter disse typer af effektstørrelser i publikationsbiastests,
-fjernes igen andet leddet (dvs. leddet på højre side af $+$-tegnet) i
+fjernes igen andet leddet (dvs. leddet på højre side af \\+\\-tegnet) i
 formlerne (8) og (9).
 
-#### Beregning af pre-posttest korrelation $\rho_{prepost}$
+#### Beregning af pre-posttest korrelation \\\rho\_{prepost}\\
 
-For at kunne beregne sampling variansen for $g_{DID}$ skal vi kende,
+For at kunne beregne sampling variansen for \\g\_{DID}\\ skal vi kende,
 estimere eller imputere en værdi for korrelationen mellem pretest og
-postscorene, $\rho_{prepost}$. jeg vil på et senere tidspunkt skrive en
-blog, hvor jeg vil vise eksempler på alle de måder jeg kender til,
-hvorpå man kan bakke ud $\rho_{prepost}$. Når resultaterne er
-afrapportet som i Tabel 1, kan vi faktisk udregne den $\rho_{prepost}$
-for hhv. treatment- og kontrolgruppen. Her kan vi benytte formler fra
-[Cochranes
+postscorene, \\\rho\_{prepost}\\. jeg vil på et senere tidspunkt skrive
+en blog, hvor jeg vil vise eksempler på alle de måder jeg kender til,
+hvorpå man kan bakke ud \\\rho\_{prepost}\\. Når resultaterne er
+afrapportet som i Tabel 1, kan vi faktisk udregne den
+\\\rho\_{prepost}\\ for hhv. treatment- og kontrolgruppen. Her kan vi
+benytte formler fra [Cochranes
 handbook](https://training.cochrane.org/handbook/current/chapter-06#section-6-5-2-8),
 som for treatmentet gruppen kan beregnes vha
 
-$$\rho_{prepost}^{T} = \frac{\left( SD_{pre}^{T} \right)^{2} + \left( SD_{post}^{T} \right)^{2} - \left( SD_{diff}^{T} \right)^{2}}{2 \times SD_{pre}^{T} \times SD_{post}^{T}}$$
+\\\begin{equation} \tag{11} \rho^T\_{prepost} = \frac{(SD^T\_{pre})^2 +
+(SD^T\_{post})^2 - (SD^T\_{diff})^2}{2 \times SD^T\_{pre} \times
+SD^T\_{post}} \end{equation}\\
 
 og for kontrolgruppen
 
-$$\rho_{prepost}^{C} = \frac{\left( SD_{pre}^{C} \right)^{2} + \left( SD_{post}^{C} \right)^{2} - \left( SD_{diff}^{C} \right)^{2}}{2 \times SD_{pre}^{C} \times SD_{post}^{C}}$$
+\\\begin{equation} \tag{12} \rho^C\_{prepost} = \frac{(SD^C\_{pre})^2 +
+(SD^C\_{post})^2 - (SD^C\_{diff})^2}{2 \times SD^C\_{pre} \times
+SD^C\_{post}} \end{equation}\\
 
 Disse beregninger kan vi faktisk lave/tilføje direkte i vores datasæt
 indtastet ovenfor  
@@ -565,16 +586,16 @@ Fisher1996 <-
 ```
 
 Nu kender vi pre-posttest korrelationen for hhv. treatment- og
-kontrolgrupperne, men for at kunne beregne $\rho_{prepost}$ skal vi
+kontrolgrupperne, men for at kunne beregne \\\rho\_{prepost}\\ skal vi
 beregne den gennemsnitlige korrelation baseret på korrelationen fra den
 treatment- og kontrolgruppe, som benyttes til at udregne den givne
 effektstørrelse. For præcist at kunne beregne denne omregner man
-korrelationer til Fishers’ z-scores via
-$z_{i} = 0.5 \times ln\left( \frac{1 + \rho_{prepost}^{i}}{1 - \rho_{prepost}^{i}} \right)$
-med varians $v_{i} = \frac{1}{n - 3}$, hvor $n$ er gruppenstørrelsen.
-Varians bruges som vægt via $w_{i} = \frac{1}{v_{i}}$, når Fishers
-z-score konverteres tilbage til en korrelation-coefficient, således
-$\rho_{prepost}^{i}$ med flest observationer/individer får størst vægt.
+korrelationer til Fishers’ z-scores via \\z_i = 0.5 \times
+ln\left(\frac{1+\rho^i\_{prepost}}{1-\rho^i\_{prepost}}\right)\\ med
+varians \\v_i = \frac{1}{n-3}\\, hvor \\n\\ er gruppenstørrelsen.
+Varians bruges som vægt via \\w_i = \frac{1}{v_i}\\, når Fishers z-score
+konverteres tilbage til en korrelation-coefficient, således
+\\\rho^i\_{prepost}\\ med flest observationer/individer får størst vægt.
 Disse kan beregnes direkte i de råt indtastede data således
 
 ``` r
@@ -591,12 +612,14 @@ Fisher1996 <-
 Den gennemsnitlige Fishers’ z-score på tværs af grupperne kan derefter
 beregnes således
 
-$$\bar{z_{r}} = \frac{\sum\limits_{i = 1}^{g}w_{i}z_{i}}{\sum\limits_{i = 1}^{g}w_{i}}$$
+\\\begin{equation} \tag{13} \bar{z_r} = \frac{\sum^g\_{i =
+1}w_iz_i}{\sum^g\_{i = 1}w_i} \end{equation}\\
 
 Herefter kan den gennemsnitlige pre-posttest korrelation på tværs af
 grupper beregnes via
 
-$${\bar{\rho}}_{prepost} = \frac{e^{(2\bar{z_{r}}}) - 1}{e^{(2\bar{z_{r}})} + 1}$$
+\\\begin{equation} \tag{14} \bar\rho\_{prepost} =
+\frac{e^{(2\bar{z_r}})-1}{e^{(2\bar{z_r})}+1} \end{equation}\\
 
 Jeg viser, hvordan dette kan beregnes, som det første i nedenstående
 effektstørrelsesudregninger i næste sektion.
@@ -604,7 +627,7 @@ effektstørrelsesudregninger i næste sektion.
 ## Omsætning af formlerne til beregninger i R
 
 Nedenfor vil jeg vise, hvordan I kan omsætte ovenstående formler, dvs.
-beregne Cohens’ $d$, Hedges’ $g$ samt difference-in-differences
+beregne Cohens’ \\d\\, Hedges’ \\g\\ samt difference-in-differences
 effektstørrelser i R, og senere også hvordan i korrigere disse for
 klusterfejl. I eksemplet nedenfor fjerner jeg den ene treatment gruppe
 for at forsimple beregningerne. Jeg vil længere nede vise, hvordan I let
@@ -1042,17 +1065,19 @@ Fisher1996_es
 ### Cluster bias korrektion når der kun er klustering i en gruppe
 
   
-$$gt_{DID} = \omega\left( \frac{M_{post}^{T} - M_{post}^{C}}{SD_{pool}} \right)\gamma$$  
+\\\begin{equation} \tag{15} gt\_{DID} = \omega\left(\frac{M^T\_{post} -
+M^C\_{post}}{SD\_{pool}}\right)\gamma \end{equation}\\  
 
-hvor $\omega = 1 - 3/\left( 4 - df_{h} - 1 \right)$, hvor $df_{h}$ er de
-klusterjusterede frihedsgrader, som beregnes for således når der kun er
-klustering i en gruppe
+hvor \\\omega = 1 - 3/(4-df_h-1)\\, hvor \\df_h\\ er de klusterjusterede
+frihedsgrader, som beregnes for således når der kun er klustering i en
+gruppe
 
   
-$$h = \frac{\left\lbrack (N - 2) - 2(n - 1)\rho \right\rbrack^{2}}{(N - 2)(1 - \rho)^{2} + n(N - 2n)\rho^{2} + 2(N - 2n)\rho(1 - \rho)}$$  
+\\\begin{equation} \tag{16} h =
+\dfrac{\[(N-2)-2(n-1)\rho\]^2}{(N-2)(1-\rho)^2 + n(N-2n)\rho^2 +
+2(N-2n)\rho(1-\rho)} \end{equation}\\  
 
-i formel 14 er
-$\gamma = \sqrt{1 - \frac{\left( N^{c} + n - 2 \right)\rho_{ICC}}{}}$
+i formel 14 er \\\gamma = \sqrt{1-\frac{(N^c +n-2)\rho\_{ICC}}{}}\\
 
 ``` r
 

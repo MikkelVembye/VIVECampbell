@@ -6,7 +6,13 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>An ANCOVA puzzler • VIVECampbell</title>
-<script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- mathjax math --><script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script><script>
+  window.MathJax = {
+    chtml: {
+      fontURL: "https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/output/chtml/fonts/woff-v2"
+    }
+  };
+</script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
@@ -95,16 +101,14 @@ you from losing track of those notes you took during your stats courses,
 back when. Here’s one of those curious little puzzles, which I recently
 encountered in helping a colleague with a meta-analysis project.</p>
 <p>A researcher conducts a randomized experiment, assigning participants
-to each of
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>G</mi><annotation encoding="application/x-tex">G</annotation></semantics></math>
-groups. Each participant is assessed on a variable
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Y</mi><annotation encoding="application/x-tex">Y</annotation></semantics></math>
-at pre-test and at post-test (we can assume there’s no attrition). In
-their study write-up, the researcher reports sample sizes for each
-group, means and standard deviations for each group at pre-test and at
-post-test, and <em>adjusted</em> means at post-test, where the
-adjustment is done using a basic analysis of covariance, controlling for
-pre-test scores only. The data layout looks like this:</p>
+to each of <span class="math inline">\(G\)</span> groups. Each
+participant is assessed on a variable <span class="math inline">\(Y\)</span> at pre-test and at post-test (we can
+assume there’s no attrition). In their study write-up, the researcher
+reports sample sizes for each group, means and standard deviations for
+each group at pre-test and at post-test, and <em>adjusted</em> means at
+post-test, where the adjustment is done using a basic analysis of
+covariance, controlling for pre-test scores only. The data layout looks
+like this:</p>
 <table class="table">
 <colgroup>
 <col width="7%">
@@ -117,50 +121,45 @@ pre-test scores only. The data layout looks like this:</p>
 </colgroup>
 <thead><tr class="header">
 <th>Group</th>
-<th><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>N</mi><annotation encoding="application/x-tex">N</annotation></semantics></math></th>
-<th>Pre-test
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>M</mi><annotation encoding="application/x-tex">M</annotation></semantics></math>
+<th><span class="math inline">\(N\)</span></th>
+<th>Pre-test <span class="math inline">\(M\)</span>
 </th>
-<th>Pre-test
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mi>D</mi></mrow><annotation encoding="application/x-tex">SD</annotation></semantics></math>
+<th>Pre-test <span class="math inline">\(SD\)</span>
 </th>
-<th>Post-test
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>M</mi><annotation encoding="application/x-tex">M</annotation></semantics></math>
+<th>Post-test <span class="math inline">\(M\)</span>
 </th>
-<th>Post-test
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mi>D</mi></mrow><annotation encoding="application/x-tex">SD</annotation></semantics></math>
+<th>Post-test <span class="math inline">\(SD\)</span>
 </th>
-<th>Adjusted post-test
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>M</mi><annotation encoding="application/x-tex">M</annotation></semantics></math>
+<th>Adjusted post-test <span class="math inline">\(M\)</span>
 </th>
 </tr></thead>
 <tbody>
 <tr class="odd">
 <td>Group A</td>
-<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>n</mi><mi>A</mi></msub><annotation encoding="application/x-tex">n_A</annotation></semantics></math></td>
-<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mover><mi>x</mi><mo accent="true">‾</mo></mover><mi>A</mi></msub><annotation encoding="application/x-tex">\bar{x}_{A}</annotation></semantics></math></td>
-<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>s</mi><mrow><mi>A</mi><mn>0</mn></mrow></msub><annotation encoding="application/x-tex">s_{A0}</annotation></semantics></math></td>
-<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mover><mi>y</mi><mo accent="true">‾</mo></mover><mi>A</mi></msub><annotation encoding="application/x-tex">\bar{y}_{A}</annotation></semantics></math></td>
-<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>s</mi><mrow><mi>A</mi><mn>1</mn></mrow></msub><annotation encoding="application/x-tex">s_{A1}</annotation></semantics></math></td>
-<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mover><mi>y</mi><mo accent="true">̃</mo></mover><mi>A</mi></msub><annotation encoding="application/x-tex">\tilde{y}_A</annotation></semantics></math></td>
+<td><span class="math inline">\(n_A\)</span></td>
+<td><span class="math inline">\(\bar{x}_{A}\)</span></td>
+<td><span class="math inline">\(s_{A0}\)</span></td>
+<td><span class="math inline">\(\bar{y}_{A}\)</span></td>
+<td><span class="math inline">\(s_{A1}\)</span></td>
+<td><span class="math inline">\(\tilde{y}_A\)</span></td>
 </tr>
 <tr class="even">
 <td>Group B</td>
-<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>n</mi><mi>B</mi></msub><annotation encoding="application/x-tex">n_B</annotation></semantics></math></td>
-<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mover><mi>x</mi><mo accent="true">‾</mo></mover><mi>B</mi></msub><annotation encoding="application/x-tex">\bar{x}_{B}</annotation></semantics></math></td>
-<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>s</mi><mrow><mi>B</mi><mn>0</mn></mrow></msub><annotation encoding="application/x-tex">s_{B0}</annotation></semantics></math></td>
-<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mover><mi>y</mi><mo accent="true">‾</mo></mover><mi>B</mi></msub><annotation encoding="application/x-tex">\bar{y}_{B}</annotation></semantics></math></td>
-<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>s</mi><mrow><mi>B</mi><mn>1</mn></mrow></msub><annotation encoding="application/x-tex">s_{B1}</annotation></semantics></math></td>
-<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mover><mi>y</mi><mo accent="true">̃</mo></mover><mi>B</mi></msub><annotation encoding="application/x-tex">\tilde{y}_B</annotation></semantics></math></td>
+<td><span class="math inline">\(n_B\)</span></td>
+<td><span class="math inline">\(\bar{x}_{B}\)</span></td>
+<td><span class="math inline">\(s_{B0}\)</span></td>
+<td><span class="math inline">\(\bar{y}_{B}\)</span></td>
+<td><span class="math inline">\(s_{B1}\)</span></td>
+<td><span class="math inline">\(\tilde{y}_B\)</span></td>
 </tr>
 <tr class="odd">
-<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>⋮</mi><annotation encoding="application/x-tex">\vdots</annotation></semantics></math></td>
-<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>⋮</mi><annotation encoding="application/x-tex">\vdots</annotation></semantics></math></td>
-<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>⋮</mi><annotation encoding="application/x-tex">\vdots</annotation></semantics></math></td>
-<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>⋮</mi><annotation encoding="application/x-tex">\vdots</annotation></semantics></math></td>
-<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>⋮</mi><annotation encoding="application/x-tex">\vdots</annotation></semantics></math></td>
-<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>⋮</mi><annotation encoding="application/x-tex">\vdots</annotation></semantics></math></td>
-<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>⋮</mi><annotation encoding="application/x-tex">\vdots</annotation></semantics></math></td>
+<td><span class="math inline">\(\vdots\)</span></td>
+<td><span class="math inline">\(\vdots\)</span></td>
+<td><span class="math inline">\(\vdots\)</span></td>
+<td><span class="math inline">\(\vdots\)</span></td>
+<td><span class="math inline">\(\vdots\)</span></td>
+<td><span class="math inline">\(\vdots\)</span></td>
+<td><span class="math inline">\(\vdots\)</span></td>
 </tr>
 </tbody>
 </table>
@@ -171,17 +170,11 @@ pre-test and post-test within each group. All we have are the summary
 statistics, plus the adjusted post-test scores. We can assume that the
 adjustment was done according to the basic ANCOVA model, assuming a
 common slope across groups as well as homoskedasticity and so on. The
-model is then
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>y</mi><mrow><mi>i</mi><mi>g</mi></mrow></msub><mo>=</mo><msub><mi>α</mi><mi>g</mi></msub><mo>+</mo><mi>β</mi><msub><mi>x</mi><mrow><mi>i</mi><mi>g</mi></mrow></msub><mo>+</mo><msub><mi>e</mi><mrow><mi>i</mi><mi>g</mi></mrow></msub><mo>,</mo></mrow><annotation encoding="application/x-tex">
+model is then <span class="math display">\[
 y_{ig} = \alpha_g + \beta x_{ig} + e_{ig},
-</annotation></semantics></math> for
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mo>=</mo><mn>1</mn><mo>,</mo><mi>.</mi><mi>.</mi><mi>.</mi><mo>,</mo><msub><mi>n</mi><mi>g</mi></msub></mrow><annotation encoding="application/x-tex">i = 1,...,n_g</annotation></semantics></math>
-and
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>g</mi><mo>=</mo><mn>1</mn><mo>,</mo><mi>.</mi><mi>.</mi><mi>.</mi><mo>,</mo><mi>G</mi></mrow><annotation encoding="application/x-tex">g = 1,...,G</annotation></semantics></math>,
-where
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>e</mi><mrow><mi>i</mi><mi>g</mi></mrow></msub><annotation encoding="application/x-tex">e_{ig}</annotation></semantics></math>
-is an independent error term that is assumed to have constant variance
-across groups.</p>
+\]</span> for <span class="math inline">\(i = 1,...,n_g\)</span> and
+<span class="math inline">\(g = 1,...,G\)</span>, where <span class="math inline">\(e_{ig}\)</span> is an independent error term that
+is assumed to have constant variance across groups.</p>
 <div class="section level3">
 <h3 id="for-realz">For realz?<a class="anchor" aria-label="anchor" href="#for-realz"></a>
 </h3>
@@ -199,21 +192,16 @@ across groups.</p>
 </colgroup>
 <thead><tr class="header">
 <th>Group</th>
-<th><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>N</mi><annotation encoding="application/x-tex">N</annotation></semantics></math></th>
-<th>Pre-test
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>M</mi><annotation encoding="application/x-tex">M</annotation></semantics></math>
+<th><span class="math inline">\(N\)</span></th>
+<th>Pre-test <span class="math inline">\(M\)</span>
 </th>
-<th>Pre-test
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mi>D</mi></mrow><annotation encoding="application/x-tex">SD</annotation></semantics></math>
+<th>Pre-test <span class="math inline">\(SD\)</span>
 </th>
-<th>Post-test
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>M</mi><annotation encoding="application/x-tex">M</annotation></semantics></math>
+<th>Post-test <span class="math inline">\(M\)</span>
 </th>
-<th>Post-test
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mi>D</mi></mrow><annotation encoding="application/x-tex">SD</annotation></semantics></math>
+<th>Post-test <span class="math inline">\(SD\)</span>
 </th>
-<th>Adjusted post-test
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>M</mi><annotation encoding="application/x-tex">M</annotation></semantics></math>
+<th>Adjusted post-test <span class="math inline">\(M\)</span>
 </th>
 </tr></thead>
 <tbody>
@@ -257,77 +245,46 @@ one-level ANCOVA.</p>
 <h2 id="the-puzzler">The puzzler<a class="anchor" aria-label="anchor" href="#the-puzzler"></a>
 </h2>
 <p>Calculate an estimate of the standardized mean difference between
-group
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>B</mi><annotation encoding="application/x-tex">B</annotation></semantics></math>
-and group
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math>,
-along with the sampling variance of the SMD estimate, that adjusts for
-pre-test differences between groups. Candidates for numerator of the SMD
-include the adjusted mean difference,
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mover><mi>y</mi><mo accent="true">̃</mo></mover><mi>B</mi></msub><mo>−</mo><msub><mover><mi>y</mi><mo accent="true">̃</mo></mover><mi>A</mi></msub></mrow><annotation encoding="application/x-tex">\tilde{y}_B - \tilde{y}_A</annotation></semantics></math>
-or the difference-in-differences,
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">(</mo><msub><mover><mi>y</mi><mo accent="true">‾</mo></mover><mi>B</mi></msub><mo>−</mo><msub><mover><mi>x</mi><mo accent="true">‾</mo></mover><mi>B</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>−</mo><mrow><mo stretchy="true" form="prefix">(</mo><msub><mover><mi>y</mi><mo accent="true">‾</mo></mover><mi>A</mi></msub><mo>−</mo><msub><mover><mi>x</mi><mo accent="true">‾</mo></mover><mi>A</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\left(\bar{y}_B - \bar{x}_B\right) - \left(\bar{y}_A - \bar{x}_A\right)</annotation></semantics></math>.
-In either case, the tricky bit is finding the sampling variance of this
-quantity, which involves the pre-post correlation. For the denominator
-of the SMD, you use the post-test SD, either pooled across just groups
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math>
-and
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>B</mi><annotation encoding="application/x-tex">B</annotation></semantics></math>
-or pooled across all
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>G</mi><annotation encoding="application/x-tex">G</annotation></semantics></math>
-groups, assuming a common population variance.</p>
+group <span class="math inline">\(B\)</span> and group <span class="math inline">\(A\)</span>, along with the sampling variance of
+the SMD estimate, that adjusts for pre-test differences between groups.
+Candidates for numerator of the SMD include the adjusted mean
+difference, <span class="math inline">\(\tilde{y}_B -
+\tilde{y}_A\)</span> or the difference-in-differences, <span class="math inline">\(\left(\bar{y}_B - \bar{x}_B\right) -
+\left(\bar{y}_A - \bar{x}_A\right)\)</span>. In either case, the tricky
+bit is finding the sampling variance of this quantity, which involves
+the pre-post correlation. For the denominator of the SMD, you use the
+post-test SD, either pooled across just groups <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> or pooled across all <span class="math inline">\(G\)</span> groups, assuming a common population
+variance.</p>
 </div>
 <div class="section level2">
 <h2 id="the-solution">The solution<a class="anchor" aria-label="anchor" href="#the-solution"></a>
 </h2>
-<p>The key here is to recognize that you can calculate
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mover><mi>β</mi><mo accent="true">̂</mo></mover><annotation encoding="application/x-tex">\hat\beta</annotation></semantics></math>,
-the estimated slope of the within-group pre-post relationship, based on
-the difference between the adjusted group means and the raw post-test
-means. Then the pre-post correlation can be derived from the
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mover><mi>β</mi><mo accent="true">̂</mo></mover><annotation encoding="application/x-tex">\hat\beta</annotation></semantics></math>.
-In the ANCOVA model,
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mover><mi>y</mi><mo accent="true">̃</mo></mover><mi>g</mi></msub><mo>=</mo><msub><mover><mi>y</mi><mo accent="true">‾</mo></mover><mi>g</mi></msub><mo>−</mo><mover><mi>β</mi><mo accent="true">̂</mo></mover><mrow><mo stretchy="true" form="prefix">(</mo><msub><mover><mi>x</mi><mo accent="true">‾</mo></mover><mi>g</mi></msub><mo>−</mo><mover><mover><mi>x</mi><mo accent="true">‾</mo></mover><mo accent="true">‾</mo></mover><mo stretchy="true" form="postfix">)</mo></mrow><mo>,</mo></mrow><annotation encoding="application/x-tex">
-\tilde{y}_g = \bar{y}_g - \hat\beta \left(\bar{x}_g - \bar{\bar{x}}\right),
-</annotation></semantics></math> where
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mover><mover><mi>x</mi><mo accent="true">‾</mo></mover><mo accent="true">‾</mo></mover><annotation encoding="application/x-tex">\bar{\bar{x}}</annotation></semantics></math>
-is the overall mean across groups, or
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mover><mi>x</mi><mo accent="true">‾</mo></mover><mo accent="true">‾</mo></mover><mo>=</mo><mfrac><mn>1</mn><msub><mi>n</mi><mo>•</mo></msub></mfrac><munderover><mo>∑</mo><mrow><mi>g</mi><mo>=</mo><mn>1</mn></mrow><mi>G</mi></munderover><msub><mi>n</mi><mi>g</mi></msub><msub><mover><mi>x</mi><mo accent="true">‾</mo></mover><mi>g</mi></msub><mo>,</mo></mrow><annotation encoding="application/x-tex">
+<p>The key here is to recognize that you can calculate <span class="math inline">\(\hat\beta\)</span>, the estimated slope of the
+within-group pre-post relationship, based on the difference between the
+adjusted group means and the raw post-test means. Then the pre-post
+correlation can be derived from the <span class="math inline">\(\hat\beta\)</span>. In the ANCOVA model, <span class="math display">\[
+\tilde{y}_g = \bar{y}_g - \hat\beta \left(\bar{x}_g -
+\bar{\bar{x}}\right),
+\]</span> where <span class="math inline">\(\bar{\bar{x}}\)</span> is
+the overall mean across groups, or <span class="math display">\[
 \bar{\bar{x}} = \frac{1}{n_{\bullet}} \sum_{g=1}^G n_g \bar{x}_g,
-</annotation></semantics></math> with
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>n</mi><mo>•</mo></msub><mo>=</mo><msubsup><mo>∑</mo><mrow><mi>g</mi><mo>=</mo><mn>1</mn></mrow><mi>G</mi></msubsup><msub><mi>n</mi><mi>g</mi></msub></mrow><annotation encoding="application/x-tex">n_{\bullet} = \sum_{g=1}^{G} n_g</annotation></semantics></math>.
-Thus, we can back out
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mover><mi>β</mi><mo accent="true">̂</mo></mover><annotation encoding="application/x-tex">\hat\beta</annotation></semantics></math>
-from the reported summary statistics for group
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>g</mi><annotation encoding="application/x-tex">g</annotation></semantics></math>
-as
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mover><mi>β</mi><mo accent="true">̂</mo></mover><mi>g</mi></msub><mo>=</mo><mfrac><mrow><msub><mover><mi>y</mi><mo accent="true">‾</mo></mover><mi>g</mi></msub><mo>−</mo><msub><mover><mi>y</mi><mo accent="true">̃</mo></mover><mi>g</mi></msub></mrow><mrow><msub><mover><mi>x</mi><mo accent="true">‾</mo></mover><mi>g</mi></msub><mo>−</mo><mover><mover><mi>x</mi><mo accent="true">‾</mo></mover><mo accent="true">‾</mo></mover></mrow></mfrac><mi>.</mi></mrow><annotation encoding="application/x-tex">
+\]</span> with <span class="math inline">\(n_{\bullet} = \sum_{g=1}^{G}
+n_g\)</span>. Thus, we can back out <span class="math inline">\(\hat\beta\)</span> from the reported summary
+statistics for group <span class="math inline">\(g\)</span> as <span class="math display">\[
 \hat\beta_g = \frac{\bar{y}_g - \tilde{y}_g}{\bar{x}_g - \bar{\bar{x}}}.
-</annotation></semantics></math> Actually, we get
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>G</mi><annotation encoding="application/x-tex">G</annotation></semantics></math>
-estimates of
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mover><mi>β</mi><mo accent="true">̂</mo></mover><mi>g</mi></msub><annotation encoding="application/x-tex">\hat\beta_g</annotation></semantics></math>—one
-from each group. Taking a weighted average seems sensible here, so we
-end up with
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>β</mi><mo accent="true">̂</mo></mover><mo>=</mo><mfrac><mn>1</mn><msub><mi>n</mi><mo>•</mo></msub></mfrac><munderover><mo>∑</mo><mrow><mi>g</mi><mo>=</mo><mn>1</mn></mrow><mi>G</mi></munderover><msub><mi>n</mi><mi>g</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mrow><msub><mover><mi>y</mi><mo accent="true">‾</mo></mover><mi>g</mi></msub><mo>−</mo><msub><mover><mi>y</mi><mo accent="true">̃</mo></mover><mi>g</mi></msub></mrow><mrow><msub><mover><mi>x</mi><mo accent="true">‾</mo></mover><mi>g</mi></msub><mo>−</mo><mover><mover><mi>x</mi><mo accent="true">‾</mo></mover><mo accent="true">‾</mo></mover></mrow></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">
-\hat\beta = \frac{1}{n_{\bullet}} \sum_{g=1}^G n_g \left(\frac{\bar{y}_g - \tilde{y}_g}{\bar{x}_g - \bar{\bar{x}}}\right).
-</annotation></semantics></math> Now, let
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>r</mi><annotation encoding="application/x-tex">r</annotation></semantics></math>
-denote the sample correlation between pre-test and post-test, after
-partialing out differences in means for each group. This correlation is
-related to
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mover><mi>β</mi><mo accent="true">̂</mo></mover><annotation encoding="application/x-tex">\hat\beta</annotation></semantics></math>
-as
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>r</mi><mo>=</mo><mover><mi>β</mi><mo accent="true">̂</mo></mover><mo>×</mo><mfrac><msub><mi>s</mi><mrow><mi>p</mi><mi>x</mi></mrow></msub><msub><mi>s</mi><mrow><mi>p</mi><mi>y</mi></mrow></msub></mfrac><mo>,</mo></mrow><annotation encoding="application/x-tex">
+\]</span> Actually, we get <span class="math inline">\(G\)</span>
+estimates of <span class="math inline">\(\hat\beta_g\)</span>—one from
+each group. Taking a weighted average seems sensible here, so we end up
+with <span class="math display">\[
+\hat\beta = \frac{1}{n_{\bullet}} \sum_{g=1}^G n_g \left(\frac{\bar{y}_g
+- \tilde{y}_g}{\bar{x}_g - \bar{\bar{x}}}\right).
+\]</span> Now, let <span class="math inline">\(r\)</span> denote the
+sample correlation between pre-test and post-test, after partialing out
+differences in means for each group. This correlation is related to
+<span class="math inline">\(\hat\beta\)</span> as <span class="math display">\[
 r = \hat\beta \times \frac{s_{px}}{s_{py}},
-</annotation></semantics></math> where
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>s</mi><mrow><mi>p</mi><mi>x</mi></mrow></msub><annotation encoding="application/x-tex">s_{px}</annotation></semantics></math>
-and
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>s</mi><mrow><mi>p</mi><mi>y</mi></mrow></msub><annotation encoding="application/x-tex">s_{py}</annotation></semantics></math>
-are the standard deviations of the pre-test and post-test, respectively,
-pooled across all
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>g</mi><annotation encoding="application/x-tex">g</annotation></semantics></math>
-groups.</p>
+\]</span> where <span class="math inline">\(s_{px}\)</span> and <span class="math inline">\(s_{py}\)</span> are the standard deviations of the
+pre-test and post-test, respectively, pooled across all <span class="math inline">\(g\)</span> groups.</p>
 <p>Here’s the result of carrying out these calculations with the example
 data from Murawski (2006):</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
@@ -373,88 +330,53 @@ ways.</p>
 <h3 id="diff-in-diff">Diff-in-diff<a class="anchor" aria-label="anchor" href="#diff-in-diff"></a>
 </h3>
 <p>One option would be to take the between-group difference in pre-post
-differences (a.k.a., the diff-in-diff):
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>D</mi><mi>D</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><msub><mover><mi>y</mi><mo accent="true">‾</mo></mover><mi>B</mi></msub><mo>−</mo><msub><mover><mi>x</mi><mo accent="true">‾</mo></mover><mi>B</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>−</mo><mrow><mo stretchy="true" form="prefix">(</mo><msub><mover><mi>y</mi><mo accent="true">‾</mo></mover><mi>A</mi></msub><mo>−</mo><msub><mover><mi>x</mi><mo accent="true">‾</mo></mover><mi>A</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">
+differences (a.k.a., the diff-in-diff): <span class="math display">\[
 DD = (\bar{y}_B - \bar{x}_B) - (\bar{y}_A - \bar{x}_A).
-</annotation></semantics></math> Assuming that the within-group variance
-of the pre-test and the within-group variance of the post-test are equal
-(and constant across groups), then
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext mathvariant="normal">Var</mtext><mrow><mo stretchy="true" form="prefix">(</mo><mi>D</mi><mi>D</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>2</mn><msup><mi>σ</mi><mn>2</mn></msup><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>ρ</mi><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mn>1</mn><msub><mi>n</mi><mi>A</mi></msub></mfrac><mo>+</mo><mfrac><mn>1</mn><msub><mi>n</mi><mi>B</mi></msub></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mo>,</mo></mrow><annotation encoding="application/x-tex">
-\text{Var}(DD) = 2\sigma^2(1 - \rho)\left(\frac{1}{n_A} + \frac{1}{n_B}\right),
-</annotation></semantics></math> where
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>σ</mi><mn>2</mn></msup><annotation encoding="application/x-tex">\sigma^2</annotation></semantics></math>
-is the within-group population variance of the post-test and
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ρ</mi><annotation encoding="application/x-tex">\rho</annotation></semantics></math>
-is the population correlation between pre- and post. Dividing
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>D</mi><mi>D</mi></mrow><annotation encoding="application/x-tex">DD</annotation></semantics></math>
-by
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>s</mi><mrow><mi>p</mi><mi>y</mi></mrow></msub><annotation encoding="application/x-tex">s_{py}</annotation></semantics></math>
-gives an estimate of the standardized mean difference between group B
-and group A,
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>d</mi><mrow><mi>D</mi><mi>D</mi></mrow></msub><mo>=</mo><mfrac><mrow><mi>D</mi><mi>D</mi></mrow><msub><mi>s</mi><mrow><mi>p</mi><mi>y</mi></mrow></msub></mfrac><mo>,</mo></mrow><annotation encoding="application/x-tex">
+\]</span> Assuming that the within-group variance of the pre-test and
+the within-group variance of the post-test are equal (and constant
+across groups), then <span class="math display">\[
+\text{Var}(DD) = 2\sigma^2(1 - \rho)\left(\frac{1}{n_A} +
+\frac{1}{n_B}\right),
+\]</span> where <span class="math inline">\(\sigma^2\)</span> is the
+within-group population variance of the post-test and <span class="math inline">\(\rho\)</span> is the population correlation
+between pre- and post. Dividing <span class="math inline">\(DD\)</span>
+by <span class="math inline">\(s_{py}\)</span> gives an estimate of the
+standardized mean difference between group B and group A, <span class="math display">\[
 d_{DD} = \frac{DD}{s_{py}},
-</annotation></semantics></math> with approximate sampling variance
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext mathvariant="normal">Var</mtext><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>d</mi><mrow><mi>D</mi><mi>D</mi></mrow></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>≈</mo><mn>2</mn><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>ρ</mi><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mn>1</mn><msub><mi>n</mi><mi>A</mi></msub></mfrac><mo>+</mo><mfrac><mn>1</mn><msub><mi>n</mi><mi>B</mi></msub></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><mfrac><msup><mi>δ</mi><mn>2</mn></msup><mrow><mn>2</mn><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>n</mi><mo>•</mo></msub><mo>−</mo><mi>G</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow></mfrac><mo>,</mo></mrow><annotation encoding="application/x-tex">
-\text{Var}(d_{DD}) \approx 2(1 - \rho)\left(\frac{1}{n_A} + \frac{1}{n_B}\right) + \frac{\delta^2}{2(n_\bullet - G)},
-</annotation></semantics></math> where
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>δ</mi><annotation encoding="application/x-tex">\delta</annotation></semantics></math>
-is the SMD parameter. The variance can be estimated by substituting
-estimates of
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ρ</mi><annotation encoding="application/x-tex">\rho</annotation></semantics></math>
-and
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>δ</mi><annotation encoding="application/x-tex">\delta</annotation></semantics></math>:
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>V</mi><mrow><mi>D</mi><mi>D</mi></mrow></msub><mo>=</mo><mn>2</mn><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>r</mi><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mn>1</mn><msub><mi>n</mi><mi>A</mi></msub></mfrac><mo>+</mo><mfrac><mn>1</mn><msub><mi>n</mi><mi>B</mi></msub></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><mfrac><msup><mi>d</mi><mn>2</mn></msup><mrow><mn>2</mn><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>n</mi><mo>•</mo></msub><mo>−</mo><mi>G</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow></mfrac><mi>.</mi></mrow><annotation encoding="application/x-tex">
-V_{DD} = 2(1 - r)\left(\frac{1}{n_A} + \frac{1}{n_B}\right) + \frac{d^2}{2(n_\bullet - G)}.
-</annotation></semantics></math> If you would prefer to pool the
-post-test standard deviation across groups
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math>
-and
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>B</mi><annotation encoding="application/x-tex">B</annotation></semantics></math>
-only, then replace
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>n</mi><mo>•</mo></msub><mo>−</mo><mi>G</mi><mo stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(n_\bullet - G)</annotation></semantics></math>
-with
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>n</mi><mi>A</mi></msub><mo>+</mo><msub><mi>n</mi><mi>B</mi></msub><mo>−</mo><mn>2</mn><mo stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(n_A + n_B - 2)</annotation></semantics></math>
-in the second term of
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>V</mi><mrow><mi>D</mi><mi>D</mi></mrow></msub><annotation encoding="application/x-tex">V_{DD}</annotation></semantics></math>.</p>
+\]</span> with approximate sampling variance <span class="math display">\[
+\text{Var}(d_{DD}) \approx 2(1 - \rho)\left(\frac{1}{n_A} +
+\frac{1}{n_B}\right) + \frac{\delta^2}{2(n_\bullet - G)},
+\]</span> where <span class="math inline">\(\delta\)</span> is the SMD
+parameter. The variance can be estimated by substituting estimates of
+<span class="math inline">\(\rho\)</span> and <span class="math inline">\(\delta\)</span>: <span class="math display">\[
+V_{DD} = 2(1 - r)\left(\frac{1}{n_A} + \frac{1}{n_B}\right) +
+\frac{d^2}{2(n_\bullet - G)}.
+\]</span> If you would prefer to pool the post-test standard deviation
+across groups <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> only, then replace <span class="math inline">\((n_\bullet - G)\)</span> with <span class="math inline">\((n_A + n_B - 2)\)</span> in the second term of
+<span class="math inline">\(V_{DD}\)</span>.</p>
 </div>
 <div class="section level3">
 <h3 id="regression-adjustment">Regression adjustment<a class="anchor" aria-label="anchor" href="#regression-adjustment"></a>
 </h3>
 <p>An alternative to the diff-in-diff approach is to use the
-regression-adjusted mean difference between group
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>B</mi><annotation encoding="application/x-tex">B</annotation></semantics></math>
-and group
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math>
-as the numerator of the SMD. Here, we would calculate the standardized
-mean difference as
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>d</mi><mrow><mi>r</mi><mi>e</mi><mi>g</mi></mrow></msub><mo>=</mo><mfrac><mrow><msub><mover><mi>y</mi><mo accent="true">̃</mo></mover><mi>B</mi></msub><mo>−</mo><msub><mover><mi>y</mi><mo accent="true">̃</mo></mover><mi>A</mi></msub></mrow><msub><mi>s</mi><mrow><mi>p</mi><mi>y</mi></mrow></msub></mfrac><mi>.</mi></mrow><annotation encoding="application/x-tex">
+regression-adjusted mean difference between group <span class="math inline">\(B\)</span> and group <span class="math inline">\(A\)</span> as the numerator of the SMD. Here, we
+would calculate the standardized mean difference as <span class="math display">\[
 d_{reg} = \frac{\tilde{y}_B - \tilde{y}_A}{s_{py}}.
-</annotation></semantics></math> Now, the variance of the
-regression-adjusted mean difference is approximately
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext mathvariant="normal">Var</mtext><mrow><mo stretchy="true" form="prefix">(</mo><msub><mover><mi>y</mi><mo accent="true">̃</mo></mover><mi>B</mi></msub><mo>−</mo><msub><mover><mi>y</mi><mo accent="true">̃</mo></mover><mi>A</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>≈</mo><msup><mi>σ</mi><mn>2</mn></msup><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>−</mo><msup><mi>ρ</mi><mn>2</mn></msup><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mn>1</mn><msub><mi>n</mi><mi>A</mi></msub></mfrac><mo>+</mo><mfrac><mn>1</mn><msub><mi>n</mi><mi>B</mi></msub></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mo>,</mo></mrow><annotation encoding="application/x-tex">
-\text{Var}(\tilde{y}_B - \tilde{y}_A) \approx \sigma^2 (1 - \rho^2) \left(\frac{1}{n_A} + \frac{1}{n_B}\right), 
-</annotation></semantics></math> from which it follows that the variance
-of the regression-adjusted SMD is approximately
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext mathvariant="normal">Var</mtext><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>d</mi><mrow><mi>r</mi><mi>e</mi><mi>g</mi></mrow></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>≈</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>−</mo><msup><mi>ρ</mi><mn>2</mn></msup><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mn>1</mn><msub><mi>n</mi><mi>A</mi></msub></mfrac><mo>+</mo><mfrac><mn>1</mn><msub><mi>n</mi><mi>B</mi></msub></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><mfrac><msup><mi>δ</mi><mn>2</mn></msup><mrow><mn>2</mn><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>n</mi><mo>•</mo></msub><mo>−</mo><mi>G</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow></mfrac><mi>.</mi></mrow><annotation encoding="application/x-tex">
-\text{Var}(d_{reg}) \approx (1 - \rho^2)\left(\frac{1}{n_A} + \frac{1}{n_B}\right) + \frac{\delta^2}{2(n_\bullet - G)}.
-</annotation></semantics></math> Again, the variance can be estimated by
-substituting estimates of
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ρ</mi><annotation encoding="application/x-tex">\rho</annotation></semantics></math>
-and
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>δ</mi><annotation encoding="application/x-tex">\delta</annotation></semantics></math>:
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>V</mi><mrow><mi>r</mi><mi>e</mi><mi>g</mi></mrow></msub><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>−</mo><msup><mi>r</mi><mn>2</mn></msup><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mn>1</mn><msub><mi>n</mi><mi>A</mi></msub></mfrac><mo>+</mo><mfrac><mn>1</mn><msub><mi>n</mi><mi>B</mi></msub></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><mfrac><msup><mi>d</mi><mn>2</mn></msup><mrow><mn>2</mn><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>n</mi><mo>•</mo></msub><mo>−</mo><mi>G</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow></mfrac><mi>.</mi></mrow><annotation encoding="application/x-tex">
-V_{reg} = (1 - r^2)\left(\frac{1}{n_A} + \frac{1}{n_B}\right) + \frac{d^2}{2(n_\bullet - G)}.
-</annotation></semantics></math> If you would prefer to pool the
-post-test standard deviation across groups
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math>
-and
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>B</mi><annotation encoding="application/x-tex">B</annotation></semantics></math>
-only, then replace
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>n</mi><mo>•</mo></msub><mo>−</mo><mi>G</mi><mo stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(n_\bullet - G)</annotation></semantics></math>
-with
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>n</mi><mi>A</mi></msub><mo>+</mo><msub><mi>n</mi><mi>B</mi></msub><mo>−</mo><mn>2</mn><mo stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(n_A + n_B - 2)</annotation></semantics></math>
-in the second term of
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>V</mi><mrow><mi>D</mi><mi>D</mi></mrow></msub><annotation encoding="application/x-tex">V_{DD}</annotation></semantics></math>.</p>
+\]</span> Now, the variance of the regression-adjusted mean difference
+is approximately <span class="math display">\[
+\text{Var}(\tilde{y}_B - \tilde{y}_A) \approx \sigma^2 (1 - \rho^2)
+\left(\frac{1}{n_A} + \frac{1}{n_B}\right),
+\]</span> from which it follows that the variance of the
+regression-adjusted SMD is approximately <span class="math display">\[
+\text{Var}(d_{reg}) \approx (1 - \rho^2)\left(\frac{1}{n_A} +
+\frac{1}{n_B}\right) + \frac{\delta^2}{2(n_\bullet - G)}.
+\]</span> Again, the variance can be estimated by substituting estimates
+of <span class="math inline">\(\rho\)</span> and <span class="math inline">\(\delta\)</span>: <span class="math display">\[
+V_{reg} = (1 - r^2)\left(\frac{1}{n_A} + \frac{1}{n_B}\right) +
+\frac{d^2}{2(n_\bullet - G)}.
+\]</span> If you would prefer to pool the post-test standard deviation
+across groups <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> only, then replace <span class="math inline">\((n_\bullet - G)\)</span> with <span class="math inline">\((n_A + n_B - 2)\)</span> in the second term of
+<span class="math inline">\(V_{DD}\)</span>.</p>
 <p>The regression-adjusted effect size estimator will always have
 smaller sampling variance than the diff-in-diff estimator (under the
 assumptions given above) and so it would seem to be generally

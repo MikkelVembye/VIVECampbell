@@ -50,30 +50,35 @@ al. (2015), er givet ved
 
   
 
-$$g_{DID} = J\left( \frac{\left\lbrack M_{post}^{T} - M_{baseline}^{T} \right\rbrack - \left\lbrack M_{post}^{C} - M_{baseline}^{C} \right\rbrack}{SD_{pool}} \right)$$  
-hvor $M_{post}^{T}$ og $M_{post}^{C}$ samt $M_{baseline}^{T}$ og
-$M_{baseline}^{C}$ er post- og baselinemål for hhv. treatment og
-kontrolgruppen, og
-$SD_{pool} = \sqrt{\frac{\left( n_{post}^{T} - 1 \right) \times \left( SD_{post}^{T} \right)^{2} + \left( n_{post}^{C} - 1 \right) \times \left( SD_{post}^{C} \right)^{2}}{n^{T} + n^{C} - 2}}$,
-mens $n^{T}$ og $n^{C}$ samt $SD_{post}^{T}$ og $SD_{post}^{C}$ er
-samplestørrelsen og standardafvigelsen for hhv. treatment og
-kontrolgruppen. $J$ i formel (1) er Hedges’ sample sample korrektor lige
-med $1 - \frac{3}{4df - 1}$ (nogen trækker 9 fra $df$ i stedet for 1,
-men det har ingen substantiel betydning).  
+\\\begin{equation} \tag{1} g\_{DID} = J \left(\frac{\[M^T\_{post} -
+M^T\_{baseline}\] - \[M^C\_{post} -
+M^C\_{baseline}\]}{SD\_{pool}}\right) \end{equation}\\  
+hvor \\M^T\_{post}\\ og \\M^C\_{post}\\ samt \\M^T\_{baseline}\\ og
+\\M^C\_{baseline}\\ er post- og baselinemål for hhv. treatment og
+kontrolgruppen, og \\SD\_{pool} = \sqrt{\frac{(n^T\_{post}
+-1)\times(SD^T\_{post})^2 + (n^C\_{post}
+-1)\times(SD^C\_{post})^2}{n^T + n^C - 2}}\\, mens \\n^T\\ og \\n^C\\
+samt \\SD^T\_{post}\\ og \\SD^C\_{post}\\ er samplestørrelsen og
+standardafvigelsen for hhv. treatment og kontrolgruppen. \\J\\ i formel
+(1) er Hedges’ sample sample korrektor lige med \\1 - \frac{3}{4df-1}\\
+(nogen trækker 9 fra \\df\\ i stedet for 1, men det har ingen
+substantiel betydning).  
   
-Hvis vi antager, at der ikke er klusterproblmer, så er
-$df = n^{T} + n^{C}$. Når der er klusteringproblemer kan $df$ beregnes
-via Equation E.21 ([WWC,
+Hvis vi antager, at der ikke er klusterproblmer, så er \\df = n^T +
+n^C\\. Når der er klusteringproblemer kan \\df\\ beregnes via Equation
+E.21 ([WWC,
 2023](https://ies.ed.gov/ncee/WWC/Docs/referenceresources/Final_WWC-HandbookVer5_0-0-508.pdf),
 s. 171) eller hvis der kun er klustering i en gruppe Equation 7 i Hedges
 og Citkowicz ([2015](https://doi.org/10.3758/s13428-014-0538-z)).
-Sampling variansen for $g_{DID}$ er givet ved
+Sampling variansen for \\g\_{DID}\\ er givet ved
 
   
-$$Var_{g_{DID}} = \left( \frac{1}{n^{T}} + \frac{1}{n^{C}} \right)2\left( 1 - \rho_{prepost} \right) + \frac{g_{DID}^{2}}{2df}$$  
+\\\begin{equation} \tag{2} Var\_{g\_{DID}} = \left(\frac{1}{n^T} +
+\frac{1}{n^C}\right) 2(1-\rho\_{prepost}) + \frac{g\_{DID}^2}{2df}
+\end{equation}\\  
 
 Problemet er dog, at man skal kende pre-posttest korrelationen,
-$\rho_{prepost}$, for at kunne beregne variansen korrekt. I mange
+\\\rho\_{prepost}\\, for at kunne beregne variansen korrekt. I mange
 tilfælde vil vi være i stand til at kunne beregne denne. Se eksemplvis
 formlerne fra [Cochranes
 handbook](https://training.cochrane.org/handbook/current/chapter-06#section-6-5-2-8)
@@ -81,15 +86,16 @@ eller formel 31 i Wilson
 ([2016](https://mason.gmu.edu/~dwilsonb/downloads/esformulas.pdf)). Se
 også denne blog på [VIVECampbell
 siden](https://mikkelvembye.github.io/VIVECampbell/articles/ancova-puzzler.html).
-Alternativt kan $Var_{g_{DID}}$ beregnes korrekt, hvis forfatterne har
-afrapporteret $t$- eller $F$-værdier fra repeated ANOVA, ANCOVA eller en
-regressions model, som har inkluderet baseline outcome som kontrol
-variabel. Hvis dette er tilfældet, så
+Alternativt kan \\Var\_{g\_{DID}}\\ beregnes korrekt, hvis forfatterne
+har afrapporteret \\t\\- eller \\F\\-værdier fra repeated ANOVA, ANCOVA
+eller en regressions model, som har inkluderet baseline outcome som
+kontrol variabel. Hvis dette er tilfældet, så
 
   
-$$Var_{g_{DID}} = \frac{g_{DID}^{2}}{t^{2}} + \frac{g_{DID}^{2}}{2df}$$  
+\\\begin{equation} \tag{3} Var\_{g\_{DID}} = \frac{g\_{DID}^2}{t^2} +
+\frac{g\_{DID}^2}{2df} \end{equation}\\  
 
-Bemærk her at $F = t^{2}$. Se [James Pustejovskys
+Bemærk her at \\F = t^2\\. Se [James Pustejovskys
 blog](https://www.jepusto.com/alternative-formulas-for-the-smd/) for en
 yderligere uddybning.  
 
@@ -97,7 +103,7 @@ I Michalak et
 al. ([2015](https://psycnet.apa.org/fulltext/2015-36864-001.html)) har
 vi imidlertidig det problem, at forfatterne ikke afrapporterer nogle af
 den kvantitative mål, som vi har brug for, for at kunne beregne
-$Var_{g_{DID}}$ korrekt. I sådan en situation foreslår Hedges et
+\\Var\_{g\_{DID}}\\ korrekt. I sådan en situation foreslår Hedges et
 al. (2023, s. 14) følgende:  
 
 > *To impute a value of the pre-test post-test correlation,
@@ -114,7 +120,7 @@ vi derfor beregnes formel (2) ved at imputere det mest konservative
 test-retest reliablity for Hamilton Rating Scale for Depression fundet i
 Trajković et
 al. ([2011](https://doi.org/10.1016/j.psychres.2010.12.007)), dvs.
-$0.65$.
+\\0.65\\.
 
 ``` r
 library(dplyr)
@@ -176,19 +182,21 @@ Michalak2015_est1 |>
 I nogen tilfælde vil det ikke være muligt at kunne finde en beregnet
 test-retest reliability. I disse tilfælde, foreslår WWC
 ([2021](https://ies.ed.gov/ncee/WWC/Docs/referenceresources/WWC-Procedures-Handbook-v4-1-508.pdf),
-s. E-6) at imputere $\rho_{prepost} = 0.5$, således at
+s. E-6) at imputere \\\rho\_{prepost} = 0.5\\, således at
 
   
-$$\left( \frac{1}{n^{T}} + \frac{1}{n^{C}} \right)2\left( 1 - \rho_{prepost} \right) + \frac{g^{2}}{2df} = \left( \frac{1}{n^{T}} + \frac{1}{n^{C}} \right) + \frac{g^{2}}{2df}$$  
+\\\begin{equation} \tag{4} \left(\frac{1}{n^T} + \frac{1}{n^C}\right)
+2(1-\rho\_{prepost}) + \frac{g^2}{2df} = \left(\frac{1}{n^T} +
+\frac{1}{n^C}\right) + \frac{g^2}{2df} \end{equation}\\  
 
 Formlen på højre side af lighedstegnet i formel 4, svarer til sampling
 variansen for den simple posttest effektstørrelse. Det følger at når
-$\rho_{prepost} > 0.5$ så vil højre side af lighedstegnet overestimere
-(dvs. variansen vil blive større end forventet) sampling variansen af
-$g_{DID}$, mens når $\rho_{prepost} < 0.5$ vil din underestimere (det
-vil modsat sige at variansen vil blive mindre end forventet) sampling
-variansen af $g_{DID}$. Hvis man vælger denne løsning, kan man plot
-ændre til `pp_cor <- 0.5` i ovenstående koder.
+\\\rho\_{prepost} \> 0.5\\ så vil højre side af lighedstegnet
+overestimere (dvs. variansen vil blive større end forventet) sampling
+variansen af \\g\_{DID}\\, mens når \\\rho\_{prepost} \< 0.5\\ vil din
+underestimere (det vil modsat sige at variansen vil blive mindre end
+forventet) sampling variansen af \\g\_{DID}\\. Hvis man vælger denne
+løsning, kan man plot ændre til `pp_cor <- 0.5` i ovenstående koder.
 
 ### Effektstørrelsesudregning med beta-coefficient, standardfejl, og afrapportet effekstørrelse
 
@@ -210,9 +218,9 @@ sample størrelser, så vil variansen med stor sandsyndlighed ikke blive
 beregnet korrekt. Men fordi forfatterne afrapporterer
 beta-coefficienter, som basically er en adjusteret means difference
 mellem treatment og kontrolgruppen, og standardfejl, så kan vi beregne
-$t = \frac{\beta}{se_{\beta}}$ og benytte formel (3) til at udregne den
-korrekte sampling varians af de afrapporterede effektstørrelser. Det kan
-gøres således
+\\t = \frac{\beta}{se\_{\beta}}\\ og benytte formel (3) til at udregne
+den korrekte sampling varians af de afrapporterede effektstørrelser. Det
+kan gøres således
 
   
 
@@ -264,12 +272,13 @@ al. [2022](https://onlinelibrary.wiley.com/doi/10.1002/cl2.1254)).
 Nedenfor viser jeg, hvordan man kan sammenlægge alle effektstørrelser på
 tværs af subskalaer for at få et overordnet mål of SF-36 outcomet. For
 at kunne få helt præcise effekter skal man kende mellem-subskala
-korrelationerne $\rho_{SS}$. Disse kender vi ikke, men vi antager her,
-at korrelationen er meget høj $\rho_{SS} = 0.9$. En rå sammenlægning
-uden at imputere $\rho_{SS}$ vil svare til at antage at $\rho_{SS} = 1$.
-Om man antager $\rho_{SS} = 0.9$ eller $\rho_{SS} = 1$, gør med stor
-sandsynlighed ikke den store forskel, men her vælger vi at antage
-$\rho_{SS} = 0.9$. Sammenlægningen kan gøres således
+korrelationerne \\\rho\_{SS}\\. Disse kender vi ikke, men vi antager
+her, at korrelationen er meget høj \\\rho\_{SS} = 0.9\\. En rå
+sammenlægning uden at imputere \\\rho\_{SS}\\ vil svare til at antage at
+\\\rho\_{SS} = 1\\. Om man antager \\\rho\_{SS} = 0.9\\ eller
+\\\rho\_{SS} = 1\\, gør med stor sandsynlighed ikke den store forskel,
+men her vælger vi at antage \\\rho\_{SS} = 0.9\\. Sammenlægningen kan
+gøres således
 
 ``` r
 library(metafor)

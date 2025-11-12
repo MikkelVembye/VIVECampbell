@@ -6,7 +6,13 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Pooling across (multiple) subgroups • VIVECampbell</title>
-<script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- mathjax math --><script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script><script>
+  window.MathJax = {
+    chtml: {
+      fontURL: "https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/output/chtml/fonts/woff-v2"
+    }
+  };
+</script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
@@ -86,155 +92,102 @@ Pustejovsky</h4>
 <p>Say that we have means and SDs at pre-test and post-test for
 participants in each of two conditions, 0 and 1, and furthermore that
 these summary statistics are reported separately for two different
-sub-groups,
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math>
-and
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>B</mi><annotation encoding="application/x-tex">B</annotation></semantics></math>.
-Let
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>n</mi><mrow><mi>g</mi><mi>j</mi></mrow></msub><annotation encoding="application/x-tex">n_{gj}</annotation></semantics></math>
-be the sample size for sub-group
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>g</mi><mo>=</mo><mi>A</mi><mo>,</mo><mi>B</mi></mrow><annotation encoding="application/x-tex">g = A, B</annotation></semantics></math>
-in condition
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>j</mi><mo>=</mo><mn>0</mn><mo>,</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">j = 0, 1</annotation></semantics></math>.
-Let
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mover><mi>y</mi><mo accent="true">‾</mo></mover><mrow><mi>g</mi><mi>j</mi><mi>t</mi></mrow></msub><annotation encoding="application/x-tex">\bar{y}_{gjt}</annotation></semantics></math>
-be the sample mean of the outcome at time
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>=</mo><mn>0</mn><mo>,</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">t = 0,1</annotation></semantics></math>
-(where
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">t = 0</annotation></semantics></math>
-is the pre-test and
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">t = 1</annotation></semantics></math>
-is the post-test), and let
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>s</mi><mrow><mi>g</mi><mi>j</mi><mi>t</mi></mrow></msub><annotation encoding="application/x-tex">s_{gjt}</annotation></semantics></math>
-be the sample standard deviation at time
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>=</mo><mn>0</mn><mo>,</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">t = 0,1</annotation></semantics></math>.</p>
+sub-groups, <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>. Let <span class="math inline">\(n_{gj}\)</span> be the sample size for sub-group
+<span class="math inline">\(g = A, B\)</span> in condition <span class="math inline">\(j = 0, 1\)</span>. Let <span class="math inline">\(\bar{y}_{gjt}\)</span> be the sample mean of the
+outcome at time <span class="math inline">\(t = 0,1\)</span> (where
+<span class="math inline">\(t = 0\)</span> is the pre-test and <span class="math inline">\(t = 1\)</span> is the post-test), and let <span class="math inline">\(s_{gjt}\)</span> be the sample standard deviation
+at time <span class="math inline">\(t = 0,1\)</span>.</p>
 <p>To recover the summary statistics for the <em>full</em> sample
 (pooled across sub-groups), we can do the following:</p>
 <ul>
-<li>The total sample size in condition
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>j</mi><annotation encoding="application/x-tex">j</annotation></semantics></math>
-is
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>n</mi><mrow><mo>•</mo><mi>j</mi></mrow></msub><mo>=</mo><msub><mi>n</mi><mrow><mi>A</mi><mi>j</mi></mrow></msub><mo>+</mo><msub><mi>n</mi><mrow><mi>B</mi><mi>j</mi></mrow></msub><mi>.</mi></mrow><annotation encoding="application/x-tex">
+<li>The total sample size in condition <span class="math inline">\(j\)</span> is <span class="math display">\[
   n_{\bullet j} = n_{Aj} + n_{Bj}.
-  </annotation></semantics></math>
+  \]</span>
 </li>
-<li>The average outcome in condition
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>j</mi><annotation encoding="application/x-tex">j</annotation></semantics></math>
-at time
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>
-is
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>y</mi><mrow><mo>•</mo><mi>j</mi><mi>t</mi></mrow></msub><mo>=</mo><mfrac><mrow><msub><mi>n</mi><mrow><mi>A</mi><mi>j</mi></mrow></msub><msub><mover><mi>y</mi><mo accent="true">‾</mo></mover><mrow><mi>A</mi><mi>j</mi><mi>t</mi></mrow></msub><mo>+</mo><msub><mi>n</mi><mrow><mi>B</mi><mi>j</mi></mrow></msub><msub><mover><mi>y</mi><mo accent="true">‾</mo></mover><mrow><mi>B</mi><mi>j</mi><mi>t</mi></mrow></msub></mrow><msub><mi>n</mi><mrow><mo>•</mo><mi>j</mi></mrow></msub></mfrac><mi>.</mi></mrow><annotation encoding="application/x-tex">
-  y_{\bullet jt} = \frac{n_{Aj} \bar{y}_{Ajt} + n_{Bj} \bar{y}_{Bjt}}{n_{\bullet j}}.
-  </annotation></semantics></math>
+<li>The average outcome in condition <span class="math inline">\(j\)</span> at time <span class="math inline">\(t\)</span> is <span class="math display">\[
+  y_{\bullet jt} = \frac{n_{Aj} \bar{y}_{Ajt} + n_{Bj}
+\bar{y}_{Bjt}}{n_{\bullet j}}.
+  \]</span>
 </li>
-<li>The full-sample variance in condition
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>j</mi><annotation encoding="application/x-tex">j</annotation></semantics></math>
-at time
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>
-is
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mi>s</mi><mrow><mo>•</mo><mi>j</mi><mi>t</mi></mrow><mn>2</mn></msubsup><mo>=</mo><mfrac><mn>1</mn><mrow><msub><mi>n</mi><mrow><mo>•</mo><mi>j</mi></mrow></msub><mo>−</mo><mn>1</mn></mrow></mfrac><mrow><mo stretchy="true" form="prefix">[</mo><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>n</mi><mrow><mi>A</mi><mi>j</mi></mrow></msub><mo>−</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow><msubsup><mi>s</mi><mrow><mi>A</mi><mi>j</mi><mi>t</mi></mrow><mn>2</mn></msubsup><mo>+</mo><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>n</mi><mrow><mi>B</mi><mi>j</mi></mrow></msub><mo>−</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow><msubsup><mi>s</mi><mrow><mi>B</mi><mi>j</mi><mi>t</mi></mrow><mn>2</mn></msubsup><mo>+</mo><mfrac><mrow><msub><mi>n</mi><mrow><mi>A</mi><mi>j</mi></mrow></msub><msub><mi>n</mi><mrow><mi>B</mi><mi>j</mi></mrow></msub></mrow><msub><mi>n</mi><mrow><mo>•</mo><mi>j</mi></mrow></msub></mfrac><msup><mrow><mo stretchy="true" form="prefix">(</mo><msub><mover><mi>y</mi><mo accent="true">‾</mo></mover><mrow><mi>A</mi><mi>j</mi><mi>t</mi></mrow></msub><mo>−</mo><msub><mover><mi>y</mi><mo accent="true">‾</mo></mover><mrow><mi>B</mi><mi>j</mi><mi>t</mi></mrow></msub><mo stretchy="true" form="postfix">)</mo></mrow><mn>2</mn></msup><mo stretchy="true" form="postfix">]</mo></mrow></mrow><annotation encoding="application/x-tex">
-  s_{\bullet jt}^2 = \frac{1}{n_{\bullet j} - 1} \left[(n_{Aj} - 1) s_{Ajt}^2 + (n_{Bj} - 1) s_{Bjt}^2 + \frac{n_{Aj} n_{Bj}}{n_{\bullet j}} (\bar{y}_{Ajt} - \bar{y}_{Bjt})^2 \right]
-  </annotation></semantics></math>
+<li>The full-sample variance in condition <span class="math inline">\(j\)</span> at time <span class="math inline">\(t\)</span> is <span class="math display">\[
+  s_{\bullet jt}^2 = \frac{1}{n_{\bullet j} - 1} \left[(n_{Aj} - 1)
+s_{Ajt}^2 + (n_{Bj} - 1) s_{Bjt}^2 + \frac{n_{Aj} n_{Bj}}{n_{\bullet j}}
+(\bar{y}_{Ajt} - \bar{y}_{Bjt})^2 \right]
+  \]</span>
 </li>
 </ul>
 <p>From these “rehydrated” summary statistics, one could calculate a
 standardized mean difference at post-test, adjusting for pre-test
-differences, by taking
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>d</mi><mi>p</mi></msub><mo>=</mo><mfrac><mrow><mrow><mo stretchy="true" form="prefix">(</mo><msub><mover><mi>y</mi><mo accent="true">‾</mo></mover><mrow><mo>•</mo><mn>11</mn></mrow></msub><mo>−</mo><msub><mover><mi>y</mi><mo accent="true">‾</mo></mover><mrow><mo>•</mo><mn>01</mn></mrow></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>−</mo><mrow><mo stretchy="true" form="prefix">(</mo><msub><mover><mi>y</mi><mo accent="true">‾</mo></mover><mrow><mo>•</mo><mn>10</mn></mrow></msub><mo>−</mo><msub><mover><mi>y</mi><mo accent="true">‾</mo></mover><mrow><mo>•</mo><mn>00</mn></mrow></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><msub><mi>s</mi><mrow><mo>•</mo><mo>•</mo><mn>1</mn></mrow></msub></mfrac></mrow><annotation encoding="application/x-tex">
-d_p = \frac{\left(\bar{y}_{\bullet 11} - \bar{y}_{\bullet 01}\right) - \left(\bar{y}_{\bullet 10} - \bar{y}_{\bullet 00}\right)}{s_{\bullet \bullet 1}}
-</annotation></semantics></math> where
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>s</mi><mrow><mo>•</mo><mo>•</mo><mn>1</mn></mrow></msub><mo>=</mo><msqrt><mrow><mfrac><mn>1</mn><mrow><msub><mi>n</mi><mrow><mo>•</mo><mn>0</mn></mrow></msub><mo>+</mo><msub><mi>n</mi><mrow><mo>•</mo><mn>1</mn></mrow></msub></mrow></mfrac><mrow><mo stretchy="true" form="prefix">[</mo><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>n</mi><mrow><mo>•</mo><mn>0</mn></mrow></msub><mo>−</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow><msubsup><mi>s</mi><mrow><mo>•</mo><mn>01</mn></mrow><mn>2</mn></msubsup><mo>+</mo><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>n</mi><mrow><mo>•</mo><mn>1</mn></mrow></msub><mo>−</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow><msubsup><mi>s</mi><mrow><mo>•</mo><mn>11</mn></mrow><mn>2</mn></msubsup><mo stretchy="true" form="postfix">]</mo></mrow></mrow></msqrt><mo>,</mo></mrow><annotation encoding="application/x-tex">
-s_{\bullet \bullet 1} = \sqrt{\frac{1}{n_{\bullet 0} + n_{\bullet 1}} \left[ (n_{\bullet 0} - 1) s_{\bullet 01}^2 + (n_{\bullet 1} - 1) s_{\bullet 11}^2\right]},
-</annotation></semantics></math> i.e., the pooled sample standard
-deviation at post-test. The sampling variance of
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>d</mi><mi>p</mi></msub><annotation encoding="application/x-tex">d_p</annotation></semantics></math>
-can be approximated as
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext mathvariant="normal">Var</mtext><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>d</mi><mi>p</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>≈</mo><mn>2</mn><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>ρ</mi><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mn>1</mn><msub><mi>n</mi><mrow><mo>•</mo><mn>0</mn></mrow></msub></mfrac><mo>+</mo><mfrac><mn>1</mn><msub><mi>n</mi><mrow><mo>•</mo><mn>1</mn></mrow></msub></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><mfrac><msup><mi>d</mi><mn>2</mn></msup><mrow><mn>2</mn><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>n</mi><mrow><mo>•</mo><mn>0</mn></mrow></msub><mo>+</mo><msub><mi>n</mi><mrow><mo>•</mo><mn>1</mn></mrow></msub><mo>−</mo><mn>2</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow></mfrac><mo>,</mo></mrow><annotation encoding="application/x-tex">
-\text{Var}(d_p) \approx 2\left(1 - \rho\right)\left(\frac{1}{n_{\bullet 0}} + \frac{1}{n_{\bullet 1}}\right) + \frac{d^2}{2\left(n_{\bullet 0} + n_{\bullet 1} - 2\right)},
-</annotation></semantics></math> where
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ρ</mi><annotation encoding="application/x-tex">\rho</annotation></semantics></math>
-is the correlation between the pre-test and the post-test within each
-condition and each sub-group.</p>
+differences, by taking <span class="math display">\[
+d_p = \frac{\left(\bar{y}_{\bullet 11} - \bar{y}_{\bullet 01}\right) -
+\left(\bar{y}_{\bullet 10} - \bar{y}_{\bullet 00}\right)}{s_{\bullet
+\bullet 1}}
+\]</span> where <span class="math display">\[
+s_{\bullet \bullet 1} = \sqrt{\frac{1}{n_{\bullet 0} + n_{\bullet 1}}
+\left[ (n_{\bullet 0} - 1) s_{\bullet 01}^2 + (n_{\bullet 1} - 1)
+s_{\bullet 11}^2\right]},
+\]</span> i.e., the pooled sample standard deviation at post-test. The
+sampling variance of <span class="math inline">\(d_p\)</span> can be
+approximated as <span class="math display">\[
+\text{Var}(d_p) \approx 2\left(1 - \rho\right)\left(\frac{1}{n_{\bullet
+0}} + \frac{1}{n_{\bullet 1}}\right) + \frac{d^2}{2\left(n_{\bullet 0} +
+n_{\bullet 1} - 2\right)},
+\]</span> where <span class="math inline">\(\rho\)</span> is the
+correlation between the pre-test and the post-test within each condition
+and each sub-group.</p>
 <p>Alternately, one could take a slightly different approach to
 calculating the numerator of the SMD, by instead calculating adjusted
 mean differences across sub-groups, and then taking their weighted
 average with weights corresponding to the total sample size of the
 sub-group. This amounts to using a mean difference that adjusts for
 sub-group differences. Denote the difference-in-differences within each
-subgroup as
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>D</mi><msub><mi>D</mi><mi>g</mi></msub><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><msub><mover><mi>y</mi><mo accent="true">‾</mo></mover><mrow><mi>g</mi><mn>11</mn></mrow></msub><mo>−</mo><msub><mover><mi>y</mi><mo accent="true">‾</mo></mover><mrow><mi>g</mi><mn>01</mn></mrow></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>−</mo><mrow><mo stretchy="true" form="prefix">(</mo><msub><mover><mi>y</mi><mo accent="true">‾</mo></mover><mrow><mi>g</mi><mn>10</mn></mrow></msub><mo>−</mo><msub><mover><mi>y</mi><mo accent="true">‾</mo></mover><mrow><mi>g</mi><mn>00</mn></mrow></msub><mo stretchy="true" form="postfix">)</mo></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">
-DD_{g} = \left(\bar{y}_{g11} - \bar{y}_{g01}\right) - \left(\bar{y}_{g10} - \bar{y}_{g00}\right).
-</annotation></semantics></math> Then the average
-difference-in-differences is
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>D</mi><msub><mi>D</mi><mo>•</mo></msub><mo>=</mo><mfrac><mn>1</mn><msub><mi>n</mi><mrow><mo>•</mo><mo>•</mo></mrow></msub></mfrac><mrow><mo stretchy="true" form="prefix">[</mo><msub><mi>n</mi><mrow><mi>A</mi><mo>•</mo></mrow></msub><mi>D</mi><msub><mi>D</mi><mi>A</mi></msub><mo>+</mo><msub><mi>n</mi><mrow><mi>B</mi><mo>•</mo></mrow></msub><mi>D</mi><msub><mi>D</mi><mi>B</mi></msub><mo stretchy="true" form="postfix">]</mo></mrow><mo>,</mo></mrow><annotation encoding="application/x-tex">
-DD_{\bullet} = \frac{1}{n_{\bullet \bullet}}\left[n_{A\bullet} DD_{A} + n_{B\bullet} DD_{B} \right],
-</annotation></semantics></math> where
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>n</mi><mrow><mi>g</mi><mo>•</mo></mrow></msub><mo>=</mo><msub><mi>n</mi><mrow><mi>g</mi><mn>0</mn></mrow></msub><mo>+</mo><msub><mi>n</mi><mrow><mi>g</mi><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">n_{g\bullet} = n_{g 0} + n_{g 1}</annotation></semantics></math>
-and
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>n</mi><mrow><mo>•</mo><mo>•</mo></mrow></msub><mo>=</mo><msub><mi>n</mi><mrow><mi>A</mi><mo>•</mo></mrow></msub><mo>+</mo><msub><mi>n</mi><mrow><mi>B</mi><mo>•</mo></mrow></msub><mo>=</mo><msub><mi>n</mi><mrow><mo>•</mo><mn>0</mn></mrow></msub><mo>+</mo><msub><mi>n</mi><mrow><mo>•</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">n_{\bullet \bullet} = n_{A\bullet} + n_{B\bullet} = n_{\bullet 0} + n_{\bullet 1}</annotation></semantics></math>.
+subgroup as <span class="math display">\[
+DD_{g} = \left(\bar{y}_{g11} - \bar{y}_{g01}\right) -
+\left(\bar{y}_{g10} - \bar{y}_{g00}\right).
+\]</span> Then the average difference-in-differences is <span class="math display">\[
+DD_{\bullet} = \frac{1}{n_{\bullet \bullet}}\left[n_{A\bullet} DD_{A} +
+n_{B\bullet} DD_{B} \right],
+\]</span> where <span class="math inline">\(n_{g\bullet} = n_{g 0} +
+n_{g 1}\)</span> and <span class="math inline">\(n_{\bullet \bullet} =
+n_{A\bullet} + n_{B\bullet} = n_{\bullet 0} + n_{\bullet 1}\)</span>.
 This average difference-in-differences could then be used in the
-numerator of the SMD, as
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>d</mi><mrow><mi>s</mi><mi>g</mi></mrow></msub><mo>=</mo><mfrac><mrow><mi>D</mi><msub><mi>D</mi><mo>•</mo></msub></mrow><msub><mi>s</mi><mrow><mo>•</mo><mo>•</mo><mn>1</mn></mrow></msub></mfrac><mi>.</mi></mrow><annotation encoding="application/x-tex">
+numerator of the SMD, as <span class="math display">\[
 d_{sg} = \frac{DD_\bullet}{s_{\bullet \bullet 1}}.
-</annotation></semantics></math> The sampling variance of
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>d</mi><mrow><mi>s</mi><mi>g</mi></mrow></msub><annotation encoding="application/x-tex">d_{sg}</annotation></semantics></math>
-can be approximated as
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext mathvariant="normal">Var</mtext><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>d</mi><mrow><mi>s</mi><mi>g</mi></mrow></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>≈</mo><mfrac><mrow><mn>2</mn><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>ρ</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><msubsup><mi>n</mi><mrow><mo>•</mo><mo>•</mo></mrow><mn>2</mn></msubsup></mfrac><mrow><mo stretchy="true" form="prefix">[</mo><mfrac><msubsup><mi>n</mi><mrow><mi>A</mi><mo>•</mo></mrow><mn>3</mn></msubsup><mrow><msub><mi>n</mi><mrow><mi>A</mi><mn>0</mn></mrow></msub><msub><mi>n</mi><mrow><mi>A</mi><mn>1</mn></mrow></msub></mrow></mfrac><mo>+</mo><mfrac><msubsup><mi>n</mi><mrow><mi>B</mi><mo>•</mo></mrow><mn>3</mn></msubsup><mrow><msub><mi>n</mi><mrow><mi>B</mi><mn>0</mn></mrow></msub><msub><mi>n</mi><mrow><mi>B</mi><mn>1</mn></mrow></msub></mrow></mfrac><mo stretchy="true" form="postfix">]</mo></mrow><mo>+</mo><mfrac><msup><mi>d</mi><mn>2</mn></msup><mrow><mn>2</mn><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>n</mi><mrow><mo>•</mo><mo>•</mo></mrow></msub><mo>−</mo><mn>2</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow></mfrac><mi>.</mi></mrow><annotation encoding="application/x-tex">
-\text{Var}(d_{sg}) \approx \frac{2\left(1 - \rho\right)}{n_{\bullet \bullet}^2}\left[\frac{n_{A\bullet}^3}{n_{A0} n_{A1}} + \frac{n_{B\bullet}^3}{n_{B0} n_{B1}}\right] + \frac{d^2}{2\left(n_{\bullet \bullet} - 2\right)}.
-</annotation></semantics></math></p>
+\]</span> The sampling variance of <span class="math inline">\(d_{sg}\)</span> can be approximated as <span class="math display">\[
+\text{Var}(d_{sg}) \approx \frac{2\left(1 - \rho\right)}{n_{\bullet
+\bullet}^2}\left[\frac{n_{A\bullet}^3}{n_{A0} n_{A1}} +
+\frac{n_{B\bullet}^3}{n_{B0} n_{B1}}\right] +
+\frac{d^2}{2\left(n_{\bullet \bullet} - 2\right)}.
+\]</span></p>
 <div class="section level2">
 <h2 id="multiple-sub-groups">Multiple sub-groups<a class="anchor" aria-label="anchor" href="#multiple-sub-groups"></a>
 </h2>
 <p>Now suppose that we have the same data as above, but reported
-separately for
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>G</mi><annotation encoding="application/x-tex">G</annotation></semantics></math>
-different sub-groups, indexed by
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>g</mi><mo>=</mo><mn>1</mn><mo>,</mo><mi>.</mi><mi>.</mi><mi>.</mi><mo>,</mo><mi>G</mi></mrow><annotation encoding="application/x-tex">g = 1,...,G</annotation></semantics></math>.
-Let
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>n</mi><mrow><mi>g</mi><mi>j</mi></mrow></msub><annotation encoding="application/x-tex">n_{gj}</annotation></semantics></math>
-be the sample size for sub-group
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>g</mi><mo>=</mo><mn>1</mn><mo>,</mo><mi>.</mi><mi>.</mi><mi>.</mi><mo>,</mo><mi>G</mi></mrow><annotation encoding="application/x-tex">g = 1,...,G</annotation></semantics></math>
-in condition
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>j</mi><mo>=</mo><mn>0</mn><mo>,</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">j = 0, 1</annotation></semantics></math>.
-Let
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mover><mi>y</mi><mo accent="true">‾</mo></mover><mrow><mi>g</mi><mi>j</mi><mi>t</mi></mrow></msub><annotation encoding="application/x-tex">\bar{y}_{gjt}</annotation></semantics></math>
-be the sample mean of the outcome at time
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>=</mo><mn>0</mn><mo>,</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">t = 0,1</annotation></semantics></math>
-(where
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">t = 0</annotation></semantics></math>
-is the pre-test and
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">t = 1</annotation></semantics></math>
-is the post-test), and let
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>s</mi><mrow><mi>g</mi><mi>j</mi><mi>t</mi></mrow></msub><annotation encoding="application/x-tex">s_{gjt}</annotation></semantics></math>
-be the sample standard deviation at time
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>=</mo><mn>0</mn><mo>,</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">t = 0,1</annotation></semantics></math>.</p>
+separately for <span class="math inline">\(G\)</span> different
+sub-groups, indexed by <span class="math inline">\(g = 1,...,G\)</span>.
+Let <span class="math inline">\(n_{gj}\)</span> be the sample size for
+sub-group <span class="math inline">\(g = 1,...,G\)</span> in condition
+<span class="math inline">\(j = 0, 1\)</span>. Let <span class="math inline">\(\bar{y}_{gjt}\)</span> be the sample mean of the
+outcome at time <span class="math inline">\(t = 0,1\)</span> (where
+<span class="math inline">\(t = 0\)</span> is the pre-test and <span class="math inline">\(t = 1\)</span> is the post-test), and let <span class="math inline">\(s_{gjt}\)</span> be the sample standard deviation
+at time <span class="math inline">\(t = 0,1\)</span>.</p>
 <p>To recover the summary statistics for the <em>full</em> sample
 (pooled across sub-groups), we can do the following:</p>
 <ul>
-<li>The total sample size in condition
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>j</mi><annotation encoding="application/x-tex">j</annotation></semantics></math>
-is
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>n</mi><mrow><mo>•</mo><mi>j</mi></mrow></msub><mo>=</mo><munderover><mo>∑</mo><mrow><mi>g</mi><mo>=</mo><mn>1</mn></mrow><mi>G</mi></munderover><msub><mi>n</mi><mrow><mi>g</mi><mi>j</mi></mrow></msub><mi>.</mi></mrow><annotation encoding="application/x-tex">
+<li>The total sample size in condition <span class="math inline">\(j\)</span> is <span class="math display">\[
   n_{\bullet j} = \sum_{g = 1}^G n_{gj}.
-  </annotation></semantics></math>
+  \]</span>
 </li>
-<li>The average outcome in condition
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>j</mi><annotation encoding="application/x-tex">j</annotation></semantics></math>
-at time
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>
-is
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>y</mi><mrow><mo>•</mo><mi>j</mi><mi>t</mi></mrow></msub><mo>=</mo><mfrac><mn>1</mn><msub><mi>n</mi><mrow><mo>•</mo><mi>j</mi></mrow></msub></mfrac><munderover><mo>∑</mo><mrow><mi>g</mi><mo>=</mo><mn>1</mn></mrow><mi>G</mi></munderover><msub><mi>n</mi><mrow><mi>g</mi><mi>j</mi></mrow></msub><msub><mover><mi>y</mi><mo accent="true">‾</mo></mover><mrow><mi>g</mi><mi>j</mi><mi>t</mi></mrow></msub><mi>.</mi></mrow><annotation encoding="application/x-tex">
-  y_{\bullet jt} = \frac{1}{n_{\bullet j}} \sum_{g = 1}^G n_{gj} \bar{y}_{gjt}.
-  </annotation></semantics></math>
+<li>The average outcome in condition <span class="math inline">\(j\)</span> at time <span class="math inline">\(t\)</span> is <span class="math display">\[
+  y_{\bullet jt} = \frac{1}{n_{\bullet j}} \sum_{g = 1}^G n_{gj}
+\bar{y}_{gjt}.
+  \]</span>
 </li>
-<li>The full-sample variance in condition
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>j</mi><annotation encoding="application/x-tex">j</annotation></semantics></math>
-at time
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>
-is
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mi>s</mi><mrow><mo>•</mo><mi>j</mi><mi>t</mi></mrow><mn>2</mn></msubsup><mo>=</mo><mfrac><mn>1</mn><mrow><msub><mi>n</mi><mrow><mo>•</mo><mi>j</mi></mrow></msub><mo>−</mo><mn>1</mn></mrow></mfrac><munderover><mo>∑</mo><mrow><mi>g</mi><mo>=</mo><mn>1</mn></mrow><mi>G</mi></munderover><mrow><mo stretchy="true" form="prefix">[</mo><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>n</mi><mrow><mi>g</mi><mi>j</mi></mrow></msub><mo>−</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow><msubsup><mi>s</mi><mrow><mi>g</mi><mi>j</mi><mi>t</mi></mrow><mn>2</mn></msubsup><mo>+</mo><msub><mi>n</mi><mrow><mi>g</mi><mi>j</mi></mrow></msub><msup><mrow><mo stretchy="true" form="prefix">(</mo><msub><mover><mi>y</mi><mo accent="true">‾</mo></mover><mrow><mi>g</mi><mi>j</mi><mi>t</mi></mrow></msub><mo>−</mo><msub><mover><mi>y</mi><mo accent="true">‾</mo></mover><mrow><mo>•</mo><mi>j</mi><mi>t</mi></mrow></msub><mo stretchy="true" form="postfix">)</mo></mrow><mn>2</mn></msup><mo stretchy="true" form="postfix">]</mo></mrow></mrow><annotation encoding="application/x-tex">
-  s_{\bullet jt}^2 = \frac{1}{n_{\bullet j} - 1} \sum_{g = 1}^G \left[\left(n_{gj}  - 1 \right) s_{gjt}^2 + n_{gj}\left(\bar{y}_{gjt} - \bar{y}_{\bullet jt}\right)^2\right]
-  </annotation></semantics></math>
+<li>The full-sample variance in condition <span class="math inline">\(j\)</span> at time <span class="math inline">\(t\)</span> is <span class="math display">\[
+  s_{\bullet jt}^2 = \frac{1}{n_{\bullet j} - 1} \sum_{g = 1}^G
+\left[\left(n_{gj}  - 1 \right) s_{gjt}^2 + n_{gj}\left(\bar{y}_{gjt} -
+\bar{y}_{\bullet jt}\right)^2\right]
+  \]</span>
 </li>
 </ul>
 <p>From these “rehydrated” summary statistics, one could calculate a
@@ -242,23 +195,21 @@ standardized mean difference at post-test, adjusting for pre-test
 differences, as described above.</p>
 <p>Alternately, one could calculate the numerator of the SMD as the
 adjusted mean difference, pooled across sub-groups. The average
-difference-in-differences is
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>D</mi><msub><mi>D</mi><mo>•</mo></msub><mo>=</mo><mfrac><mn>1</mn><msub><mi>n</mi><mrow><mo>•</mo><mo>•</mo></mrow></msub></mfrac><munderover><mo>∑</mo><mrow><mi>g</mi><mo>=</mo><mn>1</mn></mrow><mi>G</mi></munderover><msub><mi>n</mi><mrow><mi>g</mi><mo>•</mo></mrow></msub><mspace width="0.222em"></mspace><mi>D</mi><msub><mi>D</mi><mi>g</mi></msub><mo>,</mo></mrow><annotation encoding="application/x-tex">
-DD_{\bullet} = \frac{1}{n_{\bullet \bullet}} \sum_{g=1}^G n_{g \bullet} \ DD_{g},
-</annotation></semantics></math> where
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>n</mi><mrow><mi>g</mi><mo>•</mo></mrow></msub><mo>=</mo><msub><mi>n</mi><mrow><mi>g</mi><mn>0</mn></mrow></msub><mo>+</mo><msub><mi>n</mi><mrow><mi>g</mi><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">n_{g\bullet} = n_{g 0} + n_{g 1}</annotation></semantics></math>
-and
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>n</mi><mrow><mo>•</mo><mo>•</mo></mrow></msub><mo>=</mo><msubsup><mo>∑</mo><mrow><mi>g</mi><mo>=</mo><mn>1</mn></mrow><mi>G</mi></msubsup><msub><mi>n</mi><mrow><mi>g</mi><mo>•</mo></mrow></msub></mrow><annotation encoding="application/x-tex">n_{\bullet \bullet} = \sum_{g = 1}^G n_{g\bullet}</annotation></semantics></math>.
-This average difference-in-differences could then be used in the
-numerator of the SMD, as
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>d</mi><mrow><mi>s</mi><mi>g</mi></mrow></msub><mo>=</mo><mfrac><mrow><mi>D</mi><msub><mi>D</mi><mo>•</mo></msub></mrow><msub><mi>s</mi><mrow><mo>•</mo><mo>•</mo><mn>1</mn></mrow></msub></mfrac><mi>.</mi></mrow><annotation encoding="application/x-tex">
+difference-in-differences is <span class="math display">\[
+DD_{\bullet} = \frac{1}{n_{\bullet \bullet}} \sum_{g=1}^G n_{g \bullet}
+\ DD_{g},
+\]</span> where <span class="math inline">\(n_{g\bullet} = n_{g 0} +
+n_{g 1}\)</span> and <span class="math inline">\(n_{\bullet \bullet} =
+\sum_{g = 1}^G n_{g\bullet}\)</span>. This average
+difference-in-differences could then be used in the numerator of the
+SMD, as <span class="math display">\[
 d_{sg} = \frac{DD_\bullet}{s_{\bullet \bullet 1}}.
-</annotation></semantics></math> The sampling variance of
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>d</mi><mrow><mi>s</mi><mi>g</mi></mrow></msub><annotation encoding="application/x-tex">d_{sg}</annotation></semantics></math>
-can be approximated as
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext mathvariant="normal">Var</mtext><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>d</mi><mrow><mi>s</mi><mi>g</mi></mrow></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>≈</mo><mn>2</mn><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>ρ</mi><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mo stretchy="true" form="prefix">[</mo><munderover><mo>∑</mo><mrow><mi>g</mi><mo>=</mo><mn>1</mn></mrow><mi>G</mi></munderover><mfrac><msubsup><mi>n</mi><mrow><mi>g</mi><mo>•</mo></mrow><mn>2</mn></msubsup><msubsup><mi>n</mi><mrow><mo>•</mo><mo>•</mo></mrow><mn>2</mn></msubsup></mfrac><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mn>1</mn><msub><mi>n</mi><mrow><mi>g</mi><mn>0</mn></mrow></msub></mfrac><mo>+</mo><mfrac><mn>1</mn><msub><mi>n</mi><mrow><mi>g</mi><mn>1</mn></mrow></msub></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="true" form="postfix">]</mo></mrow><mo>+</mo><mfrac><msup><mi>d</mi><mn>2</mn></msup><mrow><mn>2</mn><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>n</mi><mrow><mo>•</mo><mo>•</mo></mrow></msub><mo>−</mo><mn>2</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow></mfrac><mi>.</mi></mrow><annotation encoding="application/x-tex">
-\text{Var}(d_{sg}) \approx 2\left(1 - \rho\right)\left[\sum_{g=1}^G \frac{n_{g\bullet}^2}{n_{\bullet \bullet}^2} \left(\frac{1}{n_{g0}} + \frac{1}{n_{g1}}\right)\right] + \frac{d^2}{2\left(n_{\bullet \bullet} - 2\right)}.
-</annotation></semantics></math></p>
+\]</span> The sampling variance of <span class="math inline">\(d_{sg}\)</span> can be approximated as <span class="math display">\[
+\text{Var}(d_{sg}) \approx 2\left(1 - \rho\right)\left[\sum_{g=1}^G
+\frac{n_{g\bullet}^2}{n_{\bullet \bullet}^2} \left(\frac{1}{n_{g0}} +
+\frac{1}{n_{g1}}\right)\right] + \frac{d^2}{2\left(n_{\bullet \bullet} -
+2\right)}.
+\]</span></p>
 </div>
 <div class="section level2">
 <h2 id="insert-empirical-example">INSERT EMPIRICAL EXAMPLE<a class="anchor" aria-label="anchor" href="#insert-empirical-example"></a>
