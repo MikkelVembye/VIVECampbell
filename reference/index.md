@@ -68,3 +68,10 @@ files
   : Read an RIS file into a data frame
 - [`save_dataframe_to_ris()`](https://mikkelvembye.github.io/VIVECampbell/reference/save_dataframe_to_ris.md)
   : Write a data frame to a RIS file
+
+## Full-text screening
+
+Function to run full-text screening
+
+- [`ftscreen()`](https://mikkelvembye.github.io/VIVECampbell/reference/ftscreen.md)
+  : Full-text screening with OpenAI API models
