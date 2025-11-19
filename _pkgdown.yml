@@ -43,6 +43,11 @@ reference:
       - read_ris_to_dataframe
       - save_dataframe_to_ris
 
+  - title: "Full-text screening"
+    desc: "Function to run full-text screening"
+    contents:
+      - ftscreen
+
 articles:
  - title: Get started
    navbar: ~
