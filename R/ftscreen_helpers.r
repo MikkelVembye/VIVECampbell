@@ -7,7 +7,7 @@ utils::globalVariables(c(
   "current_model", "current_rep_num", "current_study_id", "current_prompt_id",
   "current_vector_store_name", "precomputed_supplementary", "studyid"
 ))
-
+ 
 # Internal function to process a single screening run. This is called by future_pmap.
 .process_single_ft_run <- function(current_file_path, current_prompt, current_model, current_rep_num, current_study_id, current_prompt_id, current_vector_store_name, precomputed_supplementary = NULL,
                                    base_url, api_key, top_p, temperature,
