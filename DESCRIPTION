@@ -30,7 +30,15 @@ Imports:
     stats,
     tidyr,
     ggplot2,
-    purrr
+    purrr,
+    AIscreenR,
+    curl,
+    furrr,
+    httr2,
+    jsonlite,
+    officer,
+    pdftools,
+    stringr,
 Suggests: 
     knitr,
     rmarkdown,
