@@ -131,62 +131,33 @@ read_ris_to_dataframe <- function(file_path) {
   }
   
   # Create dataframe using the discovered field order
-  df_list <- list()
-  for (field in field_order) {
-    df_list[[field]] <- character(length(records))
-  }
-  
-  # Fill dataframe
-  for (i in seq_along(records)) {
-    record <- records[[i]]
-    for (field in names(record)) {
-      value <- record[[field]]
-      # If multiple values, collapse with semicolon
-      if (is.list(value)) {
-        vals <- gsub("\\s+", " ", trimws(unlist(value)))
-        df_list[[field]][i] <- paste(vals, collapse = "; ")
-      } else {
-        df_list[[field]][i] <- gsub("\\s+", " ", trimws(value))
+    df_list <- list()
+    for (field in field_order) {
+      df_list[[field]] <- character(length(records))
+    }
+
+    # Fill dataframe FIRST
+    for (i in seq_along(records)) {
+      record <- records[[i]]
+      for (field in names(record)) {
+        value <- record[[field]]
+        # If multiple values, collapse with semicolon
+        if (is.list(value)) {
+          vals <- gsub("\\s+", " ", trimws(unlist(value)))
+          df_list[[field]][i] <- paste(vals, collapse = "; ")
+        } else {
+          df_list[[field]][i] <- gsub("\\s+", " ", trimws(value))
+        }
       }
     }
-  }
-  
-  # Convert to dataframe with fields in the order they appeared in the file
-  df <- data.frame(df_list, stringsAsFactors = FALSE)
-  
-  # If AB is empty/missing and N2 has content, move N2 -> AB
-  if ("N2" %in% names(df)) {
-    # Ensure AB exists
-    if (!"AB" %in% names(df)) {
-      df$AB <- rep("", nrow(df))
-    }
-    ab_empty <- is.na(df$AB) | trimws(df$AB) == ""
-    n2_filled <- !is.na(df$N2) & trimws(df$N2) != ""
-    to_move <- ab_empty & n2_filled
-    if (any(to_move)) {
-      df$AB[to_move] <- df$N2[to_move]
-    }
-    # Drop N2 column after merging
-    df$N2 <- NULL
-  }
+    
+    # Convert to dataframe with fields in the order they appeared in the file
+    df <- data.frame(df_list, stringsAsFactors = FALSE)
 
-  # If TI is empty/missing and T1 has content, move T1 -> TI
-  if ("T1" %in% names(df)) {
-    # Ensure TI exists
-    if (!"TI" %in% names(df)) {
-      df$TI <- rep("", nrow(df))
-    }
-    ti_empty <- is.na(df$TI) | trimws(df$TI) == ""
-    t1_filled <- !is.na(df$T1) & trimws(df$T1) != ""
-    to_move <- ti_empty & t1_filled
-    if (any(to_move)) {
-      df$TI[to_move] <- df$T1[to_move]
-    }
-    # Drop T1 column after merging
-    df$T1 <- NULL
-  }
+    # Map entries in ris to descriptive names using internal function AFTER creating df
+    df <- .map_ris_tags(df)
 
-  return(df)
+    return(df)
 }
 
 #' Write a data frame to a RIS file
@@ -209,42 +180,36 @@ read_ris_to_dataframe <- function(file_path) {
 #'
 #' @export
 save_dataframe_to_ris <- function(df, file_path) {
-  # Open file connection
+  df <- .reverse_map_ris_tags(df)
   con <- file(file_path, "w", encoding = "UTF-8")
 
-  # Tags that should be written as multiple lines when semicolon-separated
-  multi_value_tags <- c("AU", "A1", "KW", "M1")
+  multi_value_tags <- c(
+    "AU","A1","KW","M1","T1","TI","SN","JF","JO","JA","Y1","PY",
+    "ID","AN","UR","DO","DP","DB","AD","PB","VL","IS","SP","EP",
+    "U1","U2","CN"
+  )
+  free_text_tags <- c("AB","N1","NT","N2","NO")
 
-  for (i in 1:nrow(df)) {
+  for (i in seq_len(nrow(df))) {
     row <- df[i, ]
 
-    # Write TY field first
     if ("TY" %in% names(row) && !is.na(row$TY) && row$TY != "") {
       writeLines(paste0("TY  - ", as.character(row$TY)), con)
     }
 
-    # Write each field
     for (col_name in names(row)) {
-      # Skip TY as it's already written, and skip empty values
       if (col_name == "TY") next
       value <- row[[col_name]]
 
-      # Coerce factors, lists etc. to character and collapse multiple elements
       if (is.factor(value)) value <- as.character(value)
       if (is.list(value) || length(value) > 1) {
         value <- paste(unlist(value), collapse = "; ")
       }
       value <- as.character(value)
-
-      # Skip empty values
       if (is.na(value) || value == "" || is.null(value)) next
-
-      # Normalize whitespace
       value <- gsub("\\s+", " ", trimws(value))
 
-      # If this tag is a multi-value tag, split on semicolons and write multiple lines.
-      # For free-text fields (e.g., AB) we do NOT split, so they remain a single tag line.
-      if (grepl(";", value) && col_name %in% multi_value_tags) {
+      if (grepl(";", value) && col_name %in% multi_value_tags && !(col_name %in% free_text_tags)) {
         values <- strsplit(value, ";\\s*")[[1]]
         for (val in values) {
           val <- trimws(val)
@@ -257,13 +222,529 @@ save_dataframe_to_ris <- function(df, file_path) {
       }
     }
 
-    # Write end of record
     writeLines("ER  - ", con)
-    writeLines("", con)  # Empty line between records
+    writeLines("", con)
   }
 
-  # Close file connection
   close(con)
-
   cat("RIS file saved to:", file_path, "\n")
+}
+
+#' Interal function to map common ris tags to descriptive names
+#' 
+#' @param df data.frame with RIS tags as column names
+#'
+#' @return data.frame with mapped column names
+#' @keywords internal
+.map_ris_tags <- function(df) {
+  tag_map <- c(
+    DB = "database",
+    FN = "file_name",
+    N = "file_name",
+    DA = "date_generated",
+    DT = "document_type",
+    M3 = "document_type",
+    TY = "source_type",
+    LT = "publication_type",
+    PT = "publication_type",
+    LA = "language",
+    PST = "status",
+    SA = "street_address",
+    STAT = "status",
+    A1 = "author",
+    A2 = "author",
+    A3 = "author",
+    A4 = "author",
+    A5 = "author",
+    AU = "author",
+    AF = "author_full",
+    FAU = "author_full",
+    BA = "author_book",
+    BF = "author_book_full",
+    CA = "author_group",
+    GP = "author_group",
+    CN = "author_corporate",
+    CNx = "author_corporate",
+    Z2 = "author_otherlang",
+    IR = "investigator",
+    IV = "investigator",
+    FIR = "investigator_full",
+    A2x = "editor",
+    BE = "editor",
+    ED = "editor",
+    EDx = "editor",
+    FED = "editor_full",
+    EM = "email",
+    OI = "orcid_id",
+    AD = "address",
+    ADx = "address",
+    C1 = "address",
+    M1 = "address",
+    CY = "address",
+    IRAD = "address",
+    RP = "reprint_address",
+    PS = "personal_name_as_subject",
+    FPS = "personal_name_as_subject_full",
+    PSx = "personal_name_as_subject",
+    RI = "researcher_id",
+    AUID = "author_id",
+    PY = "year",
+    Y1 = "year",
+    EY = "year_early_access",
+    CRDT = "date_created",
+    RC = "date_created",
+    LR = "date_revised",
+    DCOM = "date_completed",
+    EDAT = "date_added",
+    EA = "date_early_access",
+    DEP = "date_published_elec",
+    DP = "database_provider",
+    PD = "date_published",
+    PHST = "publication_history_status",
+    T1 = "title",
+    TI = "title",
+    BTI = "title_book",
+    FT = "title_foreign",
+    Z1 = "title_otherlang",
+    TT = "title_transliterated",
+    JA = "journal_ja",
+    JF = "journal_jf",
+    JO = "journal_jo",
+    JT = "journal_jt",
+    T3 = "journal_t3",
+    TA = "journal_abbreviated",
+    SO = "source",
+    T2 = "source",
+    J2 = "source_abbreviated",
+    J9 = "source_abbreviated",
+    JI = "source_abbreviated",
+    Z3 = "source_otherlang",
+    SI = "secondary_source_id",
+    C3 = "custom3",
+    VTI = "volume_title",
+    SE = "book_series_title",
+    BS = "book_series_subtitle",
+    ED = "edition",
+    EN = "edition",
+    CTI = "collection_title",
+    VI = "volume",
+    VL = "volume",
+    IP = "issue",
+    IS = "issue",
+    SI = "special_issue",
+    AR = "article_number",
+    C7 = "custom7",
+    SU = "supplement",
+    PG = "pages",
+    BP = "start_page",
+    SP = "start_page",
+    EP = "end_page",
+    PG = "n_pages",
+    PS = "n_pages",
+    P2 = "n_chapters",
+    AB = "abstract",
+    N2 = "abstract",
+    A2x = "abstract_other",
+    OAB = "abstract_other",
+    Z4 = "abstract_otherlang",
+    DE = "keywords",
+    KW = "keywords",
+    MI = "keywords",
+    ID = "record_id",
+    MH = "mesh_terms",
+    MHDA = "mesh_date",
+    VR = "version",
+    DI = "doi",
+    DO = "doi",
+    L3 = "doi",
+    D2 = "doi_book",
+    BN = "isbn",
+    ISBN = "isbn",
+    ISx = "issn",
+    SN = "issn",
+    EI = "eissn",
+    CN = "call_number",
+    AID = "article_id",
+    ID = "article_id",
+    MID = "manuscript_id",
+    C2 = "pubmed_id",
+    PM = "pubmed_id",
+    PMID = "pubmed_id",
+    PMC = "pubmed_central_identitfier",
+    PMCR = "pubmed_central_release",
+    JC = "nlm_id",
+    JID = "nlm_id",
+    OID = "other_id",
+    RN = "registry_number",
+    UT = "accession_number",
+    AN = "accession_nr",
+    GA = "document_delivery_id",
+    UR = "url",
+    AW = "url",
+    SF = "space_flight_mission",
+    SFM = "space_flight_mission",
+    PE = "published_elec",
+    CT = "conference_name",
+    HO = "conference_host",
+    CL = "conference_location",
+    CYx = "conference_location",
+    CY = "conference_date",
+    Y2 = "conference_date",
+    A4x = "conference_sponsor",
+    SPx = "conference_sponsor",
+    MA = "meeting_abstract",
+    PB = "publisher",
+    PU = "publisher",
+    PA = "place_published",
+    PI = "place_published",
+    PL = "place_published",
+    PP = "place_published",
+    AE = "patent_assignee",
+    PN = "patent_number",
+    CI = "copyright_info",
+    COI = "conflict_of_interest",
+    OCI = "copyright_info_other",
+    GN = "gene_name",
+    GS = "gene_symbol",
+    N1 = "notes1",
+    OA = "open_access",
+    PUBM = "publishing_model",
+    OWN = "owner",
+    OB = "record_owner",
+    DP = "data_provider",
+    FU = "funding_agency",
+    FX = "funding_text",
+    GR = "grant_number",
+    GI = "grant_information",
+    LID = "location_id",
+    OT = "term_other",
+    OTO = "term_owner_other",
+    SB = "subset",
+    NM = "substance_name",
+    WC = "wos_categories",
+    SC = "research_areas",
+    CH = "chemicals",
+    DS = "diseases",
+    PR = "parts",
+    OR = "systematics",
+    MQ = "methods",
+    ME = "medium",
+    GE = "geographic_data",
+    TM = "geologic_data",
+    SD = "sequence_data",
+    TAx = "taxonomic_data",
+    ST = "supertaxa",
+    TN = "taxa_notes",
+    BD = "concepts",
+    CC = "concepts",
+    MC = "concepts",
+    TC = "n_cited",
+    Z9 = "n_cited_allwos",
+    Z8 = "n_cited_csc",
+    ZB = "n_cited_biosis",
+    HC = "esi_highly_cited",
+    HP = "esi_hot_paper",
+    U2 = "custom2",
+    NR = "references_n",
+    RF = "references_n",
+    CR = "cited_references",
+    SS = "citation_subset",
+    NT = "notes",
+    NO = "comments",
+    ER = "end_record",
+    EF = "end_file"
+  )
+
+  # Handle U1 conditionally based on content
+  mapped_names <- sapply(seq_along(names(df)), function(i) {
+    original_name <- names(df)[i]
+    
+    # Special handling for U1
+    if (original_name == "U1") {
+      # Check if all non-empty values are numeric
+      u1_values <- df[[i]]
+      non_empty <- u1_values[!is.na(u1_values) & u1_values != ""]
+      
+      if (length(non_empty) > 0) {
+        # Check if all non-empty values contain only digits
+        all_numeric <- all(grepl("^[0-9]+$", non_empty))
+        
+        if (all_numeric) {
+          return("eppi_id")
+        } else {
+          return("custom_info")
+        }
+      } else {
+        return("custom_info")  # Default if no data
+      }
+    }
+    
+    # Regular mapping for other tags
+    if (original_name %in% names(tag_map)) {
+      return(tag_map[[original_name]])
+    } else {
+      return(original_name)
+    }
+  })
+  
+  unique_mapped <- unique(mapped_names)
+  result_df <- data.frame(matrix(ncol = 0, nrow = nrow(df)))
+  
+  for (base_name in unique_mapped) {
+    matching_indices <- which(mapped_names == base_name)
+    
+    if (length(matching_indices) == 1) {
+      # No duplicates, just use the mapped name
+      result_df[[base_name]] <- df[[matching_indices]]
+    } else {
+      # Multiple columns map to this name
+      # For each row, collect all unique non-empty values across matching columns
+      result_df[[base_name]] <- character(nrow(df))
+      
+      # Track which column was used for base value per row
+      used_col_per_row <- integer(nrow(df))
+      
+      for (row_idx in seq_len(nrow(df))) {
+        # Find first non-empty value for base column
+        for (col_idx in matching_indices) {
+          val <- df[row_idx, col_idx]
+          if (!is.na(val) && val != "") {
+            result_df[row_idx, base_name] <- val
+            used_col_per_row[row_idx] <- col_idx
+            break
+          }
+        }
+      }
+      
+      # Create numbered columns for remaining unique values
+      if (length(matching_indices) > 1) {
+        counter <- 2
+        for (col_idx in matching_indices) {
+          col_name <- paste0(base_name, counter)
+          result_df[[col_name]] <- character(nrow(df))
+          added_any <- FALSE
+          
+          for (row_idx in seq_len(nrow(df))) {
+            # Skip if this column was used for the base value in this row
+            if (used_col_per_row[row_idx] == col_idx) next
+            
+            val <- df[row_idx, col_idx]
+            base_val <- result_df[row_idx, base_name]
+            
+            # Only add if: has content, base is filled, and value differs from base
+            if (!is.na(val) && val != "" && base_val != "" && val != base_val) {
+              result_df[row_idx, col_name] <- val
+              added_any <- TRUE
+            }
+          }
+          
+          # Only increment counter if we added any values
+          if (added_any) {
+            counter <- counter + 1
+          } else {
+            # Remove the column if it's empty
+            result_df[[col_name]] <- NULL
+          }
+        }
+      }
+    }
+  }
+  
+  return(result_df)
+}
+
+#' Internal function to reverse map descriptive names back to RIS tags
+#' 
+#' @param df data.frame with descriptive column names
+#'
+#' @return data.frame with RIS tag column names
+#' @keywords internal
+.reverse_map_ris_tags <- function(df) {
+  # Create reverse mapping from descriptive names to RIS tags
+  # Using the most common/standard tag for each descriptive name
+  reverse_tag_map <- c(
+    database = "DB",
+    file_name = "FN",
+    date_generated = "DA",
+    document_type = "M3",
+    source_type = "TY",
+    publication_type = "PT",
+    language = "LA",
+    status = "PST",
+    street_address = "SA",
+    author = "AU",
+    author_full = "AF",
+    author_book = "BA",
+    author_book_full = "BF",
+    author_group = "CA",
+    author_corporate = "CN",
+    author_otherlang = "Z2",
+    investigator = "IR",
+    investigator_full = "FIR",
+    editor = "ED",
+    editor_full = "FED",
+    email = "EM",
+    orcid_id = "OI",
+    address = "AD",
+    reprint_address = "RP",
+    personal_name_as_subject = "PS",
+    personal_name_as_subject_full = "FPS",
+    researcher_id = "RI",
+    author_id = "AUID",
+    year = "PY",
+    year_early_access = "EY",
+    date_created = "CRDT",
+    date_revised = "LR",
+    date_completed = "DCOM",
+    date_added = "EDAT",
+    date_early_access = "EA",
+    date_published_elec = "DEP",
+    database_provider = "DP",
+    date_published = "PD",
+    publication_history_status = "PHST",
+    title = "TI",
+    title_book = "BTI",
+    title_foreign = "FT",
+    title_otherlang = "Z1",
+    title_transliterated = "TT",
+    journal = "JO",
+    journal_ja = "JA",
+    journal_jf = "JF",
+    journal_jo = "JO",
+    journal_jt = "JT",
+    journal_t3 = "T3",
+    journal_abbreviated = "TA",
+    source = "T2",
+    source_abbreviated = "J2",
+    source_otherlang = "Z3",
+    secondary_source_id = "SI",
+    custom3 = "C3",
+    volume_title = "VTI",
+    book_series_title = "SE",
+    book_series_subtitle = "BS",
+    edition = "EN",
+    collection_title = "CTI",
+    volume = "VL",
+    issue = "IS",
+    special_issue = "SI",
+    article_number = "AR",
+    custom7 = "C7",
+    supplement = "SU",
+    pages = "PG",
+    start_page = "SP",
+    end_page = "EP",
+    n_pages = "PG",
+    n_chapters = "P2",
+    abstract = "AB",
+    abstract_other = "OAB",
+    abstract_otherlang = "Z4",
+    keywords = "KW",
+    record_id = "ID",
+    mesh_terms = "MH",
+    mesh_date = "MHDA",
+    version = "VR",
+    doi = "DO",
+    doi_book = "D2",
+    isbn = "ISBN",
+    issn = "SN",
+    eissn = "EI",
+    call_number = "CN",
+    article_id = "AID",
+    manuscript_id = "MID",
+    pubmed_id = "PMID",
+    pubmed_central_identitfier = "PMC",
+    pubmed_central_release = "PMCR",
+    nlm_id = "JID",
+    other_id = "OID",
+    registry_number = "RN",
+    accession_number = "UT",
+    accession_nr = "AN",
+    document_delivery_id = "GA",
+    url = "UR",
+    space_flight_mission = "SFM",
+    published_elec = "PE",
+    conference_name = "CT",
+    conference_host = "HO",
+    conference_location = "CL",
+    conference_date = "Y2",
+    conference_sponsor = "SP",
+    meeting_abstract = "MA",
+    publisher = "PB",
+    place_published = "PP",
+    patent_assignee = "AE",
+    patent_number = "PN",
+    copyright_info = "CI",
+    conflict_of_interest = "COI",
+    copyright_info_other = "OCI",
+    gene_name = "GN",
+    gene_symbol = "GS",
+    notes1 = "N1",
+    open_access = "OA",
+    publishing_model = "PUBM",
+    owner = "OWN",
+    record_owner = "OB",
+    data_provider = "DP",
+    funding_agency = "FU",
+    funding_text = "FX",
+    grant_number = "GR",
+    grant_information = "GI",
+    location_id = "LID",
+    term_other = "OT",
+    term_owner_other = "OTO",
+    subset = "SB",
+    substance_name = "NM",
+    wos_categories = "WC",
+    research_areas = "SC",
+    chemicals = "CH",
+    diseases = "DS",
+    parts = "PR",
+    systematics = "OR",
+    methods = "MQ",
+    medium = "ME",
+    geographic_data = "GE",
+    geologic_data = "TM",
+    sequence_data = "SD",
+    taxonomic_data = "TA",
+    supertaxa = "ST",
+    taxa_notes = "TN",
+    concepts = "CC",
+    n_cited = "TC",
+    n_cited_allwos = "Z9",
+    n_cited_csc = "Z8",
+    n_cited_biosis = "ZB",
+    esi_highly_cited = "HC",
+    esi_hot_paper = "HP",
+    custom2 = "U2",
+    references_n = "NR",
+    cited_references = "CR",
+    citation_subset = "SS",
+    notes = "NT",
+    comments = "NO",
+    end_record = "ER",
+    end_file = "EF",
+    eppi_id = "U1",
+    custom_info = "U1"
+  )
+  
+  result_df <- data.frame(matrix(ncol = 0, nrow = nrow(df)))
+  
+  for (col_name in names(df)) {
+    # Check if this is a numbered variant (e.g., author2, editor3)
+    base_name <- sub("[0-9]+$", "", col_name)
+    
+    # Handle numbered columns - map back to original RIS tag
+    if (base_name != col_name && base_name %in% names(reverse_tag_map)) {
+      ris_tag <- reverse_tag_map[[base_name]]
+      result_df[[ris_tag]] <- df[[col_name]]
+    } else if (col_name %in% names(reverse_tag_map)) {
+      # Regular mapping
+      ris_tag <- reverse_tag_map[[col_name]]
+      result_df[[ris_tag]] <- df[[col_name]]
+    } else {
+      # Column name not in map, keep as is
+      result_df[[col_name]] <- df[[col_name]]
+    }
+  }
+  
+  return(result_df)
 }
