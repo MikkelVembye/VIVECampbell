@@ -230,12 +230,6 @@ save_dataframe_to_ris <- function(df, file_path) {
   cat("RIS file saved to:", file_path, "\n")
 }
 
-#' Interal function to map common ris tags to descriptive names
-#' 
-#' @param df data.frame with RIS tags as column names
-#'
-#' @return data.frame with mapped column names
-#' @keywords internal
 .map_ris_tags <- function(df) {
   tag_map <- c(
     DB = "database",
@@ -553,12 +547,6 @@ save_dataframe_to_ris <- function(df, file_path) {
   return(result_df)
 }
 
-#' Internal function to reverse map descriptive names back to RIS tags
-#' 
-#' @param df data.frame with descriptive column names
-#'
-#' @return data.frame with RIS tag column names
-#' @keywords internal
 .reverse_map_ris_tags <- function(df) {
   # Create reverse mapping from descriptive names to RIS tags
   # Using the most common/standard tag for each descriptive name
