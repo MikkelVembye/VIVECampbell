@@ -18,146 +18,106 @@
 #' @export
 read_ris_to_dataframe <- function(file_path) {
   lines <- readLines(file_path, encoding = "UTF-8")
-  
-  records <- list()
-  current_record <- list()
-  field_order <- character(0)
-  last_field <- NULL
-  
-  for (raw_line in lines) {
-    # Remove only newline/CR characters but preserve other trailing spaces
-    line_nl <- sub("[\r\n]+$", "", raw_line)
-    
-    # Skip lines that are empty once trimmed
-    if (trimws(line_nl) == "") next
-    
-    # Use the version that preserves trailing spaces for tag detection
-    line_preserve <- line_nl
-    
-    # Check if line starts a new record
-    if (startsWith(line_preserve, "TY  - ")) {
-      # If we have a current record, save it
-      if (length(current_record) > 0) {
-        records <- append(records, list(current_record), after = length(records))
+  norm_space <- function(x) gsub("\\s+", " ", trimws(x)) # Normalize whitespace
+
+  records <- vector("list", max(1L, length(lines) %/% 5L + 1L))  # Preallocate records list
+  rec_idx <- 0L # Initialize record index
+
+  current_record <- list() # Initialize current record
+  field_order <- character(0) # Initialize field order
+  last_field <- NULL # Initialize last field
+
+  for (raw_line in lines) { # Loop through each line
+    line_nl <- sub("[\r\n]+$", "", raw_line) # Remove newline characters
+    if (trimws(line_nl) == "") next # Skip empty lines
+    line_preserve <- line_nl # Preserve line for processing
+
+    if (startsWith(line_preserve, "TY  - ")) { # Check for record type
+      if (length(current_record) > 0) { # If current record exists
+        rec_idx <- rec_idx + 1L # Increment record index
+        records[[rec_idx]] <- current_record # Store current record
       }
-      # Start new record
-      current_record <- list()
-      val <- sub("^TY  - ", "", line_preserve)
-      val <- gsub("\\s+", " ", trimws(val))
-      current_record$TY <- val
-      last_field <- "TY"
-      # Add TY to field order if not already present
-      if (!"TY" %in% field_order) {
-        field_order <- c(field_order, "TY")
+      current_record <- list() # Reset current record
+      val <- norm_space(sub("^TY  - ", "", line_preserve)) # Extract and normalize value
+      current_record$TY <- val # Store type value
+      last_field <- "TY" # Update last field
+      if (!"TY" %in% field_order) field_order <- c(field_order, "TY") # Update field order
+    } else if (grepl("^ER  -\\s*$", line_preserve)) { # Check for end of record
+      if (length(current_record) > 0) { # If current record exists
+        rec_idx <- rec_idx + 1L # Increment record index
+        records[[rec_idx]] <- current_record # Store current record
       }
-    }
-    # Check for end of record
-    else if (grepl("^ER  -\\s*$", line_preserve)) {
-      # Save current record
-      if (length(current_record) > 0) {
-        records <- append(records, list(current_record), after = length(records))
-      }
-      current_record <- list()
-      last_field <- NULL
-    }
-    # Process regular field lines like "AB  - value"
-    else if (grepl("^[A-Z0-9]{2}  - ", line_preserve)) {
-      field <- substr(line_preserve, 1, 2)
-      value <- sub("^[A-Z0-9]{2}  - ", "", line_preserve)
-      value <- gsub("\\s+", " ", trimws(value))
-      
-      # Add field to order if not already present
-      if (!field %in% field_order) {
-        field_order <- c(field_order, field)
-      }
-      
-      # Handle multiple values for same field
-      if (field %in% names(current_record)) {
-        if (is.list(current_record[[field]])) {
-          current_record[[field]] <- append(current_record[[field]], value)
+      current_record <- list() # Reset current record
+      last_field <- NULL # Reset last field
+    } else if (grepl("^[A-Z0-9]{2}  - ", line_preserve)) { # Check for field line
+      field <- substr(line_preserve, 1, 2) # Extract field code
+      value <- norm_space(sub("^[A-Z0-9]{2}  - ", "", line_preserve)) # Extract and normalize value
+      if (!field %in% field_order) field_order <- c(field_order, field) # Update field order
+      if (field %in% names(current_record)) { # If field already exists in current record
+        if (is.list(current_record[[field]])) { # If field is a list
+          current_record[[field]] <- append(current_record[[field]], value) # Append value
         } else {
-          current_record[[field]] <- list(current_record[[field]], value)
+          current_record[[field]] <- list(current_record[[field]], value) # Convert to list and append
         }
       } else {
-        current_record[[field]] <- value
+        current_record[[field]] <- value # Store value in current record
       }
-      last_field <- field
-    }
-    # Continuation lines start with two spaces in RIS exports; append to last field value
-    else if (grepl("^\\s{2}", line_nl)) {
-      # Remove the two leading spaces and trailing whitespace from the continuation
-      cont <- sub("^\\s{2}", "", line_nl)
-      cont <- gsub("\\s+", " ", trimws(cont))
-      if (!is.null(last_field) && last_field %in% names(current_record)) {
-        curval <- current_record[[last_field]]
-        if (is.list(curval)) {
-          # Append to the last element of the list, normalizing spaces
-          n <- length(curval)
-          curval[[n]] <- paste(gsub("\\s+", " ", trimws(curval[[n]])), cont, sep = " ")
-          curval[[n]] <- gsub("\\s+", " ", trimws(curval[[n]]))
-          current_record[[last_field]] <- curval
+      last_field <- field # Update last field
+    } else if (grepl("^\\s{2}", line_nl)) { # Check for continuation line
+      cont <- norm_space(sub("^\\s{2}", "", line_nl)) # Extract continuation value
+      if (!is.null(last_field) && last_field %in% names(current_record)) { # If last field exists
+        curval <- current_record[[last_field]] # Get current value
+        if (is.list(curval)) { # If current value is a list
+          n <- length(curval) # Get length of list
+          curval[[n]] <- norm_space(paste(curval[[n]], cont, sep = " ")) # Append continuation
+          current_record[[last_field]] <- curval # Update current record
         } else {
-          newval <- paste(gsub("\\s+", " ", trimws(curval)), cont, sep = " ")
-          current_record[[last_field]] <- gsub("\\s+", " ", trimws(newval))
+          current_record[[last_field]] <- norm_space(paste(curval, cont, sep = " ")) # Append continuation
         }
       }
-    }
-    # Treat unknown non-empty lines as continuation of last field
-    else {
-      if (!is.null(last_field) && last_field %in% names(current_record)) {
-        cont <- gsub("\\s+", " ", trimws(line_nl))
-        curval <- current_record[[last_field]]
-        if (is.list(curval)) {
-          n <- length(curval)
-          curval[[n]] <- paste(gsub("\\s+", " ", trimws(curval[[n]])), cont, sep = " ")
-          curval[[n]] <- gsub("\\s+", " ", trimws(curval[[n]]))
-          current_record[[last_field]] <- curval
+    } else { # Handle other lines
+      if (!is.null(last_field) && last_field %in% names(current_record)) { # If last field exists
+        cont <- norm_space(line_nl) # Normalize line
+        curval <- current_record[[last_field]] # Get current value
+        if (is.list(curval)) { # If current value is a list
+          n <- length(curval) # Get length of list
+          curval[[n]] <- norm_space(paste(curval[[n]], cont, sep = " ")) # Append continuation
+          current_record[[last_field]] <- curval # Update current record
         } else {
-          newval <- paste(gsub("\\s+", " ", trimws(curval)), cont, sep = " ")
-          current_record[[last_field]] <- gsub("\\s+", " ", trimws(newval))
+          current_record[[last_field]] <- norm_space(paste(curval, cont, sep = " ")) # Append continuation
         }
       }
     }
   }
-  
-  # If file didn't end with ER, save the last record
-  if (length(current_record) > 0) {
-    records <- append(records, list(current_record), after = length(records))
-  }
-  
-  # Convert to dataframe
-  if (length(records) == 0) {
-    return(data.frame())
-  }
-  
-  # Create dataframe using the discovered field order
-    df_list <- list()
-    for (field in field_order) {
-      df_list[[field]] <- character(length(records))
-    }
 
-    # Fill dataframe FIRST
-    for (i in seq_along(records)) {
-      record <- records[[i]]
-      for (field in names(record)) {
-        value <- record[[field]]
-        # If multiple values, collapse with semicolon
-        if (is.list(value)) {
-          vals <- gsub("\\s+", " ", trimws(unlist(value)))
-          df_list[[field]][i] <- paste(vals, collapse = "; ")
-        } else {
-          df_list[[field]][i] <- gsub("\\s+", " ", trimws(value))
-        }
+  if (length(current_record) > 0) { # If current record exists
+    rec_idx <- rec_idx + 1L # Increment record index
+    records[[rec_idx]] <- current_record # Store current record
+  }
+
+  if (rec_idx == 0L) return(data.frame()) # Return empty data frame if no records
+  records <- records[seq_len(rec_idx)] # Trim records list
+
+  df_list <- vector("list", length(field_order))
+  names(df_list) <- field_order # Initialize data frame list
+  for (field in field_order) df_list[[field]] <- character(rec_idx) # Preallocate character vectors
+
+  for (i in seq_len(rec_idx)) { # Loop through records
+    record <- records[[i]] # Get current record
+    for (field in names(record)) { # Loop through fields in record
+      value <- record[[field]] # Get field value
+      if (is.list(value)) { # If value is a list
+        vals <- norm_space(unlist(value)) # Unlist and normalize
+        df_list[[field]][i] <- paste(vals, collapse = "; ") # Collapse values
+      } else {
+        df_list[[field]][i] <- norm_space(value) # Normalize value
       }
     }
-    
-    # Convert to dataframe with fields in the order they appeared in the file
-    df <- data.frame(df_list, stringsAsFactors = FALSE)
+  }
 
-    # Map entries in ris to descriptive names using internal function AFTER creating df
-    df <- .map_ris_tags(df)
-
-    return(df)
+  df <- data.frame(df_list, stringsAsFactors = FALSE) # Create data frame
+  df <- .map_ris_tags(df) # Map RIS tags
+  df
 }
 
 #' Write a data frame to a RIS file
@@ -187,42 +147,42 @@ save_dataframe_to_ris <- function(df, file_path) {
     "AU","A1","KW","M1","T1","TI","SN","JF","JO","JA","Y1","PY",
     "ID","AN","UR","DO","DP","DB","AD","PB","VL","IS","SP","EP",
     "U1","U2","CN"
-  )
-  free_text_tags <- c("AB","N1","NT","N2","NO")
+  ) # Tags that can have multiple values
+  free_text_tags <- c("AB","N1","NT","N2","NO") # Tags that may contain semicolons in free text
 
-  for (i in seq_len(nrow(df))) {
-    row <- df[i, ]
+  for (i in seq_len(nrow(df))) { # Loop through each record
+    row <- df[i, ] # Get current row
 
-    if ("TY" %in% names(row) && !is.na(row$TY) && row$TY != "") {
+    if ("TY" %in% names(row) && !is.na(row$TY) && row$TY != "") { # Write TY first
       writeLines(paste0("TY  - ", as.character(row$TY)), con)
     }
 
-    for (col_name in names(row)) {
-      if (col_name == "TY") next
-      value <- row[[col_name]]
+    for (col_name in names(row)) { # Loop through each column
+      if (col_name == "TY") next # Skip TY as it's already written
+      value <- row[[col_name]] # Get column value
 
-      if (is.factor(value)) value <- as.character(value)
-      if (is.list(value) || length(value) > 1) {
-        value <- paste(unlist(value), collapse = "; ")
+      if (is.factor(value)) value <- as.character(value) # Convert factor to character
+      if (is.list(value) || length(value) > 1) { # Handle list or multiple values
+        value <- paste(unlist(value), collapse = "; ") # Collapse to single string
       }
-      value <- as.character(value)
-      if (is.na(value) || value == "" || is.null(value)) next
-      value <- gsub("\\s+", " ", trimws(value))
+      value <- as.character(value) # Ensure value is character
+      if (is.na(value) || value == "" || is.null(value)) next # Skip empty values
+      value <- gsub("\\s+", " ", trimws(value)) # Normalize whitespace
 
-      if (grepl(";", value) && col_name %in% multi_value_tags && !(col_name %in% free_text_tags)) {
+      if (grepl(";", value) && col_name %in% multi_value_tags && !(col_name %in% free_text_tags)) { # Split multi-value tags
         values <- strsplit(value, ";\\s*")[[1]]
-        for (val in values) {
-          val <- trimws(val)
-          if (val != "") {
+        for (val in values) { # Loop through split values
+          val <- trimws(val) # Trim whitespace
+          if (val != "") { # Write non-empty values
             writeLines(paste0(col_name, "  - ", val), con)
           }
         }
-      } else {
+      } else { # Write single value
         writeLines(paste0(col_name, "  - ", value), con)
       }
     }
 
-    writeLines("ER  - ", con)
+    writeLines("ER  - ", con) # End of record
     writeLines("", con)
   }
 
@@ -230,6 +190,8 @@ save_dataframe_to_ris <- function(df, file_path) {
   cat("RIS file saved to:", file_path, "\n")
 }
 
+
+# Helper function to map RIS tags to descriptive names
 .map_ris_tags <- function(df) {
   tag_map <- c(
     DB = "database",
@@ -547,6 +509,7 @@ save_dataframe_to_ris <- function(df, file_path) {
   return(result_df)
 }
 
+# Helper function to reverse map descriptive names to RIS tags
 .reverse_map_ris_tags <- function(df) {
   # Create reverse mapping from descriptive names to RIS tags
   # Using the most common/standard tag for each descriptive name
