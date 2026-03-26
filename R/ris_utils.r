@@ -19,33 +19,32 @@
 read_ris_to_dataframe <- function(file_path) {
   lines <- readLines(file_path, encoding = "UTF-8")
 
-  preallocate_size <- max(1L, length(lines) %/% 5L + 1L)
-  records <- vector("list", preallocate_size)
-  record_order <- vector("list", preallocate_size)
-  rec_idx <- 0L
-  current_record <- list()
-  current_order <- character(0)
-  field_order <- character(0)
-  last_field <- NULL
-  after_end_record <- FALSE
-
+  preallocate_size <- max(1L, length(lines) %/% 5L + 1L) # Rough estimate: average 5 lines per record (varies widely), so preallocate for that many records to improve performance
+  records <- vector("list", preallocate_size) # To store parsed records as lists of fields
+  record_order <- vector("list", preallocate_size) # To track the order of tags for each record
+  rec_idx <- 0L # Current record index
+  current_record <- list() # Current record being processed
+  current_order <- character(0) # Order of tags in the current record
+  field_order <- character(0) # Order of all encountered tags
+  last_field <- NULL # Last field processed
+  after_end_record <- FALSE # Flag indicating if the last line was an end-of-record marker
   for (raw_line in lines) {
-    line <- sub("[\r\n]+$", "", raw_line)
-    if (trimws(line) == "") next
+    line <- sub("[\r\n]+$", "", raw_line) # Remove trailing newlines
+    if (trimws(line) == "") next  
 
     if (grepl("^ER[[:space:]]+-[[:space:]]*$", line)) {
       if (length(current_record) > 0) {
-        rec_idx <- rec_idx + 1L
-        records[[rec_idx]] <- current_record
-        record_order[[rec_idx]] <- current_order
+        rec_idx <- rec_idx + 1L # Move to next record index
+        records[[rec_idx]] <- current_record # Save the current record
+        record_order[[rec_idx]] <- current_order # Save the order of tags for this record
       }
-      current_record <- list()
-      current_order <- character(0)
-      last_field <- NULL
-      after_end_record <- TRUE
-    } else if (grepl("^[^[:space:]]+[[:space:]]+-[[:space:]]", line)) {
-      field <- sub("^([^[:space:]]+)[[:space:]]+-[[:space:]].*$", "\\1", line)
-      value <- .norm_space(sub("^[^[:space:]]+[[:space:]]+-[[:space:]]", "", line))
+      current_record <- list() # Reset the current record
+      current_order <- character(0) # Reset the order of tags for the new record
+      last_field <- NULL # Reset last field
+      after_end_record <- TRUE # Set flag to indicate we just finished a record
+    } else if (grepl("^[^[:space:]]+[[:space:]]+-[[:space:]]", line)) { # Matches lines that start with a tag followed by "  - "
+      field <- sub("^([^[:space:]]+)[[:space:]]+-[[:space:]].*$", "\\1", line) # Extract the tag (field name)
+      value <- .norm_space(sub("^[^[:space:]]+[[:space:]]+-[[:space:]]", "", line)) # Extract the value and normalize whitespace
 
       if ((rec_idx == 0L && length(current_record) == 0) || after_end_record) {
         if (length(current_record) > 0) {
@@ -53,67 +52,67 @@ read_ris_to_dataframe <- function(file_path) {
           records[[rec_idx]] <- current_record
           record_order[[rec_idx]] <- current_order
         }
-        current_record <- list()
-        current_order <- character(0)
-        after_end_record <- FALSE
+        current_record <- list() # Reset the current record
+        current_order <- character(0) # Reset the order of tags for the new record
+        after_end_record <- FALSE # Reset flag
       }
 
-      if (!field %in% field_order) field_order <- c(field_order, field)
+      if (!field %in% field_order) field_order <- c(field_order, field) # if this is the first time we've seen this field, add it to the overall field order
       current_order <- c(current_order, field)
 
       if (field %in% names(current_record)) {
-        current_record[[field]] <- if (is.list(current_record[[field]])) {
-          append(current_record[[field]], value)
+        current_record[[field]] <- if (is.list(current_record[[field]])) { # If it's already a list, append the new value
+          append(current_record[[field]], value) 
         } else {
-          list(current_record[[field]], value)
+          list(current_record[[field]], value) # If it's not a list, create a list with the existing value and the new value
         }
       } else {
-        current_record[[field]] <- value
+        current_record[[field]] <- value # First time we've seen this field in the current record, just set it
       }
       last_field <- field
     } else if (!is.null(last_field) && last_field %in% names(current_record)) {
-      cont <- .norm_space(if (grepl("^[[:space:]]{2}", line)) sub("^[[:space:]]{2}", "", line) else line)
-      curval <- current_record[[last_field]]
+      cont <- .norm_space(if (grepl("^[[:space:]]{2}", line)) sub("^[[:space:]]{2}", "", line) else line) # Continuation lines should start with at least 2 spaces
+      curval <- current_record[[last_field]] # Get the current value for the last field
       if (is.list(curval)) {
-        n <- length(curval)
-        curval[[n]] <- .norm_space(paste(curval[[n]], cont))
-        current_record[[last_field]] <- curval
+        n <- length(curval) # Append the continuation to the last value in the list
+        curval[[n]] <- .norm_space(paste(curval[[n]], cont)) # Normalize whitespace and append the continuation to the last value in the list
+        current_record[[last_field]] <- curval # Update the record with the modified list
       } else {
-        current_record[[last_field]] <- .norm_space(paste(curval, cont))
+        current_record[[last_field]] <- .norm_space(paste(curval, cont)) # Normalize whitespace and append the continuation to the current value
       }
     }
   }
 
   if (length(current_record) > 0) {
-    rec_idx <- rec_idx + 1L
-    records[[rec_idx]] <- current_record
-    record_order[[rec_idx]] <- current_order
+    rec_idx <- rec_idx + 1L # Save the last record if we ended without an ER tag
+    records[[rec_idx]] <- current_record # Save the last record
+    record_order[[rec_idx]] <- current_order # Save the order of tags for the last record
   }
-  if (rec_idx == 0L) return(data.frame())
+  if (rec_idx == 0L) return(data.frame()) # If no records were found, return an empty data frame
 
-  records <- records[seq_len(rec_idx)]
-  record_order <- record_order[seq_len(rec_idx)]
+  records <- records[seq_len(rec_idx)] # Trim the records list to the actual number of records found
+  record_order <- record_order[seq_len(rec_idx)] # Trim the record order list to the actual number of records found
 
-  df_list <- vector("list", length(field_order))
+  df_list <- vector("list", length(field_order)) # Preallocate a list of vectors for each field, ordered by first appearance in the file
   names(df_list) <- field_order
-  raw_values <- vector("list", length(field_order))
+  raw_values <- vector("list", length(field_order)) # Preallocate a list of raw values for each field
   names(raw_values) <- field_order
 
   for (field in field_order) {
-    df_list[[field]] <- character(rec_idx)
-    raw_values[[field]] <- vector("list", rec_idx)
+    df_list[[field]] <- character(rec_idx) # Initialize the data frame list with empty character vectors for each field
+    raw_values[[field]] <- vector("list", rec_idx) # Initialize the raw values list with empty lists for each field to store raw values per record
   }
 
   for (i in seq_len(rec_idx)) {
-    for (field in names(records[[i]])) {
-      value <- records[[i]][[field]]
+    for (field in names(records[[i]])) { 
+      value <- records[[i]][[field]] # Get the value for this field in the current record
       if (is.list(value)) {
-        vals <- .norm_space(unlist(value))
-        df_list[[field]][i] <- paste(vals, collapse = "; ")
-        raw_values[[field]][[i]] <- vals
+        vals <- .norm_space(unlist(value)) # Normalize whitespace for each value in the list
+        df_list[[field]][i] <- paste(vals, collapse = "; ") # Collapse multiple values with "; " for the data frame
+        raw_values[[field]][[i]] <- vals # Store the raw values as a list for this field and record
       } else {
-        df_list[[field]][i] <- .norm_space(value)
-        raw_values[[field]][[i]] <- df_list[[field]][i]
+        df_list[[field]][i] <- .norm_space(value) # Normalize whitespace for the single value and store it in the data frame
+        raw_values[[field]][[i]] <- df_list[[field]][i] # Store the raw value (which is the same as the normalized value in this case) for this field and record
       }
     }
   }
