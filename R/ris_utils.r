@@ -19,40 +19,36 @@
 read_ris_to_dataframe <- function(file_path) {
   lines <- readLines(file_path, encoding = "UTF-8")
 
-  preallocate_size <- max(1L, length(lines) %/% 5L + 1L) # Estimate number of records (avg 5 lines per record)
-  records <- vector("list", preallocate_size) # List of records
-  record_order <- vector("list", preallocate_size) # List of tag order per record
-  rec_idx <- 0L 
-  current_record <- list() # A list of tag-value pairs for the current record
-  current_order <- character(0) # Order of tags in the current record
-  field_order <- character(0) # Overall order of fields as they first appear
-  last_field <- NULL # The last field processed, for handling continuation lines
-  after_end_record <- FALSE # Track if we just processed an ER tag
+  preallocate_size <- max(1L, length(lines) %/% 5L + 1L)
+  records <- vector("list", preallocate_size)
+  record_order <- vector("list", preallocate_size)
+  rec_idx <- 0L
+  current_record <- list()
+  current_order <- character(0)
+  field_order <- character(0)
+  last_field <- NULL
+  after_end_record <- FALSE
 
-  # Parse the RIS file line by line
-  # Each record typically starts with "TY  - " but can start with other tags like "DB  - "
-  # Records end with "ER  - "
   for (raw_line in lines) {
     line <- sub("[\r\n]+$", "", raw_line)
     if (trimws(line) == "") next
 
-    if (grepl("^ER  -\\s*$", line)) { # End of record
+    if (grepl("^ER[[:space:]]+-[[:space:]]*$", line)) {
       if (length(current_record) > 0) {
         rec_idx <- rec_idx + 1L
         records[[rec_idx]] <- current_record
         record_order[[rec_idx]] <- current_order
       }
-      current_record <- list() 
+      current_record <- list()
       current_order <- character(0)
       last_field <- NULL
-      after_end_record <- TRUE # Mark that we just saw an end of record
-    } else if (grepl("^[^\\s]+\\s+-\\s", line)) { # If the line starts with a tag followed by " - ", it's a field
-      field <- sub("^([^\\s]+)\\s+-\\s.*$", "\\1", line)
-      value <- .norm_space(sub("^[^\\s]+\\s+-\\s", "", line)) # Extract the value after the tag
-      
-      # Start a new record if: this is the first field ever, OR we just saw ER and this is the first field of next record
+      after_end_record <- TRUE
+    } else if (grepl("^[^[:space:]]+[[:space:]]+-[[:space:]]", line)) {
+      field <- sub("^([^[:space:]]+)[[:space:]]+-[[:space:]].*$", "\\1", line)
+      value <- .norm_space(sub("^[^[:space:]]+[[:space:]]+-[[:space:]]", "", line))
+
       if ((rec_idx == 0L && length(current_record) == 0) || after_end_record) {
-        if (length(current_record) > 0) { # Save any pending record
+        if (length(current_record) > 0) {
           rec_idx <- rec_idx + 1L
           records[[rec_idx]] <- current_record
           record_order[[rec_idx]] <- current_order
@@ -61,56 +57,53 @@ read_ris_to_dataframe <- function(file_path) {
         current_order <- character(0)
         after_end_record <- FALSE
       }
-      
+
       if (!field %in% field_order) field_order <- c(field_order, field)
-      current_order <- c(current_order, field) # Track order of fields in this record
-      if (field %in% names(current_record)) { # If field already exists, make it a list to hold multiple values
-        current_record[[field]] <- if (is.list(current_record[[field]])) { 
+      current_order <- c(current_order, field)
+
+      if (field %in% names(current_record)) {
+        current_record[[field]] <- if (is.list(current_record[[field]])) {
           append(current_record[[field]], value)
         } else {
           list(current_record[[field]], value)
         }
-      } else { # Else, just add the field
+      } else {
         current_record[[field]] <- value
       }
       last_field <- field
-      # Handle continuation lines (RIS values that span multiple lines)
     } else if (!is.null(last_field) && last_field %in% names(current_record)) {
-      cont <- .norm_space(if (grepl("^\\s{2}", line)) sub("^\\s{2}", "", line) else line)
+      cont <- .norm_space(if (grepl("^[[:space:]]{2}", line)) sub("^[[:space:]]{2}", "", line) else line)
       curval <- current_record[[last_field]]
-      if (is.list(curval)) { # If multiple values, append to the last one
+      if (is.list(curval)) {
         n <- length(curval)
         curval[[n]] <- .norm_space(paste(curval[[n]], cont))
         current_record[[last_field]] <- curval
-      } else { # Else, just append to the single value
-        current_record[[last_field]] <- .norm_space(paste(curval, cont)) 
+      } else {
+        current_record[[last_field]] <- .norm_space(paste(curval, cont))
       }
     }
   }
-  # Add the last record if file doesn't end with ER
+
   if (length(current_record) > 0) {
     rec_idx <- rec_idx + 1L
     records[[rec_idx]] <- current_record
     record_order[[rec_idx]] <- current_order
   }
-  # Trim preallocated lists to actual size
   if (rec_idx == 0L) return(data.frame())
+
   records <- records[seq_len(rec_idx)]
   record_order <- record_order[seq_len(rec_idx)]
 
-  # Build data frame
   df_list <- vector("list", length(field_order))
   names(df_list) <- field_order
   raw_values <- vector("list", length(field_order))
   names(raw_values) <- field_order
-  
-  # Initialize columns
+
   for (field in field_order) {
     df_list[[field]] <- character(rec_idx)
     raw_values[[field]] <- vector("list", rec_idx)
   }
 
-  # Fill data frame
   for (i in seq_len(rec_idx)) {
     for (field in names(records[[i]])) {
       value <- records[[i]][[field]]
@@ -125,10 +118,10 @@ read_ris_to_dataframe <- function(file_path) {
     }
   }
 
-  df <- data.frame(df_list, stringsAsFactors = FALSE)
-  attr(df, "ris_raw_values") <- raw_values # Store raw values
-  attr(df, "ris_field_order") <- field_order # Store field order
-  attr(df, "ris_record_order") <- record_order # Store record order
+  df <- data.frame(df_list, stringsAsFactors = FALSE, check.names = FALSE)
+  attr(df, "ris_raw_values") <- raw_values
+  attr(df, "ris_field_order") <- field_order
+  attr(df, "ris_record_order") <- record_order
   .map_ris_tags(df)
 }
 
@@ -774,7 +767,7 @@ save_dataframe_to_ris <- function(df, file_path) {
 }
 
 # Helper function: normalize whitespace consistently across read/write.
-.norm_space <- function(x) gsub("\\s+", " ", trimws(x))
+.norm_space <- function(x) gsub("[[:space:]]+", " ", trimws(x))
 
 # Helper function: decide which RIS tag to write for a given column and row.
 .resolve_ris_tag <- function(col_name, row_idx, tag_meta = NULL, reverse_tag_map = NULL) {
